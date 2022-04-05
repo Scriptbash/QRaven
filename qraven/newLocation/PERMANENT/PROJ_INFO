@@ -1,0 +1,9 @@
+name: Anguilla 1957 / British West Indies Grid
+ellps: clark80
+proj: tmerc
+lat_0: 0
+lon_0: -62
+k: 0.9995
+x_0: 400000
+y_0: 0
+no_defs: defined
