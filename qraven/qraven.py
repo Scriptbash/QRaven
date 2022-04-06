@@ -258,7 +258,7 @@ class QRaven:
     #This function writes all the parameters entered by the user into the RVI file
     def writeRVI(self):
         paramDict = self.getParams()
-        print(paramDict)
+        #print(paramDict)
         outputdir = self.dlg.txt_outputdir.text()
         modelName = self.dlg.txt_modname.text()
         print(outputdir)
@@ -271,7 +271,6 @@ class QRaven:
                  for key, value in paramDict.items():
                      if value != '': 
                         rvi.write('%s:%s\n' % (key, value))
-                #rvi.write("This is some dummy text")
             print("RVI file written successfully")
         except Exception as e:
             print("Unable to write the RVI file")
@@ -388,9 +387,8 @@ class QRaven:
             
         }
 
-        
-
         return paramsDict
+        
     #This function sets up the scriptbash/basinmaker docker container. Pulls, starts and sets the python path
     def dockerinit(self):
         pythonpaths = [
