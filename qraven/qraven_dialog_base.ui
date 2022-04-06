@@ -51,7 +51,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -216,7 +216,7 @@
           </widget>
          </item>
          <item row="14" column="1">
-          <widget class="QComboBox" name="comboBox_8">
+          <widget class="QComboBox" name="combo_orotemp">
            <item>
             <property name="text">
              <string/>
@@ -250,7 +250,7 @@
           </widget>
          </item>
          <item row="12" column="3">
-          <widget class="QComboBox" name="comboBox_11">
+          <widget class="QComboBox" name="combo_swcanopy">
            <item>
             <property name="text">
              <string/>
@@ -286,7 +286,7 @@
           </widget>
          </item>
          <item row="11" column="3">
-          <widget class="QComboBox" name="comboBox_10">
+          <widget class="QComboBox" name="combo_swradation">
            <item>
             <property name="text">
              <string/>
@@ -310,7 +310,7 @@
           </widget>
          </item>
          <item row="17" column="3">
-          <widget class="QComboBox" name="comboBox_18">
+          <widget class="QComboBox" name="combo_precipicept">
            <item>
             <property name="text">
              <string/>
@@ -344,7 +344,7 @@
           </widget>
          </item>
          <item row="17" column="1">
-          <widget class="QComboBox" name="comboBox_17">
+          <widget class="QComboBox" name="combo_airpressure">
            <item>
             <property name="text">
              <string/>
@@ -394,7 +394,7 @@
           </widget>
          </item>
          <item row="13" column="1">
-          <widget class="QComboBox" name="comboBox_7">
+          <widget class="QComboBox" name="combo_oroprecip">
            <item>
             <property name="text">
              <string/>
@@ -428,7 +428,7 @@
           </widget>
          </item>
          <item row="11" column="1">
-          <widget class="QComboBox" name="comboBox_5">
+          <widget class="QComboBox" name="combo_rainsnowfrac">
            <item>
             <property name="text">
              <string/>
@@ -481,7 +481,7 @@
           </widget>
          </item>
          <item row="8" column="1">
-          <widget class="QComboBox" name="comboBox_2">
+          <widget class="QComboBox" name="combo_method">
            <item>
             <property name="text">
              <string/>
@@ -521,7 +521,7 @@
           </widget>
          </item>
          <item row="16" column="1">
-          <widget class="QComboBox" name="comboBox_14">
+          <widget class="QComboBox" name="combo_cloudcover">
            <item>
             <property name="text">
              <string/>
@@ -551,27 +551,8 @@
            </property>
           </widget>
          </item>
-         <item row="18" column="3">
-          <widget class="QComboBox" name="comboBox_20">
-           <item>
-            <property name="text">
-             <string/>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>RECHARGE_NONE</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>RECHARGE_DATA</string>
-            </property>
-           </item>
-          </widget>
-         </item>
          <item row="15" column="1">
-          <widget class="QComboBox" name="comboBox_9">
+          <widget class="QComboBox" name="combo_oropet">
            <item>
             <property name="text">
              <string/>
@@ -605,7 +586,7 @@
           </widget>
          </item>
          <item row="19" column="1">
-          <widget class="QComboBox" name="comboBox_21">
+          <widget class="QComboBox" name="combo_monthlyinterpo">
            <item>
             <property name="text">
              <string/>
@@ -658,7 +639,7 @@
           </widget>
          </item>
          <item row="10" column="1">
-          <widget class="QComboBox" name="comboBox_4">
+          <widget class="QComboBox" name="combo_evapo">
            <item>
             <property name="text">
              <string>PET_HARGREAVES_1985</string>
@@ -780,7 +761,7 @@
           </widget>
          </item>
          <item row="16" column="3">
-          <widget class="QComboBox" name="comboBox_16">
+          <widget class="QComboBox" name="combo_relhumidity">
            <item>
             <property name="text">
              <string/>
@@ -804,7 +785,7 @@
           </widget>
          </item>
          <item row="13" column="3">
-          <widget class="QComboBox" name="comboBox_12">
+          <widget class="QComboBox" name="combo_swcloud">
            <item>
             <property name="text">
              <string/>
@@ -842,7 +823,7 @@
           </widget>
          </item>
          <item row="14" column="3">
-          <widget class="QComboBox" name="comboBox_13">
+          <widget class="QComboBox" name="combo_lwradation">
            <item>
             <property name="text">
              <string/>
@@ -881,7 +862,7 @@
           </widget>
          </item>
          <item row="15" column="3">
-          <widget class="QComboBox" name="comboBox_15">
+          <widget class="QComboBox" name="combo_windspeed">
            <item>
             <property name="text">
              <string/>
@@ -912,7 +893,7 @@
           </widget>
          </item>
          <item row="9" column="1">
-          <widget class="QComboBox" name="comboBox_3">
+          <widget class="QComboBox" name="combo_interpo">
            <item>
             <property name="text">
              <string/>
@@ -941,7 +922,7 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QComboBox" name="comboBox">
+          <widget class="QComboBox" name="combo_catchment">
            <item>
             <property name="text">
              <string>DUMP</string>
@@ -965,7 +946,7 @@
           </widget>
          </item>
          <item row="12" column="1">
-          <widget class="QComboBox" name="comboBox_6">
+          <widget class="QComboBox" name="combo_owevapo">
            <item>
             <property name="text">
              <string/>
@@ -1044,7 +1025,7 @@
           </widget>
          </item>
          <item row="18" column="1">
-          <widget class="QComboBox" name="comboBox_19">
+          <widget class="QComboBox" name="combo_potentialmelt">
            <item>
             <property name="text">
              <string/>
@@ -1107,7 +1088,7 @@
           </widget>
          </item>
          <item row="19" column="3">
-          <widget class="QComboBox" name="comboBox_22">
+          <widget class="QComboBox" name="combo_subdaily">
            <item>
             <property name="text">
              <string/>
@@ -1152,7 +1133,7 @@
           </widget>
          </item>
          <item row="20" column="1">
-          <widget class="QComboBox" name="comboBox_23">
+          <widget class="QComboBox" name="combo_lakestorage">
            <item>
             <property name="text">
              <string/>
@@ -1171,7 +1152,7 @@
           </widget>
          </item>
          <item row="20" column="3">
-          <widget class="QComboBox" name="comboBox_24">
+          <widget class="QComboBox" name="combo_calendar">
            <item>
             <property name="text">
              <string/>
@@ -1226,6 +1207,25 @@
            </property>
           </widget>
          </item>
+         <item row="18" column="3">
+          <widget class="QComboBox" name="combo_recharge">
+           <item>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>RECHARGE_NONE</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>RECHARGE_DATA</string>
+            </property>
+           </item>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="tab_5">
@@ -1238,13 +1238,6 @@
          <string>Optional I/O</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_4">
-         <item row="1" column="2">
-          <widget class="QPushButton" name="pushButton">
-           <property name="text">
-            <string>Browse</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
           <widget class="QCheckBox" name="checkBox">
            <property name="layoutDirection">
@@ -1388,13 +1381,6 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="lineEdit_3">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
          <item row="3" column="2">
           <widget class="QCheckBox" name="checkBox_7">
            <property name="layoutDirection">
@@ -1521,6 +1507,16 @@
            </property>
           </widget>
          </item>
+         <item row="1" column="1">
+          <widget class="QgsFileWidget" name="mQgsFileWidget_2">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="storageMode">
+            <enum>QgsFileWidget::GetDirectory</enum>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="tab_4">
@@ -1579,13 +1575,13 @@
           <string>Spatial evaluation</string>
          </property>
         </widget>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>30</x>
            <y>40</y>
            <width>471</width>
-           <height>178</height>
+           <height>234</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout">
