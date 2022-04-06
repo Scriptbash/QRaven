@@ -194,8 +194,13 @@ class QRaven:
             self.dlg = QRavenDialog()
 
 
-        #If the checkbox is checked/unchecked, enables/disables the EndDate/Duration field
-        self.dlg.chk_duration.stateChanged.connect(self.toggleDuration)
+        #If the checkbox is checked/unchecked, enables/disables the associated widget
+        self.dlg.chk_duration.stateChanged.connect(self.toggleWidget)
+        self.dlg.chk_runname.stateChanged.connect(self.toggleWidget)
+        self.dlg.chk_outputdir.stateChanged.connect(self.toggleWidget)
+        self.dlg.chk_outputinterval.stateChanged.connect(self.toggleWidget)
+        self.dlg.chk_wateryear.stateChanged.connect(self.toggleWidget)
+
         #Calls the function to enable/disable the spinbox for the soilmodel
         self.dlg.combo_soilmod.activated.connect(self.toggleSoilModel)
         #Calls the function to browse the computer for an output folder
@@ -223,13 +228,35 @@ class QRaven:
             pass
     
     #This function enables and disables the EndDate and Duration widget based on the checkbox
-    def toggleDuration(self):
-        if self.dlg.chk_duration.isChecked():
-            self.dlg.date_enddate.setEnabled(False)
-            self.dlg.spin_duration.setEnabled(True)
-        else:
-            self.dlg.date_enddate.setEnabled(True)
-            self.dlg.spin_duration.setEnabled(False) 
+    def toggleWidget(self):
+        widget = self.dlg.sender()
+        if widget.objectName() == 'chk_duration':
+            if self.dlg.chk_duration.isChecked():
+                self.dlg.date_enddate.setEnabled(False)
+                self.dlg.spin_duration.setEnabled(True)
+            else:
+                self.dlg.date_enddate.setEnabled(True)
+                self.dlg.spin_duration.setEnabled(False) 
+        elif widget.objectName() == 'chk_runname':
+            if self.dlg.chk_runname.isChecked():
+                self.dlg.txt_runname.setEnabled(True)
+            else:
+                self.dlg.txt_runname.setEnabled(False)
+        elif widget.objectName() == 'chk_outputdir':
+            if self.dlg.chk_outputdir.isChecked():
+                self.dlg.file_outputdir.setEnabled(True)
+            else:
+                self.dlg.file_outputdir.setEnabled(False)        
+        elif widget.objectName() == 'chk_outputinterval':
+            if self.dlg.chk_outputinterval.isChecked():
+                self.dlg.spin_outinterval.setEnabled(True)
+            else:
+                self.dlg.spin_outinterval.setEnabled(False) 
+        elif widget.objectName() == 'chk_wateryear':
+            if self.dlg.chk_wateryear.isChecked():
+                self.dlg.spin_wateryear.setEnabled(True)
+            else:
+                self.dlg.spin_wateryear.setEnabled(False) 
 
     #This function enables and disables the spinbox next to the SoilModel combobox depending on the selected value of the combobox
     def toggleSoilModel(self):
@@ -237,6 +264,7 @@ class QRaven:
             self.dlg.spin_soilmod.setEnabled(True)
         else:
             self.dlg.spin_soilmod.setEnabled(False)
+    
 
     #This function opens a file explorer to select an output folder
     def browseDirectory(self):
@@ -267,10 +295,14 @@ class QRaven:
                 pathToFolder = outputdir+'/'+modelName
             else:
                 pathToFolder = outputdir+'\\'+modelName
+        
             with open(pathToFolder+".rvi","w") as rvi:
                  for key, value in paramDict.items():
-                     if value != '': 
-                        rvi.write('%s:%s\n' % (key, value))
+                    if value != '' and value != "checked":
+                        rvi.write(f":{key:<30}  {value}\n")
+                    elif value == "checked":      #This writes the optional I/O which don't have an argument (so only the key is written)
+                        rvi.write(f":{key:<30}\n")
+
             print("RVI file written successfully")
         except Exception as e:
             print("Unable to write the RVI file")
@@ -350,7 +382,81 @@ class QRaven:
         subdaily = self.dlg.combo_subdaily.currentText()
         #Get Calendar
         calendar = self.dlg.combo_calendar.currentText()
-
+        #Get all the option IO commands
+        if self.dlg.chk_runname.isChecked():
+            runname = self.dlg.txt_runname.text()
+        else:
+            runname = ''
+        if self.dlg.chk_outputdir.isChecked():
+            fileoutputdir = self.dlg.file_outputdir.filePath() 
+        else:
+            fileoutputdir = ''
+        if self.dlg.chk_outputinterval.isChecked():
+            outputinterval = self.dlg.spin_outinterval.value()
+        else:
+            outputinterval = ''
+        if self.dlg.chk_rvptemplate.isChecked():
+            rvptemplate = "checked"
+        else:
+            rvptemplate = ''
+        if self.dlg.chk_writemassbal.isChecked():
+            writemassbal = "checked"
+        else:
+            writemassbal = ''
+        if self.dlg.chk_endpause.isChecked():
+            endpause = "checked"
+        else:
+            endpause = ''
+        if self.dlg.chk_writeforcingfunc.isChecked():
+            writeforcing = "checked"
+        else:
+            writeforcing = ''
+        if self.dlg.chk_debugmode.isChecked():
+            debugmode = "checked"
+        else:
+            debugmode = ''
+        if self.dlg.chk_silentmode.isChecked():
+            silentmode = "checked"
+        else:
+            silentmode = ''
+        if self.dlg.chk_writedemand.isChecked():
+            writedemand = "checked"
+        else:
+            writedemand = ''
+        if self.dlg.chk_writeenergy.isChecked():
+            writeenergy = "checked"
+        else:
+            writeenergy = ''
+        if self.dlg.chk_writeexausmb.isChecked():
+            writeexausmb = "checked"
+        else:
+            writeexausmb = ''
+        if self.dlg.chk_writeensim.isChecked():
+            writeensim = "checked"
+        else:
+            writeensim = ''
+        if self.dlg.chk_suppressoutput.isChecked():
+            suppressoutput = "checked"
+        else:
+            suppressoutput = ''
+        if self.dlg.chk_snaphydro.isChecked():
+            snaphydro = "checked"
+        else:
+            snaphydro = ''
+        if self.dlg.chk_wateryear.isChecked():
+            wateryear = self.dlg.spin_wateryear.value()
+        else:
+            wateryear = ''
+        
+        #Writes the selected evaluation metrics
+        firstloop = True
+        for item in self.dlg.list_evalmetrics.selectedItems():
+            if firstloop != False:
+                evalmetrics = item.text()
+                firstloop = False
+            else:
+                evalmetrics= evalmetrics + ', ' + item.text()
+      
 
         #Create the dictionary
         paramsDict = { 
@@ -383,12 +489,28 @@ class QRaven:
             "RelativeHumidityMethod"     : relhumidity,
             "PrecipIceptFract"           : precipicept,
             "RechargeMethod"             : recharge,
-            "SubdailyMethod"             : subdaily
-            
+            "SubdailyMethod"             : subdaily,
+            "RunName"                    : runname,
+            "OutputDirectory"            : fileoutputdir,
+            "OutputInterval"             : outputinterval,
+            "CreateRVPTemplate"          : rvptemplate,
+            "WaterYearStartMonth"        : wateryear,
+            "WriteMassBalanceFile"       : writemassbal,
+            "writeForcingFunctions"      : writeforcing,
+            "EndPause"                   : endpause,
+            "DebugMode"                  : debugmode,
+            "SilentMode"                 : silentmode,
+            "WriteDemandFile"            : writedemand,
+            "WriteEnergyStorage"         : writeenergy,
+            "WriteExhaustiveMB"          : writeexausmb,
+            "WriteEnsimFormat"           : writeensim,
+            "SuppressOutput"             : suppressoutput,
+            "SnapshotHydrograph"         : snaphydro,
+            "EvaluationMetrics"          : evalmetrics
         }
 
         return paramsDict
-        
+
     #This function sets up the scriptbash/basinmaker docker container. Pulls, starts and sets the python path
     def dockerinit(self):
         pythonpaths = [
