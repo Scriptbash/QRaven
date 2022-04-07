@@ -193,7 +193,6 @@ class QRaven:
             self.first_start = False
             self.dlg = QRavenDialog()
 
-
         #If the checkbox is checked/unchecked, enables/disables the associated widget
         self.dlg.chk_duration.stateChanged.connect(self.toggleWidget)
         self.dlg.chk_runname.stateChanged.connect(self.toggleWidget)
@@ -203,12 +202,11 @@ class QRaven:
 
         #Calls the function to enable/disable the spinbox for the soilmodel
         self.dlg.combo_soilmod.activated.connect(self.toggleSoilModel)
+        self.dlg.combo_interpo.activated.connect(self.toggleInterpolation)
+
         #Calls the function to browse the computer for an output folder
         self.dlg.btn_outputdir.clicked.connect(self.browseDirectory)
      
-        # #Calls the function to add a custom output field
-        # self.dlg.btn_addoutput.clicked.connect(self.addOutput)
-
         #Calls the function to write the RVI file
         self.dlg.btn_write.clicked.connect(self.writeRVI)
 
@@ -264,45 +262,61 @@ class QRaven:
             self.dlg.spin_soilmod.setEnabled(True)
         else:
             self.dlg.spin_soilmod.setEnabled(False)
-    
+
+    #This function enables and disables the line edit next to the InterpolationMethod is INTERP_FROM_FILE.
+    def toggleInterpolation(self):
+        if self.dlg.combo_interpo.currentText().lower() == "interp_from_file":
+            self.dlg.txt_interpofile.setEnabled(True)
+        else:
+            self.dlg.txt_interpofile.setEnabled(False)
 
     #This function opens a file explorer to select an output folder
     def browseDirectory(self):
         dir = str(QFileDialog.getExistingDirectory(None, "Select Directory"))
         self.dlg.txt_outputdir.setText(dir)
         
-    # #This function adds another row of custom output if the "+" button is clicked
-    # def addOutput(self):
-    #     self.time_comboBox = QComboBox()
-    #     self.stat_comboBox = QComboBox()
-    #     self.grid = QGridLayout()
-    #     self.grid.addWidget(self.time_comboBox,3,0)
-        
-    #     self.dlg.setLayout(self.grid)
-
-    #     print("Added a custom output")
-
-
     #This function writes all the parameters entered by the user into the RVI file
     def writeRVI(self):
         paramDict = self.getParams()
+        customOutputList = self.getCustomOutput()
         #print(paramDict)
         outputdir = self.dlg.txt_outputdir.text()
         modelName = self.dlg.txt_modname.text()
         print(outputdir)
         try:
-            if computerOS == "linux" or computerOS == "macos":
+            if computerOS == "linux" or computerOS == "macos":  #Adds a slash or backslash to the path depending on which os is being used
                 pathToFolder = outputdir+'/'+modelName
             else:
                 pathToFolder = outputdir+'\\'+modelName
-        
+            #Creates the RVI file with the name and path provided
             with open(pathToFolder+".rvi","w") as rvi:
-                 for key, value in paramDict.items():
+                #Writes the parameters from the dictionary
+                for key, value in paramDict.items():
                     if value != '' and value != "checked":
                         rvi.write(f":{key:<30}  {value}\n")
-                    elif value == "checked":      #This writes the optional I/O which don't have an argument (so only the key is written)
+                    elif value == "checked":   #This writes the optional I/O which don't have an argument (so only the key is written)
                         rvi.write(f":{key:<30}\n")
+                #Writes the custom output
+                count = 0
+                rvi.write("{:<33}".format(":CustomOutput"))
+                for output in customOutputList:
+                    if count == 4:
+                        count = 0
+                        if output == ' ':
+                            count+=1
+                            pass
+                        else:
+                            rvi.write("\n{:<33}".format(":CustomOutput")+output+" ")
+                            count+=1
+                    else:
+                        if output == ' ':
+                            count+=1
+                            pass
+                        else:
+                            rvi.write(output + " ")
+                            count+=1
 
+            #!!!Must add a message push in qgis to let the user know!!!
             print("RVI file written successfully")
         except Exception as e:
             print("Unable to write the RVI file")
@@ -339,7 +353,10 @@ class QRaven:
         #Get method
         method= self.dlg.combo_method.currentText()   
         #Get interpolation method
-        interpolation = self.dlg.combo_interpo.currentText() #Must add the file option
+        if self.dlg.combo_interpo.currentText().lower() == "interp_from_file":
+            interpolation = self.dlg.combo_interpo.currentText() + ' ' + self.dlg.txt_interpofile.text()
+        else:
+            interpolation = self.dlg.combo_interpo.currentText()
         #Get evaporation
         evaporation = self.dlg.combo_evapo.currentText()     
         #Get rain snow fraction
@@ -449,14 +466,16 @@ class QRaven:
             wateryear = ''
         
         #Writes the selected evaluation metrics
-        firstloop = True
-        for item in self.dlg.list_evalmetrics.selectedItems():
-            if firstloop != False:
-                evalmetrics = item.text()
-                firstloop = False
-            else:
-                evalmetrics= evalmetrics + ', ' + item.text()
-      
+        if not self.dlg.list_evalmetrics.selectedItems(): 
+            evalmetrics = ''            #If nothing is selected, assign empty text to the variable to avoid crash
+        else:
+            firstloop = True
+            for item in self.dlg.list_evalmetrics.selectedItems():
+                if firstloop != False:
+                    evalmetrics = item.text()
+                    firstloop = False
+                else:
+                    evalmetrics= evalmetrics + ', ' + item.text()
 
         #Create the dictionary
         paramsDict = { 
@@ -510,6 +529,27 @@ class QRaven:
         }
 
         return paramsDict
+        
+    #This function fetches the custom output widgets' values and returns them into a list
+    def getCustomOutput(self):
+        customOutputList = []
+        #Loop through all the Custom Ouput widgets in order to get their values and add them to a list
+        for i in range(self.dlg.gridLayout.count()):
+            if isinstance(self.dlg.gridLayout.itemAt(i).widget(),QComboBox):    #Get the combobox values
+                if self.dlg.gridLayout.itemAt(i).widget().currentText() != '':
+                    #print(self.dlg.gridLayout.itemAt(i).widget().currentText())
+                    customOutputList.append(self.dlg.gridLayout.itemAt(i).widget().currentText())
+                else: 
+                    customOutputList.append(" ")
+            else:
+                if self.dlg.gridLayout.itemAt(i).widget().text() != '': #Get the line edit values
+                    #print(self.dlg.gridLayout.itemAt(i).widget().text())
+                    customOutputList.append(self.dlg.gridLayout.itemAt(i).widget().text())
+                else: 
+                    customOutputList.append(" ")
+
+        return customOutputList
+        #!!!!MISSING QUARTILES OPTION IN THE GUI!!!
 
     #This function sets up the scriptbash/basinmaker docker container. Pulls, starts and sets the python path
     def dockerinit(self):
@@ -525,7 +565,7 @@ class QRaven:
             process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
             while True:
                 output = process.stdout.readline()
-                if output == b'': #and process.poll() is not None:
+                if output == b'':
                     break
                 if output:
                     #test = str(output.strip())

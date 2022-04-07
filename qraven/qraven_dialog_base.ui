@@ -51,7 +51,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>4</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -1230,9 +1230,12 @@
           </widget>
          </item>
          <item row="10" column="3">
-          <widget class="QLineEdit" name="lineEdit">
+          <widget class="QLineEdit" name="txt_interpofile">
            <property name="enabled">
             <bool>false</bool>
+           </property>
+           <property name="placeholderText">
+            <string>Filename</string>
            </property>
           </widget>
          </item>
@@ -1558,7 +1561,7 @@
         <widget class="QLabel" name="label_29">
          <property name="geometry">
           <rect>
-           <x>40</x>
+           <x>50</x>
            <y>9</y>
            <width>71</width>
            <height>16</height>
@@ -1571,7 +1574,7 @@
         <widget class="QLabel" name="label_30">
          <property name="geometry">
           <rect>
-           <x>160</x>
+           <x>180</x>
            <y>10</y>
            <width>48</width>
            <height>16</height>
@@ -1584,7 +1587,7 @@
         <widget class="QLabel" name="label_31">
          <property name="geometry">
           <rect>
-           <x>270</x>
+           <x>310</x>
            <y>10</y>
            <width>49</width>
            <height>16</height>
@@ -1597,7 +1600,7 @@
         <widget class="QLabel" name="label_32">
          <property name="geometry">
           <rect>
-           <x>390</x>
+           <x>450</x>
            <y>10</y>
            <width>106</width>
            <height>16</height>
@@ -1618,7 +1621,7 @@
          </property>
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
-           <widget class="QComboBox" name="comboBox_25">
+           <widget class="QComboBox" name="combo_time1">
             <item>
              <property name="text">
               <string/>
@@ -1652,7 +1655,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QComboBox" name="comboBox_26">
+           <widget class="QComboBox" name="combo_stat1">
             <item>
              <property name="text">
               <string/>
@@ -1691,10 +1694,10 @@
            </widget>
           </item>
           <item row="0" column="2">
-           <widget class="QLineEdit" name="lineEdit_4"/>
+           <widget class="QLineEdit" name="txt_var1"/>
           </item>
           <item row="0" column="3">
-           <widget class="QComboBox" name="comboBox_27">
+           <widget class="QComboBox" name="combo_eval1">
             <item>
              <property name="text">
               <string/>
@@ -1728,7 +1731,7 @@
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QComboBox" name="comboBox_28">
+           <widget class="QComboBox" name="combo_time2">
             <item>
              <property name="text">
               <string/>
@@ -1762,7 +1765,7 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QComboBox" name="comboBox_29">
+           <widget class="QComboBox" name="combo_stat2">
             <item>
              <property name="text">
               <string/>
@@ -1801,10 +1804,10 @@
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QLineEdit" name="lineEdit_5"/>
+           <widget class="QLineEdit" name="txt_var2"/>
           </item>
           <item row="1" column="3">
-           <widget class="QComboBox" name="comboBox_30">
+           <widget class="QComboBox" name="combo_eval2">
             <item>
              <property name="text">
               <string/>
@@ -1838,7 +1841,7 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QComboBox" name="comboBox_31">
+           <widget class="QComboBox" name="combo_time3">
             <item>
              <property name="text">
               <string/>
@@ -1872,7 +1875,7 @@
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QComboBox" name="comboBox_32">
+           <widget class="QComboBox" name="combo_stat3">
             <item>
              <property name="text">
               <string/>
@@ -1911,10 +1914,10 @@
            </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QLineEdit" name="lineEdit_6"/>
+           <widget class="QLineEdit" name="txt_var3"/>
           </item>
           <item row="2" column="3">
-           <widget class="QComboBox" name="comboBox_33">
+           <widget class="QComboBox" name="combo_eval3">
             <item>
              <property name="text">
               <string/>
@@ -1948,7 +1951,7 @@
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QComboBox" name="comboBox_34">
+           <widget class="QComboBox" name="combo_time4">
             <item>
              <property name="text">
               <string/>
@@ -1982,7 +1985,7 @@
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QComboBox" name="comboBox_38">
+           <widget class="QComboBox" name="combo_stat4">
             <item>
              <property name="text">
               <string/>
@@ -2021,10 +2024,10 @@
            </widget>
           </item>
           <item row="3" column="2">
-           <widget class="QLineEdit" name="lineEdit_7"/>
+           <widget class="QLineEdit" name="txt_var4"/>
           </item>
           <item row="3" column="3">
-           <widget class="QComboBox" name="comboBox_42">
+           <widget class="QComboBox" name="combo_eval4">
             <item>
              <property name="text">
               <string/>
@@ -2058,7 +2061,7 @@
            </widget>
           </item>
           <item row="4" column="0">
-           <widget class="QComboBox" name="comboBox_35">
+           <widget class="QComboBox" name="combo_time5">
             <item>
              <property name="text">
               <string/>
@@ -2092,7 +2095,7 @@
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QComboBox" name="comboBox_39">
+           <widget class="QComboBox" name="combo_stat5">
             <item>
              <property name="text">
               <string/>
@@ -2131,10 +2134,10 @@
            </widget>
           </item>
           <item row="4" column="2">
-           <widget class="QLineEdit" name="lineEdit_8"/>
+           <widget class="QLineEdit" name="txt_var5"/>
           </item>
           <item row="4" column="3">
-           <widget class="QComboBox" name="comboBox_43">
+           <widget class="QComboBox" name="combo_eval5">
             <item>
              <property name="text">
               <string/>
@@ -2168,7 +2171,7 @@
            </widget>
           </item>
           <item row="5" column="0">
-           <widget class="QComboBox" name="comboBox_36">
+           <widget class="QComboBox" name="combo_time6">
             <item>
              <property name="text">
               <string/>
@@ -2202,7 +2205,7 @@
            </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QComboBox" name="comboBox_40">
+           <widget class="QComboBox" name="combo_stat6">
             <item>
              <property name="text">
               <string/>
@@ -2241,10 +2244,10 @@
            </widget>
           </item>
           <item row="5" column="2">
-           <widget class="QLineEdit" name="lineEdit_9"/>
+           <widget class="QLineEdit" name="txt_var6"/>
           </item>
           <item row="5" column="3">
-           <widget class="QComboBox" name="comboBox_44">
+           <widget class="QComboBox" name="combo_eval6">
             <item>
              <property name="text">
               <string/>
@@ -2278,7 +2281,7 @@
            </widget>
           </item>
           <item row="6" column="0">
-           <widget class="QComboBox" name="comboBox_37">
+           <widget class="QComboBox" name="combo_time7">
             <item>
              <property name="text">
               <string/>
@@ -2312,7 +2315,7 @@
            </widget>
           </item>
           <item row="6" column="1">
-           <widget class="QComboBox" name="comboBox_41">
+           <widget class="QComboBox" name="combo_stat7">
             <item>
              <property name="text">
               <string/>
@@ -2351,10 +2354,10 @@
            </widget>
           </item>
           <item row="6" column="2">
-           <widget class="QLineEdit" name="lineEdit_10"/>
+           <widget class="QLineEdit" name="txt_var7"/>
           </item>
           <item row="6" column="3">
-           <widget class="QComboBox" name="comboBox_45">
+           <widget class="QComboBox" name="combo_eval7">
             <item>
              <property name="text">
               <string/>
@@ -2394,7 +2397,7 @@
       <widget class="QPushButton" name="btn_write">
        <property name="geometry">
         <rect>
-         <x>310</x>
+         <x>400</x>
          <y>520</y>
          <width>90</width>
          <height>28</height>
