@@ -174,7 +174,6 @@ class QRaven:
         # will be set False in run()
         self.first_start = True
 
-
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
@@ -182,7 +181,6 @@ class QRaven:
                 self.tr(u'&QRaven'),
                 action)
             self.iface.removeToolBarIcon(action)
-
 
     def run(self):
         """Run method that performs all the real work"""
@@ -476,6 +474,7 @@ class QRaven:
                     firstloop = False
                 else:
                     evalmetrics= evalmetrics + ', ' + item.text()
+        evalmetrics = evalmetrics.replace(',',' ')  #Removes the commas between the metrics
 
         #Create the dictionary
         paramsDict = { 
@@ -529,7 +528,7 @@ class QRaven:
         }
 
         return paramsDict
-        
+
     #This function fetches the custom output widgets' values and returns them into a list
     def getCustomOutput(self):
         customOutputList = []
@@ -578,7 +577,6 @@ class QRaven:
 
         #!!!Missing the docker run command, export python paths, xvfb to fake a display!!!
       
-        
     #This function fully removes the container, as well as the image to free up space
     def dockerdelete(self):
         try:
@@ -595,7 +593,6 @@ class QRaven:
             self.dlg.txt_console.appendPlainText("An error occured while attempting to remove the container and image. Please remove them manually.")
             print("An error occured while attempting to remove the docker container and image")
             print(e)
-
 
 #This function return the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
 def checkOS():
