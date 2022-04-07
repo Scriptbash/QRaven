@@ -23,7 +23,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -51,7 +51,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -2415,8 +2415,8 @@
       <widget class="QLabel" name="label_28">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>20</y>
+         <x>10</x>
+         <y>0</y>
          <width>591</width>
          <height>16</height>
         </rect>
@@ -2434,8 +2434,8 @@
       <widget class="QLabel" name="label_33">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>40</y>
+         <x>10</x>
+         <y>20</y>
          <width>711</width>
          <height>16</height>
         </rect>
@@ -2450,57 +2450,11 @@
         <set>Qt::TextBrowserInteraction</set>
        </property>
       </widget>
-      <widget class="QgsMapLayerComboBox" name="mMapLayerComboBox">
-       <property name="geometry">
-        <rect>
-         <x>160</x>
-         <y>80</y>
-         <width>160</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QgsMapLayerComboBox" name="mMapLayerComboBox_2">
-       <property name="geometry">
-        <rect>
-         <x>160</x>
-         <y>120</y>
-         <width>160</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_34">
-       <property name="geometry">
-        <rect>
-         <x>50</x>
-         <y>80</y>
-         <width>58</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>DEM</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_35">
-       <property name="geometry">
-        <rect>
-         <x>50</x>
-         <y>120</y>
-         <width>58</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Landuse</string>
-       </property>
-      </widget>
       <widget class="QPushButton" name="btn_dockerrun">
        <property name="geometry">
         <rect>
          <x>60</x>
-         <y>490</y>
+         <y>520</y>
          <width>90</width>
          <height>28</height>
         </rect>
@@ -2513,7 +2467,7 @@
        <property name="geometry">
         <rect>
          <x>620</x>
-         <y>490</y>
+         <y>520</y>
          <width>111</width>
          <height>28</height>
         </rect>
@@ -2526,30 +2480,20 @@
        <property name="geometry">
         <rect>
          <x>60</x>
-         <y>300</y>
+         <y>450</y>
          <width>671</width>
-         <height>181</height>
+         <height>61</height>
         </rect>
        </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QgsFileWidget" name="mQgsFileWidget">
-       <property name="geometry">
-        <rect>
-         <x>150</x>
-         <y>180</y>
-         <width>161</width>
-         <height>28</height>
-        </rect>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_36">
        <property name="geometry">
         <rect>
          <x>60</x>
-         <y>280</y>
+         <y>430</y>
          <width>111</width>
          <height>16</height>
         </rect>
@@ -2557,6 +2501,626 @@
        <property name="text">
         <string>Console output</string>
        </property>
+      </widget>
+      <widget class="QTabWidget" name="tabWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>851</width>
+         <height>391</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="tab_6">
+        <attribute name="title">
+         <string>Delineate lake-river routing product tools</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="0">
+          <widget class="QScrollArea" name="scrollArea">
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="QWidget" name="scrollAreaWidgetContents">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>814</width>
+              <height>1023</height>
+             </rect>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_6">
+             <item row="26" column="0">
+              <widget class="QLabel" name="label_54">
+               <property name="text">
+                <string>Point_of_interest_attributes</string>
+               </property>
+              </widget>
+             </item>
+             <item row="18" column="2">
+              <widget class="QRadioButton" name="radioButton_6">
+               <property name="text">
+                <string>using_fdr</string>
+               </property>
+              </widget>
+             </item>
+             <item row="17" column="1">
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+               <property name="decimals">
+                <number>8</number>
+               </property>
+               <property name="maximum">
+                <double>999999999.999989986419678</double>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QgsMapLayerComboBox" name="mMapLayerComboBox_4"/>
+             </item>
+             <item row="25" column="1">
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximum">
+                <double>1000000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="16" column="1">
+              <widget class="QLabel" name="label_46">
+               <property name="text">
+                <string>Delineate routing structure without lakes</string>
+               </property>
+              </widget>
+             </item>
+             <item row="18" column="1">
+              <widget class="QRadioButton" name="radioButton_5">
+               <property name="text">
+                <string>using_dem</string>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="1">
+              <widget class="QgsFileWidget" name="mQgsFileWidget">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>path_to_spatial_extent_polygon</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_35">
+               <property name="text">
+                <string>Landuse (polygons)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_39">
+               <property name="text">
+                <string>Lakes*</string>
+               </property>
+              </widget>
+             </item>
+             <item row="27" column="1">
+              <widget class="QLineEdit" name="lineEdit_10">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>drainage area - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="0">
+              <widget class="QLabel" name="label_49">
+               <property name="toolTip">
+                <string>The maximum RAM that BasinMaker will be allowed to use</string>
+               </property>
+               <property name="text">
+                <string>Max memory (MB)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="19" column="2">
+              <widget class="QgsFileWidget" name="mQgsFileWidget_3">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>path of flow direction input dataset</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_59">
+               <property name="text">
+                <string>Landuse (raster)*</string>
+               </property>
+              </widget>
+             </item>
+             <item row="29" column="0">
+              <widget class="QCheckBox" name="checkBox">
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="text">
+                <string>projected_epsg_code</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLabel" name="label_43">
+               <property name="lineWidth">
+                <number>0</number>
+               </property>
+               <property name="midLineWidth">
+                <number>0</number>
+               </property>
+               <property name="text">
+                <string>Files location</string>
+               </property>
+              </widget>
+             </item>
+             <item row="32" column="1">
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="decimals">
+                <number>8</number>
+               </property>
+               <property name="maximum">
+                <double>99999.999999000006937</double>
+               </property>
+              </widget>
+             </item>
+             <item row="24" column="0">
+              <widget class="QLabel" name="label_52">
+               <property name="text">
+                <string>connected_lake_area_threshold</string>
+               </property>
+              </widget>
+             </item>
+             <item row="28" column="1">
+              <widget class="QLabel" name="label_55">
+               <property name="text">
+                <string>Add hydrology related attributes</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="0">
+              <widget class="QRadioButton" name="radioButton_2">
+               <property name="text">
+                <string>using_hybasin</string>
+               </property>
+              </widget>
+             </item>
+             <item row="33" column="1">
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_6">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="decimals">
+                <number>8</number>
+               </property>
+               <property name="maximum">
+                <double>99999.999999000006937</double>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="1">
+              <widget class="QgsFileWidget" name="mQgsFileWidget_2">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>path_to_hydrobasin_polygon</string>
+               </property>
+              </widget>
+             </item>
+             <item row="25" column="0">
+              <widget class="QLabel" name="label_53">
+               <property name="text">
+                <string>non_connected_lake_area_threshold</string>
+               </property>
+              </widget>
+             </item>
+             <item row="30" column="1">
+              <widget class="QLineEdit" name="lineEdit_13">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>Bankfull width (m) - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="31" column="2">
+              <widget class="QLineEdit" name="lineEdit_16">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>Drainage area (km2) - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="21" column="1">
+              <widget class="QLabel" name="label_50">
+               <property name="text">
+                <string>Add lake and obs control points</string>
+               </property>
+              </widget>
+             </item>
+             <item row="31" column="1">
+              <widget class="QLineEdit" name="lineEdit_15">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>Annual mean dischage (m3/s) - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_34">
+               <property name="text">
+                <string>DEM</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QgsMapLayerComboBox" name="mMapLayerComboBox"/>
+             </item>
+             <item row="29" column="1">
+              <widget class="QLineEdit" name="lineEdit_12">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>32187</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_40">
+               <property name="text">
+                <string>Bankfull width*</string>
+               </property>
+              </widget>
+             </item>
+             <item row="23" column="0">
+              <widget class="QLineEdit" name="lineEdit_5">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>volume of lakes (km3) - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="0">
+              <widget class="QRadioButton" name="radioButton_3">
+               <property name="text">
+                <string>using_outlet_pt</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="2">
+              <widget class="QLineEdit" name="lineEdit_2">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>Long</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="1">
+              <widget class="QSpinBox" name="spinBox_2">
+               <property name="minimum">
+                <number>524</number>
+               </property>
+               <property name="maximum">
+                <number>64000</number>
+               </property>
+               <property name="singleStep">
+                <number>2</number>
+               </property>
+               <property name="stepType">
+                <enum>QAbstractSpinBox::DefaultStepType</enum>
+               </property>
+               <property name="value">
+                <number>4096</number>
+               </property>
+               <property name="displayIntegerBase">
+                <number>10</number>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QgsMapLayerComboBox" name="mMapLayerComboBox_3"/>
+             </item>
+             <item row="17" column="0">
+              <widget class="QLabel" name="label_47">
+               <property name="toolTip">
+                <string>flow accumulation thresthold</string>
+               </property>
+               <property name="text">
+                <string>fac_threshold</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="0">
+              <widget class="QRadioButton" name="radioButton">
+               <property name="text">
+                <string>using_dem</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="1">
+              <widget class="QLineEdit" name="lineEdit">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>Lat</string>
+               </property>
+              </widget>
+             </item>
+             <item row="26" column="2">
+              <widget class="QLineEdit" name="lineEdit_9">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>unique name</string>
+               </property>
+              </widget>
+             </item>
+             <item row="23" column="1">
+              <widget class="QLineEdit" name="lineEdit_6">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>average depth (m)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="22" column="0">
+              <widget class="QLabel" name="label_51">
+               <property name="text">
+                <string>lake_attributes</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QgsMapLayerComboBox" name="mMapLayerComboBox_7"/>
+             </item>
+             <item row="12" column="2">
+              <widget class="QSpinBox" name="spinBox">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>hydrobasin_id_of_watershed_outlet</string>
+               </property>
+               <property name="maximum">
+                <number>99999999</number>
+               </property>
+              </widget>
+             </item>
+             <item row="15" column="0">
+              <widget class="QLabel" name="label_45">
+               <property name="text">
+                <string>buffer_distance</string>
+               </property>
+              </widget>
+             </item>
+             <item row="22" column="2">
+              <widget class="QLineEdit" name="lineEdit_4">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>type of lake</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_41">
+               <property name="text">
+                <string>Soil</string>
+               </property>
+              </widget>
+             </item>
+             <item row="22" column="1">
+              <widget class="QLineEdit" name="lineEdit_3">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>id - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="23" column="2">
+              <widget class="QLineEdit" name="lineEdit_7">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>area of lakes (km2) - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QgsMapLayerComboBox" name="mMapLayerComboBox_2"/>
+             </item>
+             <item row="15" column="1">
+              <widget class="QDoubleSpinBox" name="doubleSpinBox">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="decimals">
+                <number>8</number>
+               </property>
+               <property name="maximum">
+                <double>999999.999990000040270</double>
+               </property>
+              </widget>
+             </item>
+             <item row="30" column="0">
+              <widget class="QLabel" name="label_56">
+               <property name="text">
+                <string>bkfwd_attributes</string>
+               </property>
+              </widget>
+             </item>
+             <item row="18" column="0">
+              <widget class="QLabel" name="label_48">
+               <property name="text">
+                <string>mode</string>
+               </property>
+              </widget>
+             </item>
+             <item row="33" column="0">
+              <widget class="QLabel" name="label_58">
+               <property name="toolTip">
+                <string>if k and c is provided, the path_bkfwidthdepth_polyline will not be used</string>
+               </property>
+               <property name="text">
+                <string>C</string>
+               </property>
+              </widget>
+             </item>
+             <item row="26" column="1">
+              <widget class="QLineEdit" name="lineEdit_8">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>id - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="32" column="0">
+              <widget class="QLabel" name="label_57">
+               <property name="toolTip">
+                <string>if k and c is provided, the path_bkfwidthdepth_polyline will not be used</string>
+               </property>
+               <property name="text">
+                <string>K</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <widget class="QgsMapLayerComboBox" name="mMapLayerComboBox_6"/>
+             </item>
+             <item row="30" column="2">
+              <widget class="QLineEdit" name="lineEdit_14">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>Bankfull depth (m) - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="27" column="2">
+              <widget class="QLineEdit" name="lineEdit_11">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>source of observation point</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <widget class="QgsMapLayerComboBox" name="mMapLayerComboBox_5"/>
+             </item>
+             <item row="10" column="1">
+              <widget class="QLabel" name="label_44">
+               <property name="text">
+                <string>Define project spatial extent</string>
+               </property>
+              </widget>
+             </item>
+             <item row="24" column="1">
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximum">
+                <double>1000000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="0">
+              <widget class="QRadioButton" name="radioButton_4">
+               <property name="text">
+                <string>using_provided_ply</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QLabel" name="label_42">
+               <property name="toolTip">
+                <string>path of the point shapefile that indicate points of interest,which can include different observation gauges</string>
+               </property>
+               <property name="text">
+                <string>Points of interest</string>
+               </property>
+              </widget>
+             </item>
+             <item row="34" column="0">
+              <widget class="QLabel" name="label_60">
+               <property name="text">
+                <string>path_land_use_and_manning_n_table</string>
+               </property>
+              </widget>
+             </item>
+             <item row="34" column="1">
+              <widget class="QgsFileWidget" name="mQgsFileWidget_4">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="checkBox_2">
+               <property name="toolTip">
+                <string>Uncheck this if you only want to use the PostProcessing tools</string>
+               </property>
+               <property name="text">
+                <string>Delineate from scratch?</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tab_7">
+        <attribute name="title">
+         <string>Postprocessing tools</string>
+        </attribute>
+       </widget>
       </widget>
      </widget>
     </widget>
