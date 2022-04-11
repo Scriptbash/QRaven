@@ -191,6 +191,7 @@ class QRaven:
             self.first_start = False
             self.dlg = QRavenDialog()
 
+        #-------------Raven RVI-------------#
         #If the checkbox is checked/unchecked, enables/disables the associated widget
         self.dlg.chk_duration.stateChanged.connect(self.toggleWidget)
         self.dlg.chk_runname.stateChanged.connect(self.toggleWidget)
@@ -207,7 +208,20 @@ class QRaven:
      
         #Calls the function to write the RVI file
         self.dlg.btn_write.clicked.connect(self.writeRVI)
+        #----------------------------------------#
 
+        #-------------BasinMaker RVH-------------#
+        
+        #Calls the function that toggles the proper widgets depending on the mode chosen
+        self.dlg.buttonGroup.buttonToggled.connect(self.toggleWidget)   #Define project spatial extent
+        self.dlg.buttonGroup_2.buttonToggled.connect(self.toggleWidget)  #Delineate routing structure without lakes
+        self.dlg.file_lakes.fileChanged.connect(self.toggleWidget)  #Add lake and obs control points
+        self.dlg.chk_epsgcode.stateChanged.connect(self.toggleWidget)   #Enables/disables the 
+        self.dlg.file_bankfullwidth.fileChanged.connect(self.toggleWidget)  #Add lake and obs control points
+        self.dlg.file_landuserast.fileChanged.connect(self.toggleWidget)  #Add lake and obs control points
+
+        
+        
         #Calls the function to start the docker container
         self.dlg.btn_dockerrun.clicked.connect(self.dockerinit)
         #Calls the function to remove the docker container
@@ -218,12 +232,14 @@ class QRaven:
         # Run the dialog event loop
         result = self.dlg.exec_()
 
+        #----------------------------------------#
+
         # See if OK was pressed
         if result:
             # May remove completely this and keep only a close button in the GUI
             pass
     
-    #This function enables and disables the EndDate and Duration widget based on the checkbox
+    #This function enables and disables widgets based on their checkboxes/radiobutton state
     def toggleWidget(self):
         widget = self.dlg.sender()
         if widget.objectName() == 'chk_duration':
@@ -253,6 +269,86 @@ class QRaven:
                 self.dlg.spin_wateryear.setEnabled(True)
             else:
                 self.dlg.spin_wateryear.setEnabled(False) 
+        #Conditions for the BasinMaker RVH section below
+        elif widget.objectName() == 'buttonGroup':  #buttonGroup is the group of radiobuttons for the mode of define project spatial extent
+            if self.dlg.rb_modehybasin.isChecked(): #If the selected mode is using_hybasin
+                self.dlg.file_hybasin.setEnabled(True)
+                self.dlg.spin_hybasin.setEnabled(True)
+                self.dlg.txt_outletlat.setEnabled(False)
+                self.dlg.txt_outletlon.setEnabled(False)
+                self.dlg.file_providedply.setEnabled(False)
+                self.dlg.spin_buffer.setEnabled(True)
+            elif self.dlg.rb_outletpt.isChecked():  #Mode is using_outlet_pt
+                self.dlg.file_hybasin.setEnabled(False)
+                self.dlg.spin_hybasin.setEnabled(False)
+                self.dlg.txt_outletlat.setEnabled(True)
+                self.dlg.txt_outletlon.setEnabled(True)
+                self.dlg.file_providedply.setEnabled(False)
+                self.dlg.spin_buffer.setEnabled(False)
+            elif self.dlg.rb_providedply.isChecked():   #Mode is using_provided_ply
+                self.dlg.file_hybasin.setEnabled(False)
+                self.dlg.spin_hybasin.setEnabled(False)
+                self.dlg.txt_outletlat.setEnabled(False)
+                self.dlg.txt_outletlon.setEnabled(False)
+                self.dlg.file_providedply.setEnabled(True)
+                self.dlg.spin_buffer.setEnabled(True)
+            else:
+                self.dlg.file_hybasin.setEnabled(False) #Mode is using_dem
+                self.dlg.spin_hybasin.setEnabled(False)
+                self.dlg.txt_outletlat.setEnabled(False)
+                self.dlg.txt_outletlon.setEnabled(False)
+                self.dlg.file_providedply.setEnabled(False)
+                self.dlg.spin_buffer.setEnabled(False)
+        elif widget.objectName() == 'buttonGroup_2':  #buttonGroup_2 is the group of radiobuttons for the mode of delineate routing structure w/o lakes
+            if self.dlg.rb_fdr.isChecked(): #mode is using_fdr
+                self.dlg.file_fdr.setEnabled(True)
+            else:
+                self.dlg.file_fdr.setEnabled(False) #Mode is using_dem
+        elif widget.objectName() == 'file_lakes':   #Add lake and obs control point
+            if self.dlg.file_lakes.filePath() != '':    #If there is a layer for Lakes, enable the required fields
+                self.dlg.txt_lakeid.setEnabled(True)
+                self.dlg.txt_laketype.setEnabled(True)
+                self.dlg.txt_lakevol.setEnabled(True)
+                self.dlg.txt_lakeavgdepth.setEnabled(True)
+                self.dlg.txt_lakearea.setEnabled(True)
+                self.dlg.spin_conlakearea.setEnabled(True)
+                self.dlg.spin_nonconlakearea.setEnabled(True)
+            else:   #If the layer is removed or there's no layer, disable the fields
+                self.dlg.txt_lakeid.setEnabled(False)
+                self.dlg.txt_laketype.setEnabled(False)
+                self.dlg.txt_lakevol.setEnabled(False)
+                self.dlg.txt_lakeavgdepth.setEnabled(False)
+                self.dlg.txt_lakearea.setEnabled(False)
+                self.dlg.spin_conlakearea.setEnabled(False)
+                self.dlg.spin_nonconlakearea.setEnabled(False)
+        elif widget.objectName() == 'chk_epsgcode':
+            if self.dlg.chk_epsgcode.isChecked():
+                self.dlg.txt_epsgcode.setEnabled(True)
+            else:
+                self.dlg.txt_epsgcode.setEnabled(False)
+        elif widget.objectName() == 'file_bankfullwidth':   #Add hydrology related attributes
+            if self.dlg.file_bankfullwidth.filePath() != '':    #If there is a layer for bankfull width, enable the required fields
+                self.dlg.txt_bankfullwidth.setEnabled(True)
+                self.dlg.txt_bankfulldepth.setEnabled(True)
+                self.dlg.txt_bankfulldischarge.setEnabled(True)
+                self.dlg.txt_bankfulldrainarea.setEnabled(True)
+                self.dlg.spin_kcoef.setEnabled(False)
+                self.dlg.spin_ccoef.setEnabled(False)
+
+            else:   #If the layer is removed or there's no layer, disable the fields
+                self.dlg.txt_bankfullwidth.setEnabled(False)
+                self.dlg.txt_bankfulldepth.setEnabled(False)
+                self.dlg.txt_bankfulldischarge.setEnabled(False)
+                self.dlg.txt_bankfulldrainarea.setEnabled(False)
+                self.dlg.spin_kcoef.setEnabled(True)
+                self.dlg.spin_ccoef.setEnabled(True)
+
+        elif widget.objectName() == 'file_landuserast':   #Add hydrology related attributes
+            if self.dlg.file_landuserast.filePath() != '':    #If there is a layer for landuse (raster), enable the required fields
+                self.dlg.file_landusemanning.setEnabled(True)
+            else:   #If the layer is removed or there's no layer, disable the fields
+                self.dlg.file_landusemanning.setEnabled(False) 
+              
 
     #This function enables and disables the spinbox next to the SoilModel combobox depending on the selected value of the combobox
     def toggleSoilModel(self):
@@ -320,7 +416,7 @@ class QRaven:
             print("Unable to write the RVI file")
             print(e)
 
-    #This function gathers all the parameters entered by the user and return them into a dictionary
+    #This function gathers all the RVI parameters entered by the user and return them into a dictionary
     def getParams(self):
         #Get the start date
         startDateTmp = self.dlg.date_startdate.dateTime()
@@ -558,42 +654,193 @@ class QRaven:
                         "export PYTHONPATH=$PYTHONPATH:'/usr/share/qgis/python'",
                         "Xvfb :99 -screen 0 640x480x8 -nolisten tcp &"
                     ] 
-        try:
-            print("pulling")
-            cmd='docker', 'pull', 'scriptbash/basinmaker'
-            process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-            while True:
-                output = process.stdout.readline()
-                if output == b'':
-                    break
-                if output:
-                    #test = str(output.strip())
-                    #self.dlg.txt_console.appendPlainText(test)
-                    print(output.strip())
-            rc = process.poll()
-            print("went out of the loop")
-        except Exception as e:
-            print(e)
+        
+        paramsDict = self.getRVHparams()
+        self.exportRVHparams(paramsDict)
+        # try:
+        #     print("pulling")
+        #     cmd='docker', 'pull', 'scriptbash/basinmaker'
+        #     process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        #     while True:
+        #         output = process.stdout.readline()
+        #         if output == b'':
+        #             break
+        #         if output:
+        #             #test = str(output.strip())
+        #             #self.dlg.txt_console.appendPlainText(test)
+        #             print(output.strip())
+        #     rc = process.poll()
+        #     print("went out of the loop")
+        # except Exception as e:
+        #     print(e)
 
         #!!!Missing the docker run command, export python paths, xvfb to fake a display!!!
       
     #This function fully removes the container, as well as the image to free up space
     def dockerdelete(self):
         try:
-            self.dlg.txt_console.appendPlainText("Making sure the container is stopped > docker stop bmaker")
+            #self.dlg.txt_console.appendPlainText("Making sure the container is stopped > docker stop bmaker")
             os.system("docker stop bmaker")
-            self.dlg.txt_console.appendPlainText("Successfully stopped the containter")
-            self.dlg.txt_console.appendPlainText("Removing the docker container > docker rm bmaker")
+            #self.dlg.txt_console.appendPlainText("Successfully stopped the containter")
+            #self.dlg.txt_console.appendPlainText("Removing the docker container > docker rm bmaker")
             os.system("docker rm bmaker")
-            self.dlg.txt_console.appendPlainText("Successfully removed the container > docker rmi scriptbash/basinmaker")
-            self.dlg.txt_console.appendPlainText("Removing the image")
+            #self.dlg.txt_console.appendPlainText("Successfully removed the container > docker rmi scriptbash/basinmaker")
+            #self.dlg.txt_console.appendPlainText("Removing the image")
             os.system("docker rmi scriptbash/basinmaker")
-            self.dlg.txt_console.appendPlainText("Successfully removed the image. Everything was removed.")
+            print("container stopped and removed")
+            #self.dlg.txt_console.appendPlainText("Successfully removed the image. Everything was removed.")
         except Exception as e:
-            self.dlg.txt_console.appendPlainText("An error occured while attempting to remove the container and image. Please remove them manually.")
+            #self.dlg.txt_console.appendPlainText("An error occured while attempting to remove the container and image. Please remove them manually.")
             print("An error occured while attempting to remove the docker container and image")
             print(e)
 
+
+    def getRVHparams(self):
+
+        pathdem = self.dlg.file_dem.filePath()
+        pathlandusepoly = self.dlg.file_landusepoly.filePath()
+        pathlanduserast = self.dlg.file_landuserast.filePath()
+        pathlakes = self.dlg.file_lakes.filePath()
+        pathbankfull = self.dlg.file_bankfullwidth.filePath()
+        pathsoil = self.dlg.file_soil.filePath()
+        pathpointsinterest = self.dlg.file_pointsinterest.filePath()
+        maxmemory = self.dlg.spin_ram.value()
+
+        if self.dlg.rb_modedem.isChecked():
+            extentMode = "using_dem"
+            path_hybasin = ''
+            hybasinid = ''
+            bufferdistance = ''
+            outletlat = ''
+            outletlon = ''
+            path_providedpoly = ''
+        elif self.dlg.rb_modehybasin.isChecked():
+            extentMode = "using_hybasin"
+            path_hybasin = self.dlg.file_hybasin.filePath()
+            hybasinid   = str(self.dlg.spin_hybasin.value())
+            bufferdistance = str(self.dlg.spin_buffer.value())
+            outletlat = ''
+            outletlon = ''
+            path_providedpoly = ''
+        elif self.dlg.rb_outletpt.isChecked():
+            extentMode = "using_outlet_pt"
+            outletlat = self.dlg.txt_outletlat.text()
+            outletlon = self.dlg.txt_outletlon.text()
+            path_hybasin = ''
+            hybasinid = ''
+            bufferdistance = ''
+            path_providedpoly = ''
+        elif self.dlg.rb_providedply.isChecked():
+            extentMode = "using_provided_ply"
+            path_providedpoly = self.dlg.file_providedply.filePath()
+            bufferdistance = str(self.dlg.spin_buffer.value())
+            path_hybasin = ''
+            hybasinid = ''
+            outletlat = ''
+            outletlon = ''
+        
+        if self.dlg.file_lakes.filePath:
+            lakeid = self.dlg.txt_lakeid.text()
+            laketype = self.dlg.txt_laketype.text()
+            lakevol = self.dlg.txt_lakevol.text()
+            lakeavgdepth = self.dlg.txt_lakeavgdepth.text()
+            lakearea = self.dlg.txt_lakearea.text()
+            connectedlake = self.dlg.spin_conlakearea.value()
+            nonconnectedlake = self.dlg.spin_nonconlakearea.value()
+        else:
+            lakeid = ''
+            laketype = ''
+            lakevol = ''
+            lakeavgdepth = ''
+            lakearea = ''
+            connectedlake = ''
+            nonconnectedlake = ''
+
+        poiid = self.dlg.txt_poiid.text()
+        poiname = self.dlg.txt_poiname.text()
+        poidrainarea = self.dlg.txt_poidrainarea.text()
+        poisource = self.dlg.txt_poisource.text()
+
+        if self.dlg.chk_epsgcode.isChecked():
+            epsgcode = self.dlg.txt_epsgcode.text()
+        else:
+            epsgcode = ''
+
+
+        if self.dlg.file_bankfullwidth.filePath():
+            bankfullwidth = self.dlg.txt_bankfullwidth.text()
+            bankfulldepth = self.dlg.txt_bankfulldepth.text()
+            bankfulldischarge = self.dlg.txt_bankfulldischarge.text()
+            bankfulldrainage = self.dlg.txt_bankfulldrainarea.text()
+            kcoef = ''
+            ccoef = ''
+        else:
+            bankfullwidth = ''
+            bankfulldepth = ''
+            bankfulldischarge = ''
+            bankfulldrainage = ''
+            kcoef = str(self.dlg.spin_kcoef.value())
+            ccoef = str(self.dlg.spin_ccoef.value())
+
+        if self.dlg.file_landuserast.filePath():
+            landusemanning = self.dlg.file_landusemanning.filepath()
+        else:
+            landusemanning = ''
+        params = {
+            "pathdem"               : pathdem,
+            "pathlandusepoly"       : pathlandusepoly,
+            "pathlanduserast"       : pathlanduserast,
+            "pathlakes"             : pathlakes,
+            "pathbankfull"          : pathbankfull,
+            "pathsoil"              : pathsoil,
+            "pathpointsinterest"    : pathpointsinterest,
+            "maxmemory"             : maxmemory,
+            "extentmode"            : extentMode,
+            "pathhybasin"           : path_hybasin,
+            "hybasinid"             : hybasinid,
+            "bufferdistance"        : bufferdistance,
+            "outletlat"             : outletlat,
+            "outletlon"             : outletlon,
+            "path_providedpoly"     : path_providedpoly,
+            "lakeid"                : lakeid,
+            "laketype"              : laketype,
+            "lakevol"               : lakevol,
+            "lakeavgdepth"          : lakeavgdepth,
+            "lakearea"              : lakearea,
+            "connectedlake"         : connectedlake,
+            "nonconnectedlake"      : nonconnectedlake,
+            "poiid"                 : poiid,
+            "poiname"               : poiname,
+            "poidrainarea"          : poidrainarea,
+            "poisource"             : poisource,
+            "epsgcode"              : epsgcode,
+            "bankfullwidth"         : bankfullwidth,
+            "bankfulldepth"         : bankfulldepth,
+            "bankfulldischarge"     : bankfulldischarge,
+            "bankfulldrainage"      : bankfulldrainage,
+            "kcoef"                 : kcoef,
+            "ccoef"                 : ccoef,
+            "landusemanning"        : landusemanning
+        }
+        return params
+
+    def exportRVHparams(self,paramDict):
+        outputdir = self.dlg.file_outputfolder.filePath()
+        try:
+            if computerOS == "linux" or computerOS == "macos":  #Adds a slash or backslash to the path depending on which os is being used
+                pathToFolder = outputdir+'/'+ "parameters"
+            else:
+                pathToFolder = outputdir+'\\'+ "parameters"
+            #Creates the rvh parameters file with path provided
+            with open(pathToFolder+".txt","w") as file:
+                #Writes the parameters from the dictionary
+                for key, value in paramDict.items():
+                    if value != '':
+                        file.write(f"{key:<30}  {value}\n")
+            print("Successfully exported the RVH parameters")
+        except Exception as e:
+            print("Could not export the BasinMaker parameters")
+            print(e)
 #This function return the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
 def checkOS():
     if platform == "linux" or platform == "linux2":
