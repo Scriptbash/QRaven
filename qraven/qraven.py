@@ -701,6 +701,8 @@ class QRaven:
         pathlandusepoly = self.dlg.file_landusepoly.filePath()
         pathlanduserast = self.dlg.file_landuserast.filePath()
         pathlakes = self.dlg.file_lakes.filePath()
+        if pathlakes == '': #Since the lakes are optional, assign a value so the parameter is still written. 
+            pathlakes = '#' #This allows to make a check in the create_RVH.py
         pathbankfull = self.dlg.file_bankfullwidth.filePath()
         pathsoil = self.dlg.file_soil.filePath()
         pathpointsinterest = self.dlg.file_pointsinterest.filePath()
@@ -783,9 +785,19 @@ class QRaven:
             ccoef = str(self.dlg.spin_ccoef.value())
 
         if self.dlg.file_landuserast.filePath():
-            landusemanning = self.dlg.file_landusemanning.filepath()
+            landusemanning = self.dlg.file_landusemanning.filePath()
         else:
             landusemanning = ''
+        
+        facthreshold = self.dlg.spin_facthreshold.value()
+
+        if self.dlg.rb_fdr.isChecked():
+            delineatemode = "using_fdr"
+            pathfdr = self.dlg.file_fdr.filePath()
+        elif self.dlg.rb_dem.isChecked():
+            delineatemode = "using_dem"
+            pathfdr = ''
+
         params = {
             "pathdem"               : pathdem,
             "pathlandusepoly"       : pathlandusepoly,
@@ -820,7 +832,10 @@ class QRaven:
             "bankfulldrainage"      : bankfulldrainage,
             "kcoef"                 : kcoef,
             "ccoef"                 : ccoef,
-            "landusemanning"        : landusemanning
+            "landusemanning"        : landusemanning,
+            "facthreshold"          : facthreshold,
+            "delineatemode"         : delineatemode,
+            "pathfdr"               : pathfdr
         }
         return params
 
