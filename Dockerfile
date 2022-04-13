@@ -24,6 +24,7 @@ RUN apt-get update \
     && python3 -m pip install joblib \
     && python3 -m pip install grass_session \
     && python3 -m pip install pandas \
+    && python3 -m pip install scipy \
     && echo "export GISBASE='/usr/lib/grass78'" >> ~/.bashrc \
     && echo "export QGIS_PREFIX_PATH='/usr'" >> ~/.bashrc \
     && grass -c ~/grass_tmp --text --exec g.extension r.clip\
