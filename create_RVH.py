@@ -143,6 +143,23 @@ def addOutletPts():
 
 
 
+#Combine catchment covered by the same lake
+
+def combinecatchment():
+    start = time.time()
+    try:
+        print('\Combine_Subbasins_Covered_by_The_Same_Lake running...\n')
+        bm.Combine_Subbasins_Covered_by_The_Same_Lake(
+            gis_platform="qgis",
+            routing_product_folder = path_output_folder,
+        )
+        print('Combine_Subbasins_Covered_by_The_Same_Lake was successful...\n')
+    except Exception as e:
+        print('Combine_Subbasins_Covered_by_The_Same_Lake failed...')
+        print(e)
+    end = time.time()
+    print("Combine_Subbasins_Covered_by_The_Same_Lake took", end - start, "seconds")
+
 modelname = "Temporary_name"
 
 #Opens the parameters file created by QRaven and imports them into a dictionary
@@ -156,6 +173,8 @@ with open("/home/francis/Documents/Geoinfo/parameters.txt") as f:
 
 path_folder_to_save_intermediate_outputs = os.path.join(os.getcwd(),'bm_tmp')
 datafolder = os.path.join(os.getcwd(),'Data')
+path_output_folder = os.path.join(os.getcwd(),'OIH_Output','network_without_simplification')
+
 bm = basinmaker.delineate(path_working_folder=path_folder_to_save_intermediate_outputs)
 maxmemory = params['maxmemory']
 
@@ -163,45 +182,9 @@ defineExtent()
 delineateNoLakes()
 if params['pathlakes'] !='#':
     addOutletPts()
+combinecatchment()
 
 
-
-#params['']
-
-# pathdem = params['pathdem']
-# pathlandusepoly = params['pathdem']
-# pathlanduserast = params['pathdem']
-# pathlakes = params['pathdem']
-# pathbankfull = params['pathdem']
-# pathsoil = params['pathdem']
-# pathpointsinterest = params['pathdem']
-# maxmemory = params['pathdem']
-# extentMode = params['pathdem']
-# path_hybasin = params['pathdem']
-# hybasinid = params['pathdem']
-# bufferdistance = params['pathdem']
-# outletlat = params['pathdem']
-# outletlon = params['pathdem']
-# path_providedpoly = params['pathdem']
-# lakeid = params['pathdem']
-# laketype = params['pathdem']
-# lakevol = params['pathdem']
-# lakeavgdepth = params['pathdem']
-# lakearea = params['pathdem']
-# connectedlake = params['pathdem']
-# nonconnectedlake = params['pathdem']
-# poiid = params['pathdem']
-# poiname = params['pathdem']
-# poidrainarea = params['pathdem']
-# poisource = params['pathdem']
-# epsgcode = params['pathdem']
-# bankfullwidth = params['pathdem']
-# bankfulldepth = params['pathdem']
-# bankfulldischarge = params['pathdem']
-# bankfulldrainage =
-# kcoef =
-# ccoef =
-# landusemanning =
 
 
 
