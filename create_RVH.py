@@ -7,10 +7,11 @@ from basinmaker import basinmaker
 import time
 
 #Sets the python path for BasinMaker
-sys.path.append('/usr/lib/grass80/etc/python')
+sys.path.append('/usr/lib/grass78/etc/python')
 sys.path.append('/usr/share/qgis/python/plugins')
 sys.path.append("$PYTHONPATH:'/usr/share/qgis/python'")
-
+#Fakes a display to avoid an error with Qt
+os.system('Xvfb :99 -screen 0 640x480x8 -nolisten tcp &')
 logging.captureWarnings(True)
 
 
