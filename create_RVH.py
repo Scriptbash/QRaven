@@ -12,6 +12,9 @@ sys.path.append('/usr/share/qgis/python/plugins')
 sys.path.append("$PYTHONPATH:'/usr/share/qgis/python'")
 #Fakes a display to avoid an error with Qt
 os.system('Xvfb :99 -screen 0 640x480x8 -nolisten tcp &')
+#Sets environment variables
+os.system("export GISBASE='/usr/lib/grass78'")
+os.system("export QGIS_PREFIX_PATH='/usr'")
 logging.captureWarnings(True)
 
 
