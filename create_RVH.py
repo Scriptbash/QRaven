@@ -231,7 +231,7 @@ modelname = "Temporary_name"
 
 #Opens the parameters file created by QRaven and imports them into a dictionary
 params = {}
-with open("~/BasinMaker/parameters.txt") as f:
+with open("/root/BasinMaker/parameters.txt") as f:
     for line in f:
         (key, val) = line.split()
         params[key] = val
