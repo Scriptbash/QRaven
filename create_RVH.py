@@ -6,6 +6,11 @@ import logging
 from basinmaker import basinmaker
 import time
 
+#Sets the python path for BasinMaker
+sys.path.append('/usr/lib/grass80/etc/python')
+sys.path.append('/usr/share/qgis/python/plugins')
+sys.path.append("$PYTHONPATH:'/usr/share/qgis/python'")
+
 logging.captureWarnings(True)
 
 
@@ -118,7 +123,7 @@ def addOutletPts():
     poiname = params['poiname']
     poindrainage = params['poidrainarea']
     poinsource = params['poisource']
-    # start add new outlets 
+    
     start = time.time()
 
     try:
