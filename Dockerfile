@@ -12,10 +12,6 @@ RUN apt-get update \
         wget \
         locales \
     && localedef -i en_US -f UTF-8 en_US.UTF-8 \
-    #&& wget -qO - https://qgis.org/downloads/qgis-2021.gpg.key | gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/qgis-archive.gpg --import \
-    #&& chmod a+r /etc/apt/trusted.gpg.d/qgis-archive.gpg \
-    #&& add-apt-repository "deb https://qgis.org/debian bookworm main" \
-    && apt-get update \
     && apt install -y qgis qgis-plugin-grass \
     && apt install -y grass-gui \
     && apt install -y grass-dev \
@@ -27,12 +23,21 @@ RUN apt-get update \
     && python3 -m pip install grass_session \
     && python3 -m pip install pandas \
     && python3 -m pip install scipy \
-    && echo "export GISBASE='/usr/lib/grass78'" >> ~/.bashrc \
+    && echo "export GISBASE='/usr/lib/grass80'" >> ~/.bashrc \
     && echo "export QGIS_PREFIX_PATH='/usr'" >> ~/.bashrc \
     && mkdir -p ~/BasinMaker/Data \
-    && mkdir -p ~/BasinMaker/Data/{bkf_width, DEM, extent_poly, flow_direction, hybasin, lakes, landuse, soil, stations} \
+    #&& mkdir -p ~/BasinMaker/Data/{bkf_width,DEM,extent_poly,flow_direction,hybasin,lakes,landuse,soil,stations} \
+    && mkdir ~/BasinMaker/Data/bkf_width \
+    && mkdir ~/BasinMaker/Data/DEM \
+    && mkdir ~/BasinMaker/Data/extent_poly \
+    && mkdir ~/BasinMaker/Data/flow_direction \
+    && mkdir ~/BasinMaker/Data/hybasin \
+    && mkdir ~/BasinMaker/Data/lakes \
+    && mkdir ~/BasinMaker/Data/landuse \
+    && mkdir ~/BasinMaker/Data/soil \
+    && mkdir ~/BasinMaker/Data/stations \
     && cd ~/BasinMaker \
-    && wget https://github.com/Scriptbash/QRaven/blob/main/create_RVH.py \
+    && wget https://raw.githubusercontent.com/Scriptbash/QRaven/main/create_RVH.py \
     && grass -c EPSG:4326 ~/grass_tmp --text --exec g.extension r.clip\
     && grass -c EPSG:4326 ~/grass_tmp2 --text --exec g.extension r.accumulate \
     && grass -c EPSG:4326 ~/grass_tmp3 --text --exec g.extension r.stream.basins \
