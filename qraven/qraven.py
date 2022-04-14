@@ -700,10 +700,14 @@ class QRaven:
         pathdem = self.dlg.file_dem.filePath()
         pathlandusepoly = self.dlg.file_landusepoly.filePath()
         pathlanduserast = self.dlg.file_landuserast.filePath()
+        if pathlanduserast =='':
+            pathlanduserast = '#'
         pathlakes = self.dlg.file_lakes.filePath()
         if pathlakes == '': #Since the lakes are optional, assign a value so the parameter is still written. 
             pathlakes = '#' #This allows to make a check in the create_RVH.py
         pathbankfull = self.dlg.file_bankfullwidth.filePath()
+        if pathbankfull == '':
+            pathbankfull = '#'
         pathsoil = self.dlg.file_soil.filePath()
         pathpointsinterest = self.dlg.file_pointsinterest.filePath()
         maxmemory = self.dlg.spin_ram.value()
@@ -766,7 +770,7 @@ class QRaven:
         if self.dlg.chk_epsgcode.isChecked():
             epsgcode = self.dlg.txt_epsgcode.text()
         else:
-            epsgcode = ''
+            epsgcode = '#'
 
 
         if self.dlg.file_bankfullwidth.filePath():
