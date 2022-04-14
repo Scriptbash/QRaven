@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM ubuntu:jammy
 ENV LANG=en_EN.UTF-8 \
     LANGUAGE=en_US:en \ 
     LC_ALL=en_US.UTF-8 \
@@ -23,7 +23,7 @@ RUN apt-get update \
     && python3 -m pip install grass_session \
     && python3 -m pip install pandas \
     && python3 -m pip install scipy \
-    && echo "export GISBASE='/usr/lib/grass80'" >> ~/.bashrc \
+    && echo "export GISBASE='/usr/lib/grass78'" >> ~/.bashrc \
     && echo "export QGIS_PREFIX_PATH='/usr'" >> ~/.bashrc \
     && mkdir -p ~/BasinMaker/Data \
     #&& mkdir -p ~/BasinMaker/Data/{bkf_width,DEM,extent_poly,flow_direction,hybasin,lakes,landuse,soil,stations} \
