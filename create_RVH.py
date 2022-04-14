@@ -143,6 +143,69 @@ def addOutletPts():
 
 
 
+def genHydroRoutingAtt():
+    
+    bankfullname = os.path.basename(params['pathbankfull'])
+    landuserast = os.path.basename(params['pathlanduserast'])
+    manningtablename = os.path.basename(params['landusemanning'])
+    width = params['bankfullwidth']
+    depth = params['bankfulldepth']
+    discharge = params['bankfulldischarge']
+    drainage = params['bankfulldrainage']
+    poiid = params['poiid']
+    poiname = params['poiname']
+    poindrainage = params['poidrainarea']
+    poinsource = params['poisource']
+    lakeid = params['lakeid']
+    laketype = params['laketype']
+    lakevol = params['lakevol']
+    lakeavgdepth = params['lakeavgdepth']
+    lakearea = params['lakearea']
+    if params['epsgcode'] != '#':
+        projected_epsg_code = params['epsgcode']
+    if params['pathlanduserast'] != '#':
+        path_landuse=os.path.join(datafolder,"landuse", landuserast)
+        path_manning_table = os.path.join(datafolder,"landuse", manningtablename)
+    else: 
+        path_landuse = params['pathlanduserast']
+        path_manning_table = '#'
+        
+    start = time.time()
+
+    try:
+        print('\nGenerate_Hydrologic_Routing_Attributes running...\n')
+        if params['pathbankfull'] != '#':
+            
+            bm.Generate_Hydrologic_Routing_Attributes(
+                path_bkfwidthdepth_polyline=os.path.join(datafolder,"bkf_width",bankfullname),
+                bkfwd_attributes=[width, depth, discharge, drainage],
+                path_landuse= path_landuse,
+                path_landuse_and_manning_n_table = path_manning_table,
+                gis_platform="qgis",
+                point_of_interest_attributes=[poiid, poiname, poindrainage, poinsource],
+                lake_attributes=[lakeid, laketype, lakearea, lakevol, lakeavgdepth],
+                path_output_folder=path_output_folder,
+                projected_epsg_code =projected_epsg_code,
+            )
+        else:
+            bm.Generate_Hydrologic_Routing_Attributes(
+                gis_platform="qgis",
+                point_of_interest_attributes=[poiid, poiname, poindrainage, poinsource],
+                lake_attributes=[lakeid, laketype, lakearea, lakevol, lakeavgdepth],
+                path_output_folder=path_output_folder,
+                projected_epsg_code =projected_epsg_code,
+                k = float(params['kcoef']),
+                c = float(params['ccoef'])
+            )
+        print('Generate_Hydrologic_Routing_Attributes was successful...\n')
+    except Exception as e:
+        print('Generate_Hydrologic_Routing_Attributes failed...')
+        print(e)
+    end = time.time()
+    print("Generate_Hydrologic_Routing_Attributes took", end - start, "seconds")
+
+
+
 #Combine catchment covered by the same lake
 
 def combinecatchment():
@@ -170,7 +233,6 @@ with open("/home/francis/Documents/Geoinfo/parameters.txt") as f:
         params[key] = val
 
 
-
 path_folder_to_save_intermediate_outputs = os.path.join(os.getcwd(),'bm_tmp')
 datafolder = os.path.join(os.getcwd(),'Data')
 path_output_folder = os.path.join(os.getcwd(),'OIH_Output','network_without_simplification')
@@ -183,13 +245,4 @@ delineateNoLakes()
 if params['pathlakes'] !='#':
     addOutletPts()
 combinecatchment()
-
-
-
-
-
-
-
-
-
-
+genHydroRoutingAtt()
