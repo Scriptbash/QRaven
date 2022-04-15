@@ -51,7 +51,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>4</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -2486,7 +2486,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab_6">
         <attribute name="title">
@@ -2502,7 +2502,7 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>-236</y>
+              <y>-458</y>
               <width>814</width>
               <height>1080</height>
              </rect>
@@ -3150,6 +3150,151 @@
         <attribute name="title">
          <string>Postprocessing tools</string>
         </attribute>
+        <layout class="QGridLayout" name="gridLayout_7">
+         <item row="6" column="1">
+          <widget class="QScrollArea" name="scrollArea_2">
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="QWidget" name="scrollAreaWidgetContents_2">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>827</width>
+              <height>419</height>
+             </rect>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_8">
+             <item row="8" column="0">
+              <widget class="QLabel" name="label_70">
+               <property name="text">
+                <string>path_soil_info</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_63">
+               <property name="text">
+                <string>connected_lake_area_threshold</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QDoubleSpinBox" name="spin_filterconnectedlakes">
+               <property name="maximum">
+                <double>10000000000000000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QDoubleSpinBox" name="spin_filternonconnectedlakes">
+               <property name="maximum">
+                <double>10000000000000000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_69">
+               <property name="text">
+                <string>path_landuse_info</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <widget class="QLabel" name="label_71">
+               <property name="text">
+                <string>path_veg_info</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="2">
+              <widget class="QgsFileWidget" name="file_pathveginfo"/>
+             </item>
+             <item row="11" column="2">
+              <widget class="QLabel" name="label_72">
+               <property name="text">
+                <string>Generate Raven input files</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="2">
+              <widget class="QDoubleSpinBox" name="spin_minsubbasinarea">
+               <property name="maximum">
+                <double>10000000000000000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_64">
+               <property name="text">
+                <string>non_connected_lake_area_threshold</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLineEdit" name="txt_selectedlakeid">
+               <property name="placeholderText">
+                <string>comma seperated</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_65">
+               <property name="text">
+                <string>selected_lake_ids</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QLabel" name="label_66">
+               <property name="text">
+                <string>Increase catchment area</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="2">
+              <widget class="QgsFileWidget" name="file_pathlanduseinfo"/>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_62">
+               <property name="text">
+                <string>Filter lakes</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="2">
+              <widget class="QgsFileWidget" name="file_pathsoilinfo"/>
+             </item>
+             <item row="6" column="2">
+              <widget class="QLabel" name="label_68">
+               <property name="text">
+                <string>Generate HRUs</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_67">
+               <property name="text">
+                <string>minimum_subbasin_drainage_area</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="0">
+              <widget class="QLabel" name="label_73">
+               <property name="text">
+                <string>model_name</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="2">
+              <widget class="QLineEdit" name="txt_modelname"/>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
      </widget>
