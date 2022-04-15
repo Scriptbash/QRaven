@@ -22,6 +22,8 @@
  ***************************************************************************/
 """
 
+from pathlib import Path
+from pyexpat import model
 from qgis.PyQt.QtCore import *
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import *
@@ -646,53 +648,7 @@ class QRaven:
         return customOutputList
         #!!!!MISSING QUARTILES OPTION IN THE GUI!!!
 
-    #This function sets up the scriptbash/basinmaker docker container. Pulls, starts and sets the python path
-    def dockerinit(self):
-        pythonpaths = [
-                        "export PYTHONPATH=$PYTHONPATH:'/usr/lib/grass78/etc/python'",
-                        "export PYTHONPATH=$PYTHONPATH:'/usr/share/qgis/python/plugins'",
-                        "export PYTHONPATH=$PYTHONPATH:'/usr/share/qgis/python'",
-                        "Xvfb :99 -screen 0 640x480x8 -nolisten tcp &"
-                    ] 
-        
-        paramsDict = self.getRVHparams()
-        self.exportRVHparams(paramsDict)
-        # try:
-        #     print("pulling")
-        #     cmd='docker', 'pull', 'scriptbash/basinmaker'
-        #     process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-        #     while True:
-        #         output = process.stdout.readline()
-        #         if output == b'':
-        #             break
-        #         if output:
-        #             #test = str(output.strip())
-        #             #self.dlg.txt_console.appendPlainText(test)
-        #             print(output.strip())
-        #     rc = process.poll()
-        #     print("went out of the loop")
-        # except Exception as e:
-        #     print(e)
-
-        #!!!Missing the docker run command, export python paths, xvfb to fake a display!!!
-      
-    #This function fully removes the container, as well as the image to free up space
-    def dockerdelete(self):
-        try:
-            #self.dlg.txt_console.appendPlainText("Making sure the container is stopped > docker stop bmaker")
-            os.system("docker stop bmaker")
-            #self.dlg.txt_console.appendPlainText("Successfully stopped the containter")
-            #self.dlg.txt_console.appendPlainText("Removing the docker container > docker rm bmaker")
-            os.system("docker rm bmaker")
-            #self.dlg.txt_console.appendPlainText("Successfully removed the container > docker rmi scriptbash/basinmaker")
-            #self.dlg.txt_console.appendPlainText("Removing the image")
-            os.system("docker rmi scriptbash/basinmaker")
-            print("container stopped and removed")
-            #self.dlg.txt_console.appendPlainText("Successfully removed the image. Everything was removed.")
-        except Exception as e:
-            #self.dlg.txt_console.appendPlainText("An error occured while attempting to remove the container and image. Please remove them manually.")
-            print("An error occured while attempting to remove the docker container and image")
-            print(e)
+   
 
 
     def getRVHparams(self):
@@ -772,7 +728,6 @@ class QRaven:
         else:
             epsgcode = '#'
 
-
         if self.dlg.file_bankfullwidth.filePath():
             bankfullwidth = self.dlg.txt_bankfullwidth.text()
             bankfulldepth = self.dlg.txt_bankfulldepth.text()
@@ -801,45 +756,70 @@ class QRaven:
         elif self.dlg.rb_dem.isChecked():
             delineatemode = "using_dem"
             pathfdr = ''
+        
+        #Postprocessing parameters
+        filterconnectedlakes = self.dlg.spin_filterconnectedlakes.value()
+        filternonconnectedlakes = self.dlg.spin_filternonconnectedlakes.value()
+        if self.dlg.txt_selectedlakeid.text() != '':
+            selectedlakeid = self.dlg.txt_selectedlakeid.text()
+        else:
+            selectedlakeid = '#'
+        if self.dlg.spin_minsubbasinarea.value() != '0.0':
+            minsubbasinarea = self.dlg.spin_minsubbasinarea.value()
+        else: 
+            minsubbasinarea = '#'
+        pathlanduseinfo = self.dlg.file_pathlanduseinfo.filePath()
+        pathsoilinfo = self.dlg.file_pathsoilinfo.filePath()
+        pathveginfo = self.dlg.file_pathveginfo.filePath()
+        modelname = self.dlg.txt_modelname.text()
+
 
         params = {
-            "pathdem"               : pathdem,
-            "pathlandusepoly"       : pathlandusepoly,
-            "pathlanduserast"       : pathlanduserast,
-            "pathlakes"             : pathlakes,
-            "pathbankfull"          : pathbankfull,
-            "pathsoil"              : pathsoil,
-            "pathpointsinterest"    : pathpointsinterest,
-            "maxmemory"             : maxmemory,
-            "extentmode"            : extentMode,
-            "pathhybasin"           : path_hybasin,
-            "hybasinid"             : hybasinid,
-            "bufferdistance"        : bufferdistance,
-            "outletlat"             : outletlat,
-            "outletlon"             : outletlon,
-            "path_providedpoly"     : path_providedpoly,
-            "lakeid"                : lakeid,
-            "laketype"              : laketype,
-            "lakevol"               : lakevol,
-            "lakeavgdepth"          : lakeavgdepth,
-            "lakearea"              : lakearea,
-            "connectedlake"         : connectedlake,
-            "nonconnectedlake"      : nonconnectedlake,
-            "poiid"                 : poiid,
-            "poiname"               : poiname,
-            "poidrainarea"          : poidrainarea,
-            "poisource"             : poisource,
-            "epsgcode"              : epsgcode,
-            "bankfullwidth"         : bankfullwidth,
-            "bankfulldepth"         : bankfulldepth,
-            "bankfulldischarge"     : bankfulldischarge,
-            "bankfulldrainage"      : bankfulldrainage,
-            "kcoef"                 : kcoef,
-            "ccoef"                 : ccoef,
-            "landusemanning"        : landusemanning,
-            "facthreshold"          : facthreshold,
-            "delineatemode"         : delineatemode,
-            "pathfdr"               : pathfdr
+            "pathdem"                   : pathdem,
+            "pathlandusepoly"           : pathlandusepoly,
+            "pathlanduserast"           : pathlanduserast,
+            "pathlakes"                 : pathlakes,
+            "pathbankfull"              : pathbankfull,
+            "pathsoil"                  : pathsoil,
+            "pathpointsinterest"        : pathpointsinterest,
+            "maxmemory"                 : maxmemory,
+            "extentmode"                : extentMode,
+            "pathhybasin"               : path_hybasin,
+            "hybasinid"                 : hybasinid,
+            "bufferdistance"            : bufferdistance,
+            "outletlat"                 : outletlat,
+            "outletlon"                 : outletlon,
+            "path_providedpoly"         : path_providedpoly,
+            "lakeid"                    : lakeid,
+            "laketype"                  : laketype,
+            "lakevol"                   : lakevol,
+            "lakeavgdepth"              : lakeavgdepth,
+            "lakearea"                  : lakearea,
+            "connectedlake"             : connectedlake,
+            "nonconnectedlake"          : nonconnectedlake,
+            "poiid"                     : poiid,
+            "poiname"                   : poiname,
+            "poidrainarea"              : poidrainarea,
+            "poisource"                 : poisource,
+            "epsgcode"                  : epsgcode,
+            "bankfullwidth"             : bankfullwidth,
+            "bankfulldepth"             : bankfulldepth,
+            "bankfulldischarge"         : bankfulldischarge,
+            "bankfulldrainage"          : bankfulldrainage,
+            "kcoef"                     : kcoef,
+            "ccoef"                     : ccoef,
+            "landusemanning"            : landusemanning,
+            "facthreshold"              : facthreshold,
+            "delineatemode"             : delineatemode,
+            "pathfdr"                   : pathfdr,
+            "filterconnectedlakes"      : filterconnectedlakes,
+            "filternonconnectedlakes"   : filternonconnectedlakes,
+            "selectedlakeid"            : selectedlakeid,
+            "minsubbasinarea"           : minsubbasinarea,
+            "pathlanduseinfo"           : pathlanduseinfo,
+            "pathsoilinfo"              : pathsoilinfo,
+            "pathveginfo"               : pathveginfo,
+            "modelname"                 : modelname
         }
         return params
 
@@ -860,6 +840,234 @@ class QRaven:
         except Exception as e:
             print("Could not export the BasinMaker parameters")
             print(e)
+
+
+    #This function sets up the scriptbash/basinmaker docker container. Pulls, starts and sets the python path
+    def dockerinit(self):
+        # pythonpaths = [
+        #                 "export PYTHONPATH=$PYTHONPATH:'/usr/lib/grass78/etc/python'",
+        #                 "export PYTHONPATH=$PYTHONPATH:'/usr/share/qgis/python/plugins'",
+        #                 "export PYTHONPATH=$PYTHONPATH:'/usr/share/qgis/python'",
+        #                 "Xvfb :99 -screen 0 640x480x8 -nolisten tcp &"
+        #             ] 
+        
+        paramsDict = self.getRVHparams()
+        self.exportRVHparams(paramsDict)
+        self.dockerPull()
+        self.dockerStart()
+        self.dockerCopy(paramsDict)
+        #self.runBasinMaker()
+        #self.getDockerResults()
+
+      
+    #This function fully removes the container, as well as the image to free up space
+    def dockerdelete(self):
+        try:
+            #self.dlg.txt_console.appendPlainText("Making sure the container is stopped > docker stop bmaker")
+            os.system("docker stop bmaker")
+            #self.dlg.txt_console.appendPlainText("Successfully stopped the containter")
+            #self.dlg.txt_console.appendPlainText("Removing the docker container > docker rm bmaker")
+            os.system("docker rm bmaker")
+            #self.dlg.txt_console.appendPlainText("Successfully removed the container > docker rmi scriptbash/basinmaker")
+            #self.dlg.txt_console.appendPlainText("Removing the image")
+            os.system("docker rmi scriptbash/basinmaker")
+            print("container stopped and removed")
+            #self.dlg.txt_console.appendPlainText("Successfully removed the image. Everything was removed.")
+        except Exception as e:
+            #self.dlg.txt_console.appendPlainText("An error occured while attempting to remove the container and image. Please remove them manually.")
+            print("An error occured while attempting to remove the docker container and image")
+            print(e)
+
+    def dockerPull(self):
+        try:
+            print("Trying to pull the scriptbash/basinmaker image...")
+            cmd='docker', 'pull', 'scriptbash/basinmaker'
+            process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+            while True:
+                output = process.stdout.readline()
+                if output == b'':
+                    break
+                if output:
+                    #test = str(output.strip())
+                    #self.dlg.txt_console.appendPlainText(test)
+                    print(output.strip())
+            rc = process.poll()
+            print("The pull was successfull")
+        except Exception as e:
+            print(e)
+    
+    def dockerStart(self):
+        try:
+            print("Attempting to start the container...")
+            cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','-e',"QGIS_PREFIX_PATH='/usr'", '--name', 'bmaker', 'scriptbash/basinmaker'
+            process = subprocess.Popen(cmd,stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            while True:
+                output = process.stdout.readline()
+                if output == b'':
+                    break
+                if output:
+                    print(output.strip())
+            rc = process.poll()
+            print("The container was started successfully")
+        except Exception as e:
+            print(e)
+
+    def dockerCopy(self,params):
+        outputdir = self.dlg.file_outputfolder.filePath()
+        dockerBMpath = '/root/BasinMaker'
+        dockerDEMPath = dockerBMpath + '/Data/DEM'
+        dockerLandusePath = dockerBMpath + '/Data/landuse'
+        dockerLakesPath = dockerBMpath + '/Data/lakes'
+        dockerBankfullPath = dockerBMpath + '/Data/bkf_width'
+        dockerSoilPath = dockerBMpath + '/Data/soil'
+        dockerPoIPath = dockerBMpath + '/Data/stations'
+        dockerHybasinPath = dockerBMpath + '/Data/hybasin'
+        dockerProvPolyPath = dockerBMpath + '/Data/extent_poly'
+        dockerFDRPath = dockerBMpath + '/Data/flow_direction',
+
+        datapaths = {
+            'dem'               : params['pathdem'],
+            'landusepoly'       : params['pathlandusepoly'],
+            'landuserast'       : params['pathlanduserast'],
+            'lakes'             : params['pathlakes'],
+            'bankfull'          : params['pathbankfull'],
+            'soil'              : params['pathsoil'],
+            'pointinterest'     : params['pathpointsinterest'],
+            'hybasin'           : params['pathhybasin'],
+            'provpoly'          : params['path_providedpoly'],
+            'manning'           : params['landusemanning'],
+            'flowdirection'     : params['pathfdr'],
+            'landuseinfo'       : params['pathlanduseinfo'],
+            'soilinfo'          : params['pathsoilinfo'],
+            'veginfo'           : params['pathveginfo']
+
+        }
+        shpExt = ['cfg', 'dbf', 'prj','qmd','shp', 'shx']
+        if computerOS == "linux" or computerOS == "macos":  #Adds a slash or backslash to the path depending on which os is being used
+            seperator = '/'
+        else:
+            seperator='\\'
+        rvhScript = outputdir+seperator+ "parameters.txt"
+        cmd='docker', 'cp', rvhScript, 'bmaker:'+ dockerBMpath
+        self.SendFiles(cmd)
+
+        for key, path in datapaths.items():
+            if path != '' or path != '#':
+                filename = Path(path).stem  #Get the file name without extension and path
+                folder = os.path.dirname(path)  #Get only the file path (without the file name)
+                if key == 'dem':
+                    cmdData='docker', 'cp', params['pathdem'], 'bmaker:'+ dockerDEMPath
+                    self.SendFiles(cmdData)
+                elif key == 'landusepoly':
+                    for extension in shpExt:
+                        file = folder+seperator+filename + '.' + extension
+                        cmdData='docker', 'cp', file, 'bmaker:'+ dockerLandusePath
+                        self.SendFiles(cmdData)
+                elif key == 'landuserast':
+                    for extension in shpExt:
+                        cmdData='docker', 'cp', params['pathlanduserast'], 'bmaker:'+ dockerLandusePath
+                        self.SendFiles(cmdData)
+                elif key == 'lakes':
+                    for extension in shpExt:
+                        file = folder+seperator+filename + '.' + extension
+                        cmdData='docker', 'cp', file, 'bmaker:'+ dockerLakesPath
+                        self.SendFiles(cmdData)
+                elif key == 'bankfull':
+                    for extension in shpExt:
+                        file = folder+seperator+filename + '.' + extension
+                        cmdData='docker', 'cp', file, 'bmaker:'+ dockerBankfullPath
+                        self.SendFiles(cmdData)
+                elif key == 'soil':
+                    for extension in shpExt:
+                        file = folder+seperator+filename + '.' + extension
+                        cmdData='docker', 'cp', file, 'bmaker:'+ dockerSoilPath
+                        self.SendFiles(cmdData)
+                elif key == 'pointinterest':
+                    for extension in shpExt:
+                        file = folder+seperator+filename + '.' + extension
+                        cmdData='docker', 'cp', file, 'bmaker:'+ dockerPoIPath
+                        self.SendFiles(cmdData)
+                elif key == 'hybasin':
+                    for extension in shpExt:
+                        file = folder+seperator+filename + '.' + extension
+                        cmdData='docker', 'cp', file, 'bmaker:'+ dockerHybasinPath
+                        self.SendFiles(cmdData)
+                elif key == 'provpoly':
+                    for extension in shpExt:
+                        file = folder+seperator+filename + '.' + extension
+                        cmdData='docker', 'cp', file, 'bmaker:'+ dockerProvPolyPath
+                        self.SendFiles(cmdData)
+                elif key == 'manning':
+                    for extension in shpExt:
+                        cmdData='docker', 'cp', params['landusemanning'], 'bmaker:'+ dockerLandusePath
+                        self.SendFiles(cmdData)
+                elif key == 'flowdirection':
+                    for extension in shpExt:
+                        cmdData='docker', 'cp', params['pathfdr'], 'bmaker:'+ dockerFDRPath
+                        self.SendFiles(cmdData)
+                elif key == 'landuseinfo':
+                    cmdData='docker', 'cp', params['pathlanduseinfo'], 'bmaker:'+ dockerLandusePath
+                    self.SendFiles(cmdData)
+                elif key == 'soilinfo':
+                    cmdData='docker', 'cp', params['pathsoilinfo'], 'bmaker:'+ dockerSoilPath
+                    self.SendFiles(cmdData)
+                elif key == 'veginfo':
+                    cmdData='docker', 'cp', params['pathveginfo'], 'bmaker:'+ dockerLandusePath
+                    self.SendFiles(cmdData)
+
+          
+           
+    def SendFiles(self,cmd): 
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        while True:
+            output = process.stdout.readline()
+            if output == b'':
+                break
+            if output:
+                print(output.strip())
+        rc = process.poll()      
+
+
+    def runBasinMaker(self):
+        print("Starting BasinMaker process, this will take while to complete")
+        
+        cmd ='docker', 'exec','-t','-e', "GISBASE='/usr/lib/grass78/'", 'bmaker','python3','create_RVH.py'
+        try:
+            process = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            while True:
+                output = process.stdout.readline()
+                if output == b'':
+                    break
+                if output:
+                    print(output.strip())
+            rc = process.poll() 
+            print("BasinMaker has finished processing the files")  
+        except Exception as e:
+            print("The BasinMaker process failed...")
+            print(e)
+        os.system("docker exec -t -e GISBASE='/usr/lib/grass78' bmaker python3 create_RVH.py")
+
+
+    def getDockerResults(self):
+        outputdir = self.dlg.file_outputfolder.filePath()
+        dockerBMResultsPath = '/root/BasinMaker/OIH_Output'
+        print("Grabbing the results, this could take a while...")
+        
+        cmd ='docker', 'cp','bmaker:'+dockerBMResultsPath, outputdir
+        try:
+            process = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            while True:
+                output = process.stdout.readline()
+                if output == b'':
+                    break
+                if output:
+                    print(output.strip())
+            rc = process.poll() 
+            print("The results are now in " + outputdir)  
+        except Exception as e:
+            print("Failed to retrieve the results...")
+            print(e)
+
 #This function return the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
 def checkOS():
     if platform == "linux" or platform == "linux2":
