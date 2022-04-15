@@ -7,31 +7,24 @@ from basinmaker import basinmaker
 import time
 
 #Sets the python path for BasinMaker
-sys.path.append('/usr/lib/grass78/etc/python')
-sys.path.append('/usr/share/qgis/python/plugins')
+sys.path.append("$PYHTONPATH:'/usr/lib/grass78/etc/python'")
+sys.path.append("$PYHTONPATH:'/usr/share/qgis/python/plugins'")
 sys.path.append("$PYTHONPATH:'/usr/share/qgis/python'")
+
 #Fakes a display to avoid an error with Qt
 os.system('Xvfb :99 -screen 0 640x480x8 -nolisten tcp &')
 #Sets environment variables
-os.system("export GISBASE='/usr/lib/grass78'")
-os.system("export QGIS_PREFIX_PATH='/usr'")
+# os.system("export GISBASE='/usr/lib/grass78'")
+# os.system("export QGIS_PREFIX_PATH='/usr'")
 logging.captureWarnings(True)
 
-
-#Function to validate if file was sent to the script
-def validateFile(inputfile):
-    if os.path.is_file(inputfile):
-        return True
-    else:
-        return False
 
 #Use Basinmaker Define Project spatial extent.  
 def defineExtent():
     mode = params['extentmode']
     demname = os.path.basename(params['pathdem'])
-
     start = time.time()
-    print(mode)
+
     try:
         print('\nDefine_Project_Spatial_Extent running...\n')
         if mode == "using_dem":
@@ -70,7 +63,6 @@ def defineExtent():
                 path_to_spatial_extent_polygon = os.path.join(os.getcwd(),datafolder,'extent_poly', extentpolyname),
                 buffer_distance = bufferdist
             )
-  
         print('Define_Project_Spatial_Extent was successful...\n')
     except Exception as e:
         print('Define_Project_Spatial_Extent failed...')
@@ -84,7 +76,6 @@ def defineExtent():
 def delineateNoLakes():
     mode = params['delineatemode']
     facthreshold = float(params['facthreshold'])
-       
     start = time.time()
 
     try:
@@ -127,7 +118,6 @@ def addOutletPts():
     poiname = params['poiname']
     poindrainage = params['poidrainarea']
     poinsource = params['poisource']
-    
     start = time.time()
 
     try:
@@ -148,7 +138,6 @@ def addOutletPts():
         print(e)
     end = time.time()
     print("Add_New_Subbasin_Outlet_Points took", end - start, "seconds")
-
 
 
 def genHydroRoutingAtt():
@@ -176,8 +165,7 @@ def genHydroRoutingAtt():
         path_manning_table = os.path.join(datafolder,"landuse", manningtablename)
     else: 
         path_landuse = params['pathlanduserast']
-        path_manning_table = '#'
-        
+        path_manning_table = '#'        
     start = time.time()
 
     try:
@@ -213,10 +201,9 @@ def genHydroRoutingAtt():
     print("Generate_Hydrologic_Routing_Attributes took", end - start, "seconds")
 
 
-
 #Combine catchment covered by the same lake
-
 def combinecatchment():
+
     start = time.time()
     try:
         print('\Combine_Subbasins_Covered_by_The_Same_Lake running...\n')
@@ -231,7 +218,121 @@ def combinecatchment():
     end = time.time()
     print("Combine_Subbasins_Covered_by_The_Same_Lake took", end - start, "seconds")
 
-modelname = "Temporary_name"
+
+# Remove small lakes 
+def removesmalllakes():
+
+    input_routing_product_folder=path_output_folder
+    folder_product_after_filter_lakes = os.path.join(os.getcwd(),'OIH_Output','network_after_filter_lakes')
+    filterconnectedlakes = params['filterconnectedlakes']
+    filternonconnectedlakes = params['filternonconnectedlakes']
+    selectedlakeid = params['selectedlakeid']
+    start = time.time()
+
+    try:
+        print('\Remove_Small_Lakes running...\n')
+        bm_post.Remove_Small_Lakes(
+            path_output_folder = folder_product_after_filter_lakes,
+            routing_product_folder = input_routing_product_folder,
+            connected_lake_area_thresthold=filterconnectedlakes,
+            non_connected_lake_area_thresthold=filternonconnectedlakes,
+            selected_lake_ids = selectedlakeid,
+            gis_platform="qgis",
+        )
+        print('Remove_Small_Lakes was successful...\n')
+    except Exception as e:
+        print('Remove_Small_Lakes failed...')
+        print(e)
+    end = time.time()
+    print("Remove_Small_Lakes took", end - start, "seconds")
+
+
+def increaseCatchArea():
+
+    input_routing_product_folder = os.path.join(os.getcwd(),'OIH_Output','network_after_filter_lakes')
+    folder_product_after_increase_catchment = os.path.join(os.getcwd(),'OIH_Output','network_after_filter_lakes')
+    minsubbasinarea = params['minsubbasinarea']
+    start = time.time()
+
+    try:
+        print('\Increase_catchment_area running...\n')
+        bm_post.Decrease_River_Network_Resolution(
+            path_output_folder = folder_product_after_increase_catchment,
+            routing_product_folder = input_routing_product_folder,
+            minimum_subbasin_drainage_area= minsubbasinarea,
+            gis_platform="qgis",
+        )
+        print('Increase_catchment_area was successful...\n')
+    except Exception as e:
+        print('Increase_catchment_area failed...')
+        print(e)
+    end = time.time()
+    print("Increase_catchment_area took", end - start, "seconds")
+
+
+def generateHRUs():
+    folder_product_after_filter_lakes=os.path.join(os.getcwd(),'OIH_Output','network_after_filter_lakes')
+    input_routing_product_folder=folder_product_after_filter_lakes
+    demname = os.path.basename(params['pathdem'])
+    landusepoly = os.basename(params['pathlandusepoly'])
+    landuseinfo = os.basename(params['pathlanduseinfo'])
+    soilpoly = os.basename(params['pathsoil'])
+    soilinfo = os.basename(params['pathsoilinfo'])
+    veginfo = os.basename(params['pathveginfo'])
+    start = time.time()
+
+    try:
+        print('\Generate_HRUs running...\n')
+        bm_post.Generate_HRUs(
+            path_output_folder=folder_product_after_filter_lakes,
+            path_subbasin_polygon        =os.path.join(input_routing_product_folder, "finalcat_info.shp"),
+            path_connect_lake_polygon    =os.path.join(input_routing_product_folder, "sl_connected_lake.shp"),
+            path_non_connect_lake_polygon='#',
+            path_landuse_polygon=os.path.join(os.getcwd(),'Data','landuse', landusepoly),
+            path_soil_polygon   =os.path.join(os.getcwd(),'Data','soil',soilpoly),
+            #path_vegetation_polygon    ="#",
+            #path_other_polygon_1="#",
+            #path_other_polygon_2="#",
+            path_landuse_info=os.path.join(os.getcwd(),'Data','landuse', landuseinfo),
+            path_soil_info   =os.path.join(os.getcwd(),'Data','soil', soilinfo),
+            path_veg_info    =os.path.join(os.getcwd(),'Data','landuse', veginfo),
+            path_to_dem=os.path.join(os.getcwd(),datafolder,'DEM',demname),
+            inmportance_order = ['Soil_ID','Landuse_ID'],
+            min_hru_subbasin_area_ratio = 0.0,
+            gis_platform="qgis",
+            #projected_epsg_code = 'EPSG:3161',
+        )
+        print('Generate_HRUs was successful...\n')
+    except Exception as e:
+        print('Generate_HRUs failed...')
+        print(e)
+    end = time.time()
+    print("Generate_HRUs took", end - start, "seconds")
+
+#Generate the Raven RVH files
+def generateRavenFiles():
+    folder_product_after_filter_lakes=os.path.join(os.getcwd(),'OIH_Output','network_after_filter_lakes')
+    input_routing_product_folder=folder_product_after_filter_lakes
+    raven_model_dir = folder_product_after_filter_lakes
+    modelname = params['modelname']
+
+    try:
+        print('Generate_Raven_Model_Inputs running...\n')
+        bm_post.Generate_Raven_Model_Inputs(
+            path_hru_polygon               = os.path.join(input_routing_product_folder, "finalcat_hru_info.shp"),
+            model_name                     = modelname,
+            subbasingroup_names_channel    =["Allsubbasins"],
+            subbasingroup_length_channel   =[-1],
+            subbasingroup_name_lake        =["AllLakesubbasins"],
+            subbasingroup_area_lake        =[-1],
+            path_output_folder             = raven_model_dir,
+            aspect_from_gis                = 'grass',
+        )
+        print('Raven model inputs were successfully generated!\n')
+    except Exception as e:
+        print('Generate Raven model inputs failed...')
+        print(e)
+
 
 #Opens the parameters file created by QRaven and imports them into a dictionary
 params = {}
@@ -246,11 +347,18 @@ datafolder = os.path.join(os.getcwd(),'Data')
 path_output_folder = os.path.join(os.getcwd(),'OIH_Output','network_without_simplification')
 
 bm = basinmaker.delineate(path_working_folder=path_folder_to_save_intermediate_outputs)
+bm_post = basinmaker.postprocess()
+
 maxmemory = params['maxmemory']
 
 defineExtent()
 delineateNoLakes()
 if params['pathlakes'] !='#':
     addOutletPts()
-combinecatchment()
 genHydroRoutingAtt()
+combinecatchment()
+removesmalllakes()
+if params['minsubbasinarea'] !='#':
+    increaseCatchArea()
+generateHRUs()
+generateRavenFiles()
