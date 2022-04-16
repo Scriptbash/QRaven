@@ -27,8 +27,6 @@ from pyexpat import model
 from qgis.PyQt.QtCore import *
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import *
-#from PyQt5 import QFileDialog
-# Initialize Qt resources from file resources.py
 from .resources import *
 # Import the code for the dialog
 from .qraven_dialog import QRavenDialog
@@ -212,8 +210,8 @@ class QRaven:
         self.dlg.btn_write.clicked.connect(self.writeRVI)
         #----------------------------------------#
 
+
         #-------------BasinMaker RVH-------------#
-        
         #Calls the function that toggles the proper widgets depending on the mode chosen
         self.dlg.buttonGroup.buttonToggled.connect(self.toggleWidget)   #Define project spatial extent
         self.dlg.buttonGroup_2.buttonToggled.connect(self.toggleWidget)  #Delineate routing structure without lakes
@@ -222,11 +220,9 @@ class QRaven:
         self.dlg.file_bankfullwidth.fileChanged.connect(self.toggleWidget)  #Add lake and obs control points
         self.dlg.file_landuserast.fileChanged.connect(self.toggleWidget)  #Add lake and obs control points
 
-        
-        
-        #Calls the function to start the docker container
+        #Calls the function that initializes the docker container
         self.dlg.btn_dockerrun.clicked.connect(self.dockerinit)
-        #Calls the function to remove the docker container
+        #Calls the function to remove the docker container and its image
         self.dlg.btn_dockerrm.clicked.connect(self.dockerdelete)
 
         # show the dialog
@@ -243,34 +239,36 @@ class QRaven:
     
     #This function enables and disables widgets based on their checkboxes/radiobutton state
     def toggleWidget(self):
-        widget = self.dlg.sender()
-        if widget.objectName() == 'chk_duration':
+        widget = self.dlg.sender()  #Get the widget name
+        #RVI conditions below
+        if widget.objectName() == 'chk_duration':   #Switches between EndDate and Duration
             if self.dlg.chk_duration.isChecked():
                 self.dlg.date_enddate.setEnabled(False)
                 self.dlg.spin_duration.setEnabled(True)
             else:
                 self.dlg.date_enddate.setEnabled(True)
                 self.dlg.spin_duration.setEnabled(False) 
-        elif widget.objectName() == 'chk_runname':
+        elif widget.objectName() == 'chk_runname':  #Enables the RunName line edit
             if self.dlg.chk_runname.isChecked():
                 self.dlg.txt_runname.setEnabled(True)
             else:
                 self.dlg.txt_runname.setEnabled(False)
-        elif widget.objectName() == 'chk_outputdir':
+        elif widget.objectName() == 'chk_outputdir':    #Enables the file widget for the OutputDirectory
             if self.dlg.chk_outputdir.isChecked():
                 self.dlg.file_outputdir.setEnabled(True)
             else:
                 self.dlg.file_outputdir.setEnabled(False)        
-        elif widget.objectName() == 'chk_outputinterval':
+        elif widget.objectName() == 'chk_outputinterval':   #Enables the spinbox for the OutputInterval
             if self.dlg.chk_outputinterval.isChecked():
                 self.dlg.spin_outinterval.setEnabled(True)
             else:
                 self.dlg.spin_outinterval.setEnabled(False) 
-        elif widget.objectName() == 'chk_wateryear':
+        elif widget.objectName() == 'chk_wateryear':    #Enables the WaterYear spinbox
             if self.dlg.chk_wateryear.isChecked():
                 self.dlg.spin_wateryear.setEnabled(True)
             else:
                 self.dlg.spin_wateryear.setEnabled(False) 
+
         #Conditions for the BasinMaker RVH section below
         elif widget.objectName() == 'buttonGroup':  #buttonGroup is the group of radiobuttons for the mode of define project spatial extent
             if self.dlg.rb_modehybasin.isChecked(): #If the selected mode is using_hybasin
@@ -323,7 +321,7 @@ class QRaven:
                 self.dlg.txt_lakearea.setEnabled(False)
                 self.dlg.spin_conlakearea.setEnabled(False)
                 self.dlg.spin_nonconlakearea.setEnabled(False)
-        elif widget.objectName() == 'chk_epsgcode':
+        elif widget.objectName() == 'chk_epsgcode': #Enables the EPSG lineedit if its checkbox is checked
             if self.dlg.chk_epsgcode.isChecked():
                 self.dlg.txt_epsgcode.setEnabled(True)
             else:
@@ -336,7 +334,6 @@ class QRaven:
                 self.dlg.txt_bankfulldrainarea.setEnabled(True)
                 self.dlg.spin_kcoef.setEnabled(False)
                 self.dlg.spin_ccoef.setEnabled(False)
-
             else:   #If the layer is removed or there's no layer, disable the fields
                 self.dlg.txt_bankfullwidth.setEnabled(False)
                 self.dlg.txt_bankfulldepth.setEnabled(False)
@@ -344,7 +341,6 @@ class QRaven:
                 self.dlg.txt_bankfulldrainarea.setEnabled(False)
                 self.dlg.spin_kcoef.setEnabled(True)
                 self.dlg.spin_ccoef.setEnabled(True)
-
         elif widget.objectName() == 'file_landuserast':   #Add hydrology related attributes
             if self.dlg.file_landuserast.filePath() != '':    #If there is a layer for landuse (raster), enable the required fields
                 self.dlg.file_landusemanning.setEnabled(True)
@@ -366,19 +362,19 @@ class QRaven:
         else:
             self.dlg.txt_interpofile.setEnabled(False)
 
-    #This function opens a file explorer to select an output folder
+    #This function opens a file explorer to select an output folder. It will be replaced by a qgsFileWidget instead.
+    #There's currently a bug with the file explorer
     def browseDirectory(self):
         dir = str(QFileDialog.getExistingDirectory(None, "Select Directory"))
         self.dlg.txt_outputdir.setText(dir)
         
     #This function writes all the parameters entered by the user into the RVI file
     def writeRVI(self):
-        paramDict = self.getParams()
-        customOutputList = self.getCustomOutput()
-        #print(paramDict)
-        outputdir = self.dlg.txt_outputdir.text()
-        modelName = self.dlg.txt_modname.text()
-        print(outputdir)
+        paramDict = self.getParams()    #Gets the parameters dictionary
+        customOutputList = self.getCustomOutput()   #Gets the customOutput values
+        outputdir = self.dlg.txt_outputdir.text()   #Gets the folder where to save the RVI file
+        modelName = self.dlg.txt_modname.text()     #Gets the modelName
+
         try:
             if computerOS == "linux" or computerOS == "macos":  #Adds a slash or backslash to the path depending on which os is being used
                 pathToFolder = outputdir+'/'+modelName
@@ -389,7 +385,7 @@ class QRaven:
                 #Writes the parameters from the dictionary
                 for key, value in paramDict.items():
                     if value != '' and value != "checked":
-                        rvi.write(f":{key:<30}  {value}\n")
+                        rvi.write(f":{key:<30}  {value}\n") #Writes the parameters and their arguments
                     elif value == "checked":   #This writes the optional I/O which don't have an argument (so only the key is written)
                         rvi.write(f":{key:<30}\n")
                 #Writes the custom output
@@ -411,7 +407,6 @@ class QRaven:
                         else:
                             rvi.write(output + " ")
                             count+=1
-
             #!!!Must add a message push in qgis to let the user know!!!
             print("RVI file written successfully")
         except Exception as e:
@@ -431,7 +426,6 @@ class QRaven:
             keyDuration = "EndDate"
             endDateTmp = self.dlg.date_enddate.dateTime()
             duration = str(endDateTmp.toPyDateTime())
-            #Must not forget to add condition in the dictionary
         #Get the time step
         timeStepTmp = self.dlg.date_timestep.time()
         timeStep = str(timeStepTmp.toPyTime())
@@ -571,10 +565,10 @@ class QRaven:
                     evalmetrics = item.text()
                     firstloop = False
                 else:
-                    evalmetrics= evalmetrics + ', ' + item.text()
-        evalmetrics = evalmetrics.replace(',',' ')  #Removes the commas between the metrics
+                    evalmetrics= evalmetrics + ' ' + item.text()
+        #evalmetrics = evalmetrics.replace(',',' ')  #Removes the commas between the metrics
 
-        #Create the dictionary
+        #Create the parameter dictionary
         paramsDict = { 
             "Calendar"                   : calendar,
             "StartDate"                  : startDate,
@@ -624,7 +618,6 @@ class QRaven:
             "SnapshotHydrograph"         : snaphydro,
             "EvaluationMetrics"          : evalmetrics
         }
-
         return paramsDict
 
     #This function fetches the custom output widgets' values and returns them into a list
@@ -634,13 +627,11 @@ class QRaven:
         for i in range(self.dlg.gridLayout.count()):
             if isinstance(self.dlg.gridLayout.itemAt(i).widget(),QComboBox):    #Get the combobox values
                 if self.dlg.gridLayout.itemAt(i).widget().currentText() != '':
-                    #print(self.dlg.gridLayout.itemAt(i).widget().currentText())
                     customOutputList.append(self.dlg.gridLayout.itemAt(i).widget().currentText())
                 else: 
                     customOutputList.append(" ")
             else:
                 if self.dlg.gridLayout.itemAt(i).widget().text() != '': #Get the line edit values
-                    #print(self.dlg.gridLayout.itemAt(i).widget().text())
                     customOutputList.append(self.dlg.gridLayout.itemAt(i).widget().text())
                 else: 
                     customOutputList.append(" ")
@@ -649,26 +640,24 @@ class QRaven:
         #!!!!MISSING QUARTILES OPTION IN THE GUI!!!
 
    
-
-
+    #This function gathers all the RVH parameters and returns them into a dictionary
     def getRVHparams(self):
 
-        pathdem = self.dlg.file_dem.filePath()
-        pathlandusepoly = self.dlg.file_landusepoly.filePath()
-        pathlanduserast = self.dlg.file_landuserast.filePath()
+        pathdem = self.dlg.file_dem.filePath()  #Get the DEM path
+        pathlandusepoly = self.dlg.file_landusepoly.filePath()  #Get the landuse polygon path
+        pathlanduserast = self.dlg.file_landuserast.filePath()  #Get the landuse raster path
         if pathlanduserast =='':
             pathlanduserast = '#'
-        pathlakes = self.dlg.file_lakes.filePath()
+        pathlakes = self.dlg.file_lakes.filePath()  #Get the Lakes polygon path
         if pathlakes == '': #Since the lakes are optional, assign a value so the parameter is still written. 
             pathlakes = '#' #This allows to make a check in the create_RVH.py
-        pathbankfull = self.dlg.file_bankfullwidth.filePath()
+        pathbankfull = self.dlg.file_bankfullwidth.filePath()   #Get the bankfull path
         if pathbankfull == '':
             pathbankfull = '#'
-        pathsoil = self.dlg.file_soil.filePath()
-        pathpointsinterest = self.dlg.file_pointsinterest.filePath()
-        maxmemory = self.dlg.spin_ram.value()
-
-        if self.dlg.rb_modedem.isChecked():
+        pathsoil = self.dlg.file_soil.filePath()    #Get the soil polygon path
+        pathpointsinterest = self.dlg.file_pointsinterest.filePath()    #Get the points of interest path
+        maxmemory = self.dlg.spin_ram.value()   #Get the max RAM to be used
+        if self.dlg.rb_modedem.isChecked(): #Get the values for the mode using_DEM
             extentMode = "using_dem"
             path_hybasin = ''
             hybasinid = ''
@@ -676,7 +665,7 @@ class QRaven:
             outletlat = ''
             outletlon = ''
             path_providedpoly = ''
-        elif self.dlg.rb_modehybasin.isChecked():
+        elif self.dlg.rb_modehybasin.isChecked():   #Get the values for mode using_hybasin
             extentMode = "using_hybasin"
             path_hybasin = self.dlg.file_hybasin.filePath()
             hybasinid   = str(self.dlg.spin_hybasin.value())
@@ -684,7 +673,7 @@ class QRaven:
             outletlat = ''
             outletlon = ''
             path_providedpoly = ''
-        elif self.dlg.rb_outletpt.isChecked():
+        elif self.dlg.rb_outletpt.isChecked():  #Get the values for mode using_outlet_pt
             extentMode = "using_outlet_pt"
             outletlat = self.dlg.txt_outletlat.text()
             outletlon = self.dlg.txt_outletlon.text()
@@ -692,7 +681,7 @@ class QRaven:
             hybasinid = ''
             bufferdistance = ''
             path_providedpoly = ''
-        elif self.dlg.rb_providedply.isChecked():
+        elif self.dlg.rb_providedply.isChecked():   #Get the values for mode using_provided_ply
             extentMode = "using_provided_ply"
             path_providedpoly = self.dlg.file_providedply.filePath()
             bufferdistance = str(self.dlg.spin_buffer.value())
@@ -700,8 +689,7 @@ class QRaven:
             hybasinid = ''
             outletlat = ''
             outletlon = ''
-        
-        if self.dlg.file_lakes.filePath:
+        if self.dlg.file_lakes.filePath:    #Get the values if there is a file provided for the Lakes
             lakeid = self.dlg.txt_lakeid.text()
             laketype = self.dlg.txt_laketype.text()
             lakevol = self.dlg.txt_lakevol.text()
@@ -718,17 +706,16 @@ class QRaven:
             connectedlake = ''
             nonconnectedlake = ''
 
-        poiid = self.dlg.txt_poiid.text()
-        poiname = self.dlg.txt_poiname.text()
-        poidrainarea = self.dlg.txt_poidrainarea.text()
-        poisource = self.dlg.txt_poisource.text()
+        poiid = self.dlg.txt_poiid.text()   #Get the point of interest ID
+        poiname = self.dlg.txt_poiname.text()   #Get the point of interest unique name
+        poidrainarea = self.dlg.txt_poidrainarea.text() #Get the point of interest drainage area
+        poisource = self.dlg.txt_poisource.text()   #Get the point of interest source
 
-        if self.dlg.chk_epsgcode.isChecked():
+        if self.dlg.chk_epsgcode.isChecked():   #Get the EPSG code if its checkbox is checked
             epsgcode = self.dlg.txt_epsgcode.text()
         else:
             epsgcode = '#'
-
-        if self.dlg.file_bankfullwidth.filePath():
+        if self.dlg.file_bankfullwidth.filePath():  #Get the values for the bankfull width is a file is provided
             bankfullwidth = self.dlg.txt_bankfullwidth.text()
             bankfulldepth = self.dlg.txt_bankfulldepth.text()
             bankfulldischarge = self.dlg.txt_bankfulldischarge.text()
@@ -743,14 +730,12 @@ class QRaven:
             kcoef = str(self.dlg.spin_kcoef.value())
             ccoef = str(self.dlg.spin_ccoef.value())
 
-        if self.dlg.file_landuserast.filePath():
+        if self.dlg.file_landuserast.filePath():    #Get the values for the landuse raster if a file is provided
             landusemanning = self.dlg.file_landusemanning.filePath()
         else:
             landusemanning = ''
-        
-        facthreshold = self.dlg.spin_facthreshold.value()
-
-        if self.dlg.rb_fdr.isChecked():
+        facthreshold = self.dlg.spin_facthreshold.value()   #Get the flow accumulation threshold
+        if self.dlg.rb_fdr.isChecked(): #If using_fdr is checked, get the file for the flow direction. Otherwise use DEM
             delineatemode = "using_fdr"
             pathfdr = self.dlg.file_fdr.filePath()
         elif self.dlg.rb_dem.isChecked():
@@ -758,22 +743,22 @@ class QRaven:
             pathfdr = ''
         
         #Postprocessing parameters
-        filterconnectedlakes = self.dlg.spin_filterconnectedlakes.value()
-        filternonconnectedlakes = self.dlg.spin_filternonconnectedlakes.value()
-        if self.dlg.txt_selectedlakeid.text() != '':
+        filterconnectedlakes = self.dlg.spin_filterconnectedlakes.value()   #Get the connected lake area threshold
+        filternonconnectedlakes = self.dlg.spin_filternonconnectedlakes.value() #Get the non connected lake area threshold
+        if self.dlg.txt_selectedlakeid.text() != '':    #Get the selected lake id if there are values
             selectedlakeid = self.dlg.txt_selectedlakeid.text()
         else:
             selectedlakeid = '#'
-        if self.dlg.spin_minsubbasinarea.value() != '0.0':
+        if self.dlg.spin_minsubbasinarea.value() != '0.0':  #Get the minimum subbasin area value if it's not 0
             minsubbasinarea = self.dlg.spin_minsubbasinarea.value()
         else: 
             minsubbasinarea = '#'
-        pathlanduseinfo = self.dlg.file_pathlanduseinfo.filePath()
-        pathsoilinfo = self.dlg.file_pathsoilinfo.filePath()
-        pathveginfo = self.dlg.file_pathveginfo.filePath()
-        modelname = self.dlg.txt_modelname.text()
+        pathlanduseinfo = self.dlg.file_pathlanduseinfo.filePath()  #Get the landuse info csv path
+        pathsoilinfo = self.dlg.file_pathsoilinfo.filePath()    #Get the soil info csv path
+        pathveginfo = self.dlg.file_pathveginfo.filePath()      #Get the vegetation info csv path
+        modelname = self.dlg.txt_modelname.text()   #Get the model name
 
-
+        #Creates the parameters dictionary for the BasinMaker tools
         params = {
             "pathdem"                   : pathdem,
             "pathlandusepoly"           : pathlandusepoly,
@@ -823,8 +808,10 @@ class QRaven:
         }
         return params
 
+    #This function exports the RVH parameters into a text file. This file will be transfered to the Docker container and be used by
+    #BasinMaker in order to process the file
     def exportRVHparams(self,paramDict):
-        outputdir = self.dlg.file_outputfolder.filePath()
+        outputdir = self.dlg.file_outputfolder.filePath()   #Get the output folder where to save the parameters and the results
         try:
             if computerOS == "linux" or computerOS == "macos":  #Adds a slash or backslash to the path depending on which os is being used
                 pathToFolder = outputdir+'/'+ "parameters"
@@ -844,40 +831,28 @@ class QRaven:
 
     #This function sets up the scriptbash/basinmaker docker container. Pulls, starts and sets the python path
     def dockerinit(self):
-        # pythonpaths = [
-        #                 "export PYTHONPATH=$PYTHONPATH:'/usr/lib/grass78/etc/python'",
-        #                 "export PYTHONPATH=$PYTHONPATH:'/usr/share/qgis/python/plugins'",
-        #                 "export PYTHONPATH=$PYTHONPATH:'/usr/share/qgis/python'",
-        #                 "Xvfb :99 -screen 0 640x480x8 -nolisten tcp &"
-        #             ] 
-        
-        paramsDict = self.getRVHparams()
-        self.exportRVHparams(paramsDict)
-        self.dockerPull()
-        self.dockerStart()
-        self.dockerCopy(paramsDict)
-        #self.runBasinMaker()
-        #self.getDockerResults()
+            
+        paramsDict = self.getRVHparams()    #Calls the function to get the RVH parameters
+        self.exportRVHparams(paramsDict)    #Calls the function to save the parameters into a text file
+        self.dockerPull()                   #Calls the function to pull the scriptbash/basinmaker docker container
+        self.dockerStart()                  #Calls the function to start the container
+        self.dockerCopy(paramsDict)         #Calls the function to copy the parameters and the files to the container
+        #self.runBasinMaker()               #Calls the function to run the containers and launch the create_RVH.py script
+        #self.getDockerResults()            #Calls the function to copy the BasinMaker results from the container to the host
 
       
     #This function fully removes the container, as well as the image to free up space
     def dockerdelete(self):
         try:
-            #self.dlg.txt_console.appendPlainText("Making sure the container is stopped > docker stop bmaker")
             os.system("docker stop bmaker")
-            #self.dlg.txt_console.appendPlainText("Successfully stopped the containter")
-            #self.dlg.txt_console.appendPlainText("Removing the docker container > docker rm bmaker")
             os.system("docker rm bmaker")
-            #self.dlg.txt_console.appendPlainText("Successfully removed the container > docker rmi scriptbash/basinmaker")
-            #self.dlg.txt_console.appendPlainText("Removing the image")
             os.system("docker rmi scriptbash/basinmaker")
             print("container stopped and removed")
-            #self.dlg.txt_console.appendPlainText("Successfully removed the image. Everything was removed.")
         except Exception as e:
-            #self.dlg.txt_console.appendPlainText("An error occured while attempting to remove the container and image. Please remove them manually.")
             print("An error occured while attempting to remove the docker container and image")
             print(e)
 
+    #This function pulls the scriptbash/basinmaker image
     def dockerPull(self):
         try:
             print("Trying to pull the scriptbash/basinmaker image...")
@@ -888,14 +863,13 @@ class QRaven:
                 if output == b'':
                     break
                 if output:
-                    #test = str(output.strip())
-                    #self.dlg.txt_console.appendPlainText(test)
                     print(output.strip())
             rc = process.poll()
             print("The pull was successfull")
         except Exception as e:
             print(e)
     
+    #This function starts the Docker container
     def dockerStart(self):
         try:
             print("Attempting to start the container...")
@@ -912,19 +886,21 @@ class QRaven:
         except Exception as e:
             print(e)
 
+    #This function copies all the files provided and the parameters text file into the Docker container
     def dockerCopy(self,params):
-        outputdir = self.dlg.file_outputfolder.filePath()
-        dockerBMpath = '/root/BasinMaker'
-        dockerDEMPath = dockerBMpath + '/Data/DEM'
-        dockerLandusePath = dockerBMpath + '/Data/landuse'
-        dockerLakesPath = dockerBMpath + '/Data/lakes'
-        dockerBankfullPath = dockerBMpath + '/Data/bkf_width'
-        dockerSoilPath = dockerBMpath + '/Data/soil'
-        dockerPoIPath = dockerBMpath + '/Data/stations'
-        dockerHybasinPath = dockerBMpath + '/Data/hybasin'
-        dockerProvPolyPath = dockerBMpath + '/Data/extent_poly'
-        dockerFDRPath = dockerBMpath + '/Data/flow_direction',
+        outputdir = self.dlg.file_outputfolder.filePath()       #Get the output directory
+        dockerBMpath = '/root/BasinMaker'                       #Sets the BasinMaker path that is inside the docker container
+        dockerDEMPath = dockerBMpath + '/Data/DEM'              #Sets the path to the DEM folder in the container
+        dockerLandusePath = dockerBMpath + '/Data/landuse'      #Sets the path to the landuse folder in the container
+        dockerLakesPath = dockerBMpath + '/Data/lakes'          #Sets the path to the lakes folder in the container
+        dockerBankfullPath = dockerBMpath + '/Data/bkf_width'   #Sets the path to the bankfull folder in the container
+        dockerSoilPath = dockerBMpath + '/Data/soil'            #Sets the path to the soil folder in the container
+        dockerPoIPath = dockerBMpath + '/Data/stations'         #Sets the path to the point of interest folder in the container
+        dockerHybasinPath = dockerBMpath + '/Data/hybasin'      #Sets the path to the hybasin folder in the container
+        dockerProvPolyPath = dockerBMpath + '/Data/extent_poly' #Sets the path to the provided polygon folder in the container
+        dockerFDRPath = dockerBMpath + '/Data/flow_direction'   #Sets the path to the flow direction folder in the container
 
+        #Creates a dictionary with the paths to the data
         datapaths = {
             'dem'               : params['pathdem'],
             'landusepoly'       : params['pathlandusepoly'],
@@ -940,83 +916,81 @@ class QRaven:
             'landuseinfo'       : params['pathlanduseinfo'],
             'soilinfo'          : params['pathsoilinfo'],
             'veginfo'           : params['pathveginfo']
-
         }
-        shpExt = ['cfg', 'dbf', 'prj','qmd','shp', 'shx']
+        shpExt = ['cfg', 'dbf', 'prj','qmd','shp', 'shx']   #List of shapefile extensions 
         if computerOS == "linux" or computerOS == "macos":  #Adds a slash or backslash to the path depending on which os is being used
             seperator = '/'
         else:
             seperator='\\'
         rvhScript = outputdir+seperator+ "parameters.txt"
         cmd='docker', 'cp', rvhScript, 'bmaker:'+ dockerBMpath
-        self.SendFiles(cmd)
+        self.SendFiles(cmd) #Sends the parameters text file into the docker container
 
-        for key, path in datapaths.items():
+        for key, path in datapaths.items():     #Loop through all the provided data paths
             if path != '' or path != '#':
-                filename = Path(path).stem  #Get the file name without extension and path
+                filename = Path(path).stem      #Get the file name without extension and path
                 folder = os.path.dirname(path)  #Get only the file path (without the file name)
                 if key == 'dem':
                     cmdData='docker', 'cp', params['pathdem'], 'bmaker:'+ dockerDEMPath
-                    self.SendFiles(cmdData)
+                    self.SendFiles(cmdData)     #Sends the DEM to the container
                 elif key == 'landusepoly':
                     for extension in shpExt:
                         file = folder+seperator+filename + '.' + extension
                         cmdData='docker', 'cp', file, 'bmaker:'+ dockerLandusePath
-                        self.SendFiles(cmdData)
+                        self.SendFiles(cmdData) #Sends the landuse shapefile to the container
                 elif key == 'landuserast':
                     for extension in shpExt:
                         cmdData='docker', 'cp', params['pathlanduserast'], 'bmaker:'+ dockerLandusePath
-                        self.SendFiles(cmdData)
+                        self.SendFiles(cmdData) #Sends the landuse raster to the container
                 elif key == 'lakes':
                     for extension in shpExt:
                         file = folder+seperator+filename + '.' + extension
                         cmdData='docker', 'cp', file, 'bmaker:'+ dockerLakesPath
-                        self.SendFiles(cmdData)
+                        self.SendFiles(cmdData) #Sends the lakes shapefile to the container
                 elif key == 'bankfull':
                     for extension in shpExt:
                         file = folder+seperator+filename + '.' + extension
                         cmdData='docker', 'cp', file, 'bmaker:'+ dockerBankfullPath
-                        self.SendFiles(cmdData)
+                        self.SendFiles(cmdData) #Sends the bankfull shapefile to the container
                 elif key == 'soil':
                     for extension in shpExt:
                         file = folder+seperator+filename + '.' + extension
                         cmdData='docker', 'cp', file, 'bmaker:'+ dockerSoilPath
-                        self.SendFiles(cmdData)
+                        self.SendFiles(cmdData) #Sends the soil shapefile to the container
                 elif key == 'pointinterest':
                     for extension in shpExt:
                         file = folder+seperator+filename + '.' + extension
                         cmdData='docker', 'cp', file, 'bmaker:'+ dockerPoIPath
-                        self.SendFiles(cmdData)
+                        self.SendFiles(cmdData) #Sends the point of interest shapefile to the container
                 elif key == 'hybasin':
                     for extension in shpExt:
                         file = folder+seperator+filename + '.' + extension
                         cmdData='docker', 'cp', file, 'bmaker:'+ dockerHybasinPath
-                        self.SendFiles(cmdData)
+                        self.SendFiles(cmdData) #Sends the hybasin shapefile to the container
                 elif key == 'provpoly':
                     for extension in shpExt:
                         file = folder+seperator+filename + '.' + extension
                         cmdData='docker', 'cp', file, 'bmaker:'+ dockerProvPolyPath
-                        self.SendFiles(cmdData)
+                        self.SendFiles(cmdData) #Sends the provided polygon to the container
                 elif key == 'manning':
                     for extension in shpExt:
                         cmdData='docker', 'cp', params['landusemanning'], 'bmaker:'+ dockerLandusePath
-                        self.SendFiles(cmdData)
+                        self.SendFiles(cmdData) #Sends the landuse manning table to the container
                 elif key == 'flowdirection':
                     for extension in shpExt:
                         cmdData='docker', 'cp', params['pathfdr'], 'bmaker:'+ dockerFDRPath
-                        self.SendFiles(cmdData)
+                        self.SendFiles(cmdData) #Sends the flow direction to the container
                 elif key == 'landuseinfo':
                     cmdData='docker', 'cp', params['pathlanduseinfo'], 'bmaker:'+ dockerLandusePath
-                    self.SendFiles(cmdData)
+                    self.SendFiles(cmdData) #Sends the landuse info to the container
                 elif key == 'soilinfo':
                     cmdData='docker', 'cp', params['pathsoilinfo'], 'bmaker:'+ dockerSoilPath
-                    self.SendFiles(cmdData)
+                    self.SendFiles(cmdData) #Sends the soil info to the container
                 elif key == 'veginfo':
                     cmdData='docker', 'cp', params['pathveginfo'], 'bmaker:'+ dockerLandusePath
-                    self.SendFiles(cmdData)
+                    self.SendFiles(cmdData) #Sends the vegetation to the container
 
-          
-           
+    #This function sends the host files to the docker container      
     def SendFiles(self,cmd): 
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         while True:
@@ -1028,9 +1002,10 @@ class QRaven:
         rc = process.poll()      
 
 
+    #This function launches BasinMaker inside the Docker container
     def runBasinMaker(self):
+
         print("Starting BasinMaker process, this will take while to complete")
-        
         cmd ='docker', 'exec','-t','-e', "GISBASE='/usr/lib/grass78/'", 'bmaker','python3','create_RVH.py'
         try:
             process = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
@@ -1048,11 +1023,12 @@ class QRaven:
         os.system("docker exec -t -e GISBASE='/usr/lib/grass78' bmaker python3 create_RVH.py")
 
 
+    #This function gets the BasinMaker results and places them inside the output directory chosen by the user
     def getDockerResults(self):
-        outputdir = self.dlg.file_outputfolder.filePath()
-        dockerBMResultsPath = '/root/BasinMaker/OIH_Output'
-        print("Grabbing the results, this could take a while...")
         
+        outputdir = self.dlg.file_outputfolder.filePath()
+        dockerBMResultsPath = '/root/BasinMaker/OIH_Output' #Path to the BasinMaker results
+        print("Grabbing the results, this could take a while...")
         cmd ='docker', 'cp','bmaker:'+dockerBMResultsPath, outputdir
         try:
             process = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
