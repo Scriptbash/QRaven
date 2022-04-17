@@ -3,7 +3,12 @@ ENV LANG=en_EN.UTF-8 \
     LANGUAGE=en_US:en \ 
     LC_ALL=en_US.UTF-8 \
     DEBIAN_FRONTEND=noninteractive \
-    DISPLAY=:99 
+    DISPLAY=:99 \
+    PYTHONPATH="/usr/lib/grass78/etc/python" \
+    PYTHONPATH="/usr/share/qgis/python/plugins" \
+    PYTHONPATH="/usr/share/qgis/python" \
+    GISBASE='/usr/lib/grass78' \
+    QGIS_PREFIX_PATH='/usr'
 RUN apt-get update \
     && apt-get install --no-install-suggests --allow-unauthenticated -y \
         gnupg \
