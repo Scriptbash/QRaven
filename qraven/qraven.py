@@ -733,7 +733,7 @@ class QRaven:
         if self.dlg.file_landuserast.filePath():    #Get the values for the landuse raster if a file is provided
             landusemanning = self.dlg.file_landusemanning.filePath()
         else:
-            landusemanning = ''
+            landusemanning = '#'
         facthreshold = self.dlg.spin_facthreshold.value()   #Get the flow accumulation threshold
         if self.dlg.rb_fdr.isChecked(): #If using_fdr is checked, get the file for the flow direction. Otherwise use DEM
             delineatemode = "using_fdr"
@@ -749,7 +749,7 @@ class QRaven:
             selectedlakeid = self.dlg.txt_selectedlakeid.text()
         else:
             selectedlakeid = '#'
-        if self.dlg.spin_minsubbasinarea.value() != '0.0':  #Get the minimum subbasin area value if it's not 0
+        if self.dlg.spin_minsubbasinarea.value() >= 0.0:  #Get the minimum subbasin area value if it's not 0
             minsubbasinarea = self.dlg.spin_minsubbasinarea.value()
         else: 
             minsubbasinarea = '#'
@@ -1025,7 +1025,7 @@ class QRaven:
 
     #This function gets the BasinMaker results and places them inside the output directory chosen by the user
     def getDockerResults(self):
-        
+
         outputdir = self.dlg.file_outputfolder.filePath()
         dockerBMResultsPath = '/root/BasinMaker/OIH_Output' #Path to the BasinMaker results
         print("Grabbing the results, this could take a while...")
