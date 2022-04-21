@@ -645,12 +645,9 @@ class QRaven:
                 else: 
                     customOutputList.append(" ")
 
-        return customOutputList
-        #!!!!MISSING QUARTILES OPTION IN THE GUI!!!
+        return customOutputList 
 
-   
-
-
+    #This function gets the RVH parameters and returns them into a dictionary
     def getRVHparams(self):
 
         pathdem = self.dlg.file_dem.filePath()
@@ -842,15 +839,9 @@ class QRaven:
             print(e)
 
 
-    #This function sets up the scriptbash/basinmaker docker container. Pulls, starts and sets the python path
+    #This function sets up the scriptbash/basinmaker docker container. Pulls, starts and stops the docker container
     def dockerinit(self):
-        # pythonpaths = [
-        #                 "export PYTHONPATH=$PYTHONPATH:'/usr/lib/grass78/etc/python'",
-        #                 "export PYTHONPATH=$PYTHONPATH:'/usr/share/qgis/python/plugins'",
-        #                 "export PYTHONPATH=$PYTHONPATH:'/usr/share/qgis/python'",
-        #                 "Xvfb :99 -screen 0 640x480x8 -nolisten tcp &"
-        #             ] 
-        
+
         paramsDict = self.getRVHparams()
         self.exportRVHparams(paramsDict)
         self.dockerPull()
@@ -858,6 +849,7 @@ class QRaven:
         self.dockerCopy(paramsDict)
         self.runBasinMaker()
         self.getDockerResults()
+        os.system("docker stop bmaker")
 
       
     #This function fully removes the container, as well as the image to free up space
