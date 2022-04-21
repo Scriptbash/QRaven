@@ -1348,6 +1348,9 @@
            <property name="enabled">
             <bool>false</bool>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::TabFocus</enum>
+           </property>
            <property name="storageMode">
             <enum>QgsFileWidget::GetDirectory</enum>
            </property>
@@ -2486,7 +2489,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_6">
         <attribute name="title">
@@ -2502,13 +2505,80 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>-458</y>
+              <y>0</y>
               <width>814</width>
-              <height>1080</height>
+              <height>1114</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
-             <item row="29" column="1">
+             <item row="18" column="2">
+              <widget class="QRadioButton" name="rb_fdr">
+               <property name="text">
+                <string>using_fdr</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup_2</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="26" column="0">
+              <widget class="QLabel" name="label_53">
+               <property name="text">
+                <string>non_connected_lake_area_threshold</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="0">
+              <widget class="QRadioButton" name="rb_outletpt">
+               <property name="toolTip">
+                <string>the extent is defined by the watershed generated from input dem and the watershed outlet coordinates</string>
+               </property>
+               <property name="text">
+                <string>using_outlet_pt</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="10" column="1">
+              <widget class="QLabel" name="label_44">
+               <property name="text">
+                <string>Define project spatial extent</string>
+               </property>
+              </widget>
+             </item>
+             <item row="36" column="0">
+              <widget class="QLabel" name="label_36">
+               <property name="text">
+                <string>Where to save the results?</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="0">
+              <widget class="QLabel" name="label_49">
+               <property name="toolTip">
+                <string>The maximum RAM that BasinMaker will be allowed to use</string>
+               </property>
+               <property name="text">
+                <string>Max memory (MB)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="34" column="1">
+              <widget class="QDoubleSpinBox" name="spin_ccoef">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="decimals">
+                <number>8</number>
+               </property>
+               <property name="maximum">
+                <double>99999.999999000006937</double>
+               </property>
+              </widget>
+             </item>
+             <item row="30" column="1">
               <widget class="QLineEdit" name="txt_epsgcode">
                <property name="enabled">
                 <bool>false</bool>
@@ -2518,14 +2588,159 @@
                </property>
               </widget>
              </item>
-             <item row="18" column="0">
-              <widget class="QLabel" name="label_48">
+             <item row="25" column="0">
+              <widget class="QLabel" name="label_52">
                <property name="text">
-                <string>mode</string>
+                <string>connected_lake_area_threshold</string>
                </property>
               </widget>
              </item>
-             <item row="32" column="1">
+             <item row="13" column="2">
+              <widget class="QLineEdit" name="txt_outletlon">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>Lon</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QgsFileWidget" name="file_dem">
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="31" column="2">
+              <widget class="QLineEdit" name="txt_bankfulldepth">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>Bankfull depth (m) - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="31" column="1">
+              <widget class="QLineEdit" name="txt_bankfullwidth">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>Bankfull width (m) - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_39">
+               <property name="text">
+                <string>Lakes*</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QgsFileWidget" name="file_lakes">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_35">
+               <property name="text">
+                <string>Landuse (polygons)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="0">
+              <widget class="QRadioButton" name="rb_modehybasin">
+               <property name="toolTip">
+                <string>the extent is defined by subbasins that are drainage to the provided watershed outlet subbasins ID in HydroBASINS product</string>
+               </property>
+               <property name="text">
+                <string>using_hybasin</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="28" column="2">
+              <widget class="QLineEdit" name="txt_poisource">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="placeholderText">
+                <string>source of observation point</string>
+               </property>
+              </widget>
+             </item>
+             <item row="26" column="1">
+              <widget class="QDoubleSpinBox" name="spin_nonconlakearea">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximum">
+                <double>1000000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <widget class="QgsFileWidget" name="file_pointsinterest">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_41">
+               <property name="text">
+                <string>Soil</string>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="0">
+              <widget class="QRadioButton" name="rb_providedply">
+               <property name="toolTip">
+                <string>the extent of provided polygon is used</string>
+               </property>
+               <property name="text">
+                <string>using_provided_ply</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="25" column="1">
+              <widget class="QDoubleSpinBox" name="spin_conlakearea">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximum">
+                <double>1000000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="17" column="0">
+              <widget class="QLabel" name="label_47">
+               <property name="toolTip">
+                <string>flow accumulation thresthold</string>
+               </property>
+               <property name="text">
+                <string>fac_threshold</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_40">
+               <property name="text">
+                <string>Bankfull width*</string>
+               </property>
+              </widget>
+             </item>
+             <item row="33" column="1">
               <widget class="QDoubleSpinBox" name="spin_kcoef">
                <property name="enabled">
                 <bool>true</bool>
@@ -2538,49 +2753,44 @@
                </property>
               </widget>
              </item>
-             <item row="14" column="1">
-              <widget class="QgsFileWidget" name="file_providedply">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="toolTip">
-                <string>path_to_spatial_extent_polygon</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLabel" name="label_43">
-               <property name="lineWidth">
-                <number>0</number>
-               </property>
-               <property name="midLineWidth">
-                <number>0</number>
+             <item row="30" column="0">
+              <widget class="QCheckBox" name="chk_epsgcode">
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
                </property>
                <property name="text">
-                <string>Files location</string>
+                <string>projected_epsg_code</string>
                </property>
               </widget>
              </item>
-             <item row="31" column="1">
-              <widget class="QLineEdit" name="txt_bankfulldischarge">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="placeholderText">
-                <string>Annual mean dischage (m3/s) - required</string>
+             <item row="35" column="0">
+              <widget class="QLabel" name="label_60">
+               <property name="text">
+                <string>path_land_use_and_manning_n_table</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QgsFileWidget" name="file_dem"/>
+             <item row="29" column="1">
+              <widget class="QLabel" name="label_55">
+               <property name="text">
+                <string>Add hydrology related attributes</string>
+               </property>
+              </widget>
              </item>
-             <item row="23" column="2">
-              <widget class="QLineEdit" name="txt_lakearea">
+             <item row="28" column="1">
+              <widget class="QLineEdit" name="txt_poidrainarea">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="placeholderText">
-                <string>area of lakes (km2) - required</string>
+                <string>drainage area - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QgsFileWidget" name="file_landuserast">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
                </property>
               </widget>
              </item>
@@ -2600,213 +2810,27 @@
                </property>
               </widget>
              </item>
-             <item row="26" column="2">
-              <widget class="QLineEdit" name="txt_poiname">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="placeholderText">
-                <string>unique name</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_39">
+             <item row="22" column="0">
+              <widget class="QLabel" name="label_51">
                <property name="text">
-                <string>Lakes*</string>
+                <string>lake_attributes</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_40">
+             <item row="15" column="0">
+              <widget class="QLabel" name="label_45">
                <property name="text">
-                <string>Bankfull width*</string>
+                <string>buffer_distance</string>
                </property>
               </widget>
              </item>
-             <item row="30" column="0">
-              <widget class="QLabel" name="label_56">
-               <property name="text">
-                <string>bkfwd_attributes</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="1">
-              <widget class="QgsFileWidget" name="file_bankfullwidth"/>
-             </item>
-             <item row="29" column="0">
-              <widget class="QCheckBox" name="chk_epsgcode">
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
-               </property>
-               <property name="text">
-                <string>projected_epsg_code</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="QgsFileWidget" name="file_lakes"/>
-             </item>
-             <item row="27" column="2">
-              <widget class="QLineEdit" name="txt_poisource">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="placeholderText">
-                <string>source of observation point</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QgsFileWidget" name="file_landusepoly"/>
-             </item>
-             <item row="17" column="0">
-              <widget class="QLabel" name="label_47">
-               <property name="toolTip">
-                <string>flow accumulation thresthold</string>
-               </property>
-               <property name="text">
-                <string>fac_threshold</string>
-               </property>
-              </widget>
-             </item>
-             <item row="27" column="1">
-              <widget class="QLineEdit" name="txt_poidrainarea">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="placeholderText">
-                <string>drainage area - required</string>
-               </property>
-              </widget>
-             </item>
-             <item row="28" column="1">
-              <widget class="QLabel" name="label_55">
-               <property name="text">
-                <string>Add hydrology related attributes</string>
-               </property>
-              </widget>
-             </item>
-             <item row="16" column="1">
-              <widget class="QLabel" name="label_46">
-               <property name="text">
-                <string>Delineate routing structure without lakes</string>
-               </property>
-              </widget>
-             </item>
-             <item row="25" column="1">
-              <widget class="QDoubleSpinBox" name="spin_nonconlakearea">
+             <item row="35" column="1">
+              <widget class="QgsFileWidget" name="file_landusemanning">
                <property name="enabled">
                 <bool>false</bool>
                </property>
-               <property name="maximum">
-                <double>1000000.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-             <item row="22" column="1">
-              <widget class="QLineEdit" name="txt_lakeid">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="placeholderText">
-                <string>id - required</string>
-               </property>
-              </widget>
-             </item>
-             <item row="14" column="0">
-              <widget class="QRadioButton" name="rb_providedply">
-               <property name="toolTip">
-                <string>the extent of provided polygon is used</string>
-               </property>
-               <property name="text">
-                <string>using_provided_ply</string>
-               </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup</string>
-               </attribute>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QgsFileWidget" name="file_landuserast"/>
-             </item>
-             <item row="23" column="0">
-              <widget class="QLineEdit" name="txt_lakevol">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="placeholderText">
-                <string>volume of lakes (km3) - required</string>
-               </property>
-              </widget>
-             </item>
-             <item row="12" column="0">
-              <widget class="QRadioButton" name="rb_modehybasin">
-               <property name="toolTip">
-                <string>the extent is defined by subbasins that are drainage to the provided watershed outlet subbasins ID in HydroBASINS product</string>
-               </property>
-               <property name="text">
-                <string>using_hybasin</string>
-               </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup</string>
-               </attribute>
-              </widget>
-             </item>
-             <item row="33" column="0">
-              <widget class="QLabel" name="label_58">
-               <property name="toolTip">
-                <string>if k and c is provided, the path_bkfwidthdepth_polyline will not be used</string>
-               </property>
-               <property name="text">
-                <string>C</string>
-               </property>
-              </widget>
-             </item>
-             <item row="13" column="2">
-              <widget class="QLineEdit" name="txt_outletlon">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="placeholderText">
-                <string>Lon</string>
-               </property>
-              </widget>
-             </item>
-             <item row="30" column="1">
-              <widget class="QLineEdit" name="txt_bankfullwidth">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="placeholderText">
-                <string>Bankfull width (m) - required</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_35">
-               <property name="text">
-                <string>Landuse (polygons)</string>
-               </property>
-              </widget>
-             </item>
-             <item row="34" column="0">
-              <widget class="QLabel" name="label_60">
-               <property name="text">
-                <string>path_land_use_and_manning_n_table</string>
-               </property>
-              </widget>
-             </item>
-             <item row="12" column="2">
-              <widget class="QSpinBox" name="spin_hybasin">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="toolTip">
-                <string>hydrobasin_id_of_watershed_outlet</string>
-               </property>
-               <property name="maximum">
-                <number>99999999</number>
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
                </property>
               </widget>
              </item>
@@ -2820,28 +2844,41 @@
                </property>
               </widget>
              </item>
-             <item row="32" column="0">
-              <widget class="QLabel" name="label_57">
-               <property name="toolTip">
-                <string>if k and c is provided, the path_bkfwidthdepth_polyline will not be used</string>
+             <item row="14" column="1">
+              <widget class="QgsFileWidget" name="file_providedply">
+               <property name="enabled">
+                <bool>false</bool>
                </property>
-               <property name="text">
-                <string>K</string>
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
+               <property name="toolTip">
+                <string>path_to_spatial_extent_polygon</string>
                </property>
               </widget>
              </item>
-             <item row="26" column="0">
-              <widget class="QLabel" name="label_54">
-               <property name="text">
-                <string>Point_of_interest_attributes</string>
+             <item row="32" column="2">
+              <widget class="QLineEdit" name="txt_bankfulldrainarea">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>Drainage area (km2) - required</string>
                </property>
               </widget>
              </item>
-             <item row="11" column="0">
-              <widget class="QRadioButton" name="rb_modedem">
-               <property name="toolTip">
-                <string>the extent of input dem is used</string>
+             <item row="22" column="2">
+              <widget class="QLineEdit" name="txt_laketype">
+               <property name="enabled">
+                <bool>false</bool>
                </property>
+               <property name="placeholderText">
+                <string>type of lake</string>
+               </property>
+              </widget>
+             </item>
+             <item row="18" column="1">
+              <widget class="QRadioButton" name="rb_dem">
                <property name="text">
                 <string>using_dem</string>
                </property>
@@ -2849,17 +2886,21 @@
                 <bool>true</bool>
                </property>
                <attribute name="buttonGroup">
-                <string notr="true">buttonGroup</string>
+                <string notr="true">buttonGroup_2</string>
                </attribute>
               </widget>
              </item>
-             <item row="30" column="2">
-              <widget class="QLineEdit" name="txt_bankfulldepth">
-               <property name="enabled">
-                <bool>false</bool>
+             <item row="3" column="1">
+              <widget class="QgsFileWidget" name="file_landusepoly">
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
                </property>
-               <property name="placeholderText">
-                <string>Bankfull depth (m) - required</string>
+              </widget>
+             </item>
+             <item row="31" column="0">
+              <widget class="QLabel" name="label_56">
+               <property name="text">
+                <string>bkfwd_attributes</string>
                </property>
               </widget>
              </item>
@@ -2871,67 +2912,18 @@
               </widget>
              </item>
              <item row="7" column="1">
-              <widget class="QgsFileWidget" name="file_soil"/>
-             </item>
-             <item row="9" column="0">
-              <widget class="QLabel" name="label_49">
-               <property name="toolTip">
-                <string>The maximum RAM that BasinMaker will be allowed to use</string>
-               </property>
-               <property name="text">
-                <string>Max memory (MB)</string>
+              <widget class="QgsFileWidget" name="file_soil">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
                </property>
               </widget>
              </item>
-             <item row="10" column="1">
-              <widget class="QLabel" name="label_44">
-               <property name="text">
-                <string>Define project spatial extent</string>
+             <item row="6" column="1">
+              <widget class="QgsFileWidget" name="file_bankfullwidth">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
                </property>
               </widget>
-             </item>
-             <item row="19" column="2">
-              <widget class="QgsFileWidget" name="file_fdr">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="toolTip">
-                <string>path of flow direction input dataset</string>
-               </property>
-              </widget>
-             </item>
-             <item row="34" column="1">
-              <widget class="QgsFileWidget" name="file_landusemanning">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="33" column="1">
-              <widget class="QDoubleSpinBox" name="spin_ccoef">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="decimals">
-                <number>8</number>
-               </property>
-               <property name="maximum">
-                <double>99999.999999000006937</double>
-               </property>
-              </widget>
-             </item>
-             <item row="12" column="1">
-              <widget class="QgsFileWidget" name="file_hybasin">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="toolTip">
-                <string>path_to_hydrobasin_polygon</string>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="1">
-              <widget class="QgsFileWidget" name="file_pointsinterest"/>
              </item>
              <item row="9" column="1">
               <widget class="QSpinBox" name="spin_ram">
@@ -2955,81 +2947,72 @@
                </property>
               </widget>
              </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_59">
-               <property name="text">
-                <string>Landuse (raster)*</string>
+             <item row="12" column="2">
+              <widget class="QSpinBox" name="spin_hybasin">
+               <property name="enabled">
+                <bool>false</bool>
                </property>
-              </widget>
-             </item>
-             <item row="22" column="0">
-              <widget class="QLabel" name="label_51">
-               <property name="text">
-                <string>lake_attributes</string>
-               </property>
-              </widget>
-             </item>
-             <item row="13" column="0">
-              <widget class="QRadioButton" name="rb_outletpt">
                <property name="toolTip">
-                <string>the extent is defined by the watershed generated from input dem and the watershed outlet coordinates</string>
+                <string>hydrobasin_id_of_watershed_outlet</string>
+               </property>
+               <property name="maximum">
+                <number>99999999</number>
+               </property>
+              </widget>
+             </item>
+             <item row="16" column="1">
+              <widget class="QLabel" name="label_46">
+               <property name="text">
+                <string>Delineate routing structure without lakes</string>
+               </property>
+              </widget>
+             </item>
+             <item row="23" column="1">
+              <widget class="QLineEdit" name="txt_lakeavgdepth">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>average depth (m)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLabel" name="label_43">
+               <property name="lineWidth">
+                <number>0</number>
+               </property>
+               <property name="midLineWidth">
+                <number>0</number>
                </property>
                <property name="text">
-                <string>using_outlet_pt</string>
+                <string>Files location</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="0">
+              <widget class="QRadioButton" name="rb_modedem">
+               <property name="toolTip">
+                <string>the extent of input dem is used</string>
+               </property>
+               <property name="text">
+                <string>using_dem</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
                </property>
                <attribute name="buttonGroup">
                 <string notr="true">buttonGroup</string>
                </attribute>
               </widget>
              </item>
-             <item row="18" column="2">
-              <widget class="QRadioButton" name="rb_fdr">
-               <property name="text">
-                <string>using_fdr</string>
-               </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_2</string>
-               </attribute>
-              </widget>
-             </item>
-             <item row="15" column="0">
-              <widget class="QLabel" name="label_45">
-               <property name="text">
-                <string>buffer_distance</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_34">
-               <property name="text">
-                <string>DEM</string>
-               </property>
-              </widget>
-             </item>
-             <item row="25" column="0">
-              <widget class="QLabel" name="label_53">
-               <property name="text">
-                <string>non_connected_lake_area_threshold</string>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="0">
-              <widget class="QLabel" name="label_42">
-               <property name="toolTip">
-                <string>path of the point shapefile that indicate points of interest,which can include different observation gauges</string>
-               </property>
-               <property name="text">
-                <string>Points of interest</string>
-               </property>
-              </widget>
-             </item>
-             <item row="31" column="2">
-              <widget class="QLineEdit" name="txt_bankfulldrainarea">
+             <item row="19" column="2">
+              <widget class="QgsFileWidget" name="file_fdr">
                <property name="enabled">
                 <bool>false</bool>
                </property>
-               <property name="placeholderText">
-                <string>Drainage area (km2) - required</string>
+               <property name="toolTip">
+                <string>path of flow direction input dataset</string>
                </property>
               </widget>
              </item>
@@ -3049,84 +3032,64 @@
                </property>
               </widget>
              </item>
-             <item row="26" column="1">
+             <item row="33" column="0">
+              <widget class="QLabel" name="label_57">
+               <property name="toolTip">
+                <string>if k and c is provided, the path_bkfwidthdepth_polyline will not be used</string>
+               </property>
+               <property name="text">
+                <string>K</string>
+               </property>
+              </widget>
+             </item>
+             <item row="27" column="0">
+              <widget class="QLabel" name="label_54">
+               <property name="text">
+                <string>Point_of_interest_attributes</string>
+               </property>
+              </widget>
+             </item>
+             <item row="27" column="2">
+              <widget class="QLineEdit" name="txt_poiname">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="placeholderText">
+                <string>unique name</string>
+               </property>
+              </widget>
+             </item>
+             <item row="36" column="1">
+              <widget class="QgsFileWidget" name="file_outputfolder">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
+               <property name="storageMode">
+                <enum>QgsFileWidget::GetDirectory</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_59">
+               <property name="text">
+                <string>Landuse (raster)*</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_34">
+               <property name="text">
+                <string>DEM</string>
+               </property>
+              </widget>
+             </item>
+             <item row="27" column="1">
               <widget class="QLineEdit" name="txt_poiid">
                <property name="enabled">
                 <bool>true</bool>
                </property>
                <property name="placeholderText">
                 <string>id - required</string>
-               </property>
-              </widget>
-             </item>
-             <item row="24" column="1">
-              <widget class="QDoubleSpinBox" name="spin_conlakearea">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="maximum">
-                <double>1000000.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-             <item row="18" column="1">
-              <widget class="QRadioButton" name="rb_dem">
-               <property name="text">
-                <string>using_dem</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_2</string>
-               </attribute>
-              </widget>
-             </item>
-             <item row="23" column="1">
-              <widget class="QLineEdit" name="txt_lakeavgdepth">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="placeholderText">
-                <string>average depth (m)</string>
-               </property>
-              </widget>
-             </item>
-             <item row="22" column="2">
-              <widget class="QLineEdit" name="txt_laketype">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="placeholderText">
-                <string>type of lake</string>
-               </property>
-              </widget>
-             </item>
-             <item row="24" column="0">
-              <widget class="QLabel" name="label_52">
-               <property name="text">
-                <string>connected_lake_area_threshold</string>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="label_41">
-               <property name="text">
-                <string>Soil</string>
-               </property>
-              </widget>
-             </item>
-             <item row="35" column="0">
-              <widget class="QLabel" name="label_36">
-               <property name="text">
-                <string>Where to save the results?</string>
-               </property>
-              </widget>
-             </item>
-             <item row="35" column="1">
-              <widget class="QgsFileWidget" name="file_outputfolder">
-               <property name="storageMode">
-                <enum>QgsFileWidget::GetDirectory</enum>
                </property>
               </widget>
              </item>
@@ -3137,6 +3100,86 @@
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="32" column="1">
+              <widget class="QLineEdit" name="txt_bankfulldischarge">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>Annual mean dischage (m3/s) - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QLabel" name="label_42">
+               <property name="toolTip">
+                <string>path of the point shapefile that indicate points of interest,which can include different observation gauges</string>
+               </property>
+               <property name="text">
+                <string>Points of interest</string>
+               </property>
+              </widget>
+             </item>
+             <item row="22" column="1">
+              <widget class="QLineEdit" name="txt_lakeid">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>id - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="34" column="0">
+              <widget class="QLabel" name="label_58">
+               <property name="toolTip">
+                <string>if k and c is provided, the path_bkfwidthdepth_polyline will not be used</string>
+               </property>
+               <property name="text">
+                <string>C</string>
+               </property>
+              </widget>
+             </item>
+             <item row="23" column="2">
+              <widget class="QLineEdit" name="txt_lakearea">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>area of lakes (km2) - required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="1">
+              <widget class="QgsFileWidget" name="file_hybasin">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
+               <property name="toolTip">
+                <string>path_to_hydrobasin_polygon</string>
+               </property>
+              </widget>
+             </item>
+             <item row="18" column="0">
+              <widget class="QLabel" name="label_48">
+               <property name="text">
+                <string>mode</string>
+               </property>
+              </widget>
+             </item>
+             <item row="24" column="1">
+              <widget class="QLineEdit" name="txt_lakevol">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>volume of lakes (km3) - required</string>
                </property>
               </widget>
              </item>
@@ -3209,7 +3252,11 @@
               </widget>
              </item>
              <item row="10" column="2">
-              <widget class="QgsFileWidget" name="file_pathveginfo"/>
+              <widget class="QgsFileWidget" name="file_pathveginfo">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
+              </widget>
              </item>
              <item row="11" column="2">
               <widget class="QLabel" name="label_72">
@@ -3254,7 +3301,11 @@
               </widget>
              </item>
              <item row="7" column="2">
-              <widget class="QgsFileWidget" name="file_pathlanduseinfo"/>
+              <widget class="QgsFileWidget" name="file_pathlanduseinfo">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
+              </widget>
              </item>
              <item row="0" column="2">
               <widget class="QLabel" name="label_62">
@@ -3264,7 +3315,11 @@
               </widget>
              </item>
              <item row="8" column="2">
-              <widget class="QgsFileWidget" name="file_pathsoilinfo"/>
+              <widget class="QgsFileWidget" name="file_pathsoilinfo">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
+              </widget>
              </item>
              <item row="6" column="2">
               <widget class="QLabel" name="label_68">
@@ -3319,6 +3374,153 @@
    <header>qgsfilewidget.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>txt_outputdir</tabstop>
+  <tabstop>btn_outputdir</tabstop>
+  <tabstop>txt_modname</tabstop>
+  <tabstop>date_startdate</tabstop>
+  <tabstop>chk_duration</tabstop>
+  <tabstop>date_enddate</tabstop>
+  <tabstop>spin_duration</tabstop>
+  <tabstop>date_timestep</tabstop>
+  <tabstop>combo_soilmod</tabstop>
+  <tabstop>spin_soilmod</tabstop>
+  <tabstop>txt_defhru</tabstop>
+  <tabstop>combo_catchment</tabstop>
+  <tabstop>combo_routing</tabstop>
+  <tabstop>combo_evapo</tabstop>
+  <tabstop>combo_method</tabstop>
+  <tabstop>combo_interpo</tabstop>
+  <tabstop>txt_interpofile</tabstop>
+  <tabstop>combo_rainsnowfrac</tabstop>
+  <tabstop>combo_owevapo</tabstop>
+  <tabstop>combo_oroprecip</tabstop>
+  <tabstop>combo_orotemp</tabstop>
+  <tabstop>combo_oropet</tabstop>
+  <tabstop>combo_cloudcover</tabstop>
+  <tabstop>combo_airpressure</tabstop>
+  <tabstop>combo_potentialmelt</tabstop>
+  <tabstop>combo_monthlyinterpo</tabstop>
+  <tabstop>combo_lakestorage</tabstop>
+  <tabstop>combo_swradation</tabstop>
+  <tabstop>combo_swcanopy</tabstop>
+  <tabstop>combo_swcloud</tabstop>
+  <tabstop>combo_lwradation</tabstop>
+  <tabstop>combo_windspeed</tabstop>
+  <tabstop>combo_relhumidity</tabstop>
+  <tabstop>combo_precipicept</tabstop>
+  <tabstop>combo_recharge</tabstop>
+  <tabstop>combo_subdaily</tabstop>
+  <tabstop>combo_calendar</tabstop>
+  <tabstop>plainTextEdit</tabstop>
+  <tabstop>chk_runname</tabstop>
+  <tabstop>txt_runname</tabstop>
+  <tabstop>chk_outputdir</tabstop>
+  <tabstop>file_outputdir</tabstop>
+  <tabstop>chk_outputinterval</tabstop>
+  <tabstop>spin_outinterval</tabstop>
+  <tabstop>chk_rvptemplate</tabstop>
+  <tabstop>chk_writedemand</tabstop>
+  <tabstop>chk_writemassbal</tabstop>
+  <tabstop>chk_writeenergy</tabstop>
+  <tabstop>chk_writeforcingfunc</tabstop>
+  <tabstop>chk_writeexausmb</tabstop>
+  <tabstop>chk_endpause</tabstop>
+  <tabstop>chk_writeensim</tabstop>
+  <tabstop>chk_debugmode</tabstop>
+  <tabstop>chk_suppressoutput</tabstop>
+  <tabstop>chk_silentmode</tabstop>
+  <tabstop>chk_snaphydro</tabstop>
+  <tabstop>chk_wateryear</tabstop>
+  <tabstop>spin_wateryear</tabstop>
+  <tabstop>list_evalmetrics</tabstop>
+  <tabstop>combo_time1</tabstop>
+  <tabstop>combo_stat1</tabstop>
+  <tabstop>txt_var1</tabstop>
+  <tabstop>combo_eval1</tabstop>
+  <tabstop>combo_time2</tabstop>
+  <tabstop>combo_stat2</tabstop>
+  <tabstop>txt_var2</tabstop>
+  <tabstop>combo_eval2</tabstop>
+  <tabstop>combo_time3</tabstop>
+  <tabstop>combo_stat3</tabstop>
+  <tabstop>txt_var3</tabstop>
+  <tabstop>combo_eval3</tabstop>
+  <tabstop>combo_time4</tabstop>
+  <tabstop>combo_stat4</tabstop>
+  <tabstop>txt_var4</tabstop>
+  <tabstop>combo_eval4</tabstop>
+  <tabstop>combo_time5</tabstop>
+  <tabstop>combo_stat5</tabstop>
+  <tabstop>txt_var5</tabstop>
+  <tabstop>combo_eval5</tabstop>
+  <tabstop>combo_time6</tabstop>
+  <tabstop>combo_stat6</tabstop>
+  <tabstop>txt_var6</tabstop>
+  <tabstop>combo_eval6</tabstop>
+  <tabstop>combo_time7</tabstop>
+  <tabstop>combo_stat7</tabstop>
+  <tabstop>txt_var7</tabstop>
+  <tabstop>combo_eval7</tabstop>
+  <tabstop>btn_write</tabstop>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>file_dem</tabstop>
+  <tabstop>file_landusepoly</tabstop>
+  <tabstop>file_landuserast</tabstop>
+  <tabstop>file_lakes</tabstop>
+  <tabstop>file_bankfullwidth</tabstop>
+  <tabstop>file_soil</tabstop>
+  <tabstop>file_pointsinterest</tabstop>
+  <tabstop>spin_ram</tabstop>
+  <tabstop>rb_modedem</tabstop>
+  <tabstop>rb_modehybasin</tabstop>
+  <tabstop>spin_hybasin</tabstop>
+  <tabstop>rb_outletpt</tabstop>
+  <tabstop>txt_outletlat</tabstop>
+  <tabstop>txt_outletlon</tabstop>
+  <tabstop>rb_providedply</tabstop>
+  <tabstop>file_providedply</tabstop>
+  <tabstop>spin_buffer</tabstop>
+  <tabstop>spin_facthreshold</tabstop>
+  <tabstop>rb_dem</tabstop>
+  <tabstop>rb_fdr</tabstop>
+  <tabstop>txt_lakeid</tabstop>
+  <tabstop>txt_laketype</tabstop>
+  <tabstop>txt_lakeavgdepth</tabstop>
+  <tabstop>txt_lakearea</tabstop>
+  <tabstop>txt_lakevol</tabstop>
+  <tabstop>spin_conlakearea</tabstop>
+  <tabstop>spin_nonconlakearea</tabstop>
+  <tabstop>txt_poiid</tabstop>
+  <tabstop>txt_poiname</tabstop>
+  <tabstop>txt_poidrainarea</tabstop>
+  <tabstop>txt_poisource</tabstop>
+  <tabstop>chk_epsgcode</tabstop>
+  <tabstop>txt_epsgcode</tabstop>
+  <tabstop>txt_bankfullwidth</tabstop>
+  <tabstop>txt_bankfulldepth</tabstop>
+  <tabstop>txt_bankfulldischarge</tabstop>
+  <tabstop>txt_bankfulldrainarea</tabstop>
+  <tabstop>spin_kcoef</tabstop>
+  <tabstop>spin_ccoef</tabstop>
+  <tabstop>file_landusemanning</tabstop>
+  <tabstop>file_outputfolder</tabstop>
+  <tabstop>scrollArea_2</tabstop>
+  <tabstop>spin_filterconnectedlakes</tabstop>
+  <tabstop>spin_filternonconnectedlakes</tabstop>
+  <tabstop>txt_selectedlakeid</tabstop>
+  <tabstop>spin_minsubbasinarea</tabstop>
+  <tabstop>file_pathlanduseinfo</tabstop>
+  <tabstop>file_pathsoilinfo</tabstop>
+  <tabstop>file_pathveginfo</tabstop>
+  <tabstop>txt_modelname</tabstop>
+  <tabstop>btn_dockerrun</tabstop>
+  <tabstop>btn_dockerrm</tabstop>
+  <tabstop>file_hybasin</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -3328,8 +3530,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>29</x>
+     <y>619</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -3344,8 +3546,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>29</x>
+     <y>619</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
