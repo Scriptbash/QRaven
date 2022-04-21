@@ -33,7 +33,16 @@ QRaven aims to simplify the creation of the primary input file (.RVI) and HRU/Ba
     *  ![image](https://user-images.githubusercontent.com/98601298/162264955-e076fcb2-9c10-4fd6-981e-1472dcf7ae60.png)
 * BasinMaker RVH tab
   * Use this tab to lauch BasinMaker and generate the RVH files
-  * This section is still in development, coming soon... 
+  * This section is still very much in development and needs way more testing
+  * Like the RVI file, select the parameters values and select the files to process
+  * When a file is added, more parameters fields unlock and will need to be filled
+  * Screenshots
+    * ![image](https://user-images.githubusercontent.com/98601298/163680321-47b75579-3d5e-4506-bed7-8e2a31c87d50.png)
+    * ![image](https://user-images.githubusercontent.com/98601298/163680334-43064748-5298-43ee-ad34-79b827ea8998.png)
+    * ![image](https://user-images.githubusercontent.com/98601298/163680338-aed31db0-2bd6-4903-9385-7f424d4b410b.png)
+
+
+
 
 
 

@@ -139,7 +139,7 @@ def addOutletPts():
     end = time.time()
     print("Add_New_Subbasin_Outlet_Points took", end - start, "seconds")
 
-
+#Add hydrology related attributes
 def genHydroRoutingAtt():
     
     bankfullname = os.path.basename(params['pathbankfull'])
@@ -158,8 +158,8 @@ def genHydroRoutingAtt():
     lakevol = params['lakevol']
     lakeavgdepth = params['lakeavgdepth']
     lakearea = params['lakearea']
-    if params['epsgcode'] != '#':
-        projected_epsg_code = params['epsgcode']
+    #projected_epsg_code = params['epsgcode']
+
     if params['pathlanduserast'] != '#':
         path_landuse=os.path.join(datafolder,"landuse", landuserast)
         path_manning_table = os.path.join(datafolder,"landuse", manningtablename)
@@ -181,7 +181,7 @@ def genHydroRoutingAtt():
                 point_of_interest_attributes=[poiid, poiname, poindrainage, poinsource],
                 lake_attributes=[lakeid, laketype, lakearea, lakevol, lakeavgdepth],
                 path_output_folder=path_output_folder,
-                projected_epsg_code =projected_epsg_code,
+                #projected_epsg_code =projected_epsg_code,
             )
         else:
             bm.Generate_Hydrologic_Routing_Attributes(
@@ -189,7 +189,7 @@ def genHydroRoutingAtt():
                 point_of_interest_attributes=[poiid, poiname, poindrainage, poinsource],
                 lake_attributes=[lakeid, laketype, lakearea, lakevol, lakeavgdepth],
                 path_output_folder=path_output_folder,
-                projected_epsg_code =projected_epsg_code,
+                #projected_epsg_code =projected_epsg_code,
                 k = float(params['kcoef']),
                 c = float(params['ccoef'])
             )
@@ -224,9 +224,9 @@ def removesmalllakes():
 
     input_routing_product_folder=path_output_folder
     folder_product_after_filter_lakes = os.path.join(os.getcwd(),'OIH_Output','network_after_filter_lakes')
-    filterconnectedlakes = params['filterconnectedlakes']
-    filternonconnectedlakes = params['filternonconnectedlakes']
-    selectedlakeid = params['selectedlakeid']
+    filterconnectedlakes = float(params['filterconnectedlakes'])
+    filternonconnectedlakes = float(params['filternonconnectedlakes'])
+    #selectedlakeid = params['selectedlakeid']
     start = time.time()
 
     try:
@@ -236,7 +236,7 @@ def removesmalllakes():
             routing_product_folder = input_routing_product_folder,
             connected_lake_area_thresthold=filterconnectedlakes,
             non_connected_lake_area_thresthold=filternonconnectedlakes,
-            selected_lake_ids = selectedlakeid,
+            #selected_lake_ids = selectedlakeid,
             gis_platform="qgis",
         )
         print('Remove_Small_Lakes was successful...\n')
@@ -247,6 +247,7 @@ def removesmalllakes():
     print("Remove_Small_Lakes took", end - start, "seconds")
 
 
+#Increase catchment area
 def increaseCatchArea():
 
     input_routing_product_folder = os.path.join(os.getcwd(),'OIH_Output','network_after_filter_lakes')
@@ -269,16 +270,18 @@ def increaseCatchArea():
     end = time.time()
     print("Increase_catchment_area took", end - start, "seconds")
 
-
+#Increase_catchment_area failed...
+#'/root/BasinMaker/OIH_Output/network_after_filter_lakes/obs_gauges.dbf' and '/root/BasinMaker/OIH_Output/network_after_filter_lakes/obs_gauges.dbf' are the same file
+#Generate HRUs
 def generateHRUs():
     folder_product_after_filter_lakes=os.path.join(os.getcwd(),'OIH_Output','network_after_filter_lakes')
     input_routing_product_folder=folder_product_after_filter_lakes
     demname = os.path.basename(params['pathdem'])
-    landusepoly = os.basename(params['pathlandusepoly'])
-    landuseinfo = os.basename(params['pathlanduseinfo'])
-    soilpoly = os.basename(params['pathsoil'])
-    soilinfo = os.basename(params['pathsoilinfo'])
-    veginfo = os.basename(params['pathveginfo'])
+    landusepoly = os.path.basename(params['pathlandusepoly'])
+    landuseinfo = os.path.basename(params['pathlanduseinfo'])
+    soilpoly = os.path.basename(params['pathsoil'])
+    soilinfo = os.path.basename(params['pathsoilinfo'])
+    veginfo = os.path.basename(params['pathveginfo'])
     start = time.time()
 
     try:
@@ -308,6 +311,13 @@ def generateHRUs():
         print(e)
     end = time.time()
     print("Generate_HRUs took", end - start, "seconds")
+#ERROR 6: Failed to add field named 'a_HRULake_ID'
+#ERROR: Unable to create column <a_HRULake_ID>
+#Generate_HRUs failed...
+#Module run None v.out.ogr --o input=union_1 output=/root/BasinMaker/OIH_Output/network_after_filter_lakes/union_1_.shp format=ESRI_Shapefile ended with error
+#Process ended with non-zero return code 1. See errors in the (error) output.
+
+
 
 #Generate the Raven RVH files
 def generateRavenFiles():
