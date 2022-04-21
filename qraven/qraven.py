@@ -746,7 +746,7 @@ class QRaven:
         if self.dlg.file_landuserast.filePath():
             landusemanning = self.dlg.file_landusemanning.filePath()
         else:
-            landusemanning = ''
+            landusemanning = '#'
         
         facthreshold = self.dlg.spin_facthreshold.value()
 
@@ -764,7 +764,7 @@ class QRaven:
             selectedlakeid = self.dlg.txt_selectedlakeid.text()
         else:
             selectedlakeid = '#'
-        if self.dlg.spin_minsubbasinarea.value() != '0.0':
+        if self.dlg.spin_minsubbasinarea.value() <=0:
             minsubbasinarea = self.dlg.spin_minsubbasinarea.value()
         else: 
             minsubbasinarea = '#'
