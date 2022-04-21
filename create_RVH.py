@@ -6,18 +6,10 @@ import logging
 from basinmaker import basinmaker
 import time
 
-#Sets the python path for BasinMaker
-sys.path.append("$PYHTONPATH:'/usr/lib/grass78/etc/python'")
-sys.path.append("$PYHTONPATH:'/usr/share/qgis/python/plugins'")
-sys.path.append("$PYTHONPATH:'/usr/share/qgis/python'")
-
 #Fakes a display to avoid an error with Qt
 os.system('Xvfb :99 -screen 0 640x480x8 -nolisten tcp &')
-#Sets environment variables
-# os.system("export GISBASE='/usr/lib/grass78'")
-# os.system("export QGIS_PREFIX_PATH='/usr'")
-logging.captureWarnings(True)
 
+logging.captureWarnings(True)
 
 #Use Basinmaker Define Project spatial extent.  
 def defineExtent():
@@ -88,7 +80,7 @@ def delineateNoLakes():
                 gis_platform="qgis",
             )
         elif mode == "using_fdr":
-            fdrname = os.basename(params['pathfdr'])
+            fdrname = os.path.basename(params['pathfdr'])
             bm.Delineation_Initial_Subbasins_Without_Lakes(
                 fac_thresold = facthreshold,
                 mode=mode,
@@ -171,7 +163,6 @@ def genHydroRoutingAtt():
     try:
         print('\nGenerate_Hydrologic_Routing_Attributes running...\n')
         if params['pathbankfull'] != '#':
-            
             bm.Generate_Hydrologic_Routing_Attributes(
                 path_bkfwidthdepth_polyline=os.path.join(datafolder,"bkf_width",bankfullname),
                 bkfwd_attributes=[width, depth, discharge, drainage],
@@ -270,8 +261,7 @@ def increaseCatchArea():
     end = time.time()
     print("Increase_catchment_area took", end - start, "seconds")
 
-#Increase_catchment_area failed...
-#'/root/BasinMaker/OIH_Output/network_after_filter_lakes/obs_gauges.dbf' and '/root/BasinMaker/OIH_Output/network_after_filter_lakes/obs_gauges.dbf' are the same file
+
 #Generate HRUs
 def generateHRUs():
     folder_product_after_filter_lakes=os.path.join(os.getcwd(),'OIH_Output','network_after_filter_lakes')
@@ -311,12 +301,6 @@ def generateHRUs():
         print(e)
     end = time.time()
     print("Generate_HRUs took", end - start, "seconds")
-#ERROR 6: Failed to add field named 'a_HRULake_ID'
-#ERROR: Unable to create column <a_HRULake_ID>
-#Generate_HRUs failed...
-#Module run None v.out.ogr --o input=union_1 output=/root/BasinMaker/OIH_Output/network_after_filter_lakes/union_1_.shp format=ESRI_Shapefile ended with error
-#Process ended with non-zero return code 1. See errors in the (error) output.
-
 
 
 #Generate the Raven RVH files
