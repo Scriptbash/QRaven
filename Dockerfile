@@ -4,6 +4,7 @@ ENV LANG=en_EN.UTF-8 \
     LC_ALL=en_US.UTF-8 \
     DEBIAN_FRONTEND=noninteractive \
     DISPLAY=:99 
+SHELL ["/bin/bash", "-c"]
 RUN apt-get update \
     && apt-get install --no-install-suggests --allow-unauthenticated -y \
         gnupg \
@@ -17,7 +18,7 @@ RUN apt-get update \
     && apt install -y grass-dev \
     && apt install -y pip \
     && apt install -y xvfb \
-    && python3 -m pip install https://github.com/dustming/basinmaker/archive/refs/tags/v2.2.6.zip \
+    && python3 -m pip install https://github.com/dustming/basinmaker/archive/master.zip \
     && python3 -m pip install simpledbf grass_session \
     && python3 -m pip install joblib \
     && python3 -m pip install grass_session \
@@ -25,6 +26,10 @@ RUN apt-get update \
     && python3 -m pip install scipy \
     && echo "export GISBASE='/usr/lib/grass78'" >> ~/.bashrc \
     && echo "export QGIS_PREFIX_PATH='/usr'" >> ~/.bashrc \
+    && echo "export PYTHONPATH=\$PYTHONPATH:'/usr/lib/grass78/etc/python'" >> ~/.bashrc \
+    && echo "export PYTHONPATH=\$PYTHONPATH:'/usr/share/qgis/python/plugins'" >> ~/.bashrc \
+    && echo "export PYTHONPATH=\$PYTHONPATH:'/usr/share/qgis/python'" >> ~/.bashrc \
+    && source /root/.bashrc \
     && mkdir -p ~/BasinMaker/Data \
     #&& mkdir -p ~/BasinMaker/Data/{bkf_width,DEM,extent_poly,flow_direction,hybasin,lakes,landuse,soil,stations} \
     && mkdir ~/BasinMaker/Data/bkf_width \
