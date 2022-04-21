@@ -856,8 +856,8 @@ class QRaven:
         self.dockerPull()
         self.dockerStart()
         self.dockerCopy(paramsDict)
-        #self.runBasinMaker()
-        #self.getDockerResults()
+        self.runBasinMaker()
+        self.getDockerResults()
 
       
     #This function fully removes the container, as well as the image to free up space
@@ -899,7 +899,7 @@ class QRaven:
     def dockerStart(self):
         try:
             print("Attempting to start the container...")
-            cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','-e',"QGIS_PREFIX_PATH='/usr'", '--name', 'bmaker', 'scriptbash/basinmaker'
+            cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','--name', 'bmaker', 'scriptbash/basinmaker'
             process = subprocess.Popen(cmd,stdin=subprocess.PIPE, stdout=subprocess.PIPE)
             while True:
                 output = process.stdout.readline()
@@ -923,7 +923,7 @@ class QRaven:
         dockerPoIPath = dockerBMpath + '/Data/stations'
         dockerHybasinPath = dockerBMpath + '/Data/hybasin'
         dockerProvPolyPath = dockerBMpath + '/Data/extent_poly'
-        dockerFDRPath = dockerBMpath + '/Data/flow_direction',
+        dockerFDRPath = dockerBMpath + '/Data/flow_direction'
 
         datapaths = {
             'dem'               : params['pathdem'],
@@ -1015,7 +1015,7 @@ class QRaven:
                     cmdData='docker', 'cp', params['pathveginfo'], 'bmaker:'+ dockerLandusePath
                     self.SendFiles(cmdData)
 
-          
+        print("Done copying the files to the container")  
            
     def SendFiles(self,cmd): 
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
@@ -1031,7 +1031,9 @@ class QRaven:
     def runBasinMaker(self):
         print("Starting BasinMaker process, this will take while to complete")
         
-        cmd ='docker', 'exec','-t','-e', "GISBASE='/usr/lib/grass78/'", 'bmaker','python3','create_RVH.py'
+        pythoncmd = "python3 -u create_RVH.py"
+        cmd ='docker', 'exec','-t', 'bmaker','/bin/bash','-i','-c',pythoncmd
+        
         try:
             process = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
             while True:
@@ -1045,7 +1047,7 @@ class QRaven:
         except Exception as e:
             print("The BasinMaker process failed...")
             print(e)
-        os.system("docker exec -t -e GISBASE='/usr/lib/grass78' bmaker python3 create_RVH.py")
+        
 
 
     def getDockerResults(self):
