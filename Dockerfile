@@ -16,6 +16,7 @@ RUN apt-get update \
     && apt install -y qgis qgis-plugin-grass \
     && apt install -y grass-gui \
     && apt install -y grass-dev \
+    && apt install -y saga \
     && apt install -y pip \
     && apt install -y xvfb \
     && python3 -m pip install https://github.com/dustming/basinmaker/archive/master.zip \
