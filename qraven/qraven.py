@@ -723,7 +723,7 @@ class QRaven:
         if self.dlg.chk_epsgcode.isChecked():
             epsgcode = self.dlg.txt_epsgcode.text()
         else:
-            epsgcode = '#'
+            epsgcode = 'EPSG:3573'
 
         if self.dlg.file_bankfullwidth.filePath():
             bankfullwidth = self.dlg.txt_bankfullwidth.text()
@@ -761,10 +761,11 @@ class QRaven:
             selectedlakeid = self.dlg.txt_selectedlakeid.text()
         else:
             selectedlakeid = '#'
-        if self.dlg.spin_minsubbasinarea.value() <=0:
-            minsubbasinarea = self.dlg.spin_minsubbasinarea.value()
-        else: 
-            minsubbasinarea = '#'
+        # if self.dlg.spin_minsubbasinarea.value() >0:
+        #     minsubbasinarea = self.dlg.spin_minsubbasinarea.value()
+        # else: 
+        #     minsubbasinarea = -1
+        minsubbasinarea = self.dlg.spin_minsubbasinarea.value()
         pathlanduseinfo = self.dlg.file_pathlanduseinfo.filePath()
         pathsoilinfo = self.dlg.file_pathsoilinfo.filePath()
         pathveginfo = self.dlg.file_pathveginfo.filePath()
@@ -1027,6 +1028,7 @@ class QRaven:
         cmd ='docker', 'exec','-t', 'bmaker','/bin/bash','-i','-c',pythoncmd
         
         try:
+            os.system("docker start bmaker")    #Make sure the container is started. Only needed when the plugin is run a second time
             process = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
             while True:
                 output = process.stdout.readline()
