@@ -146,7 +146,7 @@ def genHydroRoutingAtt():
     lakevol = params['lakevol']
     lakeavgdepth = params['lakeavgdepth']
     lakearea = params['lakearea']
-    projected_epsg_code = 'EPSG:'+ str(params['epsgcode'])
+    projected_epsg_code = str(params['epsgcode'])
     
     if params['pathlanduserast'] != '#':
         path_landuse=os.path.join(datafolder,"landuse", landuserast)
@@ -309,7 +309,7 @@ def generateHRUs():
 
 #Generate the Raven RVH files
 def generateRavenFiles():
-    folder_product_after_filter_lakes=os.path.join(os.getcwd(),'OIH_Output','network_after_filter_lakes')
+    folder_product_after_filter_lakes=os.path.join(os.getcwd(),'OIH_Output','network_after_gen_hrus')
     input_routing_product_folder=folder_product_after_filter_lakes
     raven_model_dir = folder_product_after_filter_lakes
     modelname = params['modelname']
