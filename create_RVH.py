@@ -28,14 +28,14 @@ def defineExtent():
         elif mode == "using_hybasin":
             hybasinname = os.path.basename(params['pathhybasin'])
             hybasinID = int(params['hybasinid'])
-            bufferdist = float(params['bufferdistance'])
+            bufferdist = params['bufferdistance']
             bm.Define_Project_Spatial_Extent(
                 mode=mode,
                 path_to_dem_input = os.path.join(os.getcwd(),datafolder,'DEM',"DEM.tif"),
                 gis_platform="qgis",
                 path_to_hydrobasin_polygon = os.path.join(os.getcwd(),datafolder,'hybasin',hybasinname),
                 hydrobasin_id_of_watershed_outlet = hybasinID,
-                buffer_distance = bufferdist
+                buffer_distance = float(bufferdist)
             )
         elif mode == "using_outlet_pt":
             outletcoordinates = params['outletlat'], params['outletlon']
@@ -47,13 +47,13 @@ def defineExtent():
             )
         elif mode == "using_provided_ply":
             extentpolyname = os.path.basename(params['path_providedpoly'])
-            bufferdist = float(['bufferdistance'])
+            bufferdist = params['bufferdistance']
             bm.Define_Project_Spatial_Extent(
                 mode=mode,
                 path_to_dem_input = os.path.join(os.getcwd(),datafolder,'DEM',demname),
                 gis_platform="qgis",
                 path_to_spatial_extent_polygon = os.path.join(os.getcwd(),datafolder,'extent_poly', extentpolyname),
-                buffer_distance = bufferdist
+                buffer_distance = float(bufferdist)
             )
         print('Define_Project_Spatial_Extent was successful...\n')
     except Exception as e:
@@ -137,10 +137,6 @@ def genHydroRoutingAtt():
     bankfullname = os.path.basename(params['pathbankfull'])
     landuserast = os.path.basename(params['pathlanduserast'])
     manningtablename = os.path.basename(params['landusemanning'])
-    width = params['bankfullwidth']
-    depth = params['bankfulldepth']
-    discharge = params['bankfulldischarge']
-    drainage = params['bankfulldrainage']
     poiid = params['poiid']
     poiname = params['poiname']
     poindrainage = params['poidrainarea']
@@ -150,8 +146,8 @@ def genHydroRoutingAtt():
     lakevol = params['lakevol']
     lakeavgdepth = params['lakeavgdepth']
     lakearea = params['lakearea']
-    #projected_epsg_code = params['epsgcode']
-
+    projected_epsg_code = 'EPSG:'+ str(params['epsgcode'])
+    
     if params['pathlanduserast'] != '#':
         path_landuse=os.path.join(datafolder,"landuse", landuserast)
         path_manning_table = os.path.join(datafolder,"landuse", manningtablename)
@@ -163,6 +159,10 @@ def genHydroRoutingAtt():
     try:
         print('\nGenerate_Hydrologic_Routing_Attributes running...\n')
         if params['pathbankfull'] != '#':
+            width = params['bankfullwidth']
+            depth = params['bankfulldepth']
+            discharge = params['bankfulldischarge']
+            drainage = params['bankfulldrainage']
             bm.Generate_Hydrologic_Routing_Attributes(
                 path_bkfwidthdepth_polyline=os.path.join(datafolder,"bkf_width",bankfullname),
                 bkfwd_attributes=[width, depth, discharge, drainage],
@@ -172,15 +172,17 @@ def genHydroRoutingAtt():
                 point_of_interest_attributes=[poiid, poiname, poindrainage, poinsource],
                 lake_attributes=[lakeid, laketype, lakearea, lakevol, lakeavgdepth],
                 path_output_folder=path_output_folder,
-                #projected_epsg_code =projected_epsg_code,
+                projected_epsg_code =projected_epsg_code,
             )
         else:
             bm.Generate_Hydrologic_Routing_Attributes(
                 gis_platform="qgis",
+                path_landuse= path_landuse,
+                path_landuse_and_manning_n_table = path_manning_table,
                 point_of_interest_attributes=[poiid, poiname, poindrainage, poinsource],
                 lake_attributes=[lakeid, laketype, lakearea, lakevol, lakeavgdepth],
                 path_output_folder=path_output_folder,
-                #projected_epsg_code =projected_epsg_code,
+                projected_epsg_code =projected_epsg_code,
                 k = float(params['kcoef']),
                 c = float(params['ccoef'])
             )
@@ -242,8 +244,8 @@ def removesmalllakes():
 def increaseCatchArea():
 
     input_routing_product_folder = os.path.join(os.getcwd(),'OIH_Output','network_after_filter_lakes')
-    folder_product_after_increase_catchment = os.path.join(os.getcwd(),'OIH_Output','network_after_filter_lakes')
-    minsubbasinarea = params['minsubbasinarea']
+    folder_product_after_increase_catchment = os.path.join(os.getcwd(),'OIH_Output','network_after_increase_catchment')
+    minsubbasinarea = float(params['minsubbasinarea'])
     start = time.time()
 
     try:
@@ -264,8 +266,10 @@ def increaseCatchArea():
 
 #Generate HRUs
 def generateHRUs():
-    folder_product_after_filter_lakes=os.path.join(os.getcwd(),'OIH_Output','network_after_filter_lakes')
-    input_routing_product_folder=folder_product_after_filter_lakes
+    folder_product_after_increase_catchment=os.path.join(os.getcwd(),'OIH_Output','network_after_increase_catchment')
+    input_routing_product_folder=folder_product_after_increase_catchment
+    folder_product_after_gen_hrus=os.path.join(os.getcwd(),'OIH_Output','network_after_gen_hrus')
+
     demname = os.path.basename(params['pathdem'])
     landusepoly = os.path.basename(params['pathlandusepoly'])
     landuseinfo = os.path.basename(params['pathlanduseinfo'])
@@ -277,7 +281,7 @@ def generateHRUs():
     try:
         print('\Generate_HRUs running...\n')
         bm_post.Generate_HRUs(
-            path_output_folder=folder_product_after_filter_lakes,
+            path_output_folder=folder_product_after_gen_hrus,
             path_subbasin_polygon        =os.path.join(input_routing_product_folder, "finalcat_info.shp"),
             path_connect_lake_polygon    =os.path.join(input_routing_product_folder, "sl_connected_lake.shp"),
             path_non_connect_lake_polygon='#',
@@ -352,7 +356,6 @@ if params['pathlakes'] !='#':
 genHydroRoutingAtt()
 combinecatchment()
 removesmalllakes()
-if params['minsubbasinarea'] !='#':
-    increaseCatchArea()
+increaseCatchArea()
 generateHRUs()
 generateRavenFiles()
