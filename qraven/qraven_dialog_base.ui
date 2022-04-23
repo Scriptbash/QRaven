@@ -23,7 +23,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -2469,7 +2469,7 @@
       <widget class="QPushButton" name="btn_dockerrm">
        <property name="geometry">
         <rect>
-         <x>620</x>
+         <x>690</x>
          <y>520</y>
          <width>111</width>
          <height>28</height>
@@ -2484,7 +2484,7 @@
         <rect>
          <x>10</x>
          <y>40</y>
-         <width>851</width>
+         <width>841</width>
          <height>471</height>
         </rect>
        </property>
@@ -2505,8 +2505,8 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>0</y>
-              <width>814</width>
+              <y>-419</y>
+              <width>804</width>
               <height>1114</height>
              </rect>
             </property>
@@ -3204,7 +3204,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>827</width>
+              <width>817</width>
               <height>419</height>
              </rect>
             </property>
@@ -3557,7 +3557,7 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
