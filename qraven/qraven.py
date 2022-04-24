@@ -240,8 +240,10 @@ class QRaven:
             pass
     
 
-    #This function enables and disables widgets based on their checkboxes/radiobutton state
+    #This method enables and disables widgets based on their checkboxes/radiobutton state
     def toggleWidget(self):
+        '''Enables/disables a widget based on the widget calling the method'''
+
         widget = self.dlg.sender()  #Get the widget name
         
         #Conditions for the Raven RVI section below
@@ -353,30 +355,41 @@ class QRaven:
                 self.dlg.file_landusemanning.setEnabled(False) 
               
 
-    #This function enables and disables the spinbox next to the SoilModel combobox depending on the selected value of the combobox
+    #This method enables and disables the spinbox next to the SoilModel combobox depending on the selected value of the combobox
     def toggleSoilModel(self):
+        '''Toggles the spinbox for the number of soils if the soil model value is soil_multilayer'''
         if self.dlg.combo_soilmod.currentText().lower() == "soil_multilayer":
             self.dlg.spin_soilmod.setEnabled(True)
         else:
             self.dlg.spin_soilmod.setEnabled(False)
 
 
-    #This function enables and disables the line edit next to the InterpolationMethod if the value is INTERP_FROM_FILE.
+    #This method enables and disables the line edit next to the InterpolationMethod if the value is INTERP_FROM_FILE.
     def toggleInterpolation(self):
+        '''Toggles the lineEdit for the interpolation file if the interpolationMethod value is inter_from_file'''
         if self.dlg.combo_interpo.currentText().lower() == "interp_from_file":
             self.dlg.txt_interpofile.setEnabled(True)
         else:
             self.dlg.txt_interpofile.setEnabled(False)
 
 
-    #This function opens a file explorer to select an output folder
+    #This method opens a file explorer to select an output folder
     def browseDirectory(self):
+        '''Allows to browse the computer for a directory'''
         dir = str(QFileDialog.getExistingDirectory(None, "Select Directory"))
         self.dlg.txt_outputdir.setText(dir)
         
 
-    #This function writes all the parameters entered by the user into the RVI file
+    #This method writes all the parameters entered by the user into the RVI file
     def writeRVI(self):
+        '''Gathers all the RVI parameters entered by the user from a dictionary and writes them into a .RVI file
+        
+            Depends on the following methods:
+
+            getParams()
+
+            getCustomOutput()
+        '''
         paramDict = self.getParams()    #Calls the function to retrieve the widgets values
         customOutputList = self.getCustomOutput()   #Calls the function to get the custom output values
         outputdir = self.dlg.txt_outputdir.text()   #Get the output directory chosen by the use
@@ -419,8 +432,12 @@ class QRaven:
             print(e)
             self.iface.messageBar().pushMessage("Error", "Unable to write the RVI file. See python logs for more details.",level=Qgis.Critical)
 
-    #This function gathers all the RVI parameters entered by the user and returns them into a dictionary
+    #This method gathers all the RVI parameters entered by the user and returns them into a dictionary
     def getParams(self):
+        '''Gets all the parameters entered by the user in the Raven RVI tab
+        
+            Returns a dictionary of parameters
+        '''
         #Get the start date
         startDateTmp = self.dlg.date_startdate.dateTime()
         startDate = str(startDateTmp.toPyDateTime())
@@ -626,8 +643,12 @@ class QRaven:
         return paramsDict
 
 
-    #This function fetches the custom output widgets' values and returns them into a list
+    #This method fetches the custom output widgets' values and returns them into a list
     def getCustomOutput(self):
+        '''Loops through all the custom output widgets to retrieve their values
+        
+           Returns a list
+        '''
         customOutputList = []
         #Loop through all the Custom Ouput widgets in order to get their values and add them to a list
         for i in range(self.dlg.gridLayout.count()):
@@ -643,9 +664,12 @@ class QRaven:
                     customOutputList.append(" ") #If the line edit is empty, places an empty space at its place in the list
         return customOutputList 
 
-    #This function gets all the RVH parameters and returns them into a dictionary
+    #This method gets all the RVH parameters and returns them into a dictionary
     def getRVHparams(self):
-    
+        '''Gathers all the values entered by the user inside the BasinMaker RVH tab
+        
+            Returns a dictionary of parameters
+        '''
         pathdem = self.dlg.file_dem.filePath()  #Get the path to the DEM
         pathlandusepoly = self.dlg.file_landusepoly.filePath()  #Get the path to the landuse polygon
         pathlanduserast = self.dlg.file_landuserast.filePath()  #Get the path to the landuse raster
@@ -811,9 +835,10 @@ class QRaven:
         }
         return params
 
-    #This function exports the paramters dictionary into a file. This file is then used by the docker container
+    #This method exports the paramters dictionary into a file. This file is then used by the docker container
     #to run BasinMaker using the parameters from the file
     def exportRVHparams(self,paramDict):
+        '''Exports the RVH parameters dictionary into a .txt file stored inside a directory provided by the user'''
         outputdir = self.dlg.file_outputfolder.filePath()   #Get the output directory
         try:
             #Path where to save the parameters file
@@ -830,9 +855,28 @@ class QRaven:
             print(e)
 
 
-    #This function sets up the scriptbash/basinmaker docker container. Pulls, starts and stops the docker container
+    #This method sets up the scriptbash/basinmaker docker container. Pulls, starts and stops the docker container
     def dockerinit(self):
+        '''Runs multiple methods related to Docker. Basically manages the Docker setup
+        
+            Depends on the following methods:
 
+            getRVHparams()
+
+            exportRVHparams()
+
+            dockerPull()
+
+            dockerStart()
+
+            dockerCopy()
+
+            runBasinMaker()
+
+            getDockerResults()
+         '''
+        self.iface.messageBar().pushInfo("Info", "The BasinMaker process is starting, this will take a while to complete.")
+        self.iface.mainWindow().repaint()
         paramsDict = self.getRVHparams()    #Calls the function to get the RVH parameters
         self.exportRVHparams(paramsDict)    #Calls the function to export the RVH parameters into a file
         self.dockerPull()                   #Calls the function to pull the container
@@ -843,8 +887,9 @@ class QRaven:
         os.system("docker stop bmaker")     #Stops the container after the process
 
       
-    #This function fully removes the container, as well as the image to free up space
+    #This method fully removes the container, as well as the image to free up space
     def dockerdelete(self):
+        '''Stops the Docker container, removes it as well as the image'''
         try:
             print("Making sure the container is stopped > docker stop bmaker")
             os.system("docker stop bmaker")
@@ -855,13 +900,18 @@ class QRaven:
             print("container stopped and removed")
             self.iface.messageBar().pushSuccess("Success", "The docker container and the image were removed")
         except Exception as e:
-            #self.dlg.txt_console.appendPlainText("An error occured while attempting to remove the container and image. Please remove them manually.")
             print("An error occured while attempting to remove the docker container and image")
             print(e)
 
 
-    #This function pulls the scriptbash/basinmaker docker container
+    #This method pulls the scriptbash/basinmaker docker container
     def dockerPull(self):
+        '''Pulls the scriptbash/basinmaker docker container
+        
+            Depends on the following method:
+
+            dockerCommand()
+        '''
         try:
             print("Trying to pull the scriptbash/basinmaker image...")
             cmd='docker', 'pull', 'scriptbash/basinmaker'  
@@ -871,8 +921,14 @@ class QRaven:
             print(e)
     
 
-    #This function starts the docker container
+    #This method starts the docker container
     def dockerStart(self):
+        '''Starts the docker container detached, with a pseudo-tty. The working directory is /root/BasinMaker
+        
+            Depends on the following method:
+
+            dockerCommand()
+        '''
         try:
             print("Attempting to start the container...")
             cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','--name', 'bmaker', 'scriptbash/basinmaker'
@@ -881,8 +937,9 @@ class QRaven:
         except Exception as e:
             print(e)
 
-    #This function copies the RVH parameters file and the user's data to the docker container
+    #This method copies the RVH parameters file and the user's data to the docker container
     def dockerCopy(self,params):
+        '''Copy the RVH parameters file and the user's geospatial data to the Docker container'''
         outputdir = self.dlg.file_outputfolder.filePath()   #Get the output directory
         dockerBMpath = '/root/BasinMaker'   #The path to the BasinMaker folder inside the container 
         dockerDEMPath = dockerBMpath + '/Data/DEM'  #The path to the DEM folder inside the container
@@ -985,8 +1042,12 @@ class QRaven:
         print("Done copying the files to the container")  
 
 
-    #This function runs the command that it receives with subprocess
+    #This method runs the command that it receives with subprocess
     def dockerCommand(self,cmd): 
+        '''Executes the command it receives with subprocess.Popen
+        
+            param cmd: The command to run (string or tuple)
+        '''
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         while True:
             output = process.stdout.readline()
@@ -996,10 +1057,18 @@ class QRaven:
                 print(output.strip())
         rc = process.poll()      
 
-    #This function starts the create_RVH.py script
+
+    #This method starts the create_RVH.py script
     def runBasinMaker(self):
+        '''Launches the create_RVH.py script inside the Docker container.
+            Uses the bash shell in interactive mode in order to get the proper python paths and 
+            environment variables set in ~/.bashrc.
+
+            Depends on the following method:
+
+            dockerCommand()
+        '''
         print("Starting BasinMaker process, this will take a while to complete")
-        self.iface.messageBar().pushInfo("Info", "The BasinMaker process is starting, this will take a while to complete.")
         pythoncmd = "python3 -u create_RVH.py"  #Bash command to start the BasinMaker script
         cmd ='docker', 'exec','-t', 'bmaker','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
         try:
@@ -1011,8 +1080,14 @@ class QRaven:
             print(e)
         
 
-    #This function retrieves the results folder generated by BasinMaker and saves it in the user's output directory
+    #This method retrieves the results folder generated by BasinMaker and saves it in the user's output directory
     def getDockerResults(self):
+        '''Grabs the OIH_Output folder from the Docker container and places it into the user's specified directory
+        
+            Depends on the following method:
+
+            dockerCommand()
+        '''
         outputdir = self.dlg.file_outputfolder.filePath()   #Get the output directory
         dockerBMResultsPath = '/root/BasinMaker/OIH_Output' #Get the docker path where the results are
         print("Grabbing the results, this could take a while...")
@@ -1034,8 +1109,12 @@ class QRaven:
         self.iface.messageBar().pushInfo("Info", "The BasinMaker process has finished. Check the python logs for more details.")
 
 
-#This function return the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
+#This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
 def checkOS():
+    '''Makes a simple check to verify which operating system the user is using.
+
+        Returns a slash or backslash as a string depending on the OS.
+    '''
     if platform == "linux" or platform == "linux2":
         return "linux","/"
     elif platform == "darwin":
