@@ -51,7 +51,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -211,7 +211,7 @@
          <item row="18" column="2">
           <widget class="QLabel" name="label_20">
            <property name="text">
-            <string>PrecipIceptFract*</string>
+            <string>PrecipIceptFract</string>
            </property>
           </widget>
          </item>
@@ -267,14 +267,14 @@
          <item row="19" column="2">
           <widget class="QLabel" name="label_22">
            <property name="text">
-            <string>RechargeMethod*</string>
+            <string>RechargeMethod</string>
            </property>
           </widget>
          </item>
          <item row="13" column="2">
           <widget class="QLabel" name="label_13">
            <property name="text">
-            <string>SWCanopyCorrect*</string>
+            <string>SWCanopyCorrect</string>
            </property>
           </widget>
          </item>
@@ -409,25 +409,6 @@
            </item>
           </widget>
          </item>
-         <item row="21" column="1">
-          <widget class="QComboBox" name="combo_lakestorage">
-           <item>
-            <property name="text">
-             <string/>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>SURFACE_WATER</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>LAKE_STORAGE</string>
-            </property>
-           </item>
-          </widget>
-         </item>
          <item row="16" column="3">
           <widget class="QComboBox" name="combo_windspeed">
            <item>
@@ -458,7 +439,7 @@
             <enum>Qt::LeftToRight</enum>
            </property>
            <property name="text">
-            <string>InterpolationMethod*</string>
+            <string>InterpolationMethod</string>
            </property>
           </widget>
          </item>
@@ -494,7 +475,7 @@
          <item row="18" column="0">
           <widget class="QLabel" name="label_19">
            <property name="text">
-            <string>AirPressureMethod*</string>
+            <string>AirPressureMethod</string>
            </property>
           </widget>
          </item>
@@ -559,14 +540,14 @@
          <item row="16" column="2">
           <widget class="QLabel" name="label_17">
            <property name="text">
-            <string>WindspeedMethod*</string>
+            <string>WindspeedMethod</string>
            </property>
           </widget>
          </item>
          <item row="12" column="0">
           <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>RainSnowFraction*</string>
+            <string>RainSnowFraction</string>
            </property>
           </widget>
          </item>
@@ -602,14 +583,14 @@
          <item row="16" column="0">
           <widget class="QLabel" name="label_11">
            <property name="text">
-            <string>OroPETCorrect*</string>
+            <string>OroPETCorrect</string>
            </property>
           </widget>
          </item>
          <item row="19" column="0">
           <widget class="QLabel" name="label_21">
            <property name="text">
-            <string>PotentialMelt*</string>
+            <string>PotentialMelt</string>
            </property>
           </widget>
          </item>
@@ -768,7 +749,7 @@
          <item row="14" column="2">
           <widget class="QLabel" name="label_14">
            <property name="text">
-            <string>SWCloudCorrect*</string>
+            <string>SWCloudCorrect</string>
            </property>
           </widget>
          </item>
@@ -789,7 +770,7 @@
          <item row="15" column="0">
           <widget class="QLabel" name="label_10">
            <property name="text">
-            <string>OroTempCorrect*</string>
+            <string>OroTempCorrect</string>
            </property>
           </widget>
          </item>
@@ -820,28 +801,28 @@
          <item row="13" column="0">
           <widget class="QLabel" name="label_7">
            <property name="text">
-            <string>OW_Evaporation*</string>
+            <string>OW_Evaporation</string>
            </property>
           </widget>
          </item>
          <item row="20" column="2">
           <widget class="QLabel" name="label_24">
            <property name="text">
-            <string>SubdailyMethod*</string>
+            <string>SubdailyMethod</string>
            </property>
           </widget>
          </item>
          <item row="21" column="2">
           <widget class="QLabel" name="label_26">
            <property name="text">
-            <string>Calendar*</string>
+            <string>Calendar</string>
            </property>
           </widget>
          </item>
          <item row="20" column="0">
           <widget class="QLabel" name="label_23">
            <property name="text">
-            <string>MonthlyInterpolationMethod*</string>
+            <string>MonthlyInterpolationMethod</string>
            </property>
           </widget>
          </item>
@@ -1052,21 +1033,21 @@
          <item row="17" column="2">
           <widget class="QLabel" name="label_18">
            <property name="text">
-            <string>RelativeHumidityMethod*</string>
+            <string>RelativeHumidityMethod</string>
            </property>
           </widget>
          </item>
          <item row="15" column="2">
           <widget class="QLabel" name="label_15">
            <property name="text">
-            <string>LWRadiationMethod*</string>
+            <string>LWRadiationMethod</string>
            </property>
           </widget>
          </item>
          <item row="17" column="0">
           <widget class="QLabel" name="label_16">
            <property name="text">
-            <string>CloudCoverMethod*</string>
+            <string>CloudCoverMethod</string>
            </property>
           </widget>
          </item>
@@ -1107,7 +1088,7 @@
          <item row="21" column="0">
           <widget class="QLabel" name="label_25">
            <property name="text">
-            <string>LakeStorage*</string>
+            <string>LakeStorage</string>
            </property>
           </widget>
          </item>
@@ -1180,14 +1161,7 @@
          <item row="9" column="0">
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>Method*</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="3">
-          <widget class="QLabel" name="label_9">
-           <property name="text">
-            <string>* optional parameters</string>
+            <string>Method</string>
            </property>
           </widget>
          </item>
@@ -1218,14 +1192,14 @@
          <item row="12" column="2">
           <widget class="QLabel" name="label_12">
            <property name="text">
-            <string>SWRadiationMethod*</string>
+            <string>SWRadiationMethod</string>
            </property>
           </widget>
          </item>
          <item row="14" column="0">
           <widget class="QLabel" name="label_8">
            <property name="text">
-            <string>OroPrecipCorrect*</string>
+            <string>OroPrecipCorrect</string>
            </property>
           </widget>
          </item>
@@ -1239,80 +1213,56 @@
            </property>
           </widget>
          </item>
+         <item row="21" column="1">
+          <widget class="QComboBox" name="combo_lakestorage">
+           <item>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>SURFACE_WATER</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>LAKE_STORAGE</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="7" column="1">
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string> Optional parameters</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="tab_5">
         <attribute name="title">
          <string>Hydro. Processes</string>
         </attribute>
-        <widget class="QPlainTextEdit" name="plainTextEdit">
-         <property name="geometry">
-          <rect>
-           <x>190</x>
-           <y>130</y>
-           <width>371</width>
-           <height>111</height>
-          </rect>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-         <property name="plainText">
-          <string>This feature will be implemented in a future release. In the meantime, you will need to manually add your hydrological processes inside the generated .RVI file.</string>
-         </property>
-        </widget>
+        <layout class="QGridLayout" name="gridLayout_9">
+         <item row="0" column="0">
+          <widget class="QPlainTextEdit" name="plainTextEdit">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+           <property name="plainText">
+            <string>This feature will be implemented in a future release. In the meantime, you will need to manually add your hydrological processes inside the generated .RVI file.</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
        <widget class="QWidget" name="tab_3">
         <attribute name="title">
          <string>Optional I/O</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_4">
-         <item row="10" column="1">
-          <widget class="QCheckBox" name="chk_snaphydro">
-           <property name="layoutDirection">
-            <enum>Qt::RightToLeft</enum>
-           </property>
-           <property name="text">
-            <string>SnapshotHydrograph</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QCheckBox" name="chk_outputinterval">
-           <property name="layoutDirection">
-            <enum>Qt::RightToLeft</enum>
-           </property>
-           <property name="text">
-            <string>OutputInterval</string>
-           </property>
-          </widget>
-         </item>
-         <item row="14" column="1">
-          <widget class="QSpinBox" name="spin_wateryear">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="maximum">
-            <number>12</number>
-           </property>
-           <property name="displayIntegerBase">
-            <number>10</number>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QCheckBox" name="chk_rvptemplate">
-           <property name="layoutDirection">
-            <enum>Qt::RightToLeft</enum>
-           </property>
-           <property name="text">
-            <string>CreateRVPTemplate</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
           <widget class="QCheckBox" name="chk_runname">
            <property name="layoutDirection">
@@ -1323,23 +1273,63 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
-          <widget class="QCheckBox" name="chk_writeenergy">
+         <item row="10" column="1">
+          <widget class="QCheckBox" name="chk_suppressoutput">
            <property name="layoutDirection">
             <enum>Qt::RightToLeft</enum>
            </property>
            <property name="text">
-            <string>WriteEnergyStorage</string>
+            <string>SuppressOutput</string>
            </property>
           </widget>
          </item>
-         <item row="14" column="0">
-          <widget class="QCheckBox" name="chk_wateryear">
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="chk_outputdir">
            <property name="layoutDirection">
             <enum>Qt::RightToLeft</enum>
            </property>
            <property name="text">
-            <string>WaterYearStartMonth</string>
+            <string>OutputDirectory</string>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="0">
+          <widget class="QCheckBox" name="chk_debugmode">
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
+           <property name="text">
+            <string>DebugMode</string>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="1">
+          <widget class="QCheckBox" name="chk_snaphydro">
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
+           <property name="text">
+            <string>SnapshotHydrograph</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QCheckBox" name="chk_writedemand">
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
+           <property name="text">
+            <string>WriteDemandFile</string>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="0">
+          <widget class="QCheckBox" name="chk_silentmode">
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
+           <property name="text">
+            <string>SilentMode</string>
            </property>
           </widget>
          </item>
@@ -1356,40 +1346,23 @@
            </property>
           </widget>
          </item>
-         <item row="10" column="0">
-          <widget class="QCheckBox" name="chk_silentmode">
+         <item row="2" column="0">
+          <widget class="QCheckBox" name="chk_outputinterval">
            <property name="layoutDirection">
             <enum>Qt::RightToLeft</enum>
            </property>
            <property name="text">
-            <string>SilentMode</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QDoubleSpinBox" name="spin_outinterval">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QCheckBox" name="chk_writedemand">
-           <property name="layoutDirection">
-            <enum>Qt::RightToLeft</enum>
-           </property>
-           <property name="text">
-            <string>WriteDemandFile</string>
+            <string>OutputInterval</string>
            </property>
           </widget>
          </item>
          <item row="6" column="1">
-          <widget class="QCheckBox" name="chk_writeensim">
+          <widget class="QCheckBox" name="chk_writeexausmb">
            <property name="layoutDirection">
             <enum>Qt::RightToLeft</enum>
            </property>
            <property name="text">
-            <string>WriteEnsimFormat</string>
+            <string>WriteExhaustiveMB</string>
            </property>
           </widget>
          </item>
@@ -1400,17 +1373,14 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
-          <widget class="QCheckBox" name="chk_writeforcingfunc">
-           <property name="layoutDirection">
-            <enum>Qt::RightToLeft</enum>
-           </property>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_27">
            <property name="text">
-            <string>WriteForcingFunctions</string>
+            <string>EvaluationMetrics</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="2" rowspan="6">
+         <item row="1" column="2" rowspan="7">
           <widget class="QListWidget" name="list_evalmetrics">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -1489,6 +1459,23 @@
           </widget>
          </item>
          <item row="6" column="0">
+          <widget class="QCheckBox" name="chk_writeforcingfunc">
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
+           <property name="text">
+            <string>WriteForcingFunctions</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QDoubleSpinBox" name="spin_outinterval">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
           <widget class="QCheckBox" name="chk_endpause">
            <property name="layoutDirection">
             <enum>Qt::RightToLeft</enum>
@@ -1498,37 +1485,27 @@
            </property>
           </widget>
          </item>
-         <item row="9" column="0">
-          <widget class="QCheckBox" name="chk_debugmode">
+         <item row="7" column="1">
+          <widget class="QCheckBox" name="chk_writeensim">
            <property name="layoutDirection">
             <enum>Qt::RightToLeft</enum>
            </property>
            <property name="text">
-            <string>DebugMode</string>
-           </property>
-          </widget>
-         </item>
-         <item row="9" column="1">
-          <widget class="QCheckBox" name="chk_suppressoutput">
-           <property name="layoutDirection">
-            <enum>Qt::RightToLeft</enum>
-           </property>
-           <property name="text">
-            <string>SuppressOutput</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QCheckBox" name="chk_writeexausmb">
-           <property name="layoutDirection">
-            <enum>Qt::RightToLeft</enum>
-           </property>
-           <property name="text">
-            <string>WriteExhaustiveMB</string>
+            <string>WriteEnsimFormat</string>
            </property>
           </widget>
          </item>
          <item row="4" column="0">
+          <widget class="QCheckBox" name="chk_rvptemplate">
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
+           <property name="text">
+            <string>CreateRVPTemplate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
           <widget class="QCheckBox" name="chk_writemassbal">
            <property name="layoutDirection">
             <enum>Qt::RightToLeft</enum>
@@ -1538,20 +1515,39 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
-          <widget class="QCheckBox" name="chk_outputdir">
+         <item row="5" column="1">
+          <widget class="QCheckBox" name="chk_writeenergy">
            <property name="layoutDirection">
             <enum>Qt::RightToLeft</enum>
            </property>
            <property name="text">
-            <string>OutputDirectory</string>
+            <string>WriteEnergyStorage</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_27">
+         <item row="3" column="1">
+          <widget class="QSpinBox" name="spin_wateryear">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>12</number>
+           </property>
+           <property name="displayIntegerBase">
+            <number>10</number>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QCheckBox" name="chk_wateryear">
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
            <property name="text">
-            <string>EvaluationMetrics</string>
+            <string>WaterYearStartMonth</string>
            </property>
           </widget>
          </item>
@@ -2400,7 +2396,7 @@
       <widget class="QPushButton" name="btn_write">
        <property name="geometry">
         <rect>
-         <x>400</x>
+         <x>390</x>
          <y>520</y>
          <width>90</width>
          <height>28</height>
@@ -2505,7 +2501,7 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>-419</y>
+              <y>0</y>
               <width>804</width>
               <height>1114</height>
              </rect>
@@ -3204,8 +3200,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>817</width>
-              <height>419</height>
+              <width>400</width>
+              <height>366</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_8">
@@ -3403,7 +3399,6 @@
   <tabstop>combo_airpressure</tabstop>
   <tabstop>combo_potentialmelt</tabstop>
   <tabstop>combo_monthlyinterpo</tabstop>
-  <tabstop>combo_lakestorage</tabstop>
   <tabstop>combo_swradation</tabstop>
   <tabstop>combo_swcanopy</tabstop>
   <tabstop>combo_swcloud</tabstop>
@@ -3433,8 +3428,6 @@
   <tabstop>chk_suppressoutput</tabstop>
   <tabstop>chk_silentmode</tabstop>
   <tabstop>chk_snaphydro</tabstop>
-  <tabstop>chk_wateryear</tabstop>
-  <tabstop>spin_wateryear</tabstop>
   <tabstop>list_evalmetrics</tabstop>
   <tabstop>combo_time1</tabstop>
   <tabstop>combo_stat1</tabstop>
