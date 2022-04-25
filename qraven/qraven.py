@@ -242,7 +242,7 @@ class QRaven:
 
     #This method enables and disables widgets based on their checkboxes/radiobutton state
     def toggleWidget(self):
-        '''Enables/disables a widget based on the widget calling the method'''
+        '''Enables/disables widgets based on the widget calling the method'''
 
         widget = self.dlg.sender()  #Get the widget name
         
@@ -875,6 +875,9 @@ class QRaven:
 
             getDockerResults()
          '''
+        pythonConsole = self.iface.mainWindow().findChild(QDockWidget, 'PythonConsole')
+        if not pythonConsole or not pythonConsole.isVisible():  #If the python console is closed, open it
+            self.iface.actionShowPythonDialog().trigger()       #It allows the user to see the BasinMaker progress
         self.iface.messageBar().pushInfo("Info", "The BasinMaker process is starting, this will take a while to complete.")
         self.iface.mainWindow().repaint()
         paramsDict = self.getRVHparams()    #Calls the function to get the RVH parameters
