@@ -31,7 +31,7 @@ def defineExtent():
             bufferdist = params['bufferdistance']
             bm.Define_Project_Spatial_Extent(
                 mode=mode,
-                path_to_dem_input = os.path.join(os.getcwd(),datafolder,'DEM',"DEM.tif"),
+                path_to_dem_input = os.path.join(os.getcwd(),datafolder,'DEM',demname),
                 gis_platform="qgis",
                 path_to_hydrobasin_polygon = os.path.join(os.getcwd(),datafolder,'hybasin',hybasinname),
                 hydrobasin_id_of_watershed_outlet = hybasinID,
