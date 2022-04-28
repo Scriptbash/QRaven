@@ -1149,9 +1149,10 @@ class QRaven:
         '''Plots the hydrograph from the ouput of a Raven model'''
         outputdir = self.dlg.file_runoutputdir.filePath()   #Get the path where the results of the simulation are stored
         runname = self.dlg.txt_runrunname.text()    #Get the runname (this can be empty
-        
-        filename = outputdir+separator+runname+'Hydrographs.csv'    #Complete file name
-
+        if runname:
+            filename = outputdir+separator+runname+'_Hydrographs.csv'    #Complete file name
+        else: 
+            filename = outputdir+separator+'Hydrographs.csv'
         #Pandas could have made this much easier, however the plugin must not depend on other python packages that would
         #require the user to install it manually. Therefore, the csv is read manually.
         try:
@@ -1170,33 +1171,33 @@ class QRaven:
             for i in range(len(data["date"])):
                 data["date"][i] = datetime.datetime.strptime(data["date"][i], "%Y-%m-%d")   #Converts the date from string to datetime
 
-            for i in range(len(data["precip [mm/day]"])):
+            for i in range(len(data[headers[3]])):  #Using indexes here since the column name changes from models to models
                 #Converts the precipitations from string to float. If it encounters a value it cannot convert such as "---" which
                 #Raven sometimes adds, the value is set to 0
                 try:
-                    data["precip [mm/day]"][i] = float(data["precip [mm/day]"][i])
+                    data[headers[3]][i] = float(data[headers[3]][i])
                 except:
-                    data["precip [mm/day]"][i] = 0
+                    data[headers[3]][i] = 0
                     print("Warning : A value could not be converted from string to float. Overwritting with 0.")
-            for i in range(len(data["Alouette [m3/s]"])):
+            for i in range(len(data[headers[4]])):
                 #Converts the flow from string to float
                 try:
-                    data["Alouette [m3/s]"][i] = float(data["Alouette [m3/s]"][i])
+                    data[headers[4]][i] = float(data[headers[4]][i])
                 except:
-                    data["Alouette [m3/s]"][i] = 0
+                    data[headers[4]][i] = 0
                     print("Warning : A value could not be converted from string to float. Overwritting with 0.")
-            for i in range(len(data["Alouette (observed) [m3/s]"])):
+            for i in range(len(data[headers[5]])):
                 #Converts the observed flow from string to float
                 try:
-                    data["Alouette (observed) [m3/s]"][i] = float(data["Alouette (observed) [m3/s]"][i])
+                    data[headers[5]][i] = float(data[headers[5]][i])
                 except:
-                    data["Alouette (observed) [m3/s]"][i] = 0
+                    data[headers[5]][i] = 0
                     print("Warning : A value could not be converted from string to float. Overwritting with 0.")
 
             fig, ax = plt.subplots()
-            ax.plot(data["date"], data["precip [mm/day]"], label="precip [mm/day]") #Plots the precipitations by dates
-            ax.plot(data["date"], data["Alouette [m3/s]"],label="Alouette [m3/s]")  #Plots the flow by dates
-            ax.plot(data["date"], data["Alouette (observed) [m3/s]"],label="Alouette (observed) [m3/s]")    #Plots the observed flow by date
+            ax.plot(data["date"], data[headers[3]], label=headers[3]) #Plots the precipitations by dates
+            ax.plot(data["date"], data[headers[4]],label=headers[4])  #Plots the flow by dates
+            ax.plot(data["date"], data[headers[5]],label=headers[5])    #Plots the observed flow by date
             ax.legend(loc="upper left") #Adds a legend
             ax.set_title("Hydrograph")  #Sets the title of the graph          
             fig.autofmt_xdate()
