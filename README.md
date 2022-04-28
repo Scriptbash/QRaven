@@ -9,7 +9,7 @@ QRaven aims to simplify the creation of the primary input file (.RVI) and HRU/Ba
 
 ### Dependencies
 
-* QGIS (3.24 and above) must be installed. Prior versions may not work with the plugin
+* QGIS (3.20 and above) must be installed. Prior versions may not work with the plugin
 * To use the BasinMaker options, Docker must be installed on your computer and properly configured. Linux users must make sure to follow the post-installation steps provided by Docker
 * QRaven works on Linux and should work on Windows and Mac as well
 
