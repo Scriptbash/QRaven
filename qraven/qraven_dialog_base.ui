@@ -3388,17 +3388,44 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_10">
        <item row="6" column="2">
-        <widget class="QLineEdit" name="txt_runrunname"/>
+        <widget class="QLineEdit" name="txt_runrunname">
+         <property name="toolTip">
+          <string>Must be the same as :RunName in .rvi file</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLineEdit" name="txt_runnameprefix">
+         <property name="toolTip">
+          <string>The name of the model</string>
+         </property>
+         <property name="placeholderText">
+          <string>e.g. model for model.rvi</string>
+         </property>
+        </widget>
        </item>
        <item row="0" column="2">
         <widget class="QgsFileWidget" name="file_runinputdir">
+         <property name="toolTip">
+          <string>Path to the model folder</string>
+         </property>
          <property name="storageMode">
           <enum>QgsFileWidget::GetDirectory</enum>
          </property>
         </widget>
        </item>
+       <item row="8" column="1">
+        <widget class="QPushButton" name="btn_gatheroutput">
+         <property name="text">
+          <string>Gather Output</string>
+         </property>
+        </widget>
+       </item>
        <item row="2" column="2">
         <widget class="QgsFileWidget" name="file_ravenexe">
+         <property name="toolTip">
+          <string>Path to the Raven executable (Raven.exe)</string>
+         </property>
          <property name="filter">
           <string>*.exe</string>
          </property>
@@ -3406,6 +3433,9 @@
        </item>
        <item row="0" column="0">
         <widget class="QLabel" name="label_74">
+         <property name="toolTip">
+          <string>Path to the model folder</string>
+         </property>
          <property name="text">
           <string>Input directory</string>
          </property>
@@ -3413,6 +3443,9 @@
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_76">
+         <property name="toolTip">
+          <string>Path to the Raven executable (Raven.exe)</string>
+         </property>
          <property name="text">
           <string>Raven executable location</string>
          </property>
@@ -3420,6 +3453,9 @@
        </item>
        <item row="6" column="0">
         <widget class="QLabel" name="label_78">
+         <property name="toolTip">
+          <string>Must be the same as :RunName in .rvi file</string>
+         </property>
          <property name="text">
           <string>RunName</string>
          </property>
@@ -3427,6 +3463,9 @@
        </item>
        <item row="1" column="2">
         <widget class="QgsFileWidget" name="file_runoutputdir">
+         <property name="toolTip">
+          <string>Path where to save the results</string>
+         </property>
          <property name="storageMode">
           <enum>QgsFileWidget::GetDirectory</enum>
          </property>
@@ -3434,15 +3473,11 @@
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_75">
+         <property name="toolTip">
+          <string>Path where to save the results</string>
+         </property>
          <property name="text">
           <string>Output directory</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_77">
-         <property name="text">
-          <string>File name prefix</string>
          </property>
         </widget>
        </item>
@@ -3453,13 +3488,13 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="2">
-        <widget class="QLineEdit" name="txt_runnameprefix"/>
-       </item>
-       <item row="8" column="1">
-        <widget class="QPushButton" name="btn_gatheroutput">
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_77">
+         <property name="toolTip">
+          <string>The name of the model</string>
+         </property>
          <property name="text">
-          <string>Gather Output</string>
+          <string>File name prefix</string>
          </property>
         </widget>
        </item>
