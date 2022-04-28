@@ -37,6 +37,8 @@ import os.path
 from sys import platform
 import subprocess
 from subprocess import Popen, PIPE
+import matplotlib.pyplot as plt
+import csv, datetime
 
 class QRaven:
     """QGIS Plugin Implementation."""
@@ -225,7 +227,11 @@ class QRaven:
             self.dlg.btn_dockerrun.clicked.connect(self.dockerinit)
             #Calls the function to remove the docker container
             self.dlg.btn_dockerrm.clicked.connect(self.dockerdelete)
+            #----------------------------------------#
 
+            #-------------Run Raven Model-------------#
+            self.dlg.btn_runraven.clicked.connect(self.runRaven)
+            self.dlg.btn_gatheroutput.clicked.connect(self.drawHydrographs)
             #----------------------------------------#
 
         # show the dialog
@@ -1111,6 +1117,93 @@ class QRaven:
             print(e)
         self.iface.messageBar().pushInfo("Info", "The BasinMaker process has finished. Check the python logs for more details.")
 
+
+    #This method runs a Raven model provided by the user.
+    def runRaven(self):
+        '''Runs a Raven model just like RavenViewLite3'''
+        inputdir = self.dlg.file_runinputdir.filePath() #Get the path where the model files are stored
+        outputdir = self.dlg.file_runoutputdir.filePath()   #Get the path where to save the results of the simulation
+        ravenExe = self.dlg.file_ravenexe.filePath()    #Get the path to the Raven.exe
+        prefix = self.dlg.txt_runnameprefix.text()  #Get the chosen prefix
+        runname = self.dlg.txt_runrunname.text()    #Get the runname (this can be empty)
+        pathtomodel =inputdir+separator+prefix      #Get the complete path to the model
+
+        pythonConsole = self.iface.mainWindow().findChild(QDockWidget, 'PythonConsole')
+        if not pythonConsole or not pythonConsole.isVisible():  #If the python console is closed, open it
+            self.iface.actionShowPythonDialog().trigger()       #It allows the user to see the Raven progress
+        self.iface.messageBar().pushInfo("Info", "The Raven process has started, this could take a while to complete.")
+        self.iface.mainWindow().repaint()
+
+        try:
+            cmd = ravenExe, pathtomodel,"-o",outputdir, "-r",runname    #Command that launches the Raven model
+            self.dockerCommand(cmd)
+        except Exception as e:
+            print(e)
+            self.iface.messageBar().pushMessage("Error", "An error occured while running Raven. Check the python console for more details.",level=Qgis.Critical)
+
+
+
+    
+    #This method plots the resulting hydrograph
+    def drawHydrographs(self):
+        '''Plots the hydrograph from the ouput of a Raven model'''
+        outputdir = self.dlg.file_runoutputdir.filePath()   #Get the path where the results of the simulation are stored
+        runname = self.dlg.txt_runrunname.text()    #Get the runname (this can be empty
+        
+        filename = outputdir+separator+runname+'Hydrographs.csv'    #Complete file name
+
+        #Pandas could have made this much easier, however the plugin must not depend on other python packages that would
+        #require the user to install it manually. Therefore, the csv is read manually.
+        try:
+            with open(filename, "r") as file:
+                csv_reader = csv.reader(file)
+                headers = next(csv_reader)
+                
+                data = {}
+                for title in headers:   #Loops through the column names
+                    data[title] = []
+
+                for row in csv_reader:
+                    for i, title in enumerate(headers): 
+                        data[title].append(row[i])   #Adds values inside the columns                   
+    
+            for i in range(len(data["date"])):
+                data["date"][i] = datetime.datetime.strptime(data["date"][i], "%Y-%m-%d")   #Converts the date from string to datetime
+
+            for i in range(len(data["precip [mm/day]"])):
+                #Converts the precipitations from string to float. If it encounters a value it cannot convert such as "---" which
+                #Raven sometimes adds, the value is set to 0
+                try:
+                    data["precip [mm/day]"][i] = float(data["precip [mm/day]"][i])
+                except:
+                    data["precip [mm/day]"][i] = 0
+                    print("Warning : A value could not be converted from string to float. Overwritting with 0.")
+            for i in range(len(data["Alouette [m3/s]"])):
+                #Converts the flow from string to float
+                try:
+                    data["Alouette [m3/s]"][i] = float(data["Alouette [m3/s]"][i])
+                except:
+                    data["Alouette [m3/s]"][i] = 0
+                    print("Warning : A value could not be converted from string to float. Overwritting with 0.")
+            for i in range(len(data["Alouette (observed) [m3/s]"])):
+                #Converts the observed flow from string to float
+                try:
+                    data["Alouette (observed) [m3/s]"][i] = float(data["Alouette (observed) [m3/s]"][i])
+                except:
+                    data["Alouette (observed) [m3/s]"][i] = 0
+                    print("Warning : A value could not be converted from string to float. Overwritting with 0.")
+
+            fig, ax = plt.subplots()
+            ax.plot(data["date"], data["precip [mm/day]"], label="precip [mm/day]") #Plots the precipitations by dates
+            ax.plot(data["date"], data["Alouette [m3/s]"],label="Alouette [m3/s]")  #Plots the flow by dates
+            ax.plot(data["date"], data["Alouette (observed) [m3/s]"],label="Alouette (observed) [m3/s]")    #Plots the observed flow by date
+            ax.legend(loc="upper left") #Adds a legend
+            ax.set_title("Hydrograph")  #Sets the title of the graph          
+            fig.autofmt_xdate()
+            fig.show()
+        except Exception as e:
+            print(e)
+            self.iface.messageBar().pushMessage("Error", "An error occured while attempting to draw the hydrograph. Check the python console for more details.",level=Qgis.Critical)
 
 #This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
 def checkOS():
