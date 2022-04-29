@@ -1063,7 +1063,7 @@ class QRaven:
             if output == b'':
                 break
             if output:
-                print(output.strip())
+                print(output.strip().decode("utf-8","ignore").replace('',''))  #Surely there's a better way to remove the %08 character (shows as BS in str format)
         rc = process.poll()      
 
 
