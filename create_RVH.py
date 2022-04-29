@@ -294,7 +294,7 @@ def generateHRUs():
             path_soil_info   =os.path.join(os.getcwd(),'Data','soil', soilinfo),
             path_veg_info    =os.path.join(os.getcwd(),'Data','landuse', veginfo),
             path_to_dem=os.path.join(os.getcwd(),datafolder,'DEM',demname),
-            inmportance_order = ['Soil_ID','Landuse_ID'],
+            importance_order = ['Soil_ID','Landuse_ID'],
             min_hru_subbasin_area_ratio = 0.0,
             gis_platform="qgis",
             #projected_epsg_code = 'EPSG:3161',
