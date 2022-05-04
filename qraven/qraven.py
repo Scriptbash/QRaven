@@ -202,6 +202,7 @@ class QRaven:
             self.dlg.chk_outputdir.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_outputinterval.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_wateryear.stateChanged.connect(self.toggleWidget)
+            self.dlg.chk_disablehru.stateChanged.connect(self.toggleWidget)
 
             #Calls the function to enable/disable the spinbox for the soilmodel and the interpolation lineedit
             self.dlg.combo_soilmod.activated.connect(self.toggleSoilModel)
@@ -280,6 +281,11 @@ class QRaven:
                 self.dlg.spin_wateryear.setEnabled(True)
             else:
                 self.dlg.spin_wateryear.setEnabled(False) 
+        elif widget.objectName() == 'chk_disablehru':   #Enables/disables the disable hrus text edit
+            if self.dlg.chk_disablehru.isChecked():
+                self.dlg.txt_disablehru.setEnabled(True)
+            else:
+                self.dlg.txt_disablehru.setEnabled(False)
         #Conditions for the BasinMaker RVH section below
         elif widget.objectName() == 'buttonGroup':  #buttonGroup is the group of radiobuttons for the mode of define project spatial extent
             if self.dlg.rb_modehybasin.isChecked(): #If the selected mode is using_hybasin
@@ -400,7 +406,8 @@ class QRaven:
         customOutputList = self.getCustomOutput()   #Calls the function to get the custom output values
         outputdir = self.dlg.txt_outputdir.text()   #Get the output directory chosen by the use
         modelName = self.dlg.txt_modname.text()     #Get the name of the model
-       
+        disabledhrus_list = paramDict['DisableHRUGroup'].split(',')
+
         try:
             pathToFolder = outputdir+separator+modelName
             #Creates the RVI file with the name and path provided
@@ -408,7 +415,12 @@ class QRaven:
                 #Writes the parameters from the dictionary
                 for key, value in paramDict.items():
                     if value != '' and value != "checked":  #The widget has a value and is not an optional I/O
-                        rvi.write(f":{key:<30}  {value}\n")
+                        if key == 'DisableHRUGroup':
+                            for hru in disabledhrus_list:
+                                rvi.write(f':{key:<31} {hru}\n')
+                            pass
+                        else:
+                            rvi.write(f":{key:<30}  {value}\n")
                     elif value == "checked":   #This writes the optional I/O which don't have an argument (so only the key is written)
                         rvi.write(f":{key:<30}\n")
                 #Writes the custom output
@@ -583,6 +595,10 @@ class QRaven:
             wateryear = self.dlg.spin_wateryear.value()
         else:
             wateryear = ''
+        if self.dlg.chk_disablehru.isChecked():
+            disabledhru = self.dlg.txt_disablehru.toPlainText()
+        else:
+            disabledhru = ''
 
         #Writes the selected evaluation metrics
         if not self.dlg.list_evalmetrics.selectedItems(): 
@@ -604,6 +620,7 @@ class QRaven:
             "TimeStep"                   : timeStep,
             "SoilModel"                  : soilMod,
             "DefineHRUGroups"            : defHRUGroups,
+            "DisableHRUGroup"            : disabledhru,
             "CatchmentRoute"             : catchment,
             "Routing"                    : routing,
             "Method"                     : method,

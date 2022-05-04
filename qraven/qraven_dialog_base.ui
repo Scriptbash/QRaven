@@ -23,7 +23,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -51,24 +51,24 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
          <string>Model info</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="2" column="0">
-          <widget class="QLabel" name="lbl_startdate">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_37">
            <property name="text">
-            <string>StartDate</string>
+            <string>Output Directory</string>
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="lbl_enddate">
-           <property name="text">
-            <string>EndDate</string>
+         <item row="6" column="1">
+          <widget class="QTextEdit" name="txt_defhru">
+           <property name="placeholderText">
+            <string>FOREST, GRASSLAND, WATER</string>
            </property>
           </widget>
          </item>
@@ -79,15 +79,81 @@
            </property>
           </widget>
          </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="lbl_modname">
+           <property name="text">
+            <string>Model Name</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="lbl_timestep">
+           <property name="text">
+            <string>TimeStep</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QCheckBox" name="chk_duration">
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
+           <property name="text">
+            <string>Use Duration instead</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QDateTimeEdit" name="date_startdate">
+           <property name="displayFormat">
+            <string>yyyy-MM-dd h:mm:ss</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="btn_outputdir">
+           <property name="text">
+            <string>Browse</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="2">
+          <widget class="QSpinBox" name="spin_soilmod">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="txt_modname"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="lbl_enddate">
+           <property name="text">
+            <string>EndDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="lbl_defhru">
+           <property name="text">
+            <string>DefineHRUGroups</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="lbl_startdate">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
+         </item>
          <item row="4" column="1">
           <widget class="QDateTimeEdit" name="date_timestep">
            <property name="displayFormat">
             <string>h:mm:ss</string>
            </property>
           </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="txt_modname"/>
          </item>
          <item row="5" column="1">
           <widget class="QComboBox" name="combo_soilmod">
@@ -108,51 +174,6 @@
            </item>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QDateTimeEdit" name="date_startdate">
-           <property name="displayFormat">
-            <string>yyyy-MM-dd h:mm:ss</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
-          <widget class="QTextEdit" name="txt_defhru">
-           <property name="placeholderText">
-            <string>FOREST, GRASSLAND, WATER</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="lbl_modname">
-           <property name="text">
-            <string>Model Name</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="lbl_defhru">
-           <property name="text">
-            <string>DefineHRUGroups</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QCheckBox" name="chk_duration">
-           <property name="layoutDirection">
-            <enum>Qt::RightToLeft</enum>
-           </property>
-           <property name="text">
-            <string>Use Duration instead</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QDateTimeEdit" name="date_enddate">
-           <property name="displayFormat">
-            <string>yyyy-MM-dd h:mm:ss</string>
-           </property>
-          </widget>
-         </item>
          <item row="3" column="2">
           <widget class="QSpinBox" name="spin_duration">
            <property name="enabled">
@@ -163,34 +184,33 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="lbl_timestep">
-           <property name="text">
-            <string>TimeStep</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="2">
-          <widget class="QSpinBox" name="spin_soilmod">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="1">
           <widget class="QLineEdit" name="txt_outputdir"/>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_37">
-           <property name="text">
-            <string>Output Directory</string>
+         <item row="3" column="1">
+          <widget class="QDateTimeEdit" name="date_enddate">
+           <property name="displayFormat">
+            <string>yyyy-MM-dd h:mm:ss</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QPushButton" name="btn_outputdir">
+         <item row="7" column="0">
+          <widget class="QCheckBox" name="chk_disablehru">
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
            <property name="text">
-            <string>Browse</string>
+            <string>DisableHRUGroup</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="1">
+          <widget class="QTextEdit" name="txt_disablehru">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="placeholderText">
+            <string>FOREST, GRASSLAND, WATER</string>
            </property>
           </widget>
          </item>
@@ -1334,15 +1354,12 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QgsFileWidget" name="file_outputdir">
+          <widget class="QgsFileWidget" name="file_outputdir" native="true">
            <property name="enabled">
             <bool>false</bool>
            </property>
            <property name="focusPolicy">
             <enum>Qt::TabFocus</enum>
-           </property>
-           <property name="storageMode">
-            <enum>QgsFileWidget::GetDirectory</enum>
            </property>
           </widget>
          </item>
@@ -1614,8 +1631,8 @@
           <rect>
            <x>30</x>
            <y>40</y>
-           <width>551</width>
-           <height>271</height>
+           <width>663</width>
+           <height>297</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout">
@@ -2502,8 +2519,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>804</width>
-              <height>1114</height>
+              <width>803</width>
+              <height>1217</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
@@ -2602,7 +2619,7 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QgsFileWidget" name="file_dem">
+              <widget class="QgsFileWidget" name="file_dem" native="true">
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
                </property>
@@ -2636,11 +2653,11 @@
               </widget>
              </item>
              <item row="5" column="1">
-              <widget class="QgsFileWidget" name="file_lakes">
+              <widget class="QgsFileWidget" name="file_lakes" native="true">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter">
+               <property name="filter" stdset="0">
                 <string>*.shp</string>
                </property>
               </widget>
@@ -2686,11 +2703,11 @@
               </widget>
              </item>
              <item row="8" column="1">
-              <widget class="QgsFileWidget" name="file_pointsinterest">
+              <widget class="QgsFileWidget" name="file_pointsinterest" native="true">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter">
+               <property name="filter" stdset="0">
                 <string>*.shp</string>
                </property>
               </widget>
@@ -2790,7 +2807,7 @@
               </widget>
              </item>
              <item row="4" column="1">
-              <widget class="QgsFileWidget" name="file_landuserast">
+              <widget class="QgsFileWidget" name="file_landuserast" native="true">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
@@ -2827,14 +2844,14 @@
               </widget>
              </item>
              <item row="35" column="1">
-              <widget class="QgsFileWidget" name="file_landusemanning">
+              <widget class="QgsFileWidget" name="file_landusemanning" native="true">
                <property name="enabled">
                 <bool>false</bool>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter">
+               <property name="filter" stdset="0">
                 <string>*.csv</string>
                </property>
               </widget>
@@ -2850,7 +2867,7 @@
               </widget>
              </item>
              <item row="14" column="1">
-              <widget class="QgsFileWidget" name="file_providedply">
+              <widget class="QgsFileWidget" name="file_providedply" native="true">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -2860,7 +2877,7 @@
                <property name="toolTip">
                 <string>path_to_spatial_extent_polygon</string>
                </property>
-               <property name="filter">
+               <property name="filter" stdset="0">
                 <string>*.shp</string>
                </property>
               </widget>
@@ -2899,11 +2916,11 @@
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QgsFileWidget" name="file_landusepoly">
+              <widget class="QgsFileWidget" name="file_landusepoly" native="true">
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
                </property>
-               <property name="filter">
+               <property name="filter" stdset="0">
                 <string>*.shp</string>
                </property>
               </widget>
@@ -2923,21 +2940,21 @@
               </widget>
              </item>
              <item row="7" column="1">
-              <widget class="QgsFileWidget" name="file_soil">
+              <widget class="QgsFileWidget" name="file_soil" native="true">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter">
+               <property name="filter" stdset="0">
                 <string>*.shp</string>
                </property>
               </widget>
              </item>
              <item row="6" column="1">
-              <widget class="QgsFileWidget" name="file_bankfullwidth">
+              <widget class="QgsFileWidget" name="file_bankfullwidth" native="true">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter">
+               <property name="filter" stdset="0">
                 <string>*.shp</string>
                </property>
               </widget>
@@ -3024,7 +3041,7 @@
               </widget>
              </item>
              <item row="19" column="2">
-              <widget class="QgsFileWidget" name="file_fdr">
+              <widget class="QgsFileWidget" name="file_fdr" native="true">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -3077,12 +3094,9 @@
               </widget>
              </item>
              <item row="36" column="1">
-              <widget class="QgsFileWidget" name="file_outputfolder">
+              <widget class="QgsFileWidget" name="file_outputfolder" native="true">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
-               </property>
-               <property name="storageMode">
-                <enum>QgsFileWidget::GetDirectory</enum>
                </property>
               </widget>
              </item>
@@ -3171,7 +3185,7 @@
               </widget>
              </item>
              <item row="12" column="1">
-              <widget class="QgsFileWidget" name="file_hybasin">
+              <widget class="QgsFileWidget" name="file_hybasin" native="true">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -3181,7 +3195,7 @@
                <property name="toolTip">
                 <string>path_to_hydrobasin_polygon</string>
                </property>
-               <property name="filter">
+               <property name="filter" stdset="0">
                 <string>*.shp</string>
                </property>
               </widget>
@@ -3224,8 +3238,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>817</width>
-              <height>419</height>
+              <width>529</width>
+              <height>409</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_8">
@@ -3272,11 +3286,11 @@
               </widget>
              </item>
              <item row="10" column="2">
-              <widget class="QgsFileWidget" name="file_pathveginfo">
+              <widget class="QgsFileWidget" name="file_pathveginfo" native="true">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter">
+               <property name="filter" stdset="0">
                 <string>*.csv</string>
                </property>
               </widget>
@@ -3324,11 +3338,11 @@
               </widget>
              </item>
              <item row="7" column="2">
-              <widget class="QgsFileWidget" name="file_pathlanduseinfo">
+              <widget class="QgsFileWidget" name="file_pathlanduseinfo" native="true">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter">
+               <property name="filter" stdset="0">
                 <string>*.csv</string>
                </property>
               </widget>
@@ -3341,11 +3355,11 @@
               </widget>
              </item>
              <item row="8" column="2">
-              <widget class="QgsFileWidget" name="file_pathsoilinfo">
+              <widget class="QgsFileWidget" name="file_pathsoilinfo" native="true">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter">
+               <property name="filter" stdset="0">
                 <string>*.csv</string>
                </property>
               </widget>
@@ -3405,12 +3419,9 @@
         </widget>
        </item>
        <item row="0" column="2">
-        <widget class="QgsFileWidget" name="file_runinputdir">
+        <widget class="QgsFileWidget" name="file_runinputdir" native="true">
          <property name="toolTip">
           <string>Path to the model folder</string>
-         </property>
-         <property name="storageMode">
-          <enum>QgsFileWidget::GetDirectory</enum>
          </property>
         </widget>
        </item>
@@ -3422,11 +3433,11 @@
         </widget>
        </item>
        <item row="2" column="2">
-        <widget class="QgsFileWidget" name="file_ravenexe">
+        <widget class="QgsFileWidget" name="file_ravenexe" native="true">
          <property name="toolTip">
           <string>Path to the Raven executable (Raven.exe)</string>
          </property>
-         <property name="filter">
+         <property name="filter" stdset="0">
           <string>*.exe</string>
          </property>
         </widget>
@@ -3462,12 +3473,9 @@
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QgsFileWidget" name="file_runoutputdir">
+        <widget class="QgsFileWidget" name="file_runoutputdir" native="true">
          <property name="toolTip">
           <string>Path where to save the results</string>
-         </property>
-         <property name="storageMode">
-          <enum>QgsFileWidget::GetDirectory</enum>
          </property>
         </widget>
        </item>
