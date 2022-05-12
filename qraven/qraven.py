@@ -789,27 +789,21 @@ class QRaven:
                 count = 0
                 rvi.write("{:<33}".format(":CustomOutput"))
                 for output in customOutputList:
-                    if count == 0:
-                        rvi.write("{:<33}".format("\n:CustomOutput"))
-                    rvi.write(output+" ")
-                    count +=1
-
-                # for output in customOutputList:
-                #     if count == 7:
-                #         count = 0
-                #         if output == ' ':
-                #             count+=1
-                #             pass
-                #         else:
-                #             rvi.write("\n{:<33}".format(":CustomOutput")+output+" ")
-                #             count+=1
-                #     else:
-                #         if output == ' ':
-                #             count+=1
-                #             pass
-                #         else:
-                #             rvi.write(output + " ")
-                #             count+=1
+                    if count == 7:
+                        count = 0
+                        if output == '':
+                            count+=1
+                            pass
+                        else:
+                            rvi.write("\n{:<33}".format(":CustomOutput")+output+" ")
+                            count+=1
+                    else:
+                        if output == ' ':
+                            count+=1
+                            pass
+                        else:
+                            rvi.write(output + " ")
+                            count+=1
 
             print("RVI file written successfully")
             self.iface.messageBar().pushSuccess("Success", "RVI file written successfully")
@@ -1040,7 +1034,110 @@ class QRaven:
         
            Returns a list
         '''
-        customOutputList = []
+        #Get the values of the comboboxes
+        timeperiod1 = self.dlg.combo_time1.currentText()
+        timeperiod2 = self.dlg.combo_time2.currentText()
+        timeperiod3 = self.dlg.combo_time3.currentText()
+        timeperiod4 = self.dlg.combo_time4.currentText()
+        timeperiod5 = self.dlg.combo_time5.currentText()
+        timeperiod6 = self.dlg.combo_time6.currentText()
+        timeperiod7 = self.dlg.combo_time7.currentText()
+        combostat1 = self.dlg.combo_stat1.currentText()
+        combostat2 = self.dlg.combo_stat2.currentText()
+        combostat3 = self.dlg.combo_stat3.currentText()
+        combostat4 = self.dlg.combo_stat4.currentText()
+        combostat5 = self.dlg.combo_stat5.currentText()
+        combostat6 = self.dlg.combo_stat6.currentText()
+        combostat7 = self.dlg.combo_stat7.currentText()
+
+        #Sets an empty string for the spinboxes if the statistic is not histogram. Otherwise, gets the value of the spinboxes
+        if combostat1 != 'HISTOGRAM':
+            spinmin1 = ''
+            spinmax1 = ''
+            spinbin1 = ''
+        else:
+            spinmin1 = str(self.dlg.spin_min1.value())
+            spinmax1 = str(self.dlg.spin_max1.value())
+            spinbin1 = str(self.dlg.spin_bin1.value())
+        
+        if combostat2 != 'HISTOGRAM':
+            spinmin2 = ''
+            spinmax2 = ''
+            spinbin2 = ''
+        else:
+            spinmin2 = str(self.dlg.spin_min1.value())
+            spinmax2 = str(self.dlg.spin_max1.value())
+            spinbin2 = str(self.dlg.spin_bin1.value())
+                    
+        if combostat3 != 'HISTOGRAM':
+            spinmin3 = ''
+            spinmax3 = ''
+            spinbin3 = ''
+        else:
+            spinmin3 = str(self.dlg.spin_min1.value())
+            spinmax3 = str(self.dlg.spin_max1.value())
+            spinbin3 = str(self.dlg.spin_bin1.value())
+        
+        if combostat4 != 'HISTOGRAM':
+            spinmin4 = ''
+            spinmax4 = ''
+            spinbin4 = ''
+        else:
+            spinmin4 = str(self.dlg.spin_min1.value())
+            spinmax4 = str(self.dlg.spin_max1.value())
+            spinbin4 = str(self.dlg.spin_bin1.value())
+
+        if combostat5 != 'HISTOGRAM':
+            spinmin5 = ''
+            spinmax5 = ''
+            spinbin5 = ''
+        else:
+            spinmin5 = str(self.dlg.spin_min1.value())
+            spinmax5 = str(self.dlg.spin_max1.value())
+            spinbin5 = str(self.dlg.spin_bin1.value())
+        
+        if combostat6 != 'HISTOGRAM':
+            spinmin6 = ''
+            spinmax6 = ''
+            spinbin6 = ''
+        else:
+            spinmin6 = str(self.dlg.spin_min1.value())
+            spinmax6 = str(self.dlg.spin_max1.value())
+            spinbin6 = str(self.dlg.spin_bin1.value())
+        
+        if combostat7 != 'HISTOGRAM':
+            spinmin7 = ''
+            spinmax7 = ''
+            spinbin7 = ''
+        else:
+            spinmin7 = str(self.dlg.spin_min1.value())
+            spinmax7 = str(self.dlg.spin_max1.value())
+            spinbin7 = str(self.dlg.spin_bin1.value())
+        #Gets the variable value
+        txtvariable1 = self.dlg.txt_var1.text() 
+        txtvariable2 = self.dlg.txt_var2.text() 
+        txtvariable3 = self.dlg.txt_var3.text() 
+        txtvariable4 = self.dlg.txt_var4.text() 
+        txtvariable5 = self.dlg.txt_var5.text() 
+        txtvariable6 = self.dlg.txt_var6.text() 
+        txtvariable7 = self.dlg.txt_var7.text() 
+        #Gets the combobox the spatial evaluation 
+        comboeval1 = self.dlg.combo_eval1.currentText()
+        comboeval2 = self.dlg.combo_eval2.currentText()
+        comboeval3 = self.dlg.combo_eval3.currentText()
+        comboeval4 = self.dlg.combo_eval4.currentText()
+        comboeval5 = self.dlg.combo_eval5.currentText()
+        comboeval6 = self.dlg.combo_eval6.currentText()
+        comboeval7 = self.dlg.combo_eval7.currentText()
+        #Creates the list containing all the custom output information
+        customOutputList = [ timeperiod1, combostat1, spinmin1, spinmax1, spinbin1, txtvariable1,comboeval1,
+                             timeperiod2, combostat2, spinmin2, spinmax2, spinbin2,txtvariable2,comboeval2,
+                             timeperiod3, combostat3, spinmin3, spinmax3, spinbin3,txtvariable3,comboeval3,
+                             timeperiod4, combostat4, spinmin4, spinmax4, spinbin4,txtvariable4,comboeval4,
+                             timeperiod5, combostat5, spinmin5, spinmax5, spinbin5,txtvariable5,comboeval5,
+                             timeperiod6, combostat6, spinmin6, spinmax6, spinbin6,txtvariable6,comboeval6,
+                             timeperiod7, combostat7, spinmin7, spinmax7, spinbin7,txtvariable7,comboeval7,
+                           ]
         # #Loop through all the Custom Ouput widgets in order to get their values and add them to a list
         # for i in range(self.dlg.gridLayout.count()):
         #     if isinstance(self.dlg.gridLayout.itemAt(i).widget(),QComboBox):    #Get the combobox values
