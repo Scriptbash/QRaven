@@ -203,7 +203,13 @@ class QRaven:
             self.dlg.chk_outputinterval.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_wateryear.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_disablehru.stateChanged.connect(self.toggleWidget)
-
+            self.dlg.combo_stat1.activated.connect(self.toggleWidget)
+            self.dlg.combo_stat2.activated.connect(self.toggleWidget)
+            self.dlg.combo_stat3.activated.connect(self.toggleWidget)
+            self.dlg.combo_stat4.activated.connect(self.toggleWidget)
+            self.dlg.combo_stat5.activated.connect(self.toggleWidget)
+            self.dlg.combo_stat6.activated.connect(self.toggleWidget)
+            self.dlg.combo_stat7.activated.connect(self.toggleWidget)
             #Calls the function to enable/disable the spinbox for the soilmodel and the interpolation lineedit
             self.dlg.combo_soilmod.activated.connect(self.toggleSoilModel)
             self.dlg.combo_interpo.activated.connect(self.toggleInterpolation)
@@ -211,6 +217,17 @@ class QRaven:
             #Calls the function to browse the computer for an output folder
             self.dlg.btn_outputdir.clicked.connect(self.browseDirectory)
         
+            procname =['','Precipitation','CanopyEvap','SoilEvaporation','LakeEvaporation',
+                        'OpenWaterEvaporation','Infiltration','Percolation','CapillaryRise',
+                        'Baseflow','Interflow','Seepage','DepressionOverflow','LakeRelease',
+                        'Abstraction','SnowMelt','Snow Refreeze','Snow Balance','Sublimation',
+                        'SnowAlbedoEvolve','CanopyDrip','CropHeatUnitEvolve','GlacierMelt',
+                        'GlacierRelease','Flush','Overflow','Split','Convolution','LateralFlush'
+                      ]
+            self.dlg.btn_addhydroproc.clicked.connect(self.addTableRow)
+            self.dlg.btn_rmhydroproc.clicked.connect(self.removeTableRow)
+            
+
             #Calls the function to write the RVI file
             self.dlg.btn_write.clicked.connect(self.writeRVI)
             #----------------------------------------#
@@ -286,6 +303,69 @@ class QRaven:
                 self.dlg.txt_disablehru.setEnabled(True)
             else:
                 self.dlg.txt_disablehru.setEnabled(False)
+        elif widget.objectName() == "combo_stat1":
+            if self.dlg.combo_stat1.currentText().lower() == "histogram":
+                self.dlg.spin_min1.setEnabled(True)
+                self.dlg.spin_max1.setEnabled(True)
+                self.dlg.spin_bin1.setEnabled(True)
+            else:
+                self.dlg.spin_min1.setEnabled(False)
+                self.dlg.spin_max1.setEnabled(False)
+                self.dlg.spin_bin1.setEnabled(False)
+        elif widget.objectName() == "combo_stat2":
+            if self.dlg.combo_stat2.currentText().lower() == "histogram":
+                self.dlg.spin_min2.setEnabled(True)
+                self.dlg.spin_max2.setEnabled(True)
+                self.dlg.spin_bin2.setEnabled(True)
+            else:
+                self.dlg.spin_min2.setEnabled(False)
+                self.dlg.spin_max2.setEnabled(False)
+                self.dlg.spin_bin2.setEnabled(False)
+        elif widget.objectName() == "combo_stat3":
+            if self.dlg.combo_stat3.currentText().lower() == "histogram":
+                self.dlg.spin_min3.setEnabled(True)
+                self.dlg.spin_max3.setEnabled(True)
+                self.dlg.spin_bin3.setEnabled(True)
+            else:
+                self.dlg.spin_min3.setEnabled(False)
+                self.dlg.spin_max3.setEnabled(False)
+                self.dlg.spin_bin3.setEnabled(False)
+        elif widget.objectName() == "combo_stat4":
+            if self.dlg.combo_stat4.currentText().lower() == "histogram":
+                self.dlg.spin_min4.setEnabled(True)
+                self.dlg.spin_max4.setEnabled(True)
+                self.dlg.spin_bin4.setEnabled(True)
+            else:
+                self.dlg.spin_min4.setEnabled(False)
+                self.dlg.spin_max4.setEnabled(False)
+                self.dlg.spin_bin4.setEnabled(False)
+        elif widget.objectName() == "combo_stat5":
+            if self.dlg.combo_stat5.currentText().lower() == "histogram":
+                self.dlg.spin_min5.setEnabled(True)
+                self.dlg.spin_max5.setEnabled(True)
+                self.dlg.spin_bin5.setEnabled(True)
+            else:
+                self.dlg.spin_min5.setEnabled(False)
+                self.dlg.spin_max5.setEnabled(False)
+                self.dlg.spin_bin5.setEnabled(False)
+        elif widget.objectName() == "combo_stat6":
+            if self.dlg.combo_stat6.currentText().lower() == "histogram":
+                self.dlg.spin_min6.setEnabled(True)
+                self.dlg.spin_max6.setEnabled(True)
+                self.dlg.spin_bin6.setEnabled(True)
+            else:
+                self.dlg.spin_min6.setEnabled(False)
+                self.dlg.spin_max6.setEnabled(False)
+                self.dlg.spin_bin6.setEnabled(False)
+        elif widget.objectName() == "combo_stat7":
+            if self.dlg.combo_stat7.currentText().lower() == "histogram":
+                self.dlg.spin_min7.setEnabled(True)
+                self.dlg.spin_max7.setEnabled(True)
+                self.dlg.spin_bin7.setEnabled(True)
+            else:
+                self.dlg.spin_min7.setEnabled(False)
+                self.dlg.spin_max7.setEnabled(False)
+                self.dlg.spin_bin7.setEnabled(False)
         #Conditions for the BasinMaker RVH section below
         elif widget.objectName() == 'buttonGroup':  #buttonGroup is the group of radiobuttons for the mode of define project spatial extent
             if self.dlg.rb_modehybasin.isChecked(): #If the selected mode is using_hybasin
@@ -390,6 +470,288 @@ class QRaven:
         '''Allows to browse the computer for a directory'''
         dir = str(QFileDialog.getExistingDirectory(None, "Select Directory"))
         self.dlg.txt_outputdir.setText(dir)
+    
+
+    def addTableRow(self,procname):
+        #List that contains every process name
+        procname =['','Precipitation','CanopyEvap','SoilEvaporation','LakeEvaporation',
+                        'OpenWaterEvaporation','Infiltration','Percolation','CapillaryRise',
+                        'Baseflow','Interflow','Seepage','DepressionOverflow','LakeRelease',
+                        'Abstraction','SnowMelt','Snow Refreeze','Snow Balance','Sublimation',
+                        'SnowAlbedoEvolve','CanopyDrip','CropHeatUnitEvolve','GlacierMelt',
+                        'GlacierRelease','Flush','Overflow','Split','Convolution','LateralFlush'
+            ]
+        table = self.dlg.table_hydroprocess #Get the hydrological processes table
+        currentRow = table.rowCount()   #Get the number of rows the table has
+        table.insertRow(currentRow) #Inserts a new row below the last row
+        combo_proc = QComboBox() 
+        combo_alg = QComboBox()
+        combo_from = QComboBox()   
+        combo_to = QComboBox()
+        combo_proc.addItems(procname)   #Add a combobox in the new row with all the available processes
+        table.setCellWidget(currentRow, 0, combo_proc)  #Sets the new combobox in the first column and in the new row
+        table.setCellWidget(currentRow, 1, combo_alg)
+        table.setCellWidget(currentRow, 2, combo_from)
+        table.setCellWidget(currentRow, 3, combo_to)
+
+        table.resizeColumnsToContents() #Resizes the width of the column automatically
+        combo_proc.currentTextChanged.connect(self.setProcAlg)  #Updates the algorithm combobox if the process changes
+
+    def removeTableRow(self):
+        table = self.dlg.table_hydroprocess
+        selectedRow = table.currentRow()
+        table.removeRow(selectedRow)
+
+
+    def setProcAlg(self):
+       
+        combo_alg = QComboBox()
+        currentWidget = self.dlg.sender()
+        index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())
+        widgetRow = index.row()
+        #print(index.row())
+        combo_alg.clear()
+        combo_alg.addItem('')
+        if isinstance(currentWidget, QComboBox):
+            selectedProc = currentWidget.currentText()
+            #print(selectedProc)
+            if selectedProc == 'Precipitation':
+                combo_alg.addItems(precipalg)
+            elif selectedProc == 'CanopyEvap':
+                combo_alg.addItems(canopevapAlg)
+            elif selectedProc == 'SoilEvaporation':
+                combo_alg.addItems(soilevapAlg)
+            elif selectedProc == 'LakeEvaporation':
+                combo_alg.addItems(lakeevapAlg)
+            elif selectedProc == 'OpenWaterEvaporation':
+                combo_alg.addItems(openwaterevapAlg)
+            elif selectedProc == 'Infiltration':
+                combo_alg.addItems(infiltrationAlg)
+            elif selectedProc == 'Percolation':
+                combo_alg.addItems(percolationAlg)
+            elif selectedProc == 'CapillaryRise':
+                combo_alg.addItems(cappilaryriseAlg)
+            elif selectedProc == 'Baseflow':
+                combo_alg.addItems(baseflowAlg)
+            elif selectedProc == 'Interflow':
+                combo_alg.addItems(interflowAlg)
+            elif selectedProc == 'Seepage':
+                combo_alg.addItems(seepageAlg)
+            elif selectedProc == 'DepressionOverflow':
+                combo_alg.addItems(depresoverflowAlg)
+            elif selectedProc == 'LakeRelease':
+                combo_alg.addItems(lakereleaseAlg)
+            elif selectedProc == 'Abstraction':
+                combo_alg.addItems(abstractionAlg)
+            elif selectedProc == 'SnowMelt':
+                combo_alg.addItems(snowmeltAlg)
+            elif selectedProc == 'Snow Refreeze':
+                combo_alg.addItems(snowrefreezeAlg)
+            elif selectedProc == 'Snow Balance':
+                combo_alg.addItems(snowbalanceAlg)
+            elif selectedProc == 'Sublimation':
+                combo_alg.addItems(sublimationAlg)
+            elif selectedProc == 'SnowAlbedoEvolve':
+                combo_alg.addItems(snowalbedoevolveAlg)
+            elif selectedProc == 'CanopyDrip':
+                combo_alg.addItems(canopydripAlg)
+            elif selectedProc == 'CropHeatUnitEvolve':
+                combo_alg.addItems(cropheatunitevAlg)
+            elif selectedProc == 'GlacierMelt':
+                combo_alg.addItems(glaciermeltAlg)
+            elif selectedProc == 'GlacierRelease':
+                combo_alg.addItems(glacierreleaseAlg)
+            elif selectedProc == 'Flush':
+                combo_alg.addItems(flushAlg)
+            elif selectedProc == 'Overflow':
+                combo_alg.addItems(overflowAlg)
+            elif selectedProc == 'Split':
+                combo_alg.addItems(splitAlg)
+            elif selectedProc == 'Convolution':
+                combo_alg.addItems(convolutionAlg)
+            elif selectedProc == 'LateralFlush':
+                combo_alg.addItems(lateralflushAlg)
+        self.dlg.table_hydroprocess.setCellWidget(widgetRow, 1, combo_alg)
+        self.dlg.table_hydroprocess.resizeColumnsToContents()
+        combo_alg.currentTextChanged.connect(self.setStorage)   #Updates the compartments combobox if the algorithm changed
+
+    #This method sets the combobox values for the from and to compartments based on the selected algorithm
+    def setStorage(self):
+
+        #Lists of the compartments of each algorithm. Can easily add new compartments if new compartments are added in Raven
+        fromPrecip = ["ATMOS_PRECIP"]
+        toPrecip = ["MULTIPLE"]
+        fromCanevp = ["CANOPY"]
+        toCanevp = ["ATMOSPHERE"]
+        fromSoilevap = ["SOIL[0]"]
+        toSoilevap = ["ATMOSPHERE"]
+        fromLakeevap = ["LAKE","SURFACE_WATER"]
+        toLakeevap = ["ATMOSPHERE"]
+        fromOpenwaterevap = ["DEPRESSION"]
+        toOpenwaterevap = ["ATMOSPHERE"]
+        fromInfiltration = ["PONDED_WATER"]
+        toInfiltration = ["SOIL[0]", "SURFACE_WATER"]
+        toInfiltUBC = ["SOIL[0]","SOIL[1]","SOIL[2]","SOIL[3]","SURFACE_WATER"]
+        fromPercolation = []
+        toPercolation = []
+        fromCapillaryRise = []
+        toCapillaryRise = []
+        fromBaseflow = []
+        toBaseflow = ['SURFACE_WATER']
+        fromInterflow = []
+        toInterflow = ['SURFACE_WATER']
+        fromSeepage = ['DEPRESSION']
+        toSeepage = []
+        fromDepressOverflow = ['DEPRESSION']
+        toDepressOverflow = ['SURFACEWATER']
+        fromLakeRelease = ['LAKE']
+        toLakeRelease = ['SURFACE_WATER']
+        fromAbstraction = ['PONDED_WATER']
+        toAbstraction = ['DEPRESSION']
+        fromSnowmelt = ['SNOW']
+        toSnowmelt = ['SNOW_LIQ','PONDED_WATER','SURFACE_WATER']
+        fromSnowrefreeze = ['SNOW_LIQ']
+        toSnowrefreeze = ['SNOW']
+        fromSnowbalSimple = ['SNOW']
+        toSnowbalSimple = ['PONDED_WATER','SNOW_LIQ']
+        fromSnowbalColdcontent = ['SNOW','SNOW_LIQ']
+        toSnowbalColdcontent = ['SNOW','SNOW_LIQ','PONDED_WATER']
+        fromSnowbalHBV = ['SNOW','SNOW_LIQ']
+        toSnowbalHBV = ['SOIL[0]']
+        fromSnowbaltwolayer = ['SNOW[0,1]','SNOW_LIQ[0,1]']
+        toSnowbaltwolayer = ['SNOW[0,1]','SNOW_LIQ[0,1]','SURFACE_WATER']
+        fromSnowbalCema = ['SNOW']
+        toSnowbalCema = ['PONDED_WATER']
+        fromSnowbalGawser = ['SNOW','SNOW_LIQ']
+        toSnowbalGawser = ['SNOW_LIQ','ATMOSPHERE','PONDED_WATER']
+        fromSnowbalUBC = ['SNOW','SNOW_LIQ']
+        toSnowbalUBC = ['SNOW','SNOW_LIQ','SURFACE_WATER']
+        fromSublimation = ['SNOW']
+        toSublimation = ['ATMOSPHERE']
+        fromCanopydrip = ['CANOPY']
+        toCanopydrip = ['PONDED_WATER']
+        fromGlaciermelt = ['GLACIER_ICE']
+        toGlaciermelt = ['GLACIER']
+        fromGlacierRelease = ['GLACIER']
+        toGlacierRelease = ['SURFACE_WATER']
+
+        #Loops through the number of soil layers chosen by the user. Allows to add the soil[m] to comboboxes
+        if self.dlg.combo_soilmod.currentText().lower() == "soil_multilayer":
+            numberSoil = int(self.dlg.spin_soilmod.value()) #Get the number of layers
+        elif self.dlg.combo_soilmod.currentText().lower() == "soil_two_layers":
+            numberSoil = 2
+        else:
+            numberSoil = 1
+        for layer in range(numberSoil):
+            compartment = "SOIL["+str(layer)+']'    #Create the string to append to the list
+            #Append the soil[m] to the comboboxes
+            fromPercolation.append(compartment)
+            toPercolation.append(compartment)
+            fromCapillaryRise.append(compartment)
+            toCapillaryRise.append(compartment)
+            fromBaseflow.append(compartment)
+            fromInterflow.append(compartment)
+            toSeepage.append(compartment)
+        
+        currentWidget = self.dlg.sender()   #Get the widget that was triggered
+        index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())    #Get the index of the widget
+        widgetRow = index.row() #Get the row in which the widget is set
+        combo_from = QComboBox()    #Initialize the combobox for the from compartment
+        combo_to = QComboBox()      #Initialize the combobox for the to compartment
+        combo_from.clear()
+        combo_to.clear()
+
+        #Sets the value of the compartments based on the selected algorithm
+        if isinstance(currentWidget, QComboBox):
+            selectedAlg = currentWidget.currentText()
+            print(selectedAlg)
+            if selectedAlg in precipalg:
+                combo_from.addItems(fromPrecip)
+                combo_to.addItems(toPrecip)
+            elif selectedAlg in canopevapAlg:
+                combo_from.addItems(fromCanevp)
+                combo_to.addItems(toCanevp)
+            elif selectedAlg in soilevapAlg:
+                combo_from.addItems(fromSoilevap)
+                combo_to.addItems(toSoilevap) 
+            elif selectedAlg in lakeevapAlg:
+                combo_from.addItems(fromLakeevap)
+                combo_to.addItems(toLakeevap)
+            elif selectedAlg in openwaterevapAlg:
+                combo_from.addItems(fromOpenwaterevap)
+                combo_to.addItems(toOpenwaterevap)
+            elif selectedAlg in infiltrationAlg and selectedAlg =='INF_UBC':
+                combo_from.addItems(fromInfiltration)
+                combo_to.addItems(toInfiltUBC)
+            elif selectedAlg in infiltrationAlg and selectedAlg !='INF_UBC':
+                combo_from.addItems(fromInfiltration)
+                combo_to.addItems(toInfiltration)
+            elif selectedAlg in percolationAlg:
+                combo_from.addItems(fromPercolation)
+                combo_to.addItems(toPercolation)
+            elif selectedAlg in cappilaryriseAlg:
+                combo_from.addItems(fromCapillaryRise)
+                combo_to.addItems(toCapillaryRise)
+            elif selectedAlg in baseflowAlg:
+                combo_from.addItems(fromBaseflow)
+                combo_to.addItems(toBaseflow)
+            elif selectedAlg in interflowAlg:
+                combo_from.addItems(fromInterflow)
+                combo_to.addItems(toInterflow)
+            elif selectedAlg in seepageAlg:
+                combo_from.addItems(fromSeepage)
+                combo_to.addItems(toSeepage)
+            elif selectedAlg in depresoverflowAlg:
+                combo_from.addItems(fromDepressOverflow)
+                combo_to.addItems(toDepressOverflow)
+            elif selectedAlg in lakereleaseAlg:
+                combo_from.addItems(fromLakeRelease)
+                combo_to.addItems(toLakeRelease)
+            elif selectedAlg in abstractionAlg:
+                combo_from.addItems(fromAbstraction)
+                combo_to.addItems(toAbstraction)
+            elif selectedAlg == 'SNOBAL_SIMPLE_MELT':
+                combo_from.addItems(fromSnowbalSimple)
+                combo_to.addItems(toSnowbalSimple)
+            elif selectedAlg == 'SNOBAL_COLD_CONTENT':
+                combo_from.addItems(fromSnowbalColdcontent)
+                combo_to.addItems(toSnowbalColdcontent)
+            elif selectedAlg == 'SNOBAL_HBV':
+                combo_from.addItems(fromSnowbalHBV)
+                combo_to.addItems(toSnowbalHBV)
+            elif selectedAlg == 'SNOBAL_TWO_LAYER':
+                combo_from.addItems(fromSnowbaltwolayer)
+                combo_to.addItems(toSnowbaltwolayer)
+            elif selectedAlg == 'SNOBAL_CEMA_NEIGE':
+                combo_from.addItems(fromSnowbalCema)
+                combo_to.addItems(toSnowbalCema)
+            elif selectedAlg == 'SNOBAL_GAWSER':
+                combo_from.addItems(fromSnowbalGawser)
+                combo_to.addItems(toSnowbalGawser)
+            elif selectedAlg == 'SNOBAL_UBC':
+                combo_from.addItems(fromSnowbalUBC)
+                combo_to.addItems(toSnowbalUBC)
+            elif selectedAlg in snowmeltAlg:
+                combo_from.addItems(fromSnowmelt)
+                combo_to.addItems(toSnowmelt)
+            elif selectedAlg in snowrefreezeAlg:
+                combo_from.addItems(fromSnowrefreeze)
+                combo_to.addItems(toSnowrefreeze)
+            elif selectedAlg in sublimationAlg:
+                combo_from.addItems(fromSublimation)
+                combo_to.addItems(toSublimation)
+            elif selectedAlg in canopydripAlg:
+                combo_from.addItems(fromCanopydrip)
+                combo_to.addItems(toCanopydrip)
+            elif selectedAlg in glaciermeltAlg:
+                combo_from.addItems(fromGlaciermelt)
+                combo_to.addItems(toGlaciermelt)
+            elif selectedAlg in glacierreleaseAlg:
+                combo_from.addItems(fromGlacierRelease)
+                combo_to.addItems(toGlacierRelease)
+        self.dlg.table_hydroprocess.setCellWidget(widgetRow, 2, combo_from) #Set the combobox for the from compartment
+        self.dlg.table_hydroprocess.setCellWidget(widgetRow, 3, combo_to)   #Set the combobox for the to compartment
+        self.dlg.table_hydroprocess.resizeColumnsToContents()   #Resizes automatically the columns
         
 
     #This method writes all the parameters entered by the user into the RVI file
@@ -427,21 +789,27 @@ class QRaven:
                 count = 0
                 rvi.write("{:<33}".format(":CustomOutput"))
                 for output in customOutputList:
-                    if count == 4:
-                        count = 0
-                        if output == ' ':
-                            count+=1
-                            pass
-                        else:
-                            rvi.write("\n{:<33}".format(":CustomOutput")+output+" ")
-                            count+=1
-                    else:
-                        if output == ' ':
-                            count+=1
-                            pass
-                        else:
-                            rvi.write(output + " ")
-                            count+=1
+                    if count == 0:
+                        rvi.write("{:<33}".format("\n:CustomOutput"))
+                    rvi.write(output+" ")
+                    count +=1
+
+                # for output in customOutputList:
+                #     if count == 7:
+                #         count = 0
+                #         if output == ' ':
+                #             count+=1
+                #             pass
+                #         else:
+                #             rvi.write("\n{:<33}".format(":CustomOutput")+output+" ")
+                #             count+=1
+                #     else:
+                #         if output == ' ':
+                #             count+=1
+                #             pass
+                #         else:
+                #             rvi.write(output + " ")
+                #             count+=1
 
             print("RVI file written successfully")
             self.iface.messageBar().pushSuccess("Success", "RVI file written successfully")
@@ -673,18 +1041,27 @@ class QRaven:
            Returns a list
         '''
         customOutputList = []
-        #Loop through all the Custom Ouput widgets in order to get their values and add them to a list
-        for i in range(self.dlg.gridLayout.count()):
-            if isinstance(self.dlg.gridLayout.itemAt(i).widget(),QComboBox):    #Get the combobox values
-                if self.dlg.gridLayout.itemAt(i).widget().currentText() != '':
-                    customOutputList.append(self.dlg.gridLayout.itemAt(i).widget().currentText())
-                else: 
-                    customOutputList.append(" ")    #If the combobox is empty, places an empty space at its place in the list
-            else:
-                if self.dlg.gridLayout.itemAt(i).widget().text() != '': #Get the line edit values
-                    customOutputList.append(self.dlg.gridLayout.itemAt(i).widget().text())
-                else: 
-                    customOutputList.append(" ") #If the line edit is empty, places an empty space at its place in the list
+        # #Loop through all the Custom Ouput widgets in order to get their values and add them to a list
+        # for i in range(self.dlg.gridLayout.count()):
+        #     if isinstance(self.dlg.gridLayout.itemAt(i).widget(),QComboBox):    #Get the combobox values
+        #         if self.dlg.gridLayout.itemAt(i).widget().currentText() != '':
+        #             customOutputList.append(self.dlg.gridLayout.itemAt(i).widget().currentText())
+        #         else: 
+        #             customOutputList.append(" ")    #If the combobox is empty, places an empty space at its place in the list
+        #     elif isinstance(self.dlg.gridLayout.itemAt(i).widget(),QSpinBox):
+        #         if self.dlg.gridLayout.itemAt(i).widget().isEnabled() == True:
+        #             customOutputList.append(str(self.dlg.gridLayout.itemAt(i).widget().value()))
+        #         else:
+        #             customOutputList.append(" ")
+        #     else:
+        #         if self.dlg.gridLayout.itemAt(i).widget().text() != '': #Get the line edit values
+        #             customOutputList.append(self.dlg.gridLayout.itemAt(i).widget().text())
+        #         else: 
+        #             customOutputList.append(" ") #If the line edit is empty, places an empty space at its place in the list
+        # print(customOutputList)
+        
+
+
         return customOutputList 
 
     #This method gets all the RVH parameters and returns them into a dictionary
@@ -1236,3 +1613,37 @@ def checkOS():
     elif platform == "win32":
         return "windows", "\\"
 computerOS, separator = checkOS()
+
+#Lists with all of the Raven algorithms
+precipalg =['PRECIP_RAVEN']
+canopevapAlg = ['CANEVP_RUTTER','CANEVP_MAXIMUM']
+soilevapAlg = ['SOILEVAP_VIC','SOILEVAP_HBV','SOILEVAP_CHU','SOILEVAP_TOPMODEL','SOILEVAP_SEQUEN','SOILEVAP_ROOTFRAC','SOILEVAP_GAWSER']
+lakeevapAlg = ['LAKE_EVAP_BASIC']
+openwaterevapAlg = ['OPEN_WATER_EVAP']
+infiltrationAlg = ['INF_RATIONAL','INF_SCS','INF_ALL_INFILTRATES','INF_GREEN_AMPT','INF_GA_SIMPLE',
+                    'INF_UPSCALED_GREEN_AMPT','INF_HBV','INF_UBC','INF_VIC','INF_VIC_ARNO','INF_PRMS'
+                    ]
+percolationAlg = ['PERC_GAWSER','PERC_LINEAR','PERC_POWER_LAW','PERC_PRMS','PERC_SACRAMENTO','PERC_CONSTANT','PERC_GR4J']
+cappilaryriseAlg = ['CRISE_HBV']
+baseflowAlg = ['BASE_LINEAR','BASE_POWERLAW','BASE_CONSTANT','BASE_VIC','BASE_THRESH_POWER','BASE_GR4J','BASE_TOPMODEL']
+interflowAlg = ['PRMS']
+seepageAlg = ['SEEP_LINEAR']
+depresoverflowAlg = ['DFLOW_THRESHPOW','DFLOW_LINEAR']
+lakereleaseAlg = ['LAKEREL_LINEAR']
+abstractionAlg = ['ABST_PERCENTAGE','ABST_FILL','ABST_SCS']
+snowmeltAlg = ['MELT_POTMELT']
+snowrefreezeAlg = ['FREEZE_DEGREE_DAY']
+snowbalanceAlg = ['SNOBAL_SIMPLE_MELT','SNOBAL_COLD_CONTENT','SNOBAL_HBV','SNOBAL_TWO_LAYER','SNOBAL_CEMA_NEIGE',
+                    'SNOBAL_GAWSER','SNOBAL_UBC'
+                    ]
+sublimationAlg = ['SUBLIM_SVERDRUP','SUBLIM_KUZMIN','SUBLIM_CENTRAL_SIERRA','SUBLIM_PSBM','SUBLIM_WILLIAMS']
+snowalbedoevolveAlg = ['SNOALB_UBC']
+canopydripAlg = ['CANDRIP_RUTTER','CANDRIP_SLOWDRAIN']
+cropheatunitevAlg = ['CHU_ONTARIO']
+glaciermeltAlg = ['GMELT_SIMPLET_MELT','GMELT_HBV','GMELT_UBC']
+glacierreleaseAlg = ['GRELEASE_LINEAR','GRELEASE_HBV_EC']
+flushAlg = ['FLUSH_RAVEN']
+overflowAlg = ['OVERFLOW_RAVEN']
+splitAlg = ['RAVEN_DEFAULT']
+convolutionAlg = ['CONVOL_GR4J1','CONVOL_GR4J2']
+lateralflushAlg = ['RAVEN_DEFAULT']
