@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>883</width>
+    <width>969</width>
     <height>636</height>
    </rect>
   </property>
@@ -37,7 +37,7 @@
         <rect>
          <x>9</x>
          <y>9</y>
-         <width>841</width>
+         <width>931</width>
          <height>501</height>
         </rect>
        </property>
@@ -1270,7 +1270,7 @@
           <rect>
            <x>9</x>
            <y>43</y>
-           <width>821</width>
+           <width>911</width>
            <height>421</height>
           </rect>
          </property>
@@ -1281,7 +1281,7 @@
           <number>0</number>
          </property>
          <property name="columnCount">
-          <number>4</number>
+          <number>8</number>
          </property>
          <attribute name="horizontalHeaderCascadingSectionResizes">
           <bool>false</bool>
@@ -1307,6 +1307,26 @@
          <column>
           <property name="text">
            <string>To</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Conditional</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Based</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Comparison</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Type</string>
           </property>
          </column>
         </widget>
@@ -1419,6 +1439,9 @@
            </property>
            <property name="focusPolicy">
             <enum>Qt::TabFocus</enum>
+           </property>
+           <property name="storageMode">
+            <enum>QgsFileWidget::GetDirectory</enum>
            </property>
           </widget>
          </item>
@@ -2862,7 +2885,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>593</width>
+              <width>804</width>
               <height>1114</height>
              </rect>
             </property>
