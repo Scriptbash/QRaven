@@ -3,7 +3,7 @@ A QGIS Plugin to help generate input files for Raven
 
 ## Description
 
-QRaven aims to simplify the creation of the primary input file (.RVI) and HRU/Basin definition file (.RVH) for the Raven hydrological modelling framework. It allows the user to choose all the options for the RVI file (except for the hydrological processes at the moment) and it automates the setup, as well as the use of the BasinMaker python library.
+QRaven aims to simplify the creation of the primary input file (.RVI) and HRU/Basin definition file (.RVH) for the Raven hydrological modelling framework. It allows the user to choose all the options for the RVI file and it automates the setup, as well as the use of the BasinMaker python library.
 
 ## Getting Started
 
@@ -45,9 +45,9 @@ QRaven aims to simplify the creation of the primary input file (.RVI) and HRU/Ba
 * Run Model tab
   * Use this tab to run your Raven model
   * A Raven executable must be provided as well as an input and output directory
-  * The file name prefix is the name as the model
+  * The file name prefix is the same name as the model
   * The RunName is only required if the command :RunName is used in the .rvi file
-  * Once the Raven has finished processing the model, the hydrograph can be visualized by clicking on the Gather Output button
+  * Once Raven has finished processing the model, the hydrograph can be visualized by clicking on the "View hydrograph" button
   * Screenshots
     * ![image](https://user-images.githubusercontent.com/98601298/165858419-1748cd2f-bab9-4f26-82d5-033f11105c06.png)
     * ![image](https://user-images.githubusercontent.com/98601298/165858439-f31f9959-d3c6-48b0-8b29-a79fada5720b.png)
