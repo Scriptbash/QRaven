@@ -481,21 +481,33 @@ class QRaven:
                         'SnowAlbedoEvolve','CanopyDrip','CropHeatUnitEvolve','GlacierMelt',
                         'GlacierRelease','Flush','Overflow','Split','Convolution','LateralFlush'
             ]
-        table = self.dlg.table_hydroprocess #Get the hydrological processes table
+        table = self.dlg.table_hydroprocess #Get the hydrologic processes table
         currentRow = table.rowCount()   #Get the number of rows the table has
         table.insertRow(currentRow) #Inserts a new row below the last row
         combo_proc = QComboBox() 
         combo_alg = QComboBox()
         combo_from = QComboBox()   
         combo_to = QComboBox()
+        chk_isconditional = QCheckBox()
+        combo_basedtype = QComboBox()
+        combo_comparison = QComboBox()
+        txt_hrutype = QLineEdit()
         combo_proc.addItems(procname)   #Add a combobox in the new row with all the available processes
+        combo_basedtype.setEnabled(False)
+        combo_comparison.setEnabled(False)
+        txt_hrutype.setEnabled(False)
         table.setCellWidget(currentRow, 0, combo_proc)  #Sets the new combobox in the first column and in the new row
         table.setCellWidget(currentRow, 1, combo_alg)
         table.setCellWidget(currentRow, 2, combo_from)
         table.setCellWidget(currentRow, 3, combo_to)
+        table.setCellWidget(currentRow, 4, chk_isconditional)
+        table.setCellWidget(currentRow, 5, combo_basedtype)
+        table.setCellWidget(currentRow, 6, combo_comparison)
+        table.setCellWidget(currentRow, 7, txt_hrutype)
 
         table.resizeColumnsToContents() #Resizes the width of the column automatically
         combo_proc.currentTextChanged.connect(self.setProcAlg)  #Updates the algorithm combobox if the process changes
+        chk_isconditional.stateChanged.connect(self.enableConditionalProc)
 
     def removeTableRow(self):
         table = self.dlg.table_hydroprocess
@@ -603,7 +615,7 @@ class QRaven:
         fromSeepage = ['DEPRESSION']
         toSeepage = []
         fromDepressOverflow = ['DEPRESSION']
-        toDepressOverflow = ['SURFACEWATER']
+        toDepressOverflow = ['SURFACE_WATER']
         fromLakeRelease = ['LAKE']
         toLakeRelease = ['SURFACE_WATER']
         fromAbstraction = ['PONDED_WATER']
@@ -634,6 +646,9 @@ class QRaven:
         toGlaciermelt = ['GLACIER']
         fromGlacierRelease = ['GLACIER']
         toGlacierRelease = ['SURFACE_WATER']
+        anyCompartment = ['ATMOS_PRECIP','MULTIPLE','CANOPY','ATMOSPHERE','LAKE','SURFACE_WATER',
+                          'DEPRESSION','PONDED_WATER','SNOW','SNOW_LIQ','GLACIER_ICE','GLACIER'
+                         ]
 
         #Loops through the number of soil layers chosen by the user. Allows to add the soil[m] to comboboxes
         if self.dlg.combo_soilmod.currentText().lower() == "soil_multilayer":
@@ -652,7 +667,10 @@ class QRaven:
             fromBaseflow.append(compartment)
             fromInterflow.append(compartment)
             toSeepage.append(compartment)
-        
+            anyCompartment.append(compartment)
+        for layer in range(numberSoil):
+            compartment = "CONVOLUTION["+str(layer)+']' 
+            anyCompartment.append(compartment)
         currentWidget = self.dlg.sender()   #Get the widget that was triggered
         index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())    #Get the index of the widget
         widgetRow = index.row() #Get the row in which the widget is set
@@ -749,10 +767,40 @@ class QRaven:
             elif selectedAlg in glacierreleaseAlg:
                 combo_from.addItems(fromGlacierRelease)
                 combo_to.addItems(toGlacierRelease)
+            elif selectedAlg in flushAlg or selectedAlg in overflowAlg or selectedAlg in splitAlg or selectedAlg in lateralflushAlg or selectedAlg in convolutionAlg:
+                combo_from.addItems(anyCompartment)
+                combo_to.addItems(anyCompartment)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 2, combo_from) #Set the combobox for the from compartment
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 3, combo_to)   #Set the combobox for the to compartment
         self.dlg.table_hydroprocess.resizeColumnsToContents()   #Resizes automatically the columns
         
+
+    def enableConditionalProc(self):
+        basedtype = ['HRU_TYPE','LAND_CLASS','HRU_GROUP']
+        comparison = ['IS', 'IS_NOT']
+        table = self.dlg.table_hydroprocess
+        currentWidget = self.dlg.sender()
+        index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())
+        widgetRow = index.row()
+        combo_basedtype = QComboBox()
+        combo_comparison = QComboBox()
+        txt_hrutype = QLineEdit()
+        if isinstance(currentWidget, QCheckBox):
+            if currentWidget.isChecked():
+                combo_basedtype.addItems(basedtype)
+                combo_basedtype.setEnabled(True)
+                combo_comparison.addItems(comparison)
+                combo_comparison.setEnabled(True)
+                txt_hrutype.setEnabled(True)
+            else:
+                combo_basedtype.setEnabled(False)
+                combo_comparison.setEnabled(False)
+                txt_hrutype.setEnabled(False)
+            table.setCellWidget(widgetRow, 5, combo_basedtype)
+            table.setCellWidget(widgetRow, 6, combo_comparison)
+            table.setCellWidget(widgetRow, 7, txt_hrutype)
+            table.resizeColumnsToContents() #Resizes the width of the column automatically
+
 
     #This method writes all the parameters entered by the user into the RVI file
     def writeRVI(self):
@@ -766,6 +814,7 @@ class QRaven:
         '''
         paramDict = self.getParams()    #Calls the function to retrieve the widgets values
         customOutputList = self.getCustomOutput()   #Calls the function to get the custom output values
+        hydroProcessesList = self.getHydroProcess()
         outputdir = self.dlg.txt_outputdir.text()   #Get the output directory chosen by the use
         modelName = self.dlg.txt_modname.text()     #Get the name of the model
         disabledhrus_list = paramDict['DisableHRUGroup'].split(',')
@@ -785,9 +834,36 @@ class QRaven:
                             rvi.write(f":{key:<30}  {value}\n")
                     elif value == "checked":   #This writes the optional I/O which don't have an argument (so only the key is written)
                         rvi.write(f":{key:<30}\n")
+                
+                rvi.write(":HydrologicProcesses")
+                processCount = 0
+                for process in hydroProcessesList:
+                    if processCount == 0:
+                        rvi.write("\n\t{:<28}".format(':'+process))
+                        processCount+=1
+                    elif processCount <= 7:
+                        if process == 'True':
+                            firstcondition = True
+                            if firstcondition != False:
+                                rvi.write('\n\t   :-->Conditional')
+                                firstcondition = False
+                                processCount += 1
+                            else:
+                                rvi.write(' '+ process)
+                                processCount += 1
+                        elif process =='False' or process == '':
+                                processCount +=1
+                                pass
+                        else:
+                            rvi.write(' '+process)
+                            processCount +=1 
+                    else:
+                        processCount = 1
+                        rvi.write("\n\t{:<28}".format(':'+process))
+                rvi.write("\n:EndHydrologicProcesses")
                 #Writes the custom output
                 count = 0
-                rvi.write("{:<33}".format(":CustomOutput"))
+                rvi.write("{:<33}".format("\n:CustomOutput"))
                 for output in customOutputList:
                     if count == 7:
                         count = 0
@@ -1026,6 +1102,28 @@ class QRaven:
             "EvaluationMetrics"          : evalmetrics
         }
         return paramsDict
+
+
+
+    def getHydroProcess(self):
+        table = self.dlg.table_hydroprocess
+        rows = table.rowCount()
+        cols = table.columnCount()
+        processesList = []
+        for row in range(rows):
+            for col in range(cols):
+                currentWidget = table.cellWidget(row,col)
+                if isinstance(currentWidget, QComboBox):
+                    processesList.append(currentWidget.currentText())
+                elif isinstance(currentWidget, QCheckBox):
+                    if currentWidget.isChecked():
+                        processesList.append('True')
+                    else:
+                        processesList.append('False')
+                elif isinstance(currentWidget, QLineEdit):
+                    processesList.append(currentWidget.text().upper())
+        return processesList
+
 
 
     #This method fetches the custom output widgets' values and returns them into a list
