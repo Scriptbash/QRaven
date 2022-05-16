@@ -51,7 +51,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>3</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -1354,6 +1354,78 @@
          </property>
          <property name="text">
           <string>Remove selected process</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_9">
+        <attribute name="title">
+         <string>Transport cmd.</string>
+        </attribute>
+        <widget class="QTableWidget" name="table_transport">
+         <property name="geometry">
+          <rect>
+           <x>9</x>
+           <y>43</y>
+           <width>911</width>
+           <height>421</height>
+          </rect>
+         </property>
+         <property name="columnCount">
+          <number>5</number>
+         </property>
+         <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+          <bool>false</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Constituent</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Compartment</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Conc/temp/flux</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>HRU group</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QPushButton" name="btn_addtransport">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>181</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Add transport</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="btn_rmtransport">
+         <property name="geometry">
+          <rect>
+           <x>210</x>
+           <y>20</y>
+           <width>181</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Remove selected transport</string>
          </property>
         </widget>
        </widget>
