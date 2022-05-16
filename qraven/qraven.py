@@ -226,6 +226,8 @@ class QRaven:
                       ]
             self.dlg.btn_addhydroproc.clicked.connect(self.addTableRow)
             self.dlg.btn_rmhydroproc.clicked.connect(self.removeTableRow)
+            self.dlg.btn_addtransport.clicked.connect(self.addTransportProc)
+            self.dlg.btn_rmtransport.clicked.connect(self.rmTransportProc)
             
 
             #Calls the function to write the RVI file
@@ -261,7 +263,7 @@ class QRaven:
         # See if OK was pressed
         if result:
             # May remove completely this and keep only a close button in the GUI
-            pass
+            print('This button does not do anything. Use the other buttons instead.' )
     
 
     #This method enables and disables widgets based on their checkboxes/radiobutton state
@@ -682,7 +684,6 @@ class QRaven:
         #Sets the value of the compartments based on the selected algorithm
         if isinstance(currentWidget, QComboBox):
             selectedAlg = currentWidget.currentText()
-            print(selectedAlg)
             if selectedAlg in precipalg:
                 combo_from.addItems(fromPrecip)
                 combo_to.addItems(toPrecip)
@@ -802,6 +803,78 @@ class QRaven:
             table.resizeColumnsToContents() #Resizes the width of the column automatically
 
 
+    def addTransportProc(self):
+        typelist=['Transport','FixedConcentration','FixedTemperature','MassFlux']
+        table = self.dlg.table_transport #Get the hydrologic processes table
+        currentRow = table.rowCount()   #Get the number of rows the table has
+        table.insertRow(currentRow) #Inserts a new row below the last row
+        combo_type = QComboBox()
+        txt_constituent = QLineEdit()
+        combo_compartment = QComboBox()
+        spin_conctemp = QDoubleSpinBox()
+        combo_HRUgroup = QComboBox()
+
+
+        combo_type.addItems(typelist)   #Add a combobox in the new row with all the available processes
+        #txt_constituent.setEnabled(False)
+        combo_compartment.setEnabled(False)
+        spin_conctemp.setEnabled(False)
+        combo_HRUgroup.setEnabled(False)
+        table.setCellWidget(currentRow, 0, combo_type)
+        table.setCellWidget(currentRow, 1, txt_constituent)
+        table.setCellWidget(currentRow, 2, combo_compartment)
+        table.setCellWidget(currentRow, 3, spin_conctemp)
+        table.setCellWidget(currentRow, 4, combo_HRUgroup)
+        table.resizeColumnsToContents() #Resizes the width of the column automatically
+        combo_type.currentTextChanged.connect(self.setTransportCommands)
+    
+    def setTransportCommands(self): 
+        compartments = ['ATMOS_PRECIP','MULTIPLE','CANOPY','ATMOSPHERE','LAKE','SURFACE_WATER',
+                          'DEPRESSION','PONDED_WATER','SNOW','SNOW_LIQ','GLACIER_ICE','GLACIER'
+                       ]
+        hrugroups = self.dlg.txt_defhru.toPlainText().split(',')
+        currentWidget = self.dlg.sender()
+        table = self.dlg.table_transport #Get the transport processes table
+        index = self.dlg.table_transport.indexAt(currentWidget.pos())    #Get the index of the widget
+        widgetRow = index.row() #Get the row in which the widget is set
+        txt_constituent = QLineEdit()
+        combo_compartment = QComboBox()
+        spin_conctemp = QDoubleSpinBox()
+        combo_HRUgroup = QComboBox()
+        combo_compartment.clear()
+        combo_HRUgroup.clear()
+        combo_HRUgroup.addItem("")
+        if isinstance(currentWidget, QComboBox):
+            selectedType = currentWidget.currentText()
+            if selectedType == 'Transport':
+                txt_constituent.setEnabled(True)
+            elif selectedType == 'FixedConcentration':
+                txt_constituent.setEnabled(True)
+                combo_compartment.setEnabled(True)
+                combo_compartment.addItems(compartments)
+                spin_conctemp.setEnabled(True)
+                combo_HRUgroup.setEnabled(True)
+                combo_HRUgroup.addItems(hrugroups)               
+            elif selectedType == 'FixedTemperature':
+                txt_constituent.setEnabled(False)
+                combo_compartment.setEnabled(True)
+                combo_compartment.addItems(compartments)
+                spin_conctemp.setEnabled(True)
+                combo_HRUgroup.setEnabled(True)
+                combo_HRUgroup.addItems(hrugroups)     
+            elif selectedType == 'MassFlux':
+                txt_constituent.setEnabled(False)
+                combo_compartment.setEnabled(True)
+                combo_compartment.addItems(compartments)
+                spin_conctemp.setEnabled(True)
+                combo_HRUgroup.setEnabled(True)
+                combo_HRUgroup.addItems(hrugroups)       
+        table.setCellWidget(widgetRow, 1, txt_constituent)
+        table.setCellWidget(widgetRow, 2, combo_compartment)
+        table.setCellWidget(widgetRow, 3, spin_conctemp)
+        table.setCellWidget(widgetRow, 4, combo_HRUgroup)
+    def rmTransportProc(self):
+        print("place holder")
     #This method writes all the parameters entered by the user into the RVI file
     def writeRVI(self):
         '''Gathers all the RVI parameters entered by the user from a dictionary and writes them into a .RVI file
