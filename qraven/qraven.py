@@ -840,6 +840,8 @@ class QRaven:
         txt_constituent = QLineEdit()
         combo_compartment = QComboBox()
         spin_conctemp = QDoubleSpinBox()
+        spin_conctemp.setMinimum(-99999999)
+        spin_conctemp.setMaximum(99999999)
         combo_HRUgroup = QComboBox()
         combo_compartment.clear()
         combo_HRUgroup.clear()
@@ -848,6 +850,9 @@ class QRaven:
             selectedType = currentWidget.currentText()
             if selectedType == 'Transport':
                 txt_constituent.setEnabled(True)
+                combo_compartment.setEnabled(False)
+                spin_conctemp.setEnabled(False)
+                combo_HRUgroup.setEnabled(False)
             elif selectedType == 'FixedConcentration':
                 txt_constituent.setEnabled(True)
                 combo_compartment.setEnabled(True)
@@ -874,7 +879,9 @@ class QRaven:
         table.setCellWidget(widgetRow, 3, spin_conctemp)
         table.setCellWidget(widgetRow, 4, combo_HRUgroup)
     def rmTransportProc(self):
-        print("place holder")
+        table = self.dlg.table_transport
+        selectedRow = table.currentRow()
+        table.removeRow(selectedRow)
     #This method writes all the parameters entered by the user into the RVI file
     def writeRVI(self):
         '''Gathers all the RVI parameters entered by the user from a dictionary and writes them into a .RVI file
@@ -888,6 +895,7 @@ class QRaven:
         paramDict = self.getParams()    #Calls the function to retrieve the widgets values
         customOutputList = self.getCustomOutput()   #Calls the function to get the custom output values
         hydroProcessesList = self.getHydroProcess()
+        transportProcessesList = self.getTransportProcess()
         outputdir = self.dlg.txt_outputdir.text()   #Get the output directory chosen by the use
         modelName = self.dlg.txt_modname.text()     #Get the name of the model
         disabledhrus_list = paramDict['DisableHRUGroup'].split(',')
@@ -933,7 +941,21 @@ class QRaven:
                     else:
                         processCount = 1
                         rvi.write("\n\t{:<28}".format(':'+process))
-                rvi.write("\n:EndHydrologicProcesses")
+                rvi.write("\n:EndHydrologicProcesses\n")
+
+                transportCount = 0
+                for transport in transportProcessesList:
+                    if transportCount == 0:
+                        rvi.write("\n:"+transport)
+                        transportCount += 1
+                    elif transportCount <= 4 and transportCount != 0:
+                        rvi.write(" "+transport)
+                        transportCount += 1
+                    else:
+                        transportCount = 1
+                        rvi.write("\n:"+transport)
+                
+
                 #Writes the custom output
                 count = 0
                 rvi.write("{:<33}".format("\n:CustomOutput"))
@@ -1197,6 +1219,26 @@ class QRaven:
                     processesList.append(currentWidget.text().upper())
         return processesList
 
+
+    def getTransportProcess(self):
+        table = self.dlg.table_transport
+        rows = table.rowCount()
+        cols = table.columnCount()
+        processesList = []
+
+        for row in range(rows):
+            for col in range(cols):
+                currentWidget = table.cellWidget(row,col)
+                if isinstance(currentWidget, QComboBox):
+                    processesList.append(currentWidget.currentText())
+                elif isinstance(currentWidget,QLineEdit):
+                    processesList.append(currentWidget.text())
+                elif isinstance(currentWidget,QDoubleSpinBox):
+                    if currentWidget.isEnabled():
+                        processesList.append(str(currentWidget.value()))
+                    else:
+                        processesList.append("")        
+        return processesList
 
 
     #This method fetches the custom output widgets' values and returns them into a list
