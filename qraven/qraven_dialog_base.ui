@@ -23,7 +23,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -51,7 +51,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>3</number>
+        <number>5</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -1505,12 +1505,15 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QgsFileWidget" name="file_outputdir" native="true">
+          <widget class="QgsFileWidget" name="file_outputdir">
            <property name="enabled">
             <bool>false</bool>
            </property>
            <property name="focusPolicy">
             <enum>Qt::TabFocus</enum>
+           </property>
+           <property name="storageMode">
+            <enum>QgsFileWidget::GetDirectory</enum>
            </property>
           </widget>
          </item>
@@ -2953,9 +2956,9 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>0</y>
-              <width>728</width>
-              <height>1217</height>
+              <y>-695</y>
+              <width>804</width>
+              <height>1114</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
@@ -3054,7 +3057,7 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QgsFileWidget" name="file_dem" native="true">
+              <widget class="QgsFileWidget" name="file_dem">
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
                </property>
@@ -3088,11 +3091,11 @@
               </widget>
              </item>
              <item row="5" column="1">
-              <widget class="QgsFileWidget" name="file_lakes" native="true">
+              <widget class="QgsFileWidget" name="file_lakes">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter" stdset="0">
+               <property name="filter">
                 <string>*.shp</string>
                </property>
               </widget>
@@ -3138,11 +3141,11 @@
               </widget>
              </item>
              <item row="8" column="1">
-              <widget class="QgsFileWidget" name="file_pointsinterest" native="true">
+              <widget class="QgsFileWidget" name="file_pointsinterest">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter" stdset="0">
+               <property name="filter">
                 <string>*.shp</string>
                </property>
               </widget>
@@ -3242,7 +3245,7 @@
               </widget>
              </item>
              <item row="4" column="1">
-              <widget class="QgsFileWidget" name="file_landuserast" native="true">
+              <widget class="QgsFileWidget" name="file_landuserast">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
@@ -3279,14 +3282,14 @@
               </widget>
              </item>
              <item row="35" column="1">
-              <widget class="QgsFileWidget" name="file_landusemanning" native="true">
+              <widget class="QgsFileWidget" name="file_landusemanning">
                <property name="enabled">
                 <bool>false</bool>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter" stdset="0">
+               <property name="filter">
                 <string>*.csv</string>
                </property>
               </widget>
@@ -3302,7 +3305,7 @@
               </widget>
              </item>
              <item row="14" column="1">
-              <widget class="QgsFileWidget" name="file_providedply" native="true">
+              <widget class="QgsFileWidget" name="file_providedply">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -3312,7 +3315,7 @@
                <property name="toolTip">
                 <string>path_to_spatial_extent_polygon</string>
                </property>
-               <property name="filter" stdset="0">
+               <property name="filter">
                 <string>*.shp</string>
                </property>
               </widget>
@@ -3351,11 +3354,11 @@
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QgsFileWidget" name="file_landusepoly" native="true">
+              <widget class="QgsFileWidget" name="file_landusepoly">
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
                </property>
-               <property name="filter" stdset="0">
+               <property name="filter">
                 <string>*.shp</string>
                </property>
               </widget>
@@ -3375,21 +3378,21 @@
               </widget>
              </item>
              <item row="7" column="1">
-              <widget class="QgsFileWidget" name="file_soil" native="true">
+              <widget class="QgsFileWidget" name="file_soil">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter" stdset="0">
+               <property name="filter">
                 <string>*.shp</string>
                </property>
               </widget>
              </item>
              <item row="6" column="1">
-              <widget class="QgsFileWidget" name="file_bankfullwidth" native="true">
+              <widget class="QgsFileWidget" name="file_bankfullwidth">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter" stdset="0">
+               <property name="filter">
                 <string>*.shp</string>
                </property>
               </widget>
@@ -3476,7 +3479,7 @@
               </widget>
              </item>
              <item row="19" column="2">
-              <widget class="QgsFileWidget" name="file_fdr" native="true">
+              <widget class="QgsFileWidget" name="file_fdr">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -3529,9 +3532,12 @@
               </widget>
              </item>
              <item row="36" column="1">
-              <widget class="QgsFileWidget" name="file_outputfolder" native="true">
+              <widget class="QgsFileWidget" name="file_outputfolder">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
+               </property>
+               <property name="storageMode">
+                <enum>QgsFileWidget::GetDirectory</enum>
                </property>
               </widget>
              </item>
@@ -3620,7 +3626,7 @@
               </widget>
              </item>
              <item row="12" column="1">
-              <widget class="QgsFileWidget" name="file_hybasin" native="true">
+              <widget class="QgsFileWidget" name="file_hybasin">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -3630,7 +3636,7 @@
                <property name="toolTip">
                 <string>path_to_hydrobasin_polygon</string>
                </property>
-               <property name="filter" stdset="0">
+               <property name="filter">
                 <string>*.shp</string>
                </property>
               </widget>
@@ -3674,7 +3680,7 @@
               <x>0</x>
               <y>0</y>
               <width>817</width>
-              <height>411</height>
+              <height>419</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_8">
@@ -3721,11 +3727,11 @@
               </widget>
              </item>
              <item row="10" column="2">
-              <widget class="QgsFileWidget" name="file_pathveginfo" native="true">
+              <widget class="QgsFileWidget" name="file_pathveginfo">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter" stdset="0">
+               <property name="filter">
                 <string>*.csv</string>
                </property>
               </widget>
@@ -3773,11 +3779,11 @@
               </widget>
              </item>
              <item row="7" column="2">
-              <widget class="QgsFileWidget" name="file_pathlanduseinfo" native="true">
+              <widget class="QgsFileWidget" name="file_pathlanduseinfo">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter" stdset="0">
+               <property name="filter">
                 <string>*.csv</string>
                </property>
               </widget>
@@ -3790,11 +3796,11 @@
               </widget>
              </item>
              <item row="8" column="2">
-              <widget class="QgsFileWidget" name="file_pathsoilinfo" native="true">
+              <widget class="QgsFileWidget" name="file_pathsoilinfo">
                <property name="focusPolicy">
                 <enum>Qt::TabFocus</enum>
                </property>
-               <property name="filter" stdset="0">
+               <property name="filter">
                 <string>*.csv</string>
                </property>
               </widget>
@@ -3870,9 +3876,12 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QgsFileWidget" name="file_runinputdir" native="true">
+           <widget class="QgsFileWidget" name="file_runinputdir">
             <property name="toolTip">
              <string>Path to the model folder</string>
+            </property>
+            <property name="storageMode">
+             <enum>QgsFileWidget::GetDirectory</enum>
             </property>
            </widget>
           </item>
@@ -3887,9 +3896,12 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QgsFileWidget" name="file_runoutputdir" native="true">
+           <widget class="QgsFileWidget" name="file_runoutputdir">
             <property name="toolTip">
              <string>Path where to save the results</string>
+            </property>
+            <property name="storageMode">
+             <enum>QgsFileWidget::GetDirectory</enum>
             </property>
            </widget>
           </item>
@@ -3904,11 +3916,11 @@
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QgsFileWidget" name="file_ravenexe" native="true">
+           <widget class="QgsFileWidget" name="file_ravenexe">
             <property name="toolTip">
              <string>Path to the Raven executable (Raven.exe)</string>
             </property>
-            <property name="filter" stdset="0">
+            <property name="filter">
              <string>*.exe</string>
             </property>
            </widget>
@@ -4155,7 +4167,7 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
