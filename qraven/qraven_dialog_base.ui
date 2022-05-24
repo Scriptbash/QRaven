@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>969</width>
+    <width>1054</width>
     <height>636</height>
    </rect>
   </property>
@@ -35,9 +35,9 @@
       <widget class="QTabWidget" name="tabWidget">
        <property name="geometry">
         <rect>
-         <x>9</x>
+         <x>-1</x>
          <y>9</y>
-         <width>931</width>
+         <width>1031</width>
          <height>501</height>
         </rect>
        </property>
@@ -51,7 +51,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>5</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -1268,9 +1268,9 @@
         <widget class="QTableWidget" name="table_hydroprocess">
          <property name="geometry">
           <rect>
-           <x>9</x>
+           <x>-1</x>
            <y>43</y>
-           <width>911</width>
+           <width>1031</width>
            <height>421</height>
           </rect>
          </property>
@@ -1364,9 +1364,9 @@
         <widget class="QTableWidget" name="table_transport">
          <property name="geometry">
           <rect>
-           <x>9</x>
+           <x>-1</x>
            <y>43</y>
-           <width>911</width>
+           <width>1031</width>
            <height>421</height>
           </rect>
          </property>
@@ -2851,7 +2851,7 @@
       <widget class="QPushButton" name="btn_write">
        <property name="geometry">
         <rect>
-         <x>460</x>
+         <x>430</x>
          <y>520</y>
          <width>90</width>
          <height>28</height>
@@ -2920,7 +2920,7 @@
       <widget class="QPushButton" name="btn_dockerrm">
        <property name="geometry">
         <rect>
-         <x>690</x>
+         <x>860</x>
          <y>520</y>
          <width>111</width>
          <height>28</height>
@@ -2933,14 +2933,14 @@
       <widget class="QTabWidget" name="tabWidget_2">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>0</x>
          <y>40</y>
-         <width>841</width>
+         <width>1041</width>
          <height>471</height>
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_6">
         <attribute name="title">
@@ -2956,8 +2956,8 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>-695</y>
-              <width>804</width>
+              <y>0</y>
+              <width>1004</width>
               <height>1114</height>
              </rect>
             </property>
@@ -3679,7 +3679,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>817</width>
+              <width>907</width>
               <height>419</height>
              </rect>
             </property>
