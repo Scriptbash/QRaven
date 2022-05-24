@@ -372,28 +372,28 @@ class QRaven:
         elif widget.objectName() == 'buttonGroup':  #buttonGroup is the group of radiobuttons for the mode of define project spatial extent
             if self.dlg.rb_modehybasin.isChecked(): #If the selected mode is using_hybasin
                 self.dlg.file_hybasin.setEnabled(True)
-                self.dlg.spin_hybasin.setEnabled(True)
+                self.dlg.txt_hybasin.setEnabled(True)
                 self.dlg.txt_outletlat.setEnabled(False)
                 self.dlg.txt_outletlon.setEnabled(False)
                 self.dlg.file_providedply.setEnabled(False)
                 self.dlg.spin_buffer.setEnabled(True)
             elif self.dlg.rb_outletpt.isChecked():  #Mode is using_outlet_pt
                 self.dlg.file_hybasin.setEnabled(False)
-                self.dlg.spin_hybasin.setEnabled(False)
+                self.dlg.txt_hybasin.setEnabled(False)
                 self.dlg.txt_outletlat.setEnabled(True)
                 self.dlg.txt_outletlon.setEnabled(True)
                 self.dlg.file_providedply.setEnabled(False)
                 self.dlg.spin_buffer.setEnabled(False)
             elif self.dlg.rb_providedply.isChecked():   #Mode is using_provided_ply
                 self.dlg.file_hybasin.setEnabled(False)
-                self.dlg.spin_hybasin.setEnabled(False)
+                self.dlg.txt_hybasin.setEnabled(False)
                 self.dlg.txt_outletlat.setEnabled(False)
                 self.dlg.txt_outletlon.setEnabled(False)
                 self.dlg.file_providedply.setEnabled(True)
                 self.dlg.spin_buffer.setEnabled(True)
             else:
                 self.dlg.file_hybasin.setEnabled(False) #Mode is using_dem
-                self.dlg.spin_hybasin.setEnabled(False)
+                self.dlg.txt_hybasin.setEnabled(False)
                 self.dlg.txt_outletlat.setEnabled(False)
                 self.dlg.txt_outletlon.setEnabled(False)
                 self.dlg.file_providedply.setEnabled(False)
@@ -1406,7 +1406,7 @@ class QRaven:
         elif self.dlg.rb_modehybasin.isChecked():   #If the mode is using_hybasin
             extentMode = "using_hybasin"
             path_hybasin = self.dlg.file_hybasin.filePath()
-            hybasinid   = str(self.dlg.spin_hybasin.value())
+            hybasinid   = str(self.dlg.txt_hybasin.text())
             bufferdistance = str(self.dlg.spin_buffer.value())
             outletlat = ''
             outletlon = ''
