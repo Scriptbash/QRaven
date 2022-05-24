@@ -5,7 +5,7 @@ import timeit
 import logging
 from basinmaker import basinmaker
 import time
-
+import ntpath
 #Fakes a display to avoid an error with Qt
 os.system('Xvfb :99 -screen 0 640x480x8 -nolisten tcp &')
 
@@ -14,7 +14,7 @@ logging.captureWarnings(True)
 #Use Basinmaker Define Project spatial extent.  
 def defineExtent():
     mode = params['extentmode']
-    demname = os.path.basename(params['pathdem'])
+    demname = ntpath.basename(params['pathdem'])
     start = time.time()
 
     try:
@@ -26,7 +26,7 @@ def defineExtent():
                 gis_platform="qgis"
             )
         elif mode == "using_hybasin":
-            hybasinname = os.path.basename(params['pathhybasin'])
+            hybasinname = ntpath.basename(params['pathhybasin'])
             hybasinID = int(params['hybasinid'])
             bufferdist = params['bufferdistance']
             bm.Define_Project_Spatial_Extent(
@@ -46,7 +46,7 @@ def defineExtent():
                 watershed_outlet_coordinates = outletcoordinates
             )
         elif mode == "using_provided_ply":
-            extentpolyname = os.path.basename(params['path_providedpoly'])
+            extentpolyname = ntpath.basename(params['path_providedpoly'])
             bufferdist = params['bufferdistance']
             bm.Define_Project_Spatial_Extent(
                 mode=mode,
@@ -80,7 +80,7 @@ def delineateNoLakes():
                 gis_platform="qgis",
             )
         elif mode == "using_fdr":
-            fdrname = os.path.basename(params['pathfdr'])
+            fdrname = ntpath.basename(params['pathfdr'])
             bm.Delineation_Initial_Subbasins_Without_Lakes(
                 fac_thresold = facthreshold,
                 mode=mode,
@@ -99,8 +99,8 @@ def delineateNoLakes():
 #Add lake and obs control points
 def addOutletPts():
     
-    lakesname = os.path.basename(params['pathlakes'])
-    pointsinterestname = os.path.basename(params['pathpointsinterest'])
+    lakesname = ntpath.basename(params['pathlakes'])
+    pointsinterestname = ntpath.basename(params['pathpointsinterest'])
     lakeid = params['lakeid']
     laketype = params['laketype']
     lakevol = params['lakevol']
@@ -134,9 +134,9 @@ def addOutletPts():
 #Add hydrology related attributes
 def genHydroRoutingAtt():
     
-    bankfullname = os.path.basename(params['pathbankfull'])
-    landuserast = os.path.basename(params['pathlanduserast'])
-    manningtablename = os.path.basename(params['landusemanning'])
+    bankfullname = ntpath.basename(params['pathbankfull'])
+    landuserast = ntpath.basename(params['pathlanduserast'])
+    manningtablename = ntpath.basename(params['landusemanning'])
     poiid = params['poiid']
     poiname = params['poiname']
     poindrainage = params['poidrainarea']
@@ -270,12 +270,12 @@ def generateHRUs():
     input_routing_product_folder=folder_product_after_increase_catchment
     folder_product_after_gen_hrus=os.path.join(os.getcwd(),'OIH_Output','network_after_gen_hrus')
 
-    demname = os.path.basename(params['pathdem'])
-    landusepoly = os.path.basename(params['pathlandusepoly'])
-    landuseinfo = os.path.basename(params['pathlanduseinfo'])
-    soilpoly = os.path.basename(params['pathsoil'])
-    soilinfo = os.path.basename(params['pathsoilinfo'])
-    veginfo = os.path.basename(params['pathveginfo'])
+    demname = ntpath.basename(params['pathdem'])
+    landusepoly = ntpath.basename(params['pathlandusepoly'])
+    landuseinfo = ntpath.basename(params['pathlanduseinfo'])
+    soilpoly = ntpath.basename(params['pathsoil'])
+    soilinfo = ntpath.basename(params['pathsoilinfo'])
+    veginfo = ntpath.basename(params['pathveginfo'])
     start = time.time()
 
     try:
