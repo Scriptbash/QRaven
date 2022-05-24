@@ -1585,6 +1585,8 @@ class QRaven:
 
             getDockerResults()
          '''
+        if computerOS == 'windows':
+            os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"
         pythonConsole = self.iface.mainWindow().findChild(QDockWidget, 'PythonConsole')
         if not pythonConsole or not pythonConsole.isVisible():  #If the python console is closed, open it
             self.iface.actionShowPythonDialog().trigger()       #It allows the user to see the BasinMaker progress
@@ -1761,7 +1763,13 @@ class QRaven:
         
             param cmd: The command to run (string or tuple)
         '''
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        if computerOS == 'windows':
+            startupinfo = subprocess.STARTUPINFO()
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            startupinfo.wShowWindow = subprocess.SW_HIDE
+            process = subprocess.Popen(cmd, stdout=subprocess.PIPE,startupinfo=startupinfo)
+        else:
+            process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         while True:
             output = process.stdout.readline()
             if output == b'':
