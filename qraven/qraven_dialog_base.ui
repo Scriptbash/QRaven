@@ -23,7 +23,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -58,24 +58,37 @@
          <string>Model info</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_2">
+         <item row="2" column="1">
+          <widget class="QDateTimeEdit" name="date_startdate">
+           <property name="displayFormat">
+            <string>yyyy-MM-dd h:mm:ss</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="txt_modname"/>
+         </item>
+         <item row="7" column="0">
+          <widget class="QCheckBox" name="chk_disablehru">
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
+           <property name="text">
+            <string>DisableHRUGroup</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="lbl_enddate">
+           <property name="text">
+            <string>EndDate</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_37">
            <property name="text">
             <string>Output Directory</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
-          <widget class="QTextEdit" name="txt_defhru">
-           <property name="placeholderText">
-            <string>FOREST, GRASSLAND, WATER</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="lbl_soilmod">
-           <property name="text">
-            <string>SoilModel</string>
            </property>
           </widget>
          </item>
@@ -86,53 +99,15 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="lbl_timestep">
+         <item row="2" column="0">
+          <widget class="QLabel" name="lbl_startdate">
            <property name="text">
-            <string>TimeStep</string>
+            <string>StartDate</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="2">
-          <widget class="QCheckBox" name="chk_duration">
-           <property name="layoutDirection">
-            <enum>Qt::RightToLeft</enum>
-           </property>
-           <property name="text">
-            <string>Use Duration instead</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QDateTimeEdit" name="date_startdate">
-           <property name="displayFormat">
-            <string>yyyy-MM-dd h:mm:ss</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QPushButton" name="btn_outputdir">
-           <property name="text">
-            <string>Browse</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="2">
-          <widget class="QSpinBox" name="spin_soilmod">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="txt_modname"/>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="lbl_enddate">
-           <property name="text">
-            <string>EndDate</string>
-           </property>
-          </widget>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="txt_outputdir"/>
          </item>
          <item row="6" column="0">
           <widget class="QLabel" name="lbl_defhru">
@@ -141,17 +116,17 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="lbl_startdate">
+         <item row="5" column="0">
+          <widget class="QLabel" name="lbl_soilmod">
            <property name="text">
-            <string>StartDate</string>
+            <string>SoilModel</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
-          <widget class="QDateTimeEdit" name="date_timestep">
-           <property name="displayFormat">
-            <string>h:mm:ss</string>
+         <item row="5" column="2">
+          <widget class="QSpinBox" name="spin_soilmod">
+           <property name="enabled">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -174,33 +149,17 @@
            </item>
           </widget>
          </item>
-         <item row="3" column="2">
-          <widget class="QSpinBox" name="spin_duration">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="maximum">
-            <number>999999999</number>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="txt_outputdir"/>
-         </item>
-         <item row="3" column="1">
-          <widget class="QDateTimeEdit" name="date_enddate">
+         <item row="4" column="1">
+          <widget class="QDateTimeEdit" name="date_timestep">
            <property name="displayFormat">
-            <string>yyyy-MM-dd h:mm:ss</string>
+            <string>h:mm:ss</string>
            </property>
           </widget>
          </item>
-         <item row="7" column="0">
-          <widget class="QCheckBox" name="chk_disablehru">
-           <property name="layoutDirection">
-            <enum>Qt::RightToLeft</enum>
-           </property>
-           <property name="text">
-            <string>DisableHRUGroup</string>
+         <item row="6" column="1">
+          <widget class="QTextEdit" name="txt_defhru">
+           <property name="placeholderText">
+            <string>FOREST, GRASSLAND, WATER</string>
            </property>
           </widget>
          </item>
@@ -211,6 +170,47 @@
            </property>
            <property name="placeholderText">
             <string>FOREST, GRASSLAND, WATER</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QCheckBox" name="chk_duration">
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
+           <property name="text">
+            <string>Use Duration instead</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QSpinBox" name="spin_duration">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maximum">
+            <number>999999999</number>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDateTimeEdit" name="date_enddate">
+           <property name="displayFormat">
+            <string>yyyy-MM-dd h:mm:ss</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="lbl_timestep">
+           <property name="text">
+            <string>TimeStep</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="btn_outputdir">
+           <property name="text">
+            <string>Browse</string>
            </property>
           </widget>
          </item>
@@ -2956,7 +2956,7 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>0</y>
+              <y>-291</y>
               <width>1004</width>
               <height>1114</height>
              </rect>
@@ -3419,19 +3419,6 @@
                </property>
               </widget>
              </item>
-             <item row="12" column="2">
-              <widget class="QSpinBox" name="spin_hybasin">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="toolTip">
-                <string>hydrobasin_id_of_watershed_outlet</string>
-               </property>
-               <property name="maximum">
-                <number>99999999</number>
-               </property>
-              </widget>
-             </item>
              <item row="16" column="1">
               <widget class="QLabel" name="label_46">
                <property name="text">
@@ -3658,6 +3645,16 @@
                </property>
               </widget>
              </item>
+             <item row="12" column="2">
+              <widget class="QLineEdit" name="txt_hybasin">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>id</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </widget>
@@ -3679,8 +3676,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>907</width>
-              <height>419</height>
+              <width>400</width>
+              <height>366</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_8">
@@ -4087,7 +4084,6 @@
   <tabstop>spin_ram</tabstop>
   <tabstop>rb_modedem</tabstop>
   <tabstop>rb_modehybasin</tabstop>
-  <tabstop>spin_hybasin</tabstop>
   <tabstop>rb_outletpt</tabstop>
   <tabstop>txt_outletlat</tabstop>
   <tabstop>txt_outletlon</tabstop>
@@ -4167,7 +4163,7 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
