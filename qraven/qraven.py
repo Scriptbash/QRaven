@@ -38,7 +38,7 @@ from sys import platform
 import subprocess
 from subprocess import Popen, PIPE
 import matplotlib.pyplot as plt
-import csv, datetime
+import csv, datetime, webbrowser
 
 class QRaven:
     """QGIS Plugin Implementation."""
@@ -202,6 +202,14 @@ class QRaven:
             self.dlg.chk_outputdir.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_outputinterval.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_wateryear.stateChanged.connect(self.toggleWidget)
+            self.dlg.chk_outputdump.stateChanged.connect(self.toggleWidget)
+            self.dlg.chk_rvhfilename.stateChanged.connect(self.toggleWidget)
+            self.dlg.chk_rvcfilename.stateChanged.connect(self.toggleWidget)
+            self.dlg.chk_rvpfilename.stateChanged.connect(self.toggleWidget)
+            self.dlg.chk_rvtfilename.stateChanged.connect(self.toggleWidget)
+            self.dlg.chk_reservoirdemandalloc.stateChanged.connect(self.toggleWidget)
+            self.dlg.chk_chunksize.stateChanged.connect(self.toggleWidget)
+            self.dlg.chk_readlivefile.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_disablehru.stateChanged.connect(self.toggleWidget)
             self.dlg.combo_stat1.activated.connect(self.toggleWidget)
             self.dlg.combo_stat2.activated.connect(self.toggleWidget)
@@ -252,6 +260,7 @@ class QRaven:
             #-------------Run Raven Model-------------#
             self.dlg.btn_runraven.clicked.connect(self.runRaven)
             self.dlg.btn_gatheroutput.clicked.connect(self.drawHydrographs)
+            self.dlg.btn_ravenview.clicked.connect(self.openRavenView)
             #----------------------------------------#
 
         # show the dialog
@@ -300,6 +309,46 @@ class QRaven:
                 self.dlg.spin_wateryear.setEnabled(True)
             else:
                 self.dlg.spin_wateryear.setEnabled(False) 
+        elif widget.objectName() == 'chk_outputdump':
+            if self.dlg.chk_outputdump.isChecked():
+                self.dlg.date_outputdump.setEnabled(True)
+            else:
+                self.dlg.date_outputdump.setEnabled(False) 
+        elif widget.objectName() == 'chk_rvhfilename':
+            if self.dlg.chk_rvhfilename.isChecked():
+                self.dlg.txt_rvhfilename.setEnabled(True)
+            else:
+                self.dlg.txt_rvhfilename.setEnabled(False) 
+        elif widget.objectName() == 'chk_rvcfilename':
+            if self.dlg.chk_rvcfilename.isChecked():
+                self.dlg.txt_rvcfilename.setEnabled(True)
+            else:
+                self.dlg.txt_rvcfilename.setEnabled(False) 
+        elif widget.objectName() == 'chk_rvpfilename':
+            if self.dlg.chk_rvpfilename.isChecked():
+                self.dlg.txt_rvpfilename.setEnabled(True)
+            else:
+                self.dlg.txt_rvpfilename.setEnabled(False) 
+        elif widget.objectName() == 'chk_rvtfilename':
+            if self.dlg.chk_rvtfilename.isChecked():
+                self.dlg.txt_rvtfilename.setEnabled(True)
+            else:
+                self.dlg.txt_rvtfilename.setEnabled(False) 
+        elif widget.objectName() == 'chk_reservoirdemandalloc':
+            if self.dlg.chk_reservoirdemandalloc.isChecked():
+                self.dlg.combo_reservoirdemandalloc.setEnabled(True)
+            else:
+                self.dlg.combo_reservoirdemandalloc.setEnabled(False) 
+        elif widget.objectName() == 'chk_chunksize':
+            if self.dlg.chk_chunksize.isChecked():
+                self.dlg.spin_chunksize.setEnabled(True)
+            else:
+                self.dlg.spin_chunksize.setEnabled(False) 
+        elif widget.objectName() == 'chk_readlivefile':
+            if self.dlg.chk_readlivefile.isChecked():
+                self.dlg.spin_readlivefile.setEnabled(True)
+            else:
+                self.dlg.spin_readlivefile.setEnabled(False) 
         elif widget.objectName() == 'chk_disablehru':   #Enables/disables the disable hrus text edit
             if self.dlg.chk_disablehru.isChecked():
                 self.dlg.txt_disablehru.setEnabled(True)
@@ -1132,6 +1181,18 @@ class QRaven:
             disabledhru = self.dlg.txt_disablehru.toPlainText()
         else:
             disabledhru = ''
+        if self.dlg.chk_directevapo.isChecked():
+            directevapo = "checked"
+        else:
+            directevapo = ''
+        if self.dlg.chk_snowsuppressespet.isChecked():
+            snowsuppressespet = "checked"
+        else:
+            snowsuppressespet = ''
+        if self.dlg.chk_suppresscomppet.isChecked():
+            suppresscomppet = "checked"
+        else:
+            suppresscomppet = ''
 
         #Writes the selected evaluation metrics
         if not self.dlg.list_evalmetrics.selectedItems(): 
@@ -1178,6 +1239,9 @@ class QRaven:
             "PrecipIceptFract"           : precipicept,
             "RechargeMethod"             : recharge,
             "SubdailyMethod"             : subdaily,
+            "DirectEvaporation"          : directevapo,
+            "SnowSuppressesPET"          : snowsuppressespet,
+            "SuppressCompetitivePET"     : suppresscomppet,
             "RunName"                    : runname,
             "OutputDirectory"            : fileoutputdir,
             "OutputInterval"             : outputinterval,
@@ -1854,7 +1918,10 @@ class QRaven:
             self.iface.messageBar().pushMessage("Error", "An error occured while running Raven. Check the python console for more details.",level=Qgis.Critical)
 
 
-
+    #This method opens a new tab in the default web browser and points to the RavenView tool
+    def openRavenView(self):
+        url = 'http://raven.uwaterloo.ca/RavenView/RavenView.html'
+        webbrowser.open(url, new = 2)
     
     #This method plots the resulting hydrograph
     def drawHydrographs(self):
