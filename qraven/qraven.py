@@ -1193,6 +1193,52 @@ class QRaven:
             suppresscomppet = "checked"
         else:
             suppresscomppet = ''
+        if self.dlg.chk_outputdump.isChecked():
+            outputdump = self.dlg.date_outputdump.dateTime()
+            outputdump = str(outputdump.toPyDateTime())
+        else:
+            outputdump = ''
+        if self.dlg.chk_rvhfilename.isChecked():
+            rvhfilename = self.dlg.txt_rvhfilename.text()
+        else:
+            rvhfilename = ''
+        if self.dlg.chk_rvcfilename.isChecked():
+            rvcfilename = self.dlg.txt_rvcfilename.text()
+        else:
+            rvcfilename = ''
+        if self.dlg.chk_rvpfilename.isChecked():
+            rvpfilename = self.dlg.txt_rvpfilename.text()
+        else:
+            rvpfilename = ''
+        if self.dlg.chk_rvtfilename.isChecked():
+            rvtfilename = self.dlg.txt_rvtfilename.text()
+        else:
+            rvtfilename = ''
+        if self.dlg.chk_reservoirdemandalloc.isChecked():
+            reservoirdemandalloc = self.dlg.combo_reservoirdemandalloc.currentText()
+        else:
+            reservoirdemandalloc = ''
+        if self.dlg.chk_chunksize.isChecked():
+            chunksize = str(self.dlg.spin_chunksize.value())
+        else:
+            chunksize = ''
+        if self.dlg.chk_readlivefile.isChecked():
+            readlivefile = str(self.dlg.spin_readlivefile.value())
+        else:
+            readlivefile = ''
+        if self.dlg.chk_usestopfile.isChecked():
+            usestopfile = "checked"
+        else:
+            usestopfile = ''
+        if self.dlg.chk_assimilatestreamflow.isChecked():
+            assimilatestreamflow = 'checked'
+        else:
+            assimilatestreamflow = ''
+        if self.dlg.chk_assimilatereservstage.isChecked():
+            assimilatereservstage = 'checked'
+        else:
+            assimilatereservstage = ''
+        
 
         #Writes the selected evaluation metrics
         if not self.dlg.list_evalmetrics.selectedItems(): 
@@ -1247,6 +1293,14 @@ class QRaven:
             "OutputInterval"             : outputinterval,
             "CreateRVPTemplate"          : rvptemplate,
             "WaterYearStartMonth"        : wateryear,
+            "OutputDump"                 : outputdump,
+            "rvh_filename"               : rvhfilename,
+            "rvc_filename"               : rvcfilename,
+            "rvp_filename"               : rvpfilename,
+            "rvt_filename"               : rvtfilename,
+            "ReservoirDemandAllocation"  : reservoirdemandalloc,
+            "Chunksize"                  : chunksize,
+            "ReadLiveFile"               : readlivefile,
             "WriteMassBalanceFile"       : writemassbal,
             "writeForcingFunctions"      : writeforcing,
             "EndPause"                   : endpause,
@@ -1258,6 +1312,9 @@ class QRaven:
             "WriteEnsimFormat"           : writeensim,
             "SuppressOutput"             : suppressoutput,
             "SnapshotHydrograph"         : snaphydro,
+            "UseStopFile"                : usestopfile,
+            "AssimilateStreamflow"       : assimilatestreamflow,
+            "AssimilateReservoirStage"   : assimilatereservstage,
             "EvaluationMetrics"          : evalmetrics
         }
         return paramsDict
