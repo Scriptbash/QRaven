@@ -43,7 +43,7 @@ QRaven aims to simplify the creation of the primary input file (.RVI) and HRU/Ba
     
     ![image](https://user-images.githubusercontent.com/98601298/169550474-769171a0-3cf6-4678-8737-411dbbc7c2f9.png)
     
-    ![image](https://user-images.githubusercontent.com/98601298/169550619-935854b0-a65d-4ce3-9d9d-2302f599769e.png)
+    ![image](https://user-images.githubusercontent.com/98601298/172006990-0cd05ac1-dc93-493f-9eba-2373130e65a2.png)
 * BasinMaker RVH tab
   * Use this tab to launch BasinMaker and generate the RVH files
   * This section was tested on Linux and Windows, but needs to be tested MacOS
@@ -58,7 +58,7 @@ QRaven aims to simplify the creation of the primary input file (.RVI) and HRU/Ba
     
     ![image](https://user-images.githubusercontent.com/98601298/163680338-aed31db0-2bd6-4903-9385-7f424d4b410b.png)
 * Run Model tab
-  * Use this tab to run your Raven model. This section bascically attempts to mimic the RavenViewLite4 Excel file
+  * Use this tab to run your Raven model. This section basically attempts to mimic the RavenViewLite4 Excel file
   * A Raven executable must be provided as well as an input and output directory
   * The file name prefix is the same name as the model
   * The RunName is only required if the command :RunName is used in the .rvi file
