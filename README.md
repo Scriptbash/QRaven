@@ -43,6 +43,8 @@ QRaven aims to simplify the creation of the primary input file (.RVI) and HRU/Ba
     
     ![image](https://user-images.githubusercontent.com/98601298/169550474-769171a0-3cf6-4678-8737-411dbbc7c2f9.png)
     
+    ![image](https://user-images.githubusercontent.com/98601298/172007387-fea593d4-266c-4247-914e-3061560d9d89.png)
+    
     ![image](https://user-images.githubusercontent.com/98601298/172006990-0cd05ac1-dc93-493f-9eba-2373130e65a2.png)
 * BasinMaker RVH tab
   * Use this tab to launch BasinMaker and generate the RVH files
