@@ -258,6 +258,7 @@ class QRaven:
             #----------------------------------------#
 
             #-------------Run Raven Model-------------#
+            self.dlg.file_runinputdir.fileChanged.connect(self.setModelname)
             self.dlg.btn_runraven.clicked.connect(self.runRaven)
             self.dlg.btn_gatheroutput.clicked.connect(self.drawHydrographs)
             self.dlg.btn_ravenview.clicked.connect(self.openRavenView)
@@ -1950,7 +1951,26 @@ class QRaven:
             print(e)
         self.iface.messageBar().pushInfo("Info", "The BasinMaker process has finished. Check the python logs for more details.")
 
-
+    #This method opens the rvi file from the input directory and gets two values to populate them in the GUI
+    def setModelname(self):
+        inputdir = self.dlg.file_runinputdir.filePath() #Get the model input directory
+        try:
+            if inputdir:
+                for file in os.listdir(inputdir):   #Lists all the files in the input folder
+                    if file.endswith(".rvi"):       #Get the RVI file if it exists
+                        self.dlg.txt_runnameprefix.setText(file.replace('.rvi','')) #Sets the file name prefix
+                        rvifile = inputdir+separator+file
+                        with open(rvifile,'r') as rvi:  #Read the RVI file
+                            lines = rvi.readlines()
+                            for line in lines:
+                                if ':RunName' in line:  #loops through the RVI file and searches for the :RunName keyword
+                                    params = line.split()
+                                    runname = params[params.index(':RunName')+1]    #Get the string after the :RunName keyword
+                                    self.dlg.txt_runrunname.setText(runname)    #Set the RunName
+        except Exception as e:
+            self.iface.messageBar().pushInfo("Info", "Could not populate some information automatically.")
+            self.iface.mainWindow().repaint()
+            print(e)
     #This method runs a Raven model provided by the user.
     def runRaven(self):
         '''Runs a Raven model just like RavenViewLite3'''
@@ -1973,7 +1993,6 @@ class QRaven:
         except Exception as e:
             print(e)
             self.iface.messageBar().pushMessage("Error", "An error occured while running Raven. Check the python console for more details.",level=Qgis.Critical)
-
 
     #This method opens a new tab in the default web browser and points to the RavenView tool
     def openRavenView(self):
