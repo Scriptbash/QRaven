@@ -6,11 +6,11 @@
 name=QRaven
 qgisMinimumVersion=3.20
 description=A QGIS plugin to help generate input files for Raven
-version=2.0.1
+version=2.0.2
 author=Francis Lapointe
 email=francis.lapointe5@usherbrooke.ca
 
-about=QRaven aims to simplify the creation of the primary input file (.RVI) and HRU/Basin definition file (.RVH) for the Raven hydrological modelling framework. It allows the user to choose all the options for the RVI file and it automates the setup, as well as the use of the BasinMaker python library.
+about=QRaven aims to simplify the creation of the primary input file (.RVI) and HRU/Basin definition file (.RVH) for the Raven hydrological modelling framework. It allows the user to choose all the options for the RVI file and it automates the setup, as well as the use of the BasinMaker python library. It can run a model, draw the hydrograph and open RavenView using the default web browser.
 
 tracker=https://github.com/Scriptbash/QRaven/issues
 repository=https://github.com/Scriptbash/QRaven
@@ -23,7 +23,7 @@ hasProcessingProvider=no
 # changelog=
 
 # Tags are comma separated with spaces allowed
-tags=python,Raven,Hydrology,Modelisation
+tags=python,Raven,Hydrology,Modelling,RavenView
 
 homepage=https://github.com/Scriptbash/QRaven
 category=Plugins
