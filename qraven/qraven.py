@@ -247,8 +247,11 @@ class QRaven:
             self.dlg.buttonGroup.buttonToggled.connect(self.toggleWidget)   #Define project spatial extent
             self.dlg.buttonGroup_2.buttonToggled.connect(self.toggleWidget)  #Delineate routing structure without lakes
             self.dlg.file_lakes.fileChanged.connect(self.toggleWidget)  #Add lake and obs control points
+            self.dlg.file_lakes.fileChanged.connect(self.loadAttributes)
+            self.dlg.file_pointsinterest.fileChanged.connect(self.loadAttributes)
             self.dlg.chk_epsgcode.stateChanged.connect(self.toggleWidget)   #Enables/disables the EPSG
             self.dlg.file_bankfullwidth.fileChanged.connect(self.toggleWidget)  #Add lake and obs control points
+            self.dlg.file_bankfullwidth.fileChanged.connect(self.loadAttributes)
             self.dlg.file_landuserast.fileChanged.connect(self.toggleWidget)  #Add lake and obs control points
 
             #Calls the function to run the docker container
@@ -455,19 +458,19 @@ class QRaven:
                 self.dlg.file_fdr.setEnabled(False) #Mode is using_dem
         elif widget.objectName() == 'file_lakes':   #Add lake and obs control point
             if self.dlg.file_lakes.filePath() != '':   #If there is a lake layer provided, enable the fields 
-                self.dlg.txt_lakeid.setEnabled(True)
-                self.dlg.txt_laketype.setEnabled(True)
-                self.dlg.txt_lakevol.setEnabled(True)
-                self.dlg.txt_lakeavgdepth.setEnabled(True)
-                self.dlg.txt_lakearea.setEnabled(True)
+                self.dlg.combo_lakeid.setEnabled(True)
+                self.dlg.combo_laketype.setEnabled(True)
+                self.dlg.combo_lakevol.setEnabled(True)
+                self.dlg.combo_lakeavgdepth.setEnabled(True)
+                self.dlg.combo_lakearea.setEnabled(True)
                 self.dlg.spin_conlakearea.setEnabled(True)
                 self.dlg.spin_nonconlakearea.setEnabled(True)
             else:   #If the layer is removed or there's no layer, disable the fields
-                self.dlg.txt_lakeid.setEnabled(False)
-                self.dlg.txt_laketype.setEnabled(False)
-                self.dlg.txt_lakevol.setEnabled(False)
-                self.dlg.txt_lakeavgdepth.setEnabled(False)
-                self.dlg.txt_lakearea.setEnabled(False)
+                self.dlg.combo_lakeid.setEnabled(False)
+                self.dlg.combo_laketype.setEnabled(False)
+                self.dlg.combo_lakevol.setEnabled(False)
+                self.dlg.combo_lakeavgdepth.setEnabled(False)
+                self.dlg.combo_lakearea.setEnabled(False)
                 self.dlg.spin_conlakearea.setEnabled(False)
                 self.dlg.spin_nonconlakearea.setEnabled(False)
         elif widget.objectName() == 'chk_epsgcode':  
@@ -477,18 +480,18 @@ class QRaven:
                 self.dlg.txt_epsgcode.setEnabled(False)
         elif widget.objectName() == 'file_bankfullwidth':   #Add hydrology related attributes
             if self.dlg.file_bankfullwidth.filePath() != '':    #If there is a layer for bankfull width, enable the required fields
-                self.dlg.txt_bankfullwidth.setEnabled(True)
-                self.dlg.txt_bankfulldepth.setEnabled(True)
-                self.dlg.txt_bankfulldischarge.setEnabled(True)
-                self.dlg.txt_bankfulldrainarea.setEnabled(True)
+                self.dlg.combo_bankfullwidth.setEnabled(True)
+                self.dlg.combo_bankfulldepth.setEnabled(True)
+                self.dlg.combo_bankfulldischarge.setEnabled(True)
+                self.dlg.combo_bankfulldrainarea.setEnabled(True)
                 self.dlg.spin_kcoef.setEnabled(False)
                 self.dlg.spin_ccoef.setEnabled(False)
 
             else:   #If the layer is removed or there's no layer, disable the fields
-                self.dlg.txt_bankfullwidth.setEnabled(False)
-                self.dlg.txt_bankfulldepth.setEnabled(False)
-                self.dlg.txt_bankfulldischarge.setEnabled(False)
-                self.dlg.txt_bankfulldrainarea.setEnabled(False)
+                self.dlg.combo_bankfullwidth.setEnabled(False)
+                self.dlg.combo_bankfulldepth.setEnabled(False)
+                self.dlg.combo_bankfulldischarge.setEnabled(False)
+                self.dlg.combo_bankfulldrainarea.setEnabled(False)
                 self.dlg.spin_kcoef.setEnabled(True)
                 self.dlg.spin_ccoef.setEnabled(True)
 
@@ -1551,11 +1554,11 @@ class QRaven:
             outletlon = ''
         
         if self.dlg.file_lakes.filePath:    #If the is a layer for the lakes, gather the values needed. Else, assign empty values
-            lakeid = self.dlg.txt_lakeid.text()
-            laketype = self.dlg.txt_laketype.text()
-            lakevol = self.dlg.txt_lakevol.text()
-            lakeavgdepth = self.dlg.txt_lakeavgdepth.text()
-            lakearea = self.dlg.txt_lakearea.text()
+            lakeid = self.dlg.combo_lakeid.currentText()
+            laketype = self.dlg.combo_laketype.currentText()
+            lakevol = self.dlg.combo_lakevol.currentText()
+            lakeavgdepth = self.dlg.combo_lakeavgdepth.currentText()
+            lakearea = self.dlg.combo_lakearea.currentText()
             connectedlake = self.dlg.spin_conlakearea.value()
             nonconnectedlake = self.dlg.spin_nonconlakearea.value()
         else:
@@ -1567,10 +1570,10 @@ class QRaven:
             connectedlake = ''
             nonconnectedlake = ''
 
-        poiid = self.dlg.txt_poiid.text()   #Get the id field of the point of interest
-        poiname = self.dlg.txt_poiname.text()   #Get the name field of the point of interest
-        poidrainarea = self.dlg.txt_poidrainarea.text() #Get the drainage area field of the point of interest
-        poisource = self.dlg.txt_poisource.text()   #Get the source field of the point of interest
+        poiid = self.dlg.combo_poiid.currentText()   #Get the id field of the point of interest
+        poiname = self.dlg.combo_poiname.currentText()   #Get the name field of the point of interest
+        poidrainarea = self.dlg.combo_poidrainarea.currentText() #Get the drainage area field of the point of interest
+        poisource = self.dlg.combo_poisource.currentText()   #Get the source field of the point of interest
 
         if self.dlg.chk_epsgcode.isChecked():   #Get the EPSG code if the checkbox is checkedm
             epsgcode = self.dlg.txt_epsgcode.text()
@@ -1578,10 +1581,10 @@ class QRaven:
             epsgcode = 'EPSG:3573'
 
         if self.dlg.file_bankfullwidth.filePath():  #If there is a layer for Bankfull width, gather the values needed
-            bankfullwidth = self.dlg.txt_bankfullwidth.text()
-            bankfulldepth = self.dlg.txt_bankfulldepth.text()
-            bankfulldischarge = self.dlg.txt_bankfulldischarge.text()
-            bankfulldrainage = self.dlg.txt_bankfulldrainarea.text()
+            bankfullwidth = self.dlg.combo_bankfullwidth.currentText()
+            bankfulldepth = self.dlg.combo_bankfulldepth.currentText()
+            bankfulldischarge = self.dlg.combo_bankfulldischarge.currentText()
+            bankfulldrainage = self.dlg.combo_bankfulldrainarea.currentText()
             kcoef = ''
             ccoef = ''
         else:  
@@ -1687,6 +1690,70 @@ class QRaven:
             print(e)
 
 
+    def loadAttributes(self):
+        widget = self.dlg.sender()
+        widgetname = widget.objectName()
+        if widgetname == 'file_lakes': 
+            lakespath = self.dlg.file_lakes.filePath()
+            vlayer = QgsVectorLayer(lakespath, "lakes", "ogr")
+            if not vlayer.isValid():
+                print("Layer failed to load!")
+            else:
+                field_names = vlayer.fields().names()
+                self.dlg.combo_lakeid.clear()
+                self.dlg.combo_lakeid.addItem('LAKE ID - required')
+                self.dlg.combo_lakeid.addItems(field_names)
+                self.dlg.combo_laketype.clear()
+                self.dlg.combo_laketype.addItem('LAKE TYPE')
+                self.dlg.combo_laketype.addItems(field_names)
+                self.dlg.combo_lakeavgdepth.clear()
+                self.dlg.combo_lakeavgdepth.addItem('AVERAGE DEPTH (m)')
+                self.dlg.combo_lakeavgdepth.addItems(field_names)
+                self.dlg.combo_lakearea.clear()
+                self.dlg.combo_lakearea.addItem('AREA OF LAKES (km2) - required')
+                self.dlg.combo_lakearea.addItems(field_names)
+                self.dlg.combo_lakevol.clear()
+                self.dlg.combo_lakevol.addItem('VOLUME OF LAKES (km3) - required')
+                self.dlg.combo_lakevol.addItems(field_names)
+        elif widgetname == 'file_pointsinterest':
+            poipath = self.dlg.file_pointsinterest.filePath()
+            vlayer = QgsVectorLayer(poipath, "poi", "ogr")
+            if not vlayer.isValid():
+                print("Layer failed to load!")
+            else:
+                field_names = vlayer.fields().names()
+                self.dlg.combo_poiid.clear()
+                self.dlg.combo_poiid.addItem('ID - required')
+                self.dlg.combo_poiid.addItems(field_names)
+                self.dlg.combo_poiname.clear()
+                self.dlg.combo_poiname.addItem('UNIQUE NAME')
+                self.dlg.combo_poiname.addItems(field_names)
+                self.dlg.combo_poidrainarea.clear()
+                self.dlg.combo_poidrainarea.addItem('DRAINAGE AREA - required')
+                self.dlg.combo_poidrainarea.addItems(field_names)
+                self.dlg.combo_poisource.clear()
+                self.dlg.combo_poisource.addItem('SOURCE OF OBSERVATION')
+                self.dlg.combo_poisource.addItems(field_names)      
+        elif widgetname == 'file_bankfullwidth':
+            bankfullpath = self.dlg.file_bankfullwidth.filePath()
+            vlayer = QgsVectorLayer(bankfullpath, "bkfw", "ogr")
+            if not vlayer.isValid():
+                print("Layer failed to load!")
+            else:
+                field_names = vlayer.fields().names()
+                self.dlg.combo_bankfullwidth.clear()
+                self.dlg.combo_bankfullwidth.addItem('BANKFULL WIDTH (m) - required')
+                self.dlg.combo_bankfullwidth.addItems(field_names)
+                self.dlg.combo_bankfulldepth.clear()
+                self.dlg.combo_bankfulldepth.addItem('BANKFULL DEPTH (m) - required')
+                self.dlg.combo_bankfulldepth.addItems(field_names)
+                self.dlg.combo_bankfulldischarge.clear()
+                self.dlg.combo_bankfulldischarge.addItem('ANNUAL MEAN DISCHARGE (m3/s) - required')
+                self.dlg.combo_bankfulldischarge.addItems(field_names)
+                self.dlg.combo_bankfulldrainarea.clear()
+                self.dlg.combo_bankfulldrainarea.addItem('DRAINAGE AREA (km2) - required')
+                self.dlg.combo_bankfulldrainarea.addItems(field_names)                
+            
     #This method sets up the scriptbash/basinmaker docker container. Pulls, starts and stops the docker container
     def dockerinit(self):
         '''Runs multiple methods related to Docker. Basically manages the Docker setup
