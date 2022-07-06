@@ -1788,19 +1788,19 @@ class QRaven:
         self.dockerCopy(paramsDict)         #Calls the function that copies the parameters file to the docker container, as well as the data
         self.runBasinMaker()                #Calls the function that runs BasinMaker with the provided data and parameters
         self.getDockerResults()             #Calls the function that retrieves the results from BasinMaker
-        os.system("docker stop bmaker")     #Stops the container after the process
+        os.system("docker stop qraven")     #Stops the container after the process
 
       
     #This method fully removes the container, as well as the image to free up space
     def dockerdelete(self):
         '''Stops the Docker container, removes it as well as the image'''
         try:
-            print("Making sure the container is stopped > docker stop bmaker")
-            os.system("docker stop bmaker")
-            print("Removing the docker container > docker rm bmaker")
-            os.system("docker rm bmaker")
-            print("Removing the image > docker rmi scriptbash/basinmaker")
-            os.system("docker rmi scriptbash/basinmaker")
+            print("Making sure the container is stopped > docker stop qraven")
+            os.system("docker stop qraven")
+            print("Removing the docker container > docker rm qraven")
+            os.system("docker rm qraven")
+            print("Removing the image > docker rmi scriptbash/qraven")
+            os.system("docker rmi scriptbash/qraven")
             print("container stopped and removed")
             self.iface.messageBar().pushSuccess("Success", "The docker container and the image were removed")
         except Exception as e:
@@ -1808,17 +1808,17 @@ class QRaven:
             print(e)
 
 
-    #This method pulls the scriptbash/basinmaker docker container
+    #This method pulls the scriptbash/qraven docker container
     def dockerPull(self):
-        '''Pulls the scriptbash/basinmaker docker container
+        '''Pulls the scriptbash/qraven docker container
         
             Depends on the following method:
 
             dockerCommand()
         '''
         try:
-            print("Trying to pull the scriptbash/basinmaker image...")
-            cmd='docker', 'pull', 'scriptbash/basinmaker'  
+            print("Trying to pull the scriptbash/qraven image...")
+            cmd='docker', 'pull', 'scriptbash/qraven'  
             self.dockerCommand(cmd)
             print("The pull was successfull")
         except Exception as e:
@@ -1835,7 +1835,7 @@ class QRaven:
         '''
         try:
             print("Attempting to start the container...")
-            cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','--name', 'bmaker', 'scriptbash/basinmaker'
+            cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','--name', 'qraven', 'scriptbash/qraven'
             self.dockerCommand(cmd)
             print("The container was started successfully")
         except Exception as e:
@@ -1876,7 +1876,7 @@ class QRaven:
         }
         shpExt = ['cfg', 'dbf', 'prj','qmd','shp', 'shx']   #List with the shapefile extensions
         rvhScript = outputdir+separator+ "parameters.txt"   #Get the path to the exported parameters file
-        cmd='docker', 'cp', rvhScript, 'bmaker:'+ dockerBMpath
+        cmd='docker', 'cp', rvhScript, 'qraven:'+ dockerBMpath
         self.dockerCommand(cmd)
         
         #Loop through the dictionary of paths
@@ -1885,62 +1885,62 @@ class QRaven:
                 filename = Path(path).stem  #Get the file name without extension and path
                 folder = os.path.dirname(path)  #Get only the file path (without the file name)
                 if key == 'dem':
-                    cmdData='docker', 'cp', params['pathdem'], 'bmaker:'+ dockerDEMPath
+                    cmdData='docker', 'cp', params['pathdem'], 'qraven:'+ dockerDEMPath
                     self.dockerCommand(cmdData) #Sends the DEM to the container
                 elif key == 'landusepoly':
                     for extension in shpExt:
                         file = folder+separator+filename + '.' + extension
-                        cmdData='docker', 'cp', file, 'bmaker:'+ dockerLandusePath
+                        cmdData='docker', 'cp', file, 'qraven:'+ dockerLandusePath
                         self.dockerCommand(cmdData) #Sends the complete landuse polygon shapefile to the container
                 elif key == 'landuserast':
-                    cmdData='docker', 'cp', params['pathlanduserast'], 'bmaker:'+ dockerLandusePath
+                    cmdData='docker', 'cp', params['pathlanduserast'], 'qraven:'+ dockerLandusePath
                     self.dockerCommand(cmdData) #Sends the landuse raster to the container
                 elif key == 'lakes':
                     for extension in shpExt:
                         file = folder+separator+filename + '.' + extension
-                        cmdData='docker', 'cp', file, 'bmaker:'+ dockerLakesPath
+                        cmdData='docker', 'cp', file, 'qraven:'+ dockerLakesPath
                         self.dockerCommand(cmdData) #Sends the complete lakes shapefile to the container
                 elif key == 'bankfull':
                     for extension in shpExt:
                         file = folder+separator+filename + '.' + extension
-                        cmdData='docker', 'cp', file, 'bmaker:'+ dockerBankfullPath
+                        cmdData='docker', 'cp', file, 'qraven:'+ dockerBankfullPath
                         self.dockerCommand(cmdData) #Sends the complete bankfull width shapefile to the container
                 elif key == 'soil':
                     for extension in shpExt:
                         file = folder+separator+filename + '.' + extension
-                        cmdData='docker', 'cp', file, 'bmaker:'+ dockerSoilPath
+                        cmdData='docker', 'cp', file, 'qraven:'+ dockerSoilPath
                         self.dockerCommand(cmdData)     #Sends the complete soil shapefile to the container
                 elif key == 'pointinterest':
                     for extension in shpExt:
                         file = folder+separator+filename + '.' + extension
-                        cmdData='docker', 'cp', file, 'bmaker:'+ dockerPoIPath
+                        cmdData='docker', 'cp', file, 'qraven:'+ dockerPoIPath
                         self.dockerCommand(cmdData) #Sends the complete point of interest shapefile to the container
                 elif key == 'hybasin':
                     for extension in shpExt:
                         file = folder+separator+filename + '.' + extension
-                        cmdData='docker', 'cp', file, 'bmaker:'+ dockerHybasinPath
+                        cmdData='docker', 'cp', file, 'qraven:'+ dockerHybasinPath
                         self.dockerCommand(cmdData) #Sends the complete hydro basin shapefile to the container
                 elif key == 'provpoly':
                     for extension in shpExt:
                         file = folder+separator+filename + '.' + extension
-                        cmdData='docker', 'cp', file, 'bmaker:'+ dockerProvPolyPath
+                        cmdData='docker', 'cp', file, 'qraven:'+ dockerProvPolyPath
                         self.dockerCommand(cmdData) #Sends the complete extent polygon shapefile to the container
                 elif key == 'manning':
                     for extension in shpExt:
-                        cmdData='docker', 'cp', params['landusemanning'], 'bmaker:'+ dockerLandusePath
+                        cmdData='docker', 'cp', params['landusemanning'], 'qraven:'+ dockerLandusePath
                         self.dockerCommand(cmdData) #Sends the landuse manning table to the container
                 elif key == 'flowdirection':
                     for extension in shpExt:
-                        cmdData='docker', 'cp', params['pathfdr'], 'bmaker:'+ dockerFDRPath
+                        cmdData='docker', 'cp', params['pathfdr'], 'qraven:'+ dockerFDRPath
                         self.dockerCommand(cmdData)  #Sends flow direction file to the container
                 elif key == 'landuseinfo':
-                    cmdData='docker', 'cp', params['pathlanduseinfo'], 'bmaker:'+ dockerLandusePath
+                    cmdData='docker', 'cp', params['pathlanduseinfo'], 'qraven:'+ dockerLandusePath
                     self.dockerCommand(cmdData)     #Sends landuse info csv file to the container
                 elif key == 'soilinfo':
-                    cmdData='docker', 'cp', params['pathsoilinfo'], 'bmaker:'+ dockerSoilPath
+                    cmdData='docker', 'cp', params['pathsoilinfo'], 'qraven:'+ dockerSoilPath
                     self.dockerCommand(cmdData) #Sends soil info csv file to the container
                 elif key == 'veginfo':
-                    cmdData='docker', 'cp', params['pathveginfo'], 'bmaker:'+ dockerLandusePath
+                    cmdData='docker', 'cp', params['pathveginfo'], 'qraven:'+ dockerLandusePath
                     self.dockerCommand(cmdData) #Sends vegetation csv file to the container
 
         print("Done copying the files to the container")  
@@ -1980,9 +1980,9 @@ class QRaven:
         '''
         print("Starting BasinMaker process, this will take a while to complete")
         pythoncmd = "python3 -u create_RVH.py"  #Bash command to start the BasinMaker script
-        cmd ='docker', 'exec','-t', 'bmaker','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
+        cmd ='docker', 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
         try:
-            os.system("docker start bmaker")    #Make sure the container is started. Only needed when the plugin is run a second time
+            os.system("docker start qraven")    #Make sure the container is started. Only needed when the plugin is run a second time
             self.dockerCommand(cmd)
             print("BasinMaker has finished processing the files")  
         except Exception as e:
@@ -2001,7 +2001,7 @@ class QRaven:
         outputdir = self.dlg.file_outputfolder.filePath()   #Get the output directory
         dockerBMResultsPath = '/root/BasinMaker/OIH_Output' #Get the docker path where the results are
         print("Grabbing the results, this could take a while...")
-        cmd ='docker', 'cp','bmaker:'+dockerBMResultsPath, outputdir
+        cmd ='docker', 'cp','qraven:'+dockerBMResultsPath, outputdir
         try:
             self.dockerCommand(cmd)
             print("The results are now in " + outputdir) 
