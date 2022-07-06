@@ -23,7 +23,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -3142,7 +3142,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Delete container</string>
+        <string>Delete image</string>
        </property>
       </widget>
       <widget class="QTabWidget" name="tabWidget_2">
@@ -3171,7 +3171,7 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>-771</y>
+              <y>0</y>
               <width>1004</width>
               <height>1190</height>
              </rect>
@@ -4049,6 +4049,181 @@
        </widget>
       </widget>
      </widget>
+     <widget class="QWidget" name="tab_10">
+      <attribute name="title">
+       <string>GridWeights</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_9">
+       <item row="2" column="2">
+        <widget class="QComboBox" name="combo_dimlon"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label_83">
+         <property name="text">
+          <string>Dim name longitude (x)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QComboBox" name="combo_varlon"/>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_84">
+         <property name="text">
+          <string>Dim name latitude (y)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QLabel" name="label_89">
+         <property name="text">
+          <string>Output path</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_82">
+         <property name="text">
+          <string>NetCDF file</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLabel" name="label_87">
+         <property name="text">
+          <string>HRUs file</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QComboBox" name="combo_varlat"/>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="label_86">
+         <property name="text">
+          <string>Var name latitude (y)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="label_85">
+         <property name="text">
+          <string>Var name longitude (x)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QgsFileWidget" name="file_hrus">
+         <property name="filter">
+          <string>*.shp</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QComboBox" name="combo_dimlat"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="label_88">
+         <property name="text">
+          <string>Shapefile attribute</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="2">
+        <widget class="QgsFileWidget" name="file_outputgridweight">
+         <property name="filter">
+          <string>*.txt</string>
+         </property>
+         <property name="storageMode">
+          <enum>QgsFileWidget::SaveFile</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QRadioButton" name="rb_subbasinid">
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="text">
+          <string>Use subbasin ID</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup_3</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QgsFileWidget" name="file_netcdf">
+         <property name="filter">
+          <string>*.nc *.nc4 *.shp</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="2">
+        <widget class="QLineEdit" name="txt_gridid">
+         <property name="placeholderText">
+          <string>id</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QComboBox" name="combo_ncattributes">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QRadioButton" name="rb_gaugeid">
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="text">
+          <string>Use gauge ID</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup_3</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="10" column="1" colspan="2">
+        <widget class="QFrame" name="frame_2">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <widget class="QPushButton" name="btn_rungridweight">
+          <property name="geometry">
+           <rect>
+            <x>60</x>
+            <y>24</y>
+            <width>85</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Run</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_rmigridweight">
+          <property name="geometry">
+           <rect>
+            <x>860</x>
+            <y>24</y>
+            <width>99</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Delete image</string>
+          </property>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="tab_8">
       <attribute name="title">
        <string>Run Model</string>
@@ -4371,5 +4546,6 @@
  <buttongroups>
   <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_3"/>
  </buttongroups>
 </ui>
