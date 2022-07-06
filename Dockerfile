@@ -25,6 +25,11 @@ RUN apt-get update \
     && python3 -m pip install grass_session \
     && python3 -m pip install pandas \
     && python3 -m pip install scipy \
+    && python3 -m pip install argparse \
+    && python3 -m pip install geopandas \
+    && python3 -m pip install netCDF4 \
+    && python3 -m pip install GDAL \
+    && python3 -m pip install numpy \
     && echo "export GISBASE='/usr/lib/grass78'" >> ~/.bashrc \
     && echo "export QGIS_PREFIX_PATH='/usr'" >> ~/.bashrc \
     && echo "export PYTHONPATH=\$PYTHONPATH:'/usr/lib/grass78/etc/python'" >> ~/.bashrc \
@@ -42,8 +47,11 @@ RUN apt-get update \
     && mkdir ~/BasinMaker/Data/landuse \
     && mkdir ~/BasinMaker/Data/soil \
     && mkdir ~/BasinMaker/Data/stations \
+    && mkdir -p ~/Gridweights/Data \
     && cd ~/BasinMaker \
     && wget https://raw.githubusercontent.com/Scriptbash/QRaven/main/create_RVH.py \
+    && cd ~/Gridweights \
+    && wget https://raw.githubusercontent.com/julemai/GridWeightsGenerator/main/derive_grid_weights.py \
     && grass -c EPSG:4326 ~/grass_tmp --text --exec g.extension r.clip\
     && grass -c EPSG:4326 ~/grass_tmp2 --text --exec g.extension r.accumulate \
     && grass -c EPSG:4326 ~/grass_tmp3 --text --exec g.extension r.stream.basins \
