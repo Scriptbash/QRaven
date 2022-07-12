@@ -32,13 +32,21 @@ from .resources import *
 # Import the code for the dialog
 from .qraven_dialog import QRavenDialog
 
-from qgis.core import Qgis, QgsVectorLayer, QgsProject
+from qgis.core import Qgis, QgsVectorLayer, QgsRasterLayer, QgsProject
 import os.path
 from sys import platform
 import subprocess
 from subprocess import Popen, PIPE
 import matplotlib.pyplot as plt
-import csv, datetime, webbrowser
+import csv, datetime, webbrowser, ntpath
+
+# try:
+#     import netCDF4 as nc
+#     netcdf_installed = True
+# except Exception as e:
+#     netcdf_installed = False
+#     print(e)
+
 
 class QRaven:
     """QGIS Plugin Implementation."""
@@ -259,6 +267,12 @@ class QRaven:
             #Calls the function to remove the docker container
             self.dlg.btn_dockerrm.clicked.connect(self.dockerdelete)
             #----------------------------------------#
+
+            #----------Genereate GridWeights---------#
+            self.dlg.btn_rungridweight.clicked.connect(self.generateGridWeights)
+
+            #----------------------------------------#
+
 
             #-------------Run Raven Model-------------#
             self.dlg.file_runinputdir.fileChanged.connect(self.setModelname)
@@ -1789,6 +1803,7 @@ class QRaven:
         self.runBasinMaker()                #Calls the function that runs BasinMaker with the provided data and parameters
         self.getDockerResults()             #Calls the function that retrieves the results from BasinMaker
         os.system("docker stop qraven")     #Stops the container after the process
+        os.system("docker rm qraven")       #Deletes the container
 
       
     #This method fully removes the container, as well as the image to free up space
@@ -2018,6 +2033,74 @@ class QRaven:
             print(e)
         self.iface.messageBar().pushInfo("Info", "The BasinMaker process has finished. Check the python logs for more details.")
 
+
+    def generateGridWeights(self):
+        # if netcdf_installed == True:
+        #     try:
+        #         fn = "/home/francis/Documents/Geoinfo/precip_exp.nc"
+        #         ds = nc.Dataset(fn)
+        #         print(ds)
+        #     except Exception as e:
+        #         print("Couldn't open the netCDF file...")
+        #         print(e)
+        # else:
+        #     self.iface.messageBar().pushMessage("Error", "Please install the netCDF4 python library to use this feature",level=Qgis.Critical)
+        #     print('The netCDF4 library could not be found. Please install it before using this feature.')
+
+        ncfile = self.dlg.file_netcdf.filePath()
+        ncfilename = ntpath.basename(ncfile)  #Get the file name with extension
+        foldernc = os.path.dirname(ncfile)  #Get only the file path (without the file name)
+        ncextension = os.path.splitext(ncfilename)[1]
+        volumenc = foldernc+':/root/Gridweights/nc/'
+        hrusfile = self.dlg.file_hrus.filePath()
+        hrusfilename = ntpath.basename(hrusfile)
+        folderhrus = os.path.dirname(hrusfile)
+        volumehrus = folderhrus+':/root/Gridweights/hru/'
+        dimlon = self.dlg.txt_dimlon.text()
+        dimlat = self.dlg.txt_dimlat.text()
+        varlon = self.dlg.txt_varlon.text()
+        varlat = self.dlg.txt_varlat.text()
+        subgauge_id = self.dlg.txt_gridid.text()
+        #shpattributes = 
+        output = self.dlg.file_outputgridweight.filePath()
+        outputfolder = folderhrus = os.path.dirname(output)
+        outputfile = ntpath.basename(output)
+
+        if self.dlg.rb_subbasinid.isChecked():
+            selectedid = ' -s '
+        elif self.dlg.rb_gaugeid.isChecked():
+            selectedid = ' -b '
+        
+        #print(ncextension)
+        #if ncextension == '.shp':
+          
+        self.iface.messageBar().pushInfo("Info", "The GridWeights generator process has started. This could take a while.")
+        self.iface.mainWindow().repaint()
+        self.dockerPull()                   #Calls the function to pull the container
+       # self.dockerStart()                  #Calls the function that starts the container
+        try:
+            print("Attempting to start the container...")
+            cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven'
+            self.dockerCommand(cmd)
+            print("The container was started successfully")
+        except Exception as e:
+            print(e)
+        print("Starting the GridWeights generator process, this will take a while to complete")
+        pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/nc/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
+        print(pythoncmd)
+        cmd ='docker', 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
+        try:
+            os.system("docker start qraven")    #Make sure the container is started. Only needed when the plugin is run a second time
+            self.dockerCommand(cmd)
+            cmd = 'docker', 'cp', 'qraven:/root/Gridweights/'+outputfile, outputfolder
+            self.dockerCommand(cmd)
+            print("GridWeights generator has finished processing the files")  
+        except Exception as e:
+            print("The GridWeights generator process failed...")
+            print(e)
+        self.iface.messageBar().pushInfo("Info", "The GridWeights generator process has finished. Check the python logs for more details.")
+        os.system("docker stop qraven")     #Stops the container after the process
+        os.system("docker rm qraven")       #Deletes the container
     #This method opens the rvi file from the input directory and gets two values to populate them in the GUI
     def setModelname(self):
         inputdir = self.dlg.file_runinputdir.filePath() #Get the model input directory
