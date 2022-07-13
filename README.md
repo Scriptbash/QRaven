@@ -11,7 +11,7 @@ QRaven aims to simplify the creation of the primary input file (.RVI) and HRU/Ba
 
 * QGIS (3.20 and above) must be installed. Prior versions may not work with the plugin
   * https://qgis.org/en/site/forusers/download.html  
-* To use the BasinMaker options, Docker must be installed on your computer and properly configured. Linux users must make sure to follow the post-installation steps provided by Docker
+* To use the BasinMaker options and the GridWeights generator, Docker must be installed on your computer and properly configured. Linux users must make sure to follow the post-installation steps provided by Docker
   * https://docs.docker.com/get-docker/ 
 * QRaven works on Linux and Windows. It should work on Mac as well, but testing must be done
 
@@ -31,9 +31,10 @@ QRaven aims to simplify the creation of the primary input file (.RVI) and HRU/Ba
 
 ![image](https://user-images.githubusercontent.com/98601298/170999781-22514c96-7611-424a-b946-69fd465c5181.png)
 
-* You will have three main tabs
+* You will have four main tabs
   * Raven RVI
   * BasinMaker RVH 
+  * GridWeights
   * Run Model 
 
 * Raven RVI tab
@@ -59,16 +60,24 @@ QRaven aims to simplify the creation of the primary input file (.RVI) and HRU/Ba
     ![image](https://user-images.githubusercontent.com/98601298/169554028-a5a38f52-985e-4709-a4bf-4782dfd9e8a3.png)
     
     ![image](https://user-images.githubusercontent.com/98601298/163680338-aed31db0-2bd6-4903-9385-7f424d4b410b.png)
+    
+* GridWeights tab
+  * Use this tab to generate the grid weights for your NetCDF input data
+  * Simply specify the NetCDF file to process, its dimensions and variables
+  * The HRUs file is the BasinMaker final output
+  * Screenshots
+  ![image](https://user-images.githubusercontent.com/98601298/178625993-c64d7f09-924d-4ff3-b167-90ac5623832c.png)
+
 * Run Model tab
   * Use this tab to run your Raven model. This section basically attempts to mimic the RavenViewLite4 Excel file
   * A Raven executable must be provided as well as an input and output directory
-  * The file name prefix is the same name as the model
-  * The RunName is only required if the command :RunName is used in the .rvi file
+  * The file name prefix is the same name as the model, but it should fill itself automatically after selecting an input folder
+  * The RunName is only required if the command :RunName is used in the .rvi file. It should be added automatically after selecting an input folder
   * Once Raven has finished processing the model, the hydrograph can be viewed by clicking on the "Draw hydrograph" button
-  * By clicking on the RavenView button, RavenView will open a new tab in the user's default web browser
+  * By clicking on the RavenView button, RavenView will open in a new tab in the user's default web browser
   * Screenshots
     
-    ![image](https://user-images.githubusercontent.com/98601298/171002436-09b8b4b9-6732-4ceb-9dec-fc41bee594df.png)
+    ![image](https://user-images.githubusercontent.com/98601298/178626346-5eebe8b8-bbf9-4c96-9977-e026057cd3a6.png)
 
     ![image](https://user-images.githubusercontent.com/98601298/169554447-858c4eb4-d79b-4839-8157-4ce727931d1f.png)
 
