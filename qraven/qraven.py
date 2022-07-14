@@ -530,13 +530,7 @@ class QRaven:
                 self.dlg.txt_dimlat.setEnabled(True)
                 self.dlg.txt_varlon.setEnabled(True)
                 self.dlg.txt_varlat.setEnabled(True)
-
-
-            ncfile = self.dlg.file_netcdf.filePath()
-        ncfilename = ntpath.basename(ncfile)  #Get the file name with extension
-        foldernc = os.path.dirname(ncfile)  #Get only the file path (without the file name)
-        ncextension = os.path.splitext(ncfilename)[1]
-              
+             
 
     #This method enables and disables the spinbox next to the SoilModel combobox depending on the selected value of the combobox
     def toggleSoilModel(self):
