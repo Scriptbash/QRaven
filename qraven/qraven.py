@@ -2145,6 +2145,8 @@ class QRaven:
     #This method opens the rvi file from the input directory and gets two values to populate them in the GUI
     def setModelname(self):
         inputdir = self.dlg.file_runinputdir.filePath() #Get the model input directory
+        self.dlg.txt_runnameprefix.clear()
+        self.dlg.txt_runrunname.clear()
         try:
             if inputdir:
                 for file in os.listdir(inputdir):   #Lists all the files in the input folder
