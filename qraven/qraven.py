@@ -268,9 +268,10 @@ class QRaven:
             self.dlg.btn_dockerrm.clicked.connect(self.dockerdelete)
             #----------------------------------------#
 
-            #----------Genereate GridWeights---------#
+            #----------Generate GridWeights---------#
+            self.dlg.file_netcdf.fileChanged.connect(self.toggleWidget)
             self.dlg.btn_rungridweight.clicked.connect(self.generateGridWeights)
-
+            self.dlg.btn_rmigridweight.clicked.connect(self.dockerdelete)
             #----------------------------------------#
 
 
@@ -514,6 +515,27 @@ class QRaven:
                 self.dlg.file_landusemanning.setEnabled(True)
             else:   #If the layer is removed or there's no layer, disable the fields
                 self.dlg.file_landusemanning.setEnabled(False) 
+
+        elif widget.objectName() == 'file_netcdf':
+            if os.path.splitext(self.dlg.file_netcdf.filePath())[1] == '.shp':
+                self.dlg.combo_ncattributes.setEnabled(True)
+                self.dlg.txt_dimlon.setEnabled(False)
+                self.dlg.txt_dimlat.setEnabled(False)
+                self.dlg.txt_varlon.setEnabled(False)
+                self.dlg.txt_varlat.setEnabled(False)
+                self.loadAttributes()
+            else:
+                self.dlg.combo_ncattributes.setEnabled(False)
+                self.dlg.txt_dimlon.setEnabled(True)
+                self.dlg.txt_dimlat.setEnabled(True)
+                self.dlg.txt_varlon.setEnabled(True)
+                self.dlg.txt_varlat.setEnabled(True)
+
+
+            ncfile = self.dlg.file_netcdf.filePath()
+        ncfilename = ntpath.basename(ncfile)  #Get the file name with extension
+        foldernc = os.path.dirname(ncfile)  #Get only the file path (without the file name)
+        ncextension = os.path.splitext(ncfilename)[1]
               
 
     #This method enables and disables the spinbox next to the SoilModel combobox depending on the selected value of the combobox
@@ -1766,7 +1788,18 @@ class QRaven:
                 self.dlg.combo_bankfulldischarge.addItems(field_names)
                 self.dlg.combo_bankfulldrainarea.clear()
                 self.dlg.combo_bankfulldrainarea.addItem('DRAINAGE AREA (km2) - required')
-                self.dlg.combo_bankfulldrainarea.addItems(field_names)                
+                self.dlg.combo_bankfulldrainarea.addItems(field_names)   
+
+
+        elif widgetname == 'file_netcdf':
+            netcdfpath = self.dlg.file_netcdf.filePath()
+            vlayer = QgsVectorLayer(netcdfpath, "netcdf", "ogr")
+            if not vlayer.isValid():
+                print("Layer failed to load!")
+            else:
+                field_names = vlayer.fields().names()
+                self.dlg.combo_ncattributes.clear()
+                self.dlg.combo_ncattributes.addItems(field_names)             
             
     #This method sets up the scriptbash/basinmaker docker container. Pulls, starts and stops the docker container
     def dockerinit(self):
@@ -2069,11 +2102,14 @@ class QRaven:
         if self.dlg.rb_subbasinid.isChecked():
             selectedid = ' -s '
         elif self.dlg.rb_gaugeid.isChecked():
-            selectedid = ' -b '
+            selectedid = ' -b '            
         
         #print(ncextension)
-        #if ncextension == '.shp':
-          
+        
+        
+        pythonConsole = self.iface.mainWindow().findChild(QDockWidget, 'PythonConsole')
+        if not pythonConsole or not pythonConsole.isVisible():  #If the python console is closed, open it
+            self.iface.actionShowPythonDialog().trigger()
         self.iface.messageBar().pushInfo("Info", "The GridWeights generator process has started. This could take a while.")
         self.iface.mainWindow().repaint()
         self.dockerPull()                   #Calls the function to pull the container
@@ -2086,7 +2122,12 @@ class QRaven:
         except Exception as e:
             print(e)
         print("Starting the GridWeights generator process, this will take a while to complete")
-        pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/nc/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
+        if ncextension == '.shp':
+            shpattributes = self.dlg.combo_ncattributes.currentText()
+            pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/nc/'+ncfilename + ' -f '+ '"'+shpattributes+'"' + ' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
+            
+        else:
+            pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/nc/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
         print(pythoncmd)
         cmd ='docker', 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
         try:
