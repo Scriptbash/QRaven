@@ -1606,7 +1606,7 @@ class QRaven:
         poisource = self.dlg.combo_poisource.currentText()   #Get the source field of the point of interest
 
         if self.dlg.chk_epsgcode.isChecked():   #Get the EPSG code if the checkbox is checkedm
-            epsgcode = self.dlg.txt_epsgcode.text()
+            epsgcode = 'EPSG:'+self.dlg.txt_epsgcode.text()
         else:                                   #Otherwise use the default value of BasinMaker
             epsgcode = 'EPSG:3573'
 
