@@ -2251,25 +2251,28 @@ class QRaven:
             self.iface.messageBar().pushMessage("Error", "An error occured while attempting to draw the hydrograph. Check the python console for more details.",level=Qgis.Critical)
     
     def checkUpdate(self):
-        metadatafile = Path(__file__).parent / "metadata.txt"
-        with open(metadatafile,'r') as metadata:  #Read the metadata file
-            lines = metadata.readlines()
-            for line in lines:
-                if 'version=' in line:  #loops through the metadata file and searches for the plugin version
-                    pluginversion = line.split()
-                    print(pluginversion[0])
-        print("Looking for updates")
-        link = "https://raw.githubusercontent.com/Scriptbash/QRaven/main/qraven/metadata.txt"
-        page = requests.get(link)
-        content = page.text     
-        keywords = content.split()
-        if pluginversion[0] in keywords:
-            print("version is up to date")
-        else:
-            print("Found an update. Please install the latest version of the plugin here: https://github.com/Scriptbash/QRaven/releases")
-            self.dlg.lbl_update.setText('An update is available, please install the latest version <a href="https://github.com/Scriptbash/QRaven/releases">https://github.com/Scriptbash/QRaven/releases</a>')
-            #self.iface.messageBar().pushInfo("Info", "A QRaven update is available, please install the latest version https://github.com/Scriptbash/QRaven/releases")
-        
+        try:
+            metadatafile = Path(__file__).parent / "metadata.txt"
+            with open(metadatafile,'r') as metadata:  #Read the metadata file
+                lines = metadata.readlines()
+                for line in lines:
+                    if 'version=' in line:  #loops through the metadata file and searches for the plugin version
+                        pluginversion = line.split()
+                        print(pluginversion[0])
+            print("Looking for updates")
+            link = "https://raw.githubusercontent.com/Scriptbash/QRaven/main/qraven/metadata.txt"
+            page = requests.get(link)
+            content = page.text     
+            keywords = content.split()
+            if pluginversion[0] in keywords:
+                print("version is up to date")
+            else:
+                print("Found an update. Please install the latest version of the plugin here: https://github.com/Scriptbash/QRaven/releases")
+                self.dlg.lbl_update.setText('An update is available, please install the latest version <a href="https://github.com/Scriptbash/QRaven/releases">https://github.com/Scriptbash/QRaven/releases</a>')
+                #self.iface.messageBar().pushInfo("Info", "A QRaven update is available, please install the latest version https://github.com/Scriptbash/QRaven/releases")
+        except Exception as e:
+            print(e)
+            print("Could not check for an update. Verify your internet connection.")
 
 #This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
 def checkOS():
