@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1054</width>
-    <height>636</height>
+    <height>669</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -51,7 +51,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -3066,6 +3066,9 @@
        <property name="textFormat">
         <enum>Qt::RichText</enum>
        </property>
+       <property name="openExternalLinks">
+        <bool>true</bool>
+       </property>
        <property name="textInteractionFlags">
         <set>Qt::TextBrowserInteraction</set>
        </property>
@@ -3141,7 +3144,7 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>-218</y>
+              <y>0</y>
               <width>1004</width>
               <height>1190</height>
              </rect>
@@ -4353,6 +4356,16 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="lbl_update">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QDialogButtonBox" name="button_box">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -4534,7 +4547,7 @@
  </connections>
  <buttongroups>
   <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup_3"/>
  </buttongroups>
 </ui>
