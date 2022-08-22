@@ -305,25 +305,44 @@ def generateHRUs():
 
     try:
         print('\Generate_HRUs running...\n')
-        bm_post.Generate_HRUs(
-            path_output_folder=folder_product_after_gen_hrus,
-            path_subbasin_polygon        =os.path.join(input_routing_product_folder, "finalcat_info.shp"),
-            path_connect_lake_polygon    =os.path.join(input_routing_product_folder, "sl_connected_lake.shp"),
-            path_non_connect_lake_polygon=os.path.join(input_routing_product_folder, "sl_non_connected_lake.shp"),
-            path_landuse_polygon=os.path.join(os.getcwd(),'Data','landuse', landusepoly),
-            path_soil_polygon   =os.path.join(os.getcwd(),'Data','soil',soilpoly),
-            #path_vegetation_polygon    ="#",
-            #path_other_polygon_1="#",
-            #path_other_polygon_2="#",
-            path_landuse_info=os.path.join(os.getcwd(),'Data','landuse', landuseinfo),
-            path_soil_info   =os.path.join(os.getcwd(),'Data','soil', soilinfo),
-            path_veg_info    =os.path.join(os.getcwd(),'Data','landuse', veginfo),
-            path_to_dem=os.path.join(os.getcwd(),datafolder,'DEM',demname),
-            importance_order = ['Soil_ID','Landuse_ID'],
-            min_hru_subbasin_area_ratio = 0.0,
-            gis_platform="qgis",
-            projected_epsg_code = projected_epsg_code,
-        )
+        if params['pathlakes'] != '#':
+            bm_post.Generate_HRUs(
+                path_output_folder=folder_product_after_gen_hrus,
+                path_subbasin_polygon        =os.path.join(input_routing_product_folder, "finalcat_info.shp"),
+                path_connect_lake_polygon    =os.path.join(input_routing_product_folder, "sl_connected_lake.shp"),
+                path_non_connect_lake_polygon=os.path.join(input_routing_product_folder, "sl_non_connected_lake.shp"),
+                path_landuse_polygon=os.path.join(os.getcwd(),'Data','landuse', landusepoly),
+                path_soil_polygon   =os.path.join(os.getcwd(),'Data','soil',soilpoly),
+                #path_vegetation_polygon    ="#",
+                #path_other_polygon_1="#",
+                #path_other_polygon_2="#",
+                path_landuse_info=os.path.join(os.getcwd(),'Data','landuse', landuseinfo),
+                path_soil_info   =os.path.join(os.getcwd(),'Data','soil', soilinfo),
+                path_veg_info    =os.path.join(os.getcwd(),'Data','landuse', veginfo),
+                path_to_dem=os.path.join(os.getcwd(),datafolder,'DEM',demname),
+                importance_order = ['Soil_ID','Landuse_ID'],
+                min_hru_subbasin_area_ratio = 0.0,
+                gis_platform="qgis",
+                projected_epsg_code = projected_epsg_code,
+            )
+        else:
+            bm_post.Generate_HRUs(
+                path_output_folder=folder_product_after_gen_hrus,
+                path_subbasin_polygon =os.path.join(input_routing_product_folder, "finalcat_info.shp"),
+                path_landuse_polygon=os.path.join(os.getcwd(),'Data','landuse', landusepoly),
+                path_soil_polygon   =os.path.join(os.getcwd(),'Data','soil',soilpoly),
+                #path_vegetation_polygon    ="#",
+                #path_other_polygon_1="#",
+                #path_other_polygon_2="#",
+                path_landuse_info=os.path.join(os.getcwd(),'Data','landuse', landuseinfo),
+                path_soil_info   =os.path.join(os.getcwd(),'Data','soil', soilinfo),
+                path_veg_info    =os.path.join(os.getcwd(),'Data','landuse', veginfo),
+                path_to_dem=os.path.join(os.getcwd(),datafolder,'DEM',demname),
+                importance_order = ['Soil_ID','Landuse_ID'],
+                min_hru_subbasin_area_ratio = 0.0,
+                gis_platform="qgis",
+                projected_epsg_code = projected_epsg_code,
+            )
         print('Generate_HRUs was successful...\n')
     except Exception as e:
         print('Generate_HRUs failed...')
