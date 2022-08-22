@@ -111,7 +111,7 @@ def addOutletPts():
     poindrainage = params['poidrainarea']
     poinsource = params['poisource']
 
-    if lakesname !='#':
+    if params['pathlakes'] !='#':
         lake_attributes=[lakeid, laketype, lakevol, lakeavgdepth, lakearea]
     else:
         lake_attributes=[]
@@ -120,7 +120,7 @@ def addOutletPts():
 
     try:
         print('\nAdd_New_Subbasin_Outlet_Points running...\n')
-        if lakesname !='#':
+        if params['pathlakes'] !='#':
             bm.Add_New_Subbasin_Outlet_Points(
                 path_lake_polygon=os.path.join(datafolder,"lakes",lakesname),
                 lake_attributes=lake_attributes,
