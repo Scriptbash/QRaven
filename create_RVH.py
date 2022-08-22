@@ -116,7 +116,7 @@ def addOutletPts():
         print('\nAdd_New_Subbasin_Outlet_Points running...\n')
         bm.Add_New_Subbasin_Outlet_Points(
             path_lake_polygon=os.path.join(datafolder,"lakes",lakesname),
-            lake_attributes=[lakeid, laketype, lakearea, lakevol, lakeavgdepth],
+            lake_attributes=[lakeid, laketype, lakevol, lakeavgdepth, lakearea],
             connected_lake_area_thresthold=float(params['connectedlake']),
             non_connected_lake_area_thresthold=float(params['nonconnectedlake']),
             path_point_of_interest=os.path.join(os.getcwd(),datafolder,'stations',pointsinterestname), 
@@ -146,6 +146,12 @@ def genHydroRoutingAtt():
     lakevol = params['lakevol']
     lakeavgdepth = params['lakeavgdepth']
     lakearea = params['lakearea']
+
+    if ntpath.basename(params['pathlake']) != '#':
+        lakeattributes=[lakeid, laketype, lakevol,lakeavgdepth, lakearea]
+    else:
+        lakeattributes=[]
+
     projected_epsg_code = str(params['epsgcode'])
     
     if params['pathlanduserast'] != '#':
@@ -170,7 +176,7 @@ def genHydroRoutingAtt():
                 path_landuse_and_manning_n_table = path_manning_table,
                 gis_platform="qgis",
                 point_of_interest_attributes=[poiid, poiname, poindrainage, poinsource],
-                lake_attributes=[lakeid, laketype, lakearea, lakevol, lakeavgdepth],
+                lake_attributes=lakeattributes,
                 path_output_folder=path_output_folder,
                 projected_epsg_code =projected_epsg_code,
             )
