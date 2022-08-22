@@ -286,6 +286,7 @@ def generateHRUs():
     soilpoly = ntpath.basename(params['pathsoil'])
     soilinfo = ntpath.basename(params['pathsoilinfo'])
     veginfo = ntpath.basename(params['pathveginfo'])
+    projected_epsg_code = str(params['epsgcode'])
     start = time.time()
 
     try:
@@ -307,7 +308,7 @@ def generateHRUs():
             importance_order = ['Soil_ID','Landuse_ID'],
             min_hru_subbasin_area_ratio = 0.0,
             gis_platform="qgis",
-            #projected_epsg_code = 'EPSG:3161',
+            projected_epsg_code = projected_epsg_code,
         )
         print('Generate_HRUs was successful...\n')
     except Exception as e:
