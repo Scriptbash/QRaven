@@ -919,7 +919,7 @@ class QRaven:
         compartments = ['ATMOS_PRECIP','MULTIPLE','CANOPY','ATMOSPHERE','LAKE','SURFACE_WATER',
                           'DEPRESSION','PONDED_WATER','SNOW','SNOW_LIQ','GLACIER_ICE','GLACIER'
                        ]
-        hrugroups = self.dlg.txt_defhru.toPlainText().split(',')
+        hrugroups = [x.strip() for x in self.dlg.txt_defhru.toPlainText().split(',')]
         currentWidget = self.dlg.sender()
         table = self.dlg.table_transport #Get the transport processes table
         index = self.dlg.table_transport.indexAt(currentWidget.pos())    #Get the index of the widget

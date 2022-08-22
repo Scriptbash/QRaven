@@ -227,7 +227,7 @@ def removesmalllakes():
     filternonconnectedlakes = float(params['filternonconnectedlakes'])
     selectedlakeid = params['selectedlakeid']
     if selectedlakeid != '#':
-        selectedlakeid = selectedlakeid.split(",")
+        selectedlakeid = [x.strip() for x in selectedlakeid.split(",")]
     else: 
         selectedlakeid = []
     start = time.time()
