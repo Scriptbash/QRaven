@@ -225,7 +225,11 @@ def removesmalllakes():
     folder_product_after_filter_lakes = os.path.join(os.getcwd(),'OIH_Output','network_after_filter_lakes')
     filterconnectedlakes = float(params['filterconnectedlakes'])
     filternonconnectedlakes = float(params['filternonconnectedlakes'])
-    #selectedlakeid = params['selectedlakeid']
+    selectedlakeid = params['selectedlakeid']
+    if selectedlakeid != '#':
+        selectedlakeid = selectedlakeid.split(",")
+    else: 
+        selectedlakeid = []
     start = time.time()
 
     try:
@@ -235,7 +239,7 @@ def removesmalllakes():
             routing_product_folder = input_routing_product_folder,
             connected_lake_area_thresthold=filterconnectedlakes,
             non_connected_lake_area_thresthold=filternonconnectedlakes,
-            #selected_lake_ids = selectedlakeid,
+            selected_lake_ids = selectedlakeid,
             gis_platform="qgis",
         )
         print('Remove_Small_Lakes was successful...\n')
