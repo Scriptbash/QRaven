@@ -294,7 +294,7 @@ def generateHRUs():
             path_output_folder=folder_product_after_gen_hrus,
             path_subbasin_polygon        =os.path.join(input_routing_product_folder, "finalcat_info.shp"),
             path_connect_lake_polygon    =os.path.join(input_routing_product_folder, "sl_connected_lake.shp"),
-            path_non_connect_lake_polygon='#',
+            path_non_connect_lake_polygon=os.path.join(input_routing_product_folder, "sl_non_connected_lake.shp"),
             path_landuse_polygon=os.path.join(os.getcwd(),'Data','landuse', landusepoly),
             path_soil_polygon   =os.path.join(os.getcwd(),'Data','soil',soilpoly),
             #path_vegetation_polygon    ="#",
