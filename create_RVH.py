@@ -110,20 +110,34 @@ def addOutletPts():
     poiname = params['poiname']
     poindrainage = params['poidrainarea']
     poinsource = params['poisource']
+
+    if lakesname !='#':
+        lake_attributes=[lakeid, laketype, lakevol, lakeavgdepth, lakearea]
+    else:
+        lake_attributes=[]
+
     start = time.time()
 
     try:
         print('\nAdd_New_Subbasin_Outlet_Points running...\n')
-        bm.Add_New_Subbasin_Outlet_Points(
-            path_lake_polygon=os.path.join(datafolder,"lakes",lakesname),
-            lake_attributes=[lakeid, laketype, lakevol, lakeavgdepth, lakearea],
-            connected_lake_area_thresthold=float(params['connectedlake']),
-            non_connected_lake_area_thresthold=float(params['nonconnectedlake']),
-            path_point_of_interest=os.path.join(os.getcwd(),datafolder,'stations',pointsinterestname), 
-            point_of_interest_attributes=[poiid, poiname, poindrainage, poinsource],
-            max_memroy=maxmemory,
-            gis_platform="qgis",
-        )
+        if lakesname !='#':
+            bm.Add_New_Subbasin_Outlet_Points(
+                path_lake_polygon=os.path.join(datafolder,"lakes",lakesname),
+                lake_attributes=lake_attributes,
+                connected_lake_area_thresthold=float(params['connectedlake']),
+                non_connected_lake_area_thresthold=float(params['nonconnectedlake']),
+                path_point_of_interest=os.path.join(os.getcwd(),datafolder,'stations',pointsinterestname), 
+                point_of_interest_attributes=[poiid, poiname, poindrainage, poinsource],
+                max_memroy=maxmemory,
+                gis_platform="qgis",
+            )
+        else:
+            bm.Add_New_Subbasin_Outlet_Points(
+                path_point_of_interest=os.path.join(os.getcwd(),datafolder,'stations',pointsinterestname), 
+                point_of_interest_attributes=[poiid, poiname, poindrainage, poinsource],
+                max_memroy=maxmemory,
+                gis_platform="qgis",
+            )
         print('Add_New_Subbasin_Outlet_Points was successful...\n')
     except Exception as e:
         print('Add_New_Subbasin_Outlet_Points failed...')
@@ -362,8 +376,8 @@ maxmemory = params['maxmemory']
 
 defineExtent()
 delineateNoLakes()
-if params['pathlakes'] !='#':
-    addOutletPts()
+#if params['pathlakes'] !='#':
+addOutletPts()
 genHydroRoutingAtt()
 combinecatchment()
 removesmalllakes()

@@ -1587,7 +1587,7 @@ class QRaven:
             outletlat = ''
             outletlon = ''
         
-        if self.dlg.file_lakes.filePath:    #If the is a layer for the lakes, gather the values needed. Else, assign empty values
+        if self.dlg.file_lakes.filePath():    #If there is a layer for the lakes, gather the values needed. Else, assign empty values
             lakeid = self.dlg.combo_lakeid.currentText()
             laketype = self.dlg.combo_laketype.currentText()
             lakevol = self.dlg.combo_lakevol.currentText()
@@ -1595,14 +1595,15 @@ class QRaven:
             lakearea = self.dlg.combo_lakearea.currentText()
             connectedlake = self.dlg.spin_conlakearea.value()
             nonconnectedlake = self.dlg.spin_nonconlakearea.value()
+            print('went in the non empty values')
         else:
-            lakeid = ''
-            laketype = ''
-            lakevol = ''
-            lakeavgdepth = ''
-            lakearea = ''
-            connectedlake = ''
-            nonconnectedlake = ''
+            lakeid = '#'
+            laketype = '#'
+            lakevol = '#'
+            lakeavgdepth = '#'
+            lakearea = '#'
+            connectedlake = '#'
+            nonconnectedlake = '#'
 
         poiid = self.dlg.combo_poiid.currentText()   #Get the id field of the point of interest
         poiname = self.dlg.combo_poiname.currentText()   #Get the name field of the point of interest
