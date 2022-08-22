@@ -1646,7 +1646,7 @@ class QRaven:
         filterconnectedlakes = self.dlg.spin_filterconnectedlakes.value()  #Get the connected lake area threshold value
         filternonconnectedlakes = self.dlg.spin_filternonconnectedlakes.value() #Get the non connected lake area threshold value
         if self.dlg.txt_selectedlakeid.text() != '':    #Get selected lake ids if they are provided
-            selectedlakeid = self.dlg.txt_selectedlakeid.text()
+            selectedlakeid = self.dlg.txt_selectedlakeid.text().replace(" ","")
         else:
             selectedlakeid = '#'
         minsubbasinarea = self.dlg.spin_minsubbasinarea.value() #Get the minimum subbasin area value
@@ -1863,7 +1863,7 @@ class QRaven:
         '''
         try:
             print("Trying to pull the scriptbash/qraven image...")
-            cmd='docker', 'pull', 'scriptbash/qraven'  
+            cmd='docker', 'pull', 'scriptbash/qraven:latest'  
             self.dockerCommand(cmd)
             print("The pull was successfull")
         except Exception as e:
