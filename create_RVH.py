@@ -161,7 +161,7 @@ def genHydroRoutingAtt():
     lakeavgdepth = params['lakeavgdepth']
     lakearea = params['lakearea']
 
-    if ntpath.basename(params['pathlake']) != '#':
+    if ntpath.basename(params['pathlakes']) != '#':
         lakeattributes=[lakeid, laketype, lakevol,lakeavgdepth, lakearea]
     else:
         lakeattributes=[]
@@ -376,7 +376,6 @@ maxmemory = params['maxmemory']
 
 defineExtent()
 delineateNoLakes()
-#if params['pathlakes'] !='#':
 addOutletPts()
 genHydroRoutingAtt()
 combinecatchment()
