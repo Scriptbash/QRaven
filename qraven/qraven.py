@@ -1088,8 +1088,13 @@ class QRaven:
             endDateTmp = self.dlg.date_enddate.dateTime()
             duration = str(endDateTmp.toPyDateTime())
         #Get the time step
-        timeStepTmp = self.dlg.date_timestep.time()
-        timeStep = str(timeStepTmp.toPyTime())
+        #timeStepTmp = self.dlg.date_timestep.time()
+        #timeStep = str(timeStepTmp.toPyTime())
+         
+        timestep_h = str("%02d" % self.dlg.spin_timestep_h.value())
+        timestep_m = str("%02d" % self.dlg.spin_timestep_m.value())
+        timestep_s = str("%02d" % self.dlg.spin_timestep_s.value())
+        timeStep = timestep_h + ':'+timestep_m+':'+timestep_s
         #Get soil model
         if self.dlg.combo_soilmod.currentText().lower() == "soil_multilayer":
             soilMod = self.dlg.combo_soilmod.currentText() + ' ' + str(self.dlg.spin_soilmod.value())
