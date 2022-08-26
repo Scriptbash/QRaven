@@ -208,6 +208,7 @@ class QRaven:
             self.checkUpdate()
 
             #-------------Raven RVI-------------#
+            self.dlg.btn_load_hmets.clicked.connect(self.loadHmets)
             #If the checkbox is checked/unchecked, enables/disables the associated widget
             self.dlg.chk_duration.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_runname.stateChanged.connect(self.toggleWidget)
@@ -237,13 +238,7 @@ class QRaven:
             #Calls the function to browse the computer for an output folder
             self.dlg.btn_outputdir.clicked.connect(self.browseDirectory)
         
-            procname =['','Precipitation','CanopyEvap','SoilEvaporation','LakeEvaporation',
-                        'OpenWaterEvaporation','Infiltration','Percolation','CapillaryRise',
-                        'Baseflow','Interflow','Seepage','DepressionOverflow','LakeRelease',
-                        'Abstraction','SnowMelt','Snow Refreeze','Snow Balance','Sublimation',
-                        'SnowAlbedoEvolve','CanopyDrip','CropHeatUnitEvolve','GlacierMelt',
-                        'GlacierRelease','Flush','Overflow','Split','Convolution','LateralFlush'
-                      ]
+
             self.dlg.btn_addhydroproc.clicked.connect(self.addTableRow)
             self.dlg.btn_rmhydroproc.clicked.connect(self.removeTableRow)
             self.dlg.btn_addtransport.clicked.connect(self.addTransportProc)
@@ -561,15 +556,8 @@ class QRaven:
         self.dlg.txt_outputdir.setText(dir)
     
 
-    def addTableRow(self,procname):
-        #List that contains every process name
-        procname =['','Precipitation','CanopyEvap','SoilEvaporation','LakeEvaporation',
-                        'OpenWaterEvaporation','Infiltration','Percolation','CapillaryRise',
-                        'Baseflow','Interflow','Seepage','DepressionOverflow','LakeRelease',
-                        'Abstraction','SnowMelt','Snow Refreeze','Snow Balance','Sublimation',
-                        'SnowAlbedoEvolve','CanopyDrip','CropHeatUnitEvolve','GlacierMelt',
-                        'GlacierRelease','Flush','Overflow','Split','Convolution','LateralFlush'
-            ]
+    def addTableRow(self):
+        
         table = self.dlg.table_hydroprocess #Get the hydrologic processes table
         currentRow = table.rowCount()   #Get the number of rows the table has
         table.insertRow(currentRow) #Inserts a new row below the last row
@@ -595,7 +583,7 @@ class QRaven:
         table.setCellWidget(currentRow, 7, txt_hrutype)
 
         table.resizeColumnsToContents() #Resizes the width of the column automatically
-        combo_proc.currentTextChanged.connect(self.setProcAlg)  #Updates the algorithm combobox if the process changes
+        combo_proc.currentIndexChanged.connect(self.setProcAlg)  #Updates the algorithm combobox if the process changes
         chk_isconditional.stateChanged.connect(self.enableConditionalProc)
 
     def removeTableRow(self):
@@ -605,17 +593,22 @@ class QRaven:
 
 
     def setProcAlg(self):
-       
+        print('Went into the algs')
         combo_alg = QComboBox()
+        combo_from = QComboBox()
+        combo_to = QComboBox()
         currentWidget = self.dlg.sender()
+        print(currentWidget)
         index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())
+        print(index)
         widgetRow = index.row()
-        #print(index.row())
+        print(index.row())
         combo_alg.clear()
         combo_alg.addItem('')
+       
         if isinstance(currentWidget, QComboBox):
             selectedProc = currentWidget.currentText()
-            #print(selectedProc)
+            print(selectedProc)
             if selectedProc == 'Precipitation':
                 combo_alg.addItems(precipalg)
             elif selectedProc == 'CanopyEvap':
@@ -646,9 +639,9 @@ class QRaven:
                 combo_alg.addItems(abstractionAlg)
             elif selectedProc == 'SnowMelt':
                 combo_alg.addItems(snowmeltAlg)
-            elif selectedProc == 'Snow Refreeze':
+            elif selectedProc == 'SnowRefreeze':
                 combo_alg.addItems(snowrefreezeAlg)
-            elif selectedProc == 'Snow Balance':
+            elif selectedProc == 'SnowBalance':
                 combo_alg.addItems(snowbalanceAlg)
             elif selectedProc == 'Sublimation':
                 combo_alg.addItems(sublimationAlg)
@@ -673,71 +666,14 @@ class QRaven:
             elif selectedProc == 'LateralFlush':
                 combo_alg.addItems(lateralflushAlg)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 1, combo_alg)
+        self.dlg.table_hydroprocess.setCellWidget(widgetRow, 2, combo_from)
+        self.dlg.table_hydroprocess.setCellWidget(widgetRow, 3, combo_to)
         self.dlg.table_hydroprocess.resizeColumnsToContents()
-        combo_alg.currentTextChanged.connect(self.setStorage)   #Updates the compartments combobox if the algorithm changed
+        combo_alg.currentIndexChanged.connect(self.setStorage)   #Updates the compartments combobox if the algorithm changed
+
 
     #This method sets the combobox values for the from and to compartments based on the selected algorithm
     def setStorage(self):
-
-        #Lists of the compartments of each algorithm. Can easily add new compartments if new compartments are added in Raven
-        fromPrecip = ["ATMOS_PRECIP"]
-        toPrecip = ["MULTIPLE"]
-        fromCanevp = ["CANOPY"]
-        toCanevp = ["ATMOSPHERE"]
-        fromSoilevap = ["SOIL[0]"]
-        toSoilevap = ["ATMOSPHERE"]
-        fromLakeevap = ["LAKE","SURFACE_WATER"]
-        toLakeevap = ["ATMOSPHERE"]
-        fromOpenwaterevap = ["DEPRESSION"]
-        toOpenwaterevap = ["ATMOSPHERE"]
-        fromInfiltration = ["PONDED_WATER"]
-        toInfiltration = ["SOIL[0]", "SURFACE_WATER"]
-        toInfiltUBC = ["SOIL[0]","SOIL[1]","SOIL[2]","SOIL[3]","SURFACE_WATER"]
-        fromPercolation = []
-        toPercolation = []
-        fromCapillaryRise = []
-        toCapillaryRise = []
-        fromBaseflow = []
-        toBaseflow = ['SURFACE_WATER']
-        fromInterflow = []
-        toInterflow = ['SURFACE_WATER']
-        fromSeepage = ['DEPRESSION']
-        toSeepage = []
-        fromDepressOverflow = ['DEPRESSION']
-        toDepressOverflow = ['SURFACE_WATER']
-        fromLakeRelease = ['LAKE']
-        toLakeRelease = ['SURFACE_WATER']
-        fromAbstraction = ['PONDED_WATER']
-        toAbstraction = ['DEPRESSION']
-        fromSnowmelt = ['SNOW']
-        toSnowmelt = ['SNOW_LIQ','PONDED_WATER','SURFACE_WATER']
-        fromSnowrefreeze = ['SNOW_LIQ']
-        toSnowrefreeze = ['SNOW']
-        fromSnowbalSimple = ['SNOW']
-        toSnowbalSimple = ['PONDED_WATER','SNOW_LIQ']
-        fromSnowbalColdcontent = ['SNOW','SNOW_LIQ']
-        toSnowbalColdcontent = ['SNOW','SNOW_LIQ','PONDED_WATER']
-        fromSnowbalHBV = ['SNOW','SNOW_LIQ']
-        toSnowbalHBV = ['SOIL[0]']
-        fromSnowbaltwolayer = ['SNOW[0,1]','SNOW_LIQ[0,1]']
-        toSnowbaltwolayer = ['SNOW[0,1]','SNOW_LIQ[0,1]','SURFACE_WATER']
-        fromSnowbalCema = ['SNOW']
-        toSnowbalCema = ['PONDED_WATER']
-        fromSnowbalGawser = ['SNOW','SNOW_LIQ']
-        toSnowbalGawser = ['SNOW_LIQ','ATMOSPHERE','PONDED_WATER']
-        fromSnowbalUBC = ['SNOW','SNOW_LIQ']
-        toSnowbalUBC = ['SNOW','SNOW_LIQ','SURFACE_WATER']
-        fromSublimation = ['SNOW']
-        toSublimation = ['ATMOSPHERE']
-        fromCanopydrip = ['CANOPY']
-        toCanopydrip = ['PONDED_WATER']
-        fromGlaciermelt = ['GLACIER_ICE']
-        toGlaciermelt = ['GLACIER']
-        fromGlacierRelease = ['GLACIER']
-        toGlacierRelease = ['SURFACE_WATER']
-        anyCompartment = ['ATMOS_PRECIP','MULTIPLE','CANOPY','ATMOSPHERE','LAKE','SURFACE_WATER',
-                          'DEPRESSION','PONDED_WATER','SNOW','SNOW_LIQ','GLACIER_ICE','GLACIER'
-                         ]
 
         #Loops through the number of soil layers chosen by the user. Allows to add the soil[m] to comboboxes
         if self.dlg.combo_soilmod.currentText().lower() == "soil_multilayer":
@@ -837,6 +773,9 @@ class QRaven:
             elif selectedAlg == 'SNOBAL_UBC':
                 combo_from.addItems(fromSnowbalUBC)
                 combo_to.addItems(toSnowbalUBC)
+            elif selectedAlg == 'SNOBAL_HMETS':
+                combo_from.addItems(fromSnowbalHMETS)
+                combo_to.addItems(toSnowbalHMETS)
             elif selectedAlg in snowmeltAlg:
                 combo_from.addItems(fromSnowmelt)
                 combo_to.addItems(toSnowmelt)
@@ -1094,7 +1033,7 @@ class QRaven:
         timestep_h = str("%02d" % self.dlg.spin_timestep_h.value())
         timestep_m = str("%02d" % self.dlg.spin_timestep_m.value())
         timestep_s = str("%02d" % self.dlg.spin_timestep_s.value())
-        timeStep = timestep_h + ':'+timestep_m+':'+timestep_s
+        timeStep = timestep_h+':'+timestep_m+':'+timestep_s
         #Get soil model
         if self.dlg.combo_soilmod.currentText().lower() == "soil_multilayer":
             soilMod = self.dlg.combo_soilmod.currentText() + ' ' + str(self.dlg.spin_soilmod.value())
@@ -1316,7 +1255,7 @@ class QRaven:
             "OroPetCorrect"              : oropet,
             "CloudCoverMethod"           : cloudcover,
             "AirPressureMethod"          : airpressure,
-            "PotentialMelt"              : potmelt,
+            "PotentialMeltMethod"        : potmelt,
             "MonthlyInterpolationMethod" : monthlyinterpo,
             "LakeStorage"                : lakestorage,
             "SWRadiationMEthod"          : swradiation,
@@ -2279,6 +2218,65 @@ class QRaven:
         except Exception as e:
             print(e)
             print("Could not check for an update. Verify your internet connection.")
+    
+    #This method loads a template of HMETS into the GUI
+    def loadHmets(self):
+        
+        table = self.dlg.table_hydroprocess #Get the hydrological processes table
+        while(table.rowCount()>0):
+            table.removeRow(0)
+
+        self.addTableRow()
+
+        #Sets the model parameters 
+        self.dlg.combo_potentialmelt.setCurrentText("POTMELT_HMETS")
+        self.dlg.combo_rainsnowfrac.setCurrentText("RAINSNOW_DATA")
+        self.dlg.combo_evapo.setCurrentText("PET_OUDIN")
+        self.dlg.combo_catchment.setCurrentText("ROUTE_DUMP")
+        self.dlg.combo_routing.setCurrentText("ROUTE_NONE")
+        self.dlg.combo_soilmod.setCurrentText("SOIL_TWO_LAYER")
+
+        # #Sets the hydrological processes
+        currentRow = table.rowCount()   #Get the number of rows the table has
+        # table.insertRow(currentRow) #Inserts a new row below the last row
+        #combo_proc = QComboBox() 
+        #combo_alg = QComboBox()
+        # combo_from = QComboBox()   
+        # combo_to = QComboBox()
+
+        combo_proc = table.cellWidget(0,0)
+        combo_alg = table.cellWidget(0,1)
+        combo_from = table.cellWidget(0,2)
+        combo_to = table.cellWidget(0,3)
+
+
+        #combo_proc.addItems(procname)
+        #combo_alg.addItems(snowbalanceAlg)
+        #combo_from.addItem("MULTIPLE")
+        #combo_to.addItem("MULTIPLE")
+        combo_proc.setCurrentText("SnowBalance")
+        combo_alg.setCurrentText("SNOBAL_HMETS")
+        combo_from.setCurrentText("MULTIPLE")
+        combo_to.setCurrentText("MULTIPLE")
+        # table.setCellWidget(0, 0, combo_proc)  #Sets the new combobox in the first column and in the new row
+        # table.setCellWidget(0, 1, combo_alg)
+        # table.setCellWidget(0, 2, combo_from)
+        # table.setCellWidget(0, 3, combo_to)
+
+        self.addTableRow()
+
+        combo_proc = table.cellWidget(1,0)
+        combo_alg = table.cellWidget(1,1)
+        combo_from = table.cellWidget(1,2)
+        combo_to = table.cellWidget(1,3)
+        combo_alg.addItems(snowbalanceAlg)
+        combo_proc.setCurrentText("Precipitation")
+        combo_alg.setCurrentText("RAVEN_DEFAULT")
+        combo_from.setCurrentText("ATMOS_PRECIP")
+        combo_to.setCurrentText("MULTIPLE")
+
+
+        table.resizeColumnsToContents() #Resizes the width of the column automatically
 
 #This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
 def checkOS():
@@ -2295,6 +2293,15 @@ def checkOS():
         return "windows", "\\"
 
 computerOS, separator = checkOS()
+
+#List that contains every process name
+procname =['','Precipitation','CanopyEvap','SoilEvaporation','LakeEvaporation',
+                'OpenWaterEvaporation','Infiltration','Percolation','CapillaryRise',
+                'Baseflow','Interflow','Seepage','DepressionOverflow','LakeRelease',
+                'Abstraction','SnowMelt','SnowRefreeze','SnowBalance','Sublimation',
+                'SnowAlbedoEvolve','CanopyDrip','CropHeatUnitEvolve','GlacierMelt',
+                'GlacierRelease','Flush','Overflow','Split','Convolution','LateralFlush'
+    ]
 
 #Lists with all of the Raven algorithms
 precipalg =['PRECIP_RAVEN']
@@ -2316,7 +2323,7 @@ abstractionAlg = ['ABST_PERCENTAGE','ABST_FILL','ABST_SCS']
 snowmeltAlg = ['MELT_POTMELT']
 snowrefreezeAlg = ['FREEZE_DEGREE_DAY']
 snowbalanceAlg = ['SNOBAL_SIMPLE_MELT','SNOBAL_COLD_CONTENT','SNOBAL_HBV','SNOBAL_TWO_LAYER','SNOBAL_CEMA_NEIGE',
-                    'SNOBAL_GAWSER','SNOBAL_UBC'
+                    'SNOBAL_GAWSER','SNOBAL_UBC', 'SNOBAL_HMETS'
                     ]
 sublimationAlg = ['SUBLIM_SVERDRUP','SUBLIM_KUZMIN','SUBLIM_CENTRAL_SIERRA','SUBLIM_PSBM','SUBLIM_WILLIAMS']
 snowalbedoevolveAlg = ['SNOALB_UBC']
@@ -2329,3 +2336,66 @@ overflowAlg = ['OVERFLOW_RAVEN']
 splitAlg = ['RAVEN_DEFAULT']
 convolutionAlg = ['CONVOL_GR4J1','CONVOL_GR4J2']
 lateralflushAlg = ['RAVEN_DEFAULT']
+
+
+#Lists of the compartments of each algorithm. Can easily add new compartments if new compartments are added in Raven
+fromPrecip = ["ATMOS_PRECIP"]
+toPrecip = ["MULTIPLE"]
+fromCanevp = ["CANOPY"]
+toCanevp = ["ATMOSPHERE"]
+fromSoilevap = ["SOIL[0]"]
+toSoilevap = ["ATMOSPHERE"]
+fromLakeevap = ["LAKE","SURFACE_WATER"]
+toLakeevap = ["ATMOSPHERE"]
+fromOpenwaterevap = ["DEPRESSION"]
+toOpenwaterevap = ["ATMOSPHERE"]
+fromInfiltration = ["PONDED_WATER"]
+toInfiltration = ["SOIL[0]", "SURFACE_WATER"]
+toInfiltUBC = ["SOIL[0]","SOIL[1]","SOIL[2]","SOIL[3]","SURFACE_WATER"]
+fromPercolation = []
+toPercolation = []
+fromCapillaryRise = []
+toCapillaryRise = []
+fromBaseflow = []
+toBaseflow = ['SURFACE_WATER']
+fromInterflow = []
+toInterflow = ['SURFACE_WATER']
+fromSeepage = ['DEPRESSION']
+toSeepage = []
+fromDepressOverflow = ['DEPRESSION']
+toDepressOverflow = ['SURFACE_WATER']
+fromLakeRelease = ['LAKE']
+toLakeRelease = ['SURFACE_WATER']
+fromAbstraction = ['PONDED_WATER']
+toAbstraction = ['DEPRESSION']
+fromSnowmelt = ['SNOW']
+toSnowmelt = ['SNOW_LIQ','PONDED_WATER','SURFACE_WATER']
+fromSnowrefreeze = ['SNOW_LIQ']
+toSnowrefreeze = ['SNOW']
+fromSnowbalSimple = ['SNOW']
+toSnowbalSimple = ['PONDED_WATER','SNOW_LIQ']
+fromSnowbalColdcontent = ['SNOW','SNOW_LIQ']
+toSnowbalColdcontent = ['SNOW','SNOW_LIQ','PONDED_WATER']
+fromSnowbalHBV = ['SNOW','SNOW_LIQ']
+toSnowbalHBV = ['SOIL[0]']
+fromSnowbaltwolayer = ['SNOW[0,1]','SNOW_LIQ[0,1]']
+toSnowbaltwolayer = ['SNOW[0,1]','SNOW_LIQ[0,1]','SURFACE_WATER']
+fromSnowbalCema = ['SNOW']
+toSnowbalCema = ['PONDED_WATER']
+fromSnowbalGawser = ['SNOW','SNOW_LIQ']
+toSnowbalGawser = ['SNOW_LIQ','ATMOSPHERE','PONDED_WATER']
+fromSnowbalUBC = ['SNOW','SNOW_LIQ']
+toSnowbalUBC = ['SNOW','SNOW_LIQ','SURFACE_WATER']
+fromSnowbalHMETS = ['MULTIPLE']
+toSnowbalHMETS = ['MULTIPLE']
+fromSublimation = ['SNOW']
+toSublimation = ['ATMOSPHERE']
+fromCanopydrip = ['CANOPY']
+toCanopydrip = ['PONDED_WATER']
+fromGlaciermelt = ['GLACIER_ICE']
+toGlaciermelt = ['GLACIER']
+fromGlacierRelease = ['GLACIER']
+toGlacierRelease = ['SURFACE_WATER']
+anyCompartment = ['ATMOS_PRECIP','MULTIPLE','CANOPY','ATMOSPHERE','LAKE','SURFACE_WATER',
+                    'DEPRESSION','PONDED_WATER','SNOW','SNOW_LIQ','GLACIER_ICE','GLACIER'
+                    ]
