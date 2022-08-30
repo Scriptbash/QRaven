@@ -208,6 +208,8 @@ class QRaven:
 
             #-------------Raven RVI-------------#
             self.dlg.btn_load_hmets.clicked.connect(self.loadHmets)
+            self.dlg.btn_load_hbvec.clicked.connect(self.loadHbvec)
+
             #If the checkbox is checked/unchecked, enables/disables the associated widget
             self.dlg.chk_duration.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_runname.stateChanged.connect(self.toggleWidget)
@@ -231,7 +233,7 @@ class QRaven:
             self.dlg.combo_stat6.activated.connect(self.toggleWidget)
             self.dlg.combo_stat7.activated.connect(self.toggleWidget)
             #Calls the function to enable/disable the spinbox for the soilmodel and the interpolation lineedit
-            self.dlg.combo_soilmod.activated.connect(self.toggleSoilModel)
+            self.dlg.combo_soilmod.currentIndexChanged.connect(self.toggleSoilModel)
             self.dlg.combo_interpo.activated.connect(self.toggleInterpolation)
 
             #Calls the function to browse the computer for an output folder
@@ -610,7 +612,7 @@ class QRaven:
             #print(selectedProc)
             if selectedProc == 'Precipitation':
                 combo_alg.addItems(precipalg)
-            elif selectedProc == 'CanopyEvap':
+            elif selectedProc == 'CanopyEvaporation' or selectedProc == 'CanopySublimation':
                 combo_alg.addItems(canopevapAlg)
             elif selectedProc == 'SoilEvaporation':
                 combo_alg.addItems(soilevapAlg)
@@ -673,7 +675,7 @@ class QRaven:
 
     #This method sets the combobox values for the from and to compartments based on the selected algorithm
     def setStorage(self):
-
+        
         #Loops through the number of soil layers chosen by the user. Allows to add the soil[m] to comboboxes
         if self.dlg.combo_soilmod.currentText().lower() == "soil_multilayer":
             numberSoil = int(self.dlg.spin_soilmod.value()) #Get the number of layers
@@ -800,6 +802,15 @@ class QRaven:
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 3, combo_to)   #Set the combobox for the to compartment
         self.dlg.table_hydroprocess.resizeColumnsToContents()   #Resizes automatically the columns
         
+        #Clears the lists to avoid infinite duplicates
+        fromPercolation.clear()
+        toPercolation.clear()
+        fromCapillaryRise.clear()
+        toCapillaryRise.clear()
+        fromBaseflow.clear()
+        fromInterflow.clear()
+        toSeepage.clear()
+        anyCompartment.clear()
 
     def enableConditionalProc(self):
         basedtype = ['HRU_TYPE','LAND_CLASS','HRU_GROUP']
@@ -851,7 +862,7 @@ class QRaven:
         table.setCellWidget(currentRow, 3, spin_conctemp)
         table.setCellWidget(currentRow, 4, combo_HRUgroup)
         table.resizeColumnsToContents() #Resizes the width of the column automatically
-        combo_type.currentTextChanged.connect(self.setTransportCommands)
+        combo_type.currentIndexChanged.connect(self.setTransportCommands)
     
     def setTransportCommands(self): 
         compartments = ['ATMOS_PRECIP','MULTIPLE','CANOPY','ATMOSPHERE','LAKE','SURFACE_WATER',
@@ -2345,7 +2356,147 @@ class QRaven:
             print(e)
 
 
+    def loadHbvec(self):
+        try:
+            table = self.dlg.table_hydroprocess #Get the hydrological processes table
 
+            #Sets the model parameters 
+            self.dlg.combo_method.setCurrentText("ORDERED_SERIES")
+            self.dlg.combo_interpo.setCurrentText("INTERP_NEAREST_NEIGHBOR")
+            self.dlg.combo_routing.setCurrentText("ROUTE_NONE")
+            self.dlg.combo_catchment.setCurrentText("ROUTE_TRI_CONVOLUTION")
+            self.dlg.combo_evapo.setCurrentText("PET_FROMMONTHLY")
+            self.dlg.combo_owevapo.setCurrentText("PET_FROMMONTHLY")
+            self.dlg.combo_swradation.setCurrentText("SW_RAD_DEFAULT")
+            self.dlg.combo_swcloud.setCurrentText("SW_CLOUD_CORR_NONE")
+            self.dlg.combo_swcanopy.setCurrentText("SW_CANOPY_CORR_NONE")
+            self.dlg.combo_lwradation.setCurrentText("LW_RAD_DEFAULT")
+            self.dlg.combo_rainsnowfrac.setCurrentText("RAINSNOW_HBV")
+            self.dlg.combo_potentialmelt.setCurrentText("POTMELT_HBV")    
+            self.dlg.combo_orotemp.setCurrentText("OROCORR_HBV")
+            self.dlg.combo_oroprecip.setCurrentText("OROCORR_HBV")
+            self.dlg.combo_oropet.setCurrentText("OROCORR_HBV")
+            self.dlg.combo_cloudcover.setCurrentText("CLOUDCOV_NONE")
+            self.dlg.combo_soilmod.setCurrentText("SOIL_TWO_LAYER")
+            self.dlg.combo_precipicept.setCurrentText("PRECIP_ICEPT_USER")
+            self.dlg.combo_monthlyinterpo.setCurrentText("MONTHINT_LINEAR_21")
+            #NEED TO SET THE LAKESTORAGE PROPERLY!!!!
+            self.dlg.combo_lakestorage.setCurrentText("SOIL[1]")
+            self.dlg.combo_soilmod.setCurrentText("SOIL_MULTILAYER")
+            self.dlg.spin_soilmod.setValue(3)
+
+
+            #Sets the hydrological processes
+            for i in range(20):
+                self.addTableRow()
+            
+            combo_proc = table.cellWidget(0,0)
+            combo_proc.setCurrentText("SnowRefreeze")
+            combo_alg = table.cellWidget(0,1)
+            combo_alg.setCurrentText("FREEZE_DEGREE_DAY")
+            combo_from = table.cellWidget(0,2)
+            combo_from.setCurrentText("SNOW_LIQ")
+            combo_to = table.cellWidget(0,3)
+            combo_to.setCurrentText("SNOW")
+        
+            combo_proc = table.cellWidget(1,0)
+            combo_proc.setCurrentText("Precipitation")
+            combo_alg = table.cellWidget(1,1)
+            combo_alg.setCurrentText("RAVEN_DEFAULT")
+            combo_from = table.cellWidget(1,2)
+            combo_from.setCurrentText("ATMOS_PRECIP")
+            combo_to = table.cellWidget(1,3)
+            combo_to.setCurrentText("MULTIPLE")
+
+            combo_proc = table.cellWidget(2,0)
+            combo_proc.setCurrentText("CanopyEvaporation")
+            combo_alg = table.cellWidget(2,1)
+            combo_alg.setCurrentText("CANEVP_ALL")
+            combo_from = table.cellWidget(2,2)
+            combo_from.setCurrentText("CANOPY")
+            combo_to = table.cellWidget(2,3)
+            combo_to.setCurrentText("ATMOSPHERE")
+
+            combo_proc = table.cellWidget(3,0)
+            combo_proc.setCurrentText("CanopySublimation")
+            combo_alg = table.cellWidget(3,1)
+            combo_alg.setCurrentText("CANEVP_ALL")
+            combo_from = table.cellWidget(3,2)
+            combo_from.setCurrentText("CANOPY_SNOW")
+            combo_to = table.cellWidget(3,3)
+            combo_to.setCurrentText("ATMOSPHERE")
+
+            combo_proc = table.cellWidget(4,0)
+            combo_proc.setCurrentText("SnowBalance")
+            combo_alg = table.cellWidget(4,1)
+            combo_alg.setCurrentText("SNOBAL_SIMPLE_MELT")
+            combo_from = table.cellWidget(4,2)
+            combo_from.setCurrentText("SNOW")
+            combo_to = table.cellWidget(4,3)
+            combo_to.setCurrentText("SNOW_LIQ")
+
+            combo_proc = table.cellWidget(5,0)
+            combo_proc.setCurrentText("Overflow")
+            combo_alg = table.cellWidget(5,1)
+            combo_alg.setCurrentText("RAVEN_DEFAULT")
+            combo_from = table.cellWidget(5,2)
+            combo_from.setCurrentText("SNOW_LIQ")
+            combo_to = table.cellWidget(5,3)
+            combo_to.setCurrentText("PONDED_WATER")
+
+            combo_proc = table.cellWidget(6,0)
+            combo_proc.setCurrentText("Flush")
+            combo_alg = table.cellWidget(6,1)
+            combo_alg.setCurrentText("RAVEN_DEFAULT")
+            combo_from = table.cellWidget(6,2)
+            combo_from.setCurrentText("PONDED_WATER")
+            combo_to = table.cellWidget(6,3)
+            combo_to.setCurrentText("GLACIER")
+            #!!ADD CONDITIONAL
+
+            combo_proc = table.cellWidget(7,0)
+            combo_proc.setCurrentText("GlacierMelt")
+            combo_alg = table.cellWidget(7,1)
+            combo_alg.setCurrentText("GMELT_HBV")
+            combo_from = table.cellWidget(7,2)
+            combo_from.setCurrentText("GLACIER_ICE")
+            combo_to = table.cellWidget(7,3)
+            combo_to.setCurrentText("GLACIER")
+
+            combo_proc = table.cellWidget(8,0)
+            combo_proc.setCurrentText("GlacierRelease")
+            combo_alg = table.cellWidget(8,1)
+            combo_alg.setCurrentText("GRELEASE_HBV_EC")
+            combo_from = table.cellWidget(8,2)
+            combo_from.setCurrentText("GLACIER")
+            combo_to = table.cellWidget(8,3)
+            combo_to.setCurrentText("SURFACE_WATER")
+
+            combo_proc = table.cellWidget(9,0)
+            combo_proc.setCurrentText("Infiltration")
+            combo_alg = table.cellWidget(9,1)
+            combo_alg.setCurrentText("INF_HBV")
+            combo_from = table.cellWidget(9,2)
+            combo_from.setCurrentText("PONDED_WATER")
+            combo_to = table.cellWidget(9,3)
+            combo_to.setCurrentText("MULTIPLE")
+
+            combo_proc = table.cellWidget(10,0)
+            combo_proc.setCurrentText("Flush")
+            combo_alg = table.cellWidget(10,1)
+            combo_alg.setCurrentText("RAVEN_DEFAULT")
+            combo_from = table.cellWidget(10,2)
+            combo_from.setCurrentText("SURFACE_WATER")
+            combo_to = table.cellWidget(10,3)
+            combo_to.setCurrentText("SOIL[1]")
+
+            table.resizeColumnsToContents() #Resizes the width of the column automatically
+            
+            print("HBV-EC template loaded.")
+            self.iface.messageBar().pushSuccess("Success", "Loaded HBV-EC template successfully")
+        except Exception as e:
+            print('An error occured while loading HBV-EC template.')
+            print(e)        
 
 #This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
 def checkOS():
@@ -2364,7 +2515,7 @@ def checkOS():
 computerOS, separator = checkOS()
 
 #List that contains every process name
-procname =['','Precipitation','CanopyEvap','SoilEvaporation','LakeEvaporation',
+procname =['','Precipitation','CanopyEvaporation','CanopySublimation','SoilEvaporation','LakeEvaporation',
                 'OpenWaterEvaporation','Infiltration','Percolation','CapillaryRise',
                 'Baseflow','Interflow','Seepage','DepressionOverflow','LakeRelease',
                 'Abstraction','SnowMelt','SnowRefreeze','SnowBalance','Sublimation',
@@ -2374,7 +2525,7 @@ procname =['','Precipitation','CanopyEvap','SoilEvaporation','LakeEvaporation',
 
 #Lists with all of the Raven algorithms
 precipalg =['PRECIP_RAVEN','RAVEN_DEFAULT']
-canopevapAlg = ['CANEVP_RUTTER','CANEVP_MAXIMUM']
+canopevapAlg = ['CANEVP_RUTTER','CANEVP_MAXIMUM','CANEVP_ALL']
 soilevapAlg = ['SOILEVAP_VIC','SOILEVAP_HBV','SOILEVAP_CHU','SOILEVAP_TOPMODEL','SOILEVAP_SEQUEN','SOILEVAP_ROOTFRAC','SOILEVAP_GAWSER','SOILEVAP_ALL']
 lakeevapAlg = ['LAKE_EVAP_BASIC']
 openwaterevapAlg = ['OPEN_WATER_EVAP']
@@ -2400,8 +2551,8 @@ canopydripAlg = ['CANDRIP_RUTTER','CANDRIP_SLOWDRAIN']
 cropheatunitevAlg = ['CHU_ONTARIO']
 glaciermeltAlg = ['GMELT_SIMPLET_MELT','GMELT_HBV','GMELT_UBC']
 glacierreleaseAlg = ['GRELEASE_LINEAR','GRELEASE_HBV_EC']
-flushAlg = ['FLUSH_RAVEN']
-overflowAlg = ['OVERFLOW_RAVEN']
+flushAlg = ['FLUSH_RAVEN','RAVEN_DEFAULT']
+overflowAlg = ['OVERFLOW_RAVEN','RAVEN_DEFAULT']
 splitAlg = ['RAVEN_DEFAULT']
 convolutionAlg = ['CONVOL_GR4J1','CONVOL_GR4J2','CONVOL_GAMMA','CONVOL_GAMMA2']
 lateralflushAlg = ['RAVEN_DEFAULT']
