@@ -675,7 +675,7 @@ class QRaven:
 
     #This method sets the combobox values for the from and to compartments based on the selected algorithm
     def setStorage(self):
-        
+        tmpanyCompartment = anyCompartment.copy()
         #Loops through the number of soil layers chosen by the user. Allows to add the soil[m] to comboboxes
         if self.dlg.combo_soilmod.currentText().lower() == "soil_multilayer":
             numberSoil = int(self.dlg.spin_soilmod.value()) #Get the number of layers
@@ -693,10 +693,10 @@ class QRaven:
             fromBaseflow.append(compartment)
             fromInterflow.append(compartment)
             toSeepage.append(compartment)
-            anyCompartment.append(compartment)
+            tmpanyCompartment.append(compartment)
         for layer in range(numberSoil):
             compartment = "CONVOLUTION["+str(layer)+']' 
-            anyCompartment.append(compartment)
+            tmpanyCompartment.append(compartment)
         currentWidget = self.dlg.sender()   #Get the widget that was triggered
         index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())    #Get the index of the widget
         widgetRow = index.row() #Get the row in which the widget is set
@@ -708,7 +708,10 @@ class QRaven:
         #Sets the value of the compartments based on the selected algorithm
         if isinstance(currentWidget, QComboBox):
             selectedAlg = currentWidget.currentText()
-            if selectedAlg in precipalg:
+            if selectedAlg == 'RAVEN_DEFAULT':
+                combo_from.addItems(tmpanyCompartment)
+                combo_to.addItems(tmpanyCompartment)
+            elif selectedAlg in precipalg:
                 combo_from.addItems(fromPrecip)
                 combo_to.addItems(toPrecip)
             elif selectedAlg in canopevapAlg:
@@ -796,8 +799,9 @@ class QRaven:
                 combo_from.addItems(fromGlacierRelease)
                 combo_to.addItems(toGlacierRelease)
             elif selectedAlg in flushAlg or selectedAlg in overflowAlg or selectedAlg in splitAlg or selectedAlg in lateralflushAlg or selectedAlg in convolutionAlg:
-                combo_from.addItems(anyCompartment)
-                combo_to.addItems(anyCompartment)
+                print(selectedAlg)
+                combo_from.addItems(tmpanyCompartment)
+                combo_to.addItems(tmpanyCompartment)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 2, combo_from) #Set the combobox for the from compartment
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 3, combo_to)   #Set the combobox for the to compartment
         self.dlg.table_hydroprocess.resizeColumnsToContents()   #Resizes automatically the columns
@@ -810,8 +814,8 @@ class QRaven:
         fromBaseflow.clear()
         fromInterflow.clear()
         toSeepage.clear()
-        anyCompartment.clear()
-
+        #tmpanyCompartment.clear() 
+               
     def enableConditionalProc(self):
         basedtype = ['HRU_TYPE','LAND_CLASS','HRU_GROUP']
         comparison = ['IS', 'IS_NOT']
@@ -962,7 +966,7 @@ class QRaven:
                     for process in hydroProcessesList:
                         if firstprocess == True:
                             if process == 'Overflow':   #If the process is :Overflow
-                                rvi.write('\n\t   :-->Overflow')
+                                rvi.write('\n\t   :-->Overflow'.ljust(30))
                                 #processcount +=1
                                 firstprocess = False
                             else:
@@ -979,11 +983,11 @@ class QRaven:
                                 firstprocess = False
                                 pass
                             elif process == 'True': #The process is conditional
-                                rvi.write('\n\t   :-->Conditional')
+                                rvi.write('\n\t   :-->Conditional'.ljust(30))
                                 #processcount += 1
                                 firstprocess = False
                             else:
-                                rvi.write(' ' + process)
+                                rvi.write(' {:<20}'.format(process))
                
                 #Write the transport processes
                 transportCount = 0
@@ -2393,9 +2397,8 @@ class QRaven:
             self.dlg.combo_soilmod.setCurrentText("SOIL_MULTILAYER")
             self.dlg.spin_soilmod.setValue(3)
 
-
             #Sets the hydrological processes
-            for i in range(20):
+            for i in range(21):
                 self.addTableRow()
             
             combo_proc = table.cellWidget(0,0)
@@ -2460,7 +2463,14 @@ class QRaven:
             combo_from.setCurrentText("PONDED_WATER")
             combo_to = table.cellWidget(6,3)
             combo_to.setCurrentText("GLACIER")
-            #!!ADD CONDITIONAL
+            checkconditional = table.cellWidget(6,4)
+            checkconditional.setChecked(True)
+            combo_basedtype = table.cellWidget(6,5)
+            combo_basedtype.setCurrentText("HRU_TYPE")
+            combo_comparison = table.cellWidget(6,6)
+            combo_comparison.setCurrentText("IS")
+            txt_hrutype = table.cellWidget(6,7)
+            txt_hrutype.setText("GLACIER")
 
             combo_proc = table.cellWidget(7,0)
             combo_proc.setCurrentText("GlacierMelt")
@@ -2497,6 +2507,114 @@ class QRaven:
             combo_from.setCurrentText("SURFACE_WATER")
             combo_to = table.cellWidget(10,3)
             combo_to.setCurrentText("SOIL[1]")
+            checkconditional = table.cellWidget(10,4)
+            checkconditional.setChecked(True)
+            combo_basedtype = table.cellWidget(10,5)
+            combo_basedtype.setCurrentText("HRU_TYPE")
+            combo_comparison = table.cellWidget(10,6)
+            combo_comparison.setCurrentText("IS_NOT")
+            txt_hrutype = table.cellWidget(10,7)
+            txt_hrutype.setText("GLACIER")
+
+            combo_proc = table.cellWidget(11,0)
+            combo_proc.setCurrentText("Flush")
+            combo_alg = table.cellWidget(11,1)
+            combo_alg.setCurrentText("RAVEN_DEFAULT")
+            combo_from = table.cellWidget(11,2)
+            combo_from.setCurrentText("SOIL[2]")
+            combo_to = table.cellWidget(11,3)
+            combo_to.setCurrentText("SURFACE_WATER")
+            checkconditional = table.cellWidget(11,4)
+            checkconditional.setChecked(True)
+            combo_basedtype = table.cellWidget(11,5)
+            combo_basedtype.setCurrentText("HRU_TYPE")
+            combo_comparison = table.cellWidget(11,6)
+            combo_comparison.setCurrentText("IS")
+            txt_hrutype = table.cellWidget(11,7)
+            txt_hrutype.setText("LAKE")
+
+            combo_proc = table.cellWidget(12,0)
+            combo_proc.setCurrentText("SoilEvaporation")
+            combo_alg = table.cellWidget(12,1)
+            combo_alg.setCurrentText("SOILEVAP_HBV")
+            combo_from = table.cellWidget(12,2)
+            combo_from.setCurrentText("SOIL[0]")
+            combo_to = table.cellWidget(12,3)
+            combo_to.setCurrentText("ATMOSPHERE")
+
+            combo_proc = table.cellWidget(13,0)
+            combo_proc.setCurrentText("CapillaryRise")
+            combo_alg = table.cellWidget(13,1)
+            combo_alg.setCurrentText("CRISE_HBV")
+            combo_from = table.cellWidget(13,2)
+            combo_from.setCurrentText("SOIL[1]")
+            combo_to = table.cellWidget(13,3)
+            combo_to.setCurrentText("SOIL[0]")
+
+            combo_proc = table.cellWidget(14,0)
+            combo_proc.setCurrentText("LakeEvaporation")
+            combo_alg = table.cellWidget(14,1)
+            combo_alg.setCurrentText("LAKE_EVAP_BASIC")
+            combo_from = table.cellWidget(14,2)
+            combo_from.setCurrentText("SOIL[0]")
+            combo_to = table.cellWidget(14,3)
+            combo_to.setCurrentText("ATMOSPHERE")
+
+            combo_proc = table.cellWidget(15,0)
+            combo_proc.setCurrentText("SoilEvaporation")
+            combo_alg = table.cellWidget(15,1)
+            combo_alg.setCurrentText("SOILEVAP_HBV")
+            combo_from = table.cellWidget(15,2)
+            combo_from.setCurrentText("SOIL[2]")
+            combo_to = table.cellWidget(15,3)
+            combo_to.setCurrentText("ATMOSPHERE")
+
+            combo_proc = table.cellWidget(16,0)
+            combo_proc.setCurrentText("Percolation")
+            combo_alg = table.cellWidget(16,1)
+            combo_alg.setCurrentText("PERC_CONSTANT")
+            combo_from = table.cellWidget(16,2)
+            combo_from.setCurrentText("SOIL[1]")
+            combo_to = table.cellWidget(16,3)
+            combo_to.setCurrentText("SOIL[2]")
+
+            combo_proc = table.cellWidget(17,0)
+            combo_proc.setCurrentText("Baseflow")
+            combo_alg = table.cellWidget(17,1)
+            combo_alg.setCurrentText("BASE_POWER_LAW")
+            combo_from = table.cellWidget(17,2)
+            combo_from.setCurrentText("SOIL[1]")
+            combo_to = table.cellWidget(17,3)
+            combo_to.setCurrentText("SURFACE_WATER")
+
+            combo_proc = table.cellWidget(18,0)
+            combo_proc.setCurrentText("Baseflow")
+            combo_alg = table.cellWidget(18,1)
+            combo_alg.setCurrentText("BASE_LINEAR")
+            combo_from = table.cellWidget(18,2)
+            combo_from.setCurrentText("SOIL[2]")
+            combo_to = table.cellWidget(18,3)
+            combo_to.setCurrentText("SURFACE_WATER")
+
+            #MUST CHANGE TWO NEXT PERCOLATION FOR LATERALFLUSH EQUILIBRATE
+            #ONCE PCT IS ADDED TO THE TABLE
+            combo_proc = table.cellWidget(19,0)
+            combo_proc.setCurrentText("Percolation")
+            combo_alg = table.cellWidget(19,1)
+            combo_alg.setCurrentText("PERC_CONSTANT")
+            combo_from = table.cellWidget(19,2)
+            combo_from.setCurrentText("SOIL[1]")
+            combo_to = table.cellWidget(19,3)
+            combo_to.setCurrentText("SOIL[2]")
+
+            combo_proc = table.cellWidget(20,0)
+            combo_proc.setCurrentText("Percolation")
+            combo_alg = table.cellWidget(20,1)
+            combo_alg.setCurrentText("PERC_CONSTANT")
+            combo_from = table.cellWidget(20,2)
+            combo_from.setCurrentText("SOIL[1]")
+            combo_to = table.cellWidget(20,3)
+            combo_to.setCurrentText("SOIL[2]")
 
             table.resizeColumnsToContents() #Resizes the width of the column automatically
             
@@ -2542,7 +2660,7 @@ infiltrationAlg = ['INF_RATIONAL','INF_SCS','INF_ALL_INFILTRATES','INF_GREEN_AMP
                     ]
 percolationAlg = ['PERC_GAWSER','PERC_LINEAR','PERC_POWER_LAW','PERC_PRMS','PERC_SACRAMENTO','PERC_CONSTANT','PERC_GR4J']
 cappilaryriseAlg = ['CRISE_HBV']
-baseflowAlg = ['BASE_LINEAR','BASE_POWERLAW','BASE_CONSTANT','BASE_VIC','BASE_THRESH_POWER','BASE_GR4J','BASE_TOPMODEL']
+baseflowAlg = ['BASE_LINEAR','BASE_POWER_LAW','BASE_CONSTANT','BASE_VIC','BASE_THRESH_POWER','BASE_GR4J','BASE_TOPMODEL']
 interflowAlg = ['PRMS']
 seepageAlg = ['SEEP_LINEAR']
 depresoverflowAlg = ['DFLOW_THRESHPOW','DFLOW_LINEAR']
@@ -2571,9 +2689,9 @@ fromPrecip = ["ATMOS_PRECIP"]
 toPrecip = ["MULTIPLE"]
 fromCanevp = ["CANOPY"]
 toCanevp = ["ATMOSPHERE"]
-fromSoilevap = ["SOIL[0]"]
+fromSoilevap = ["SOIL[0]","SOIL[2]"]
 toSoilevap = ["ATMOSPHERE"]
-fromLakeevap = ["LAKE","SURFACE_WATER"]
+fromLakeevap = ["LAKE","SURFACE_WATER","SOIL[2]"]
 toLakeevap = ["ATMOSPHERE"]
 fromOpenwaterevap = ["DEPRESSION"]
 toOpenwaterevap = ["ATMOSPHERE"]
