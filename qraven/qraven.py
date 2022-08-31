@@ -952,33 +952,40 @@ class QRaven:
                     elif value == "checked":   #This writes the optional I/O which don't have an argument (so only the key is written)
                         rvi.write(f":{key:<30}\n")
                 
-                rvi.write(":HydrologicProcesses")
-                processCount = 0
-                for process in hydroProcessesList:
-                    if processCount == 0:
-                        rvi.write("\n\t{:<28}".format(':'+process))
-                        processCount+=1
-                    elif processCount <= 7:
-                        if process == 'True':
-                            firstcondition = True
-                            if firstcondition != False:
-                                rvi.write('\n\t   :-->Conditional')
-                                firstcondition = False
-                                processCount += 1
+                #Writes the hydrological processes
+                if not hydroProcessesList:
+                    rvi.write("#:HydrologicProcesses\n#!!!Add your hydrological processes here!!!\n#:EndHydrologicProcesses\n")
+                else:
+                    #processcount = 0    #Keeps tracks of the column
+                    firstprocess = True #If true, means the current process is the first column
+                    rvi.write(":HydrologicProcesses")
+                    for process in hydroProcessesList:
+                        if firstprocess == True:
+                            if process == 'Overflow':   #If the process is :Overflow
+                                rvi.write('\n\t   :-->Overflow')
+                                #processcount +=1
+                                firstprocess = False
                             else:
-                                rvi.write(' '+ process)
-                                processCount += 1
-                        elif process =='False' or process == '':
-                                processCount +=1
+                                rvi.write("\n\t{:<28}".format(':'+process)) #Else it's a regular process
+                                #processcount += 1
+                                firstprocess = False
+                        else:   #It is an algorithm, from, to , etc.
+                            if process == 'NewLine':    #If we reach the end of the list, we restart with a process
+                                #processcount = 0
+                                firstprocess = True
                                 pass
-                        else:
-                            rvi.write(' '+process)
-                            processCount +=1 
-                    else:
-                        processCount = 1
-                        rvi.write("\n\t{:<28}".format(':'+process))
-                rvi.write("\n:EndHydrologicProcesses\n")
-
+                            elif process == 'False' or process == '':   #The process is not conditional
+                                #processcount +=1
+                                firstprocess = False
+                                pass
+                            elif process == 'True': #The process is conditional
+                                rvi.write('\n\t   :-->Conditional')
+                                #processcount += 1
+                                firstprocess = False
+                            else:
+                                rvi.write(' ' + process)
+               
+                #Write the transport processes
                 transportCount = 0
                 for transport in transportProcessesList:
                     if transportCount == 0:
@@ -1330,6 +1337,7 @@ class QRaven:
                         processesList.append('False')
                 elif isinstance(currentWidget, QLineEdit):
                     processesList.append(currentWidget.text().upper())
+            processesList.append("NewLine")
         return processesList
 
 
