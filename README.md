@@ -11,9 +11,9 @@ QRaven aims to simplify the creation of the primary input file (RVI) and HRU/Bas
 
 * QGIS (3.20 and above) must be installed. Prior versions may not work with the plugin
   * https://qgis.org/en/site/forusers/download.html  
-* To use the BasinMaker options and the GridWeights generator, Docker must be installed on your computer and be properly configured. Linux users must make sure to follow the post-installation steps provided by Docker
+* To use the BasinMaker options and the GridWeights generator, Docker must be installed on your computer and be properly configured. Also make sure that the Docker daemon is running before running BasinMaker or the GridWeights generator. Linux users must make sure to follow the post-installation steps provided by Docker, more specifically the "Manage Docker as a non-root user" steps.
   * https://docs.docker.com/get-docker/ 
-  * https://docs.docker.com/engine/install/linux-postinstall/
+  * https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user
 * QRaven works on Linux and Windows. It should work on Mac as well, but until now remains untested
 
 ### Installing
