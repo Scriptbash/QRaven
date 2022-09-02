@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1087</width>
-    <height>720</height>
+    <width>1091</width>
+    <height>736</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,10 +38,10 @@
       <widget class="QTabWidget" name="tabWidget">
        <property name="geometry">
         <rect>
-         <x>-1</x>
-         <y>9</y>
+         <x>0</x>
+         <y>0</y>
          <width>1071</width>
-         <height>561</height>
+         <height>571</height>
         </rect>
        </property>
        <property name="layoutDirection">
@@ -54,7 +54,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>5</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -70,14 +70,103 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>-34</y>
-              <width>1034</width>
-              <height>546</height>
+              <y>0</y>
+              <width>1033</width>
+              <height>722</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_12">
+             <item row="5" column="0">
+              <widget class="QLabel" name="lbl_enddate">
+               <property name="text">
+                <string>EndDate</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="1">
+              <widget class="QSpinBox" name="spin_soilmod">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="0">
+              <widget class="QLabel" name="lbl_defhru">
+               <property name="text">
+                <string>DefineHRUGroups</string>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="0">
+              <widget class="QCheckBox" name="chk_disablehru">
+               <property name="layoutDirection">
+                <enum>Qt::RightToLeft</enum>
+               </property>
+               <property name="text">
+                <string>DisableHRUGroup</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="1">
+              <widget class="QTextEdit" name="txt_defhru">
+               <property name="placeholderText">
+                <string>FOREST, GRASSLAND, WATER</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QCheckBox" name="chk_duration">
+               <property name="layoutDirection">
+                <enum>Qt::RightToLeft</enum>
+               </property>
+               <property name="text">
+                <string>Use Duration instead</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="lbl_startdate">
+               <property name="text">
+                <string>StartDate</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_37">
+               <property name="text">
+                <string>Output Directory</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QgsFileWidget" name="file_rvioutputdir">
+               <property name="storageMode">
+                <enum>QgsFileWidget::GetDirectory</enum>
+               </property>
+              </widget>
+             </item>
              <item row="3" column="1">
               <widget class="QLineEdit" name="txt_modname"/>
+             </item>
+             <item row="7" column="1">
+              <widget class="QSpinBox" name="spin_duration">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximum">
+                <number>999999999</number>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="1">
+              <widget class="QTextEdit" name="txt_disablehru">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>FOREST, GRASSLAND, WATER</string>
+               </property>
+              </widget>
              </item>
              <item row="5" column="1">
               <widget class="QDateTimeEdit" name="date_enddate">
@@ -86,20 +175,91 @@
                </property>
               </widget>
              </item>
-             <item row="7" column="1">
-              <spacer name="horizontalSpacer_6">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+             <item row="8" column="0">
+              <widget class="QLabel" name="lbl_timestep">
+               <property name="text">
+                <string>TimeStep</string>
                </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QDateTimeEdit" name="date_startdate">
+               <property name="displayFormat">
+                <string>yyyy-MM-dd h:mm:ss</string>
                </property>
-              </spacer>
+              </widget>
              </item>
              <item row="8" column="1">
+              <widget class="QFrame" name="frame_3">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>97</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_13">
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_90">
+                  <property name="text">
+                   <string>Hours</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLabel" name="label_91">
+                  <property name="text">
+                   <string>Minutes</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QSpinBox" name="spin_timestep_h">
+                  <property name="maximum">
+                   <number>24</number>
+                  </property>
+                  <property name="stepType">
+                   <enum>QAbstractSpinBox::DefaultStepType</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="2">
+                 <widget class="QLabel" name="label_92">
+                  <property name="text">
+                   <string>Seconds</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="2">
+                 <widget class="QSpinBox" name="spin_timestep_s">
+                  <property name="maximum">
+                   <number>59</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QSpinBox" name="spin_timestep_m">
+                  <property name="maximum">
+                   <number>59</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="lbl_modname">
+               <property name="text">
+                <string>Model Name</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="1">
               <widget class="QComboBox" name="combo_soilmod">
                <item>
                 <property name="text">
@@ -118,133 +278,32 @@
                </item>
               </widget>
              </item>
-             <item row="5" column="2">
-              <widget class="QSpinBox" name="spin_duration">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="maximum">
-                <number>999999999</number>
-               </property>
-              </widget>
-             </item>
-             <item row="10" column="1">
-              <widget class="QTextEdit" name="txt_disablehru">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="placeholderText">
-                <string>FOREST, GRASSLAND, WATER</string>
-               </property>
-              </widget>
-             </item>
-             <item row="10" column="0">
-              <widget class="QCheckBox" name="chk_disablehru">
-               <property name="layoutDirection">
-                <enum>Qt::RightToLeft</enum>
-               </property>
-               <property name="text">
-                <string>DisableHRUGroup</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="lbl_enddate">
-               <property name="text">
-                <string>EndDate</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="1">
-              <widget class="QFrame" name="frame_3">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>70</height>
-                </size>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_13">
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_90">
-                  <property name="text">
-                   <string>Hours</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="2">
-                 <widget class="QLabel" name="label_92">
-                  <property name="text">
-                   <string>Seconds</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QSpinBox" name="spin_timestep_h">
-                  <property name="maximum">
-                   <number>24</number>
-                  </property>
-                  <property name="stepType">
-                   <enum>QAbstractSpinBox::DefaultStepType</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="2">
-                 <widget class="QSpinBox" name="spin_timestep_s">
-                  <property name="maximum">
-                   <number>59</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QLabel" name="label_91">
-                  <property name="text">
-                   <string>Minutes</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QSpinBox" name="spin_timestep_m">
-                  <property name="maximum">
-                   <number>59</number>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_37">
-               <property name="text">
-                <string>Output Directory</string>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="0">
+             <item row="11" column="0">
               <widget class="QLabel" name="lbl_soilmod">
                <property name="text">
                 <string>SoilModel</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="2">
-              <widget class="QPushButton" name="btn_outputdir">
-               <property name="text">
-                <string>Browse</string>
+             <item row="10" column="1">
+              <spacer name="horizontalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-              </widget>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
-             <item row="1" column="1">
+             <item row="1" column="0" colspan="2">
               <widget class="QFrame" name="frame_4">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>100</height>
+                 <height>110</height>
                 </size>
                </property>
                <property name="frameShape">
@@ -321,68 +380,6 @@
                  </widget>
                 </item>
                </layout>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QDateTimeEdit" name="date_startdate">
-               <property name="displayFormat">
-                <string>yyyy-MM-dd h:mm:ss</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="lbl_timestep">
-               <property name="text">
-                <string>TimeStep</string>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="1">
-              <widget class="QTextEdit" name="txt_defhru">
-               <property name="placeholderText">
-                <string>FOREST, GRASSLAND, WATER</string>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="0">
-              <widget class="QLabel" name="lbl_defhru">
-               <property name="text">
-                <string>DefineHRUGroups</string>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="2">
-              <widget class="QSpinBox" name="spin_soilmod">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="lbl_modname">
-               <property name="text">
-                <string>Model Name</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="lbl_startdate">
-               <property name="text">
-                <string>StartDate</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="txt_outputdir"/>
-             </item>
-             <item row="4" column="2">
-              <widget class="QCheckBox" name="chk_duration">
-               <property name="layoutDirection">
-                <enum>Qt::RightToLeft</enum>
-               </property>
-               <property name="text">
-                <string>Use Duration instead</string>
-               </property>
               </widget>
              </item>
             </layout>
@@ -1562,8 +1559,8 @@
           <rect>
            <x>-1</x>
            <y>43</y>
-           <width>1031</width>
-           <height>421</height>
+           <width>1071</width>
+           <height>491</height>
           </rect>
          </property>
          <property name="columnCount">
@@ -1616,7 +1613,7 @@
           <rect>
            <x>210</x>
            <y>20</y>
-           <width>181</width>
+           <width>191</width>
            <height>21</height>
           </rect>
          </property>
@@ -2127,9 +2124,9 @@
         <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
-           <x>20</x>
-           <y>30</y>
-           <width>991</width>
+           <x>10</x>
+           <y>40</y>
+           <width>1041</width>
            <height>431</height>
           </rect>
          </property>
@@ -3217,7 +3214,7 @@
       <widget class="QPushButton" name="btn_write">
        <property name="geometry">
         <rect>
-         <x>480</x>
+         <x>20</x>
          <y>580</y>
          <width>90</width>
          <height>28</height>
@@ -3225,6 +3222,19 @@
        </property>
        <property name="text">
         <string>Write</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btn_reset">
+       <property name="geometry">
+        <rect>
+         <x>960</x>
+         <y>580</y>
+         <width>90</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Reset</string>
        </property>
       </widget>
      </widget>
@@ -3237,7 +3247,7 @@
         <rect>
          <x>10</x>
          <y>0</y>
-         <width>591</width>
+         <width>641</width>
          <height>21</height>
         </rect>
        </property>
@@ -3309,7 +3319,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab_6">
         <attribute name="title">
@@ -3325,9 +3335,9 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>0</y>
-              <width>1034</width>
-              <height>1190</height>
+              <y>-1061</y>
+              <width>1033</width>
+              <height>1522</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
@@ -3756,7 +3766,7 @@
              <item row="44" column="0">
               <widget class="QLabel" name="label_36">
                <property name="text">
-                <string>Where to save the results?</string>
+                <string>Output folder</string>
                </property>
               </widget>
              </item>
@@ -4046,7 +4056,7 @@
               <x>0</x>
               <y>0</y>
               <width>1047</width>
-              <height>469</height>
+              <height>461</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_8">
@@ -4208,21 +4218,49 @@
        <string>GridWeights</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_9">
-       <item row="2" column="1">
-        <widget class="QLabel" name="label_83">
-         <property name="text">
-          <string>Dim name longitude (x)</string>
+       <item row="1" column="2">
+        <widget class="QComboBox" name="combo_ncattributes">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="label_84">
+       <item row="6" column="1">
+        <widget class="QLabel" name="label_87">
          <property name="text">
-          <string>Dim name latitude (y)</string>
+          <string>HRUs file</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="1">
+       <item row="5" column="2">
+        <widget class="QLineEdit" name="txt_varlat">
+         <property name="placeholderText">
+          <string>lat</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="2">
+        <widget class="QLineEdit" name="txt_gridid">
+         <property name="placeholderText">
+          <string>id</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="txt_dimlon">
+         <property name="placeholderText">
+          <string>rlon</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="label_86">
+         <property name="text">
+          <string>Var name latitude (y)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
         <widget class="QLabel" name="label_89">
          <property name="text">
           <string>Output path</string>
@@ -4236,31 +4274,10 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
-        <widget class="QLabel" name="label_87">
-         <property name="text">
-          <string>HRUs file</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLabel" name="label_86">
-         <property name="text">
-          <string>Var name latitude (y)</string>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="1">
         <widget class="QLabel" name="label_85">
          <property name="text">
           <string>Var name longitude (x)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <widget class="QgsFileWidget" name="file_hrus">
-         <property name="filter">
-          <string>*.shp</string>
          </property>
         </widget>
        </item>
@@ -4271,67 +4288,14 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="2">
-        <widget class="QgsFileWidget" name="file_outputgridweight">
+       <item row="6" column="2">
+        <widget class="QgsFileWidget" name="file_hrus">
          <property name="filter">
-          <string>*.txt</string>
-         </property>
-         <property name="storageMode">
-          <enum>QgsFileWidget::SaveFile</enum>
+          <string>*.shp</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
-        <widget class="QRadioButton" name="rb_subbasinid">
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="text">
-          <string>Use subbasin ID</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">buttonGroup_3</string>
-         </attribute>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QgsFileWidget" name="file_netcdf">
-         <property name="filter">
-          <string>*.nc *.nc4 *.shp</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="2">
-        <widget class="QLineEdit" name="txt_gridid">
-         <property name="placeholderText">
-          <string>id</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QComboBox" name="combo_ncattributes">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QRadioButton" name="rb_gaugeid">
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="text">
-          <string>Use gauge ID</string>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">buttonGroup_3</string>
-         </attribute>
-        </widget>
-       </item>
-       <item row="10" column="1" colspan="2">
+       <item row="11" column="1" colspan="2">
         <widget class="QFrame" name="frame_2">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -4343,7 +4307,7 @@
           <property name="geometry">
            <rect>
             <x>50</x>
-            <y>60</y>
+            <y>30</y>
             <width>85</width>
             <height>28</height>
            </rect>
@@ -4356,7 +4320,7 @@
           <property name="geometry">
            <rect>
             <x>880</x>
-            <y>60</y>
+            <y>30</y>
             <width>111</width>
             <height>28</height>
            </rect>
@@ -4367,11 +4331,51 @@
          </widget>
         </widget>
        </item>
-       <item row="2" column="2">
-        <widget class="QLineEdit" name="txt_dimlon">
-         <property name="placeholderText">
-          <string>rlon</string>
+       <item row="7" column="2">
+        <widget class="QFrame" name="frame_5">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QRadioButton" name="rb_gaugeid">
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="text">
+             <string>Use gauge ID</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup_3</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rb_subbasinid">
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="text">
+             <string>Use subbasin ID</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup_3</string>
+            </attribute>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item row="3" column="2">
@@ -4388,12 +4392,49 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="2">
-        <widget class="QLineEdit" name="txt_varlat">
-         <property name="placeholderText">
-          <string>lat</string>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label_83">
+         <property name="text">
+          <string>Dim name longitude (x)</string>
          </property>
         </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QgsFileWidget" name="file_netcdf">
+         <property name="filter">
+          <string>*.nc *.nc4 *.shp</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="2">
+        <widget class="QgsFileWidget" name="file_outputgridweight">
+         <property name="filter">
+          <string>*.txt</string>
+         </property>
+         <property name="storageMode">
+          <enum>QgsFileWidget::SaveFile</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_84">
+         <property name="text">
+          <string>Dim name latitude (y)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="2">
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -4716,8 +4757,8 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
