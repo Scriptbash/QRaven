@@ -995,6 +995,7 @@ class QRaven:
                                 firstprocess = False
                             else:
                                 rvi.write(' {:<20}'.format(process))
+                    rvi.write("\n:EndHydrologicProcesses")
                
                 #Write the transport processes
                 transportCount = 0
@@ -2037,19 +2038,9 @@ class QRaven:
         self.iface.messageBar().pushInfo("Info", "The BasinMaker process has finished. Check the python logs for more details.")
 
 
+    #This method runs the gridweight generator inside the Docker container
     def generateGridWeights(self):
-        # if netcdf_installed == True:
-        #     try:
-        #         fn = "/home/francis/Documents/Geoinfo/precip_exp.nc"
-        #         ds = nc.Dataset(fn)
-        #         print(ds)
-        #     except Exception as e:
-        #         print("Couldn't open the netCDF file...")
-        #         print(e)
-        # else:
-        #     self.iface.messageBar().pushMessage("Error", "Please install the netCDF4 python library to use this feature",level=Qgis.Critical)
-        #     print('The netCDF4 library could not be found. Please install it before using this feature.')
-
+        
         ncfile = self.dlg.file_netcdf.filePath()
         ncfilename = ntpath.basename(ncfile)  #Get the file name with extension
         foldernc = os.path.dirname(ncfile)  #Get only the file path (without the file name)
@@ -2064,7 +2055,6 @@ class QRaven:
         varlon = self.dlg.txt_varlon.text()
         varlat = self.dlg.txt_varlat.text()
         subgauge_id = self.dlg.txt_gridid.text()
-        #shpattributes = 
         output = self.dlg.file_outputgridweight.filePath()
         outputfolder = folderhrus = os.path.dirname(output)
         outputfile = ntpath.basename(output)
@@ -2072,10 +2062,7 @@ class QRaven:
         if self.dlg.rb_subbasinid.isChecked():
             selectedid = ' -s '
         elif self.dlg.rb_gaugeid.isChecked():
-            selectedid = ' -b '            
-        
-        #print(ncextension)
-        
+            selectedid = ' -b '                    
         
         pythonConsole = self.iface.mainWindow().findChild(QDockWidget, 'PythonConsole')
         if not pythonConsole or not pythonConsole.isVisible():  #If the python console is closed, open it
@@ -2083,7 +2070,6 @@ class QRaven:
         self.iface.messageBar().pushInfo("Info", "The GridWeights generator process has started. This could take a while.")
         self.iface.mainWindow().repaint()
         self.dockerPull()                   #Calls the function to pull the container
-       # self.dockerStart()                  #Calls the function that starts the container
         try:
             print("Attempting to start the container...")
             cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven'
@@ -2112,6 +2098,8 @@ class QRaven:
         self.iface.messageBar().pushInfo("Info", "The GridWeights generator process has finished. Check the python logs for more details.")
         os.system("docker stop qraven")     #Stops the container after the process
         os.system("docker rm qraven")       #Deletes the container
+   
+   
     #This method opens the rvi file from the input directory and gets two values to populate them in the GUI
     def setModelname(self):
         inputdir = self.dlg.file_runinputdir.filePath() #Get the model input directory
