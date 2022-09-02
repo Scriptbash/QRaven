@@ -237,7 +237,7 @@ class QRaven:
             self.dlg.combo_interpo.activated.connect(self.toggleInterpolation)
 
             #Calls the function to browse the computer for an output folder
-            self.dlg.btn_outputdir.clicked.connect(self.browseDirectory)
+            #self.dlg.btn_outputdir.clicked.connect(self.browseDirectory)
         
 
             self.dlg.btn_addhydroproc.clicked.connect(self.addTableRow)
@@ -550,11 +550,11 @@ class QRaven:
             self.dlg.txt_interpofile.setEnabled(False)
 
 
-    #This method opens a file explorer to select an output folder
-    def browseDirectory(self):
-        '''Allows to browse the computer for a directory'''
-        dir = str(QFileDialog.getExistingDirectory(None, "Select Directory"))
-        self.dlg.txt_outputdir.setText(dir)
+    # #This method opens a file explorer to select an output folder
+    # def browseDirectory(self):
+    #     '''Allows to browse the computer for a directory'''
+    #     dir = str(QFileDialog.getExistingDirectory(None, "Select Directory"))
+    #     self.dlg.txt_outputdir.setText(dir)
     
 
     def addTableRow(self):
@@ -943,7 +943,7 @@ class QRaven:
         customOutputList = self.getCustomOutput()   #Calls the function to get the custom output values
         hydroProcessesList = self.getHydroProcess()
         transportProcessesList = self.getTransportProcess()
-        outputdir = self.dlg.txt_outputdir.text()   #Get the output directory chosen by the use
+        outputdir = self.dlg.file_rvioutputdir.filePath()   #Get the output directory chosen by the use
         modelName = self.dlg.txt_modname.text()     #Get the name of the model
         disabledhrus_list = paramDict['DisableHRUGroup'].split(',')
 
