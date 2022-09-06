@@ -211,6 +211,7 @@ class QRaven:
             self.dlg.btn_load_hbvec.clicked.connect(self.loadHbvec)
             self.dlg.btn_load_ubcwm.clicked.connect(self.loadUbcwm)
             self.dlg.btn_load_gr4j.clicked.connect(self.loadGr4j)
+            self.dlg.btn_reset.clicked.connect(self.resetGUI)
             #If the checkbox is checked/unchecked, enables/disables the associated widget
             self.dlg.chk_duration.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_runname.stateChanged.connect(self.toggleWidget)
@@ -2272,9 +2273,8 @@ class QRaven:
     #This method loads a template of HMETS into the GUI
     def loadHmets(self):
         try:
+            self.resetGUI()
             table = self.dlg.table_hydroprocess #Get the hydrological processes table
-            while(table.rowCount()>0):
-                table.removeRow(0)
 
             #Sets the model parameters 
             self.dlg.combo_potentialmelt.setCurrentText("POTMELT_HMETS")
@@ -2399,6 +2399,7 @@ class QRaven:
     #This method loads a template of HBV-EC into the GUI
     def loadHbvec(self):
         try:
+            self.resetGUI()
             table = self.dlg.table_hydroprocess #Get the hydrological processes table
 
             #Sets the model parameters 
@@ -2657,6 +2658,7 @@ class QRaven:
     #This method loads a UBCWM template into the GUI
     def loadUbcwm(self):
         try:
+            self.resetGUI()
             table = self.dlg.table_hydroprocess #Get the hydrological processes table
 
             #Sets the model parameters 
@@ -2847,6 +2849,7 @@ class QRaven:
     #This method loads a GR4J template into the GUI
     def loadGr4j(self):
         try:
+            self.resetGUI()
             table = self.dlg.table_hydroprocess #Get the hydrological processes table
 
             #Sets the model parameters 
@@ -3010,6 +3013,48 @@ class QRaven:
             print('An error occured while loading GR4J template.')
             print(e)     
 
+    #This method reset the RVI section to the default values
+    def resetGUI(self):
+        table = self.dlg.table_hydroprocess #Get the hydrological processes table
+        #Deletes all the table rows
+        while(table.rowCount()>0):
+            table.removeRow(0)
+        #Revert back all the RVI options to the default values
+        self.dlg.combo_soilmod.setCurrentText("SOIL_ONE_LAYER")
+        self.dlg.spin_soilmod.setValue(0)
+        self.dlg.combo_catchment.setCurrentText("ROUTE_DUMP")
+        self.dlg.combo_routing.setCurrentText("ROUTE_DIFFUSIVE_WAVE")
+        self.dlg.combo_evapo.setCurrentText("PET_HARGREAVES_1985")
+
+        self.dlg.combo_method.setCurrentText("")
+        self.dlg.combo_interpo.setCurrentText("")
+        self.dlg.combo_rainsnowfrac.setCurrentText("")
+        self.dlg.combo_owevapo.setCurrentText("")
+        self.dlg.combo_oroprecip.setCurrentText("")
+        self.dlg.combo_orotemp.setCurrentText("")
+        self.dlg.combo_oropet.setCurrentText("")
+        self.dlg.combo_cloudcover.setCurrentText("")
+        self.dlg.combo_airpressure.setCurrentText("")
+        self.dlg.combo_potentialmelt.setCurrentText("")
+        self.dlg.combo_monthlyinterpo.setCurrentText("")
+        self.dlg.combo_lakestorage.setCurrentText("")
+        self.dlg.txt_interpofile.clear()
+        self.dlg.combo_swradation.setCurrentText("")
+        self.dlg.combo_swcanopy.setCurrentText("")
+        self.dlg.combo_swcloud.setCurrentText("")
+        self.dlg.combo_lwradation.setCurrentText("")
+        self.dlg.combo_windspeed.setCurrentText("")
+        self.dlg.combo_relhumidity.setCurrentText("")
+        self.dlg.combo_precipicept.setCurrentText("")
+        self.dlg.combo_recharge.setCurrentText("")
+        self.dlg.combo_subdaily.setCurrentText("")
+        self.dlg.combo_calendar.setCurrentText("")
+        self.dlg.chk_directevapo.setChecked(False)
+        self.dlg.chk_snowsuppressespet.setChecked(False)
+        self.dlg.chk_suppresscomppet.setChecked(False)
+        self.dlg.chk_snaphydro.setChecked(False)
+          
+        
 #This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
 def checkOS():
     '''Makes a simple check to verify which operating system the user is using.
