@@ -2644,7 +2644,6 @@ class QRaven:
             self.dlg.combo_oroprecip.setCurrentText("OROCORR_UBCWM2")
             self.dlg.combo_oropet.setCurrentText("OROCORR_UBCWM")
             self.dlg.combo_cloudcover.setCurrentText("CLOUDCOV_UBCWM")
-            self.dlg.combo_soilmod.setCurrentText("SOIL_TWO_LAYER")
             self.dlg.combo_precipicept.setCurrentText("PRECIP_ICEPT_USER")
             self.dlg.combo_monthlyinterpo.setCurrentText("MONTHINT_LINEAR_21")
             self.dlg.combo_soilmod.setCurrentText("SOIL_MULTILAYER")
