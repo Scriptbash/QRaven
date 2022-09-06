@@ -54,7 +54,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>5</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -71,124 +71,11 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>1033</width>
-              <height>722</height>
+              <width>1034</width>
+              <height>645</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_12">
-             <item row="5" column="0">
-              <widget class="QLabel" name="lbl_enddate">
-               <property name="text">
-                <string>EndDate</string>
-               </property>
-              </widget>
-             </item>
-             <item row="12" column="1">
-              <widget class="QSpinBox" name="spin_soilmod">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="13" column="0">
-              <widget class="QLabel" name="lbl_defhru">
-               <property name="text">
-                <string>DefineHRUGroups</string>
-               </property>
-              </widget>
-             </item>
-             <item row="14" column="0">
-              <widget class="QCheckBox" name="chk_disablehru">
-               <property name="layoutDirection">
-                <enum>Qt::RightToLeft</enum>
-               </property>
-               <property name="text">
-                <string>DisableHRUGroup</string>
-               </property>
-              </widget>
-             </item>
-             <item row="13" column="1">
-              <widget class="QTextEdit" name="txt_defhru">
-               <property name="placeholderText">
-                <string>FOREST, GRASSLAND, WATER</string>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
-              <widget class="QCheckBox" name="chk_duration">
-               <property name="layoutDirection">
-                <enum>Qt::RightToLeft</enum>
-               </property>
-               <property name="text">
-                <string>Use Duration instead</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="lbl_startdate">
-               <property name="text">
-                <string>StartDate</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_37">
-               <property name="text">
-                <string>Output Directory</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QgsFileWidget" name="file_rvioutputdir">
-               <property name="storageMode">
-                <enum>QgsFileWidget::GetDirectory</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QLineEdit" name="txt_modname"/>
-             </item>
-             <item row="7" column="1">
-              <widget class="QSpinBox" name="spin_duration">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="maximum">
-                <number>999999999</number>
-               </property>
-              </widget>
-             </item>
-             <item row="14" column="1">
-              <widget class="QTextEdit" name="txt_disablehru">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="placeholderText">
-                <string>FOREST, GRASSLAND, WATER</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="QDateTimeEdit" name="date_enddate">
-               <property name="displayFormat">
-                <string>yyyy-MM-dd h:mm:ss</string>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="0">
-              <widget class="QLabel" name="lbl_timestep">
-               <property name="text">
-                <string>TimeStep</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QDateTimeEdit" name="date_startdate">
-               <property name="displayFormat">
-                <string>yyyy-MM-dd h:mm:ss</string>
-               </property>
-              </widget>
-             </item>
              <item row="8" column="1">
               <widget class="QFrame" name="frame_3">
                <property name="minimumSize">
@@ -206,6 +93,18 @@
                <layout class="QGridLayout" name="gridLayout_13">
                 <item row="1" column="0">
                  <widget class="QLabel" name="label_90">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="text">
                    <string>Hours</string>
                   </property>
@@ -252,30 +151,14 @@
                </layout>
               </widget>
              </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="lbl_modname">
-               <property name="text">
-                <string>Model Name</string>
+             <item row="14" column="1">
+              <widget class="QTextEdit" name="txt_disablehru">
+               <property name="enabled">
+                <bool>false</bool>
                </property>
-              </widget>
-             </item>
-             <item row="11" column="1">
-              <widget class="QComboBox" name="combo_soilmod">
-               <item>
-                <property name="text">
-                 <string>SOIL_ONE_LAYER</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>SOIL_TWO_LAYER</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>SOIL_MULTILAYER</string>
-                </property>
-               </item>
+               <property name="placeholderText">
+                <string>FOREST, GRASSLAND, WATER</string>
+               </property>
               </widget>
              </item>
              <item row="11" column="0">
@@ -285,18 +168,36 @@
                </property>
               </widget>
              </item>
-             <item row="10" column="1">
-              <spacer name="horizontalSpacer_6">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+             <item row="13" column="0">
+              <widget class="QLabel" name="lbl_defhru">
+               <property name="text">
+                <string>DefineHRUGroups</string>
                </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
+              </widget>
+             </item>
+             <item row="12" column="1">
+              <widget class="QSpinBox" name="spin_soilmod">
+               <property name="enabled">
+                <bool>false</bool>
                </property>
-              </spacer>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QgsFileWidget" name="file_rvioutputdir">
+               <property name="storageMode">
+                <enum>QgsFileWidget::GetDirectory</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <widget class="QSpinBox" name="spin_duration">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximum">
+                <number>999999999</number>
+               </property>
+              </widget>
              </item>
              <item row="1" column="0" colspan="2">
               <widget class="QFrame" name="frame_4">
@@ -380,6 +281,135 @@
                  </widget>
                 </item>
                </layout>
+              </widget>
+             </item>
+             <item row="14" column="0">
+              <widget class="QCheckBox" name="chk_disablehru">
+               <property name="layoutDirection">
+                <enum>Qt::RightToLeft</enum>
+               </property>
+               <property name="text">
+                <string>DisableHRUGroup</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="txt_modname"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_37">
+               <property name="text">
+                <string>Output Directory</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="1">
+              <spacer name="horizontalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="lbl_startdate">
+               <property name="text">
+                <string>StartDate</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QDateTimeEdit" name="date_startdate">
+               <property name="displayFormat">
+                <string>yyyy-MM-dd h:mm:ss</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QCheckBox" name="chk_duration">
+               <property name="layoutDirection">
+                <enum>Qt::RightToLeft</enum>
+               </property>
+               <property name="text">
+                <string>Use Duration instead</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="1">
+              <widget class="QComboBox" name="combo_soilmod">
+               <item>
+                <property name="text">
+                 <string>SOIL_ONE_LAYER</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>SOIL_TWO_LAYER</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>SOIL_MULTILAYER</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QDateTimeEdit" name="date_enddate">
+               <property name="displayFormat">
+                <string>yyyy-MM-dd h:mm:ss</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="lbl_modname">
+               <property name="text">
+                <string>Model Name</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="1">
+              <widget class="QTextEdit" name="txt_defhru">
+               <property name="placeholderText">
+                <string>FOREST, GRASSLAND, WATER</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="lbl_enddate">
+               <property name="text">
+                <string>EndDate</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QLabel" name="lbl_timestep">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>43</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>43</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>TimeStep</string>
+               </property>
               </widget>
              </item>
             </layout>
@@ -482,6 +512,11 @@
            <item>
             <property name="text">
              <string>SW_CLOUDCOV_CORR_UBC</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>SW_CLOUD_CORR_UBCWM</string>
             </property>
            </item>
           </widget>
@@ -696,12 +731,12 @@
            </item>
            <item>
             <property name="text">
-             <string>POTMELT_UBCWM</string>
+             <string>POTMELT_HBV</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>POTMELT_HBV</string>
+             <string>POTMELT_UBCWM</string>
             </property>
            </item>
            <item>
@@ -788,6 +823,11 @@
            <item>
             <property name="text">
              <string>LW_RAD_UBC</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>LW_RAD_UBCWM</string>
             </property>
            </item>
            <item>
@@ -908,6 +948,11 @@
            </item>
            <item>
             <property name="text">
+             <string>RAINSNOW_UBCWM</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
              <string>RAINSNOW_HBV</string>
             </property>
            </item>
@@ -952,6 +997,11 @@
            </item>
            <item>
             <property name="text">
+             <string>OROCORR_UBCWM</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
              <string>OROCORR_SIMPLE</string>
             </property>
            </item>
@@ -977,6 +1027,11 @@
            <item>
             <property name="text">
              <string>CLOUDCOV_UBC</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>CLOUDCOV_UBCWM</string>
             </property>
            </item>
           </widget>
@@ -1006,6 +1061,11 @@
            <item>
             <property name="text">
              <string>OROCORR_UBC_2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>OROCORR_UBCWM2</string>
             </property>
            </item>
            <item>
@@ -1074,6 +1134,11 @@
            <item>
             <property name="text">
              <string>OROCORR_UBC_2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>OROCORR_UBCWM</string>
             </property>
            </item>
            <item>
@@ -1355,6 +1420,11 @@
              <string>SW_CANOPY_CORR_UBC</string>
             </property>
            </item>
+           <item>
+            <property name="text">
+             <string>SW_CANOPY_CORR_UBCWM</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item row="9" column="1">
@@ -1413,6 +1483,11 @@
            <item>
             <property name="text">
              <string>WINDVEL_UBC</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>WINDVEL_UBCWM</string>
             </property>
            </item>
           </widget>
@@ -3335,9 +3410,9 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>-1061</y>
-              <width>1033</width>
-              <height>1522</height>
+              <y>0</y>
+              <width>593</width>
+              <height>1190</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
@@ -4056,7 +4131,7 @@
               <x>0</x>
               <y>0</y>
               <width>1047</width>
-              <height>461</height>
+              <height>469</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_8">
@@ -4757,8 +4832,8 @@
   </connection>
  </connections>
  <buttongroups>
+  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
