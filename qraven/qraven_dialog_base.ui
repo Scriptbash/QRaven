@@ -54,7 +54,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -525,7 +525,7 @@
           <widget class="QComboBox" name="combo_catchment">
            <item>
             <property name="text">
-             <string>DUMP</string>
+             <string>ROUTE_DUMP</string>
             </property>
            </item>
            <item>
@@ -1005,6 +1005,11 @@
              <string>OROCORR_SIMPLE</string>
             </property>
            </item>
+           <item>
+            <property name="text">
+             <string>OROCORR_SIMPLELAPSE</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item row="17" column="1">
@@ -1071,6 +1076,11 @@
            <item>
             <property name="text">
              <string>OROCORR_SIMPLE</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>OROCORR_SIMPLELAPSE</string>
             </property>
            </item>
           </widget>
@@ -1144,6 +1154,11 @@
            <item>
             <property name="text">
              <string>OROCORR_PRMS</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>OROCORR_SIMPLELAPSE</string>
             </property>
            </item>
           </widget>

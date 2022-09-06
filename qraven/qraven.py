@@ -210,6 +210,7 @@ class QRaven:
             self.dlg.btn_load_hmets.clicked.connect(self.loadHmets)
             self.dlg.btn_load_hbvec.clicked.connect(self.loadHbvec)
             self.dlg.btn_load_ubcwm.clicked.connect(self.loadUbcwm)
+            self.dlg.btn_load_gr4j.clicked.connect(self.loadGr4j)
             #If the checkbox is checked/unchecked, enables/disables the associated widget
             self.dlg.chk_duration.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_runname.stateChanged.connect(self.toggleWidget)
@@ -644,6 +645,8 @@ class QRaven:
                 combo_alg.addItems(snowrefreezeAlg)
             elif selectedProc == 'SnowBalance':
                 combo_alg.addItems(snowbalanceAlg)
+            elif selectedProc == 'SnowTempEvolve':
+                combo_alg.addItems(snowtempevolveAlg)
             elif selectedProc == 'Sublimation':
                 combo_alg.addItems(sublimationAlg)
             elif selectedProc == 'SnowAlbedoEvolve':
@@ -785,6 +788,9 @@ class QRaven:
             elif selectedAlg == 'SNOBAL_UBCWM':
                 combo_from.addItems(fromSnowbalUBCWM)
                 combo_to.addItems(toSnowbalUBCWM)
+            elif selectedAlg in snowtempevolveAlg:
+                combo_from.addItems(fromSnowtempEvolve)
+                combo_to.addItems(toSnowtempEvolve)
             elif selectedAlg in snowmeltAlg:
                 combo_from.addItems(fromSnowmelt)
                 combo_to.addItems(toSnowmelt)
@@ -2809,6 +2815,174 @@ class QRaven:
             print('An error occured while loading UBCWM template.')
             print(e)     
 
+
+
+    #This method loads a GR4J template into the GUI
+    def loadGr4j(self):
+        try:
+            table = self.dlg.table_hydroprocess #Get the hydrological processes table
+
+            #Sets the model parameters 
+            self.dlg.combo_method.setCurrentText("ORDERED_SERIES")
+            self.dlg.combo_interpo.setCurrentText("INTERP_NEAREST_NEIGHBOR")
+            self.dlg.combo_routing.setCurrentText("ROUTE_NONE")
+            self.dlg.combo_catchment.setCurrentText("ROUTE_DUMP")
+
+            self.dlg.combo_evapo.setCurrentText("PET_DATA")
+            self.dlg.combo_rainsnowfrac.setCurrentText("RAINSNOW_DINGMAN")
+            self.dlg.combo_potentialmelt.setCurrentText("POTMELT_DEGREE_DAY")  
+            self.dlg.combo_orotemp.setCurrentText("OROCORR_SIMPLELAPSE")
+            self.dlg.combo_oroprecip.setCurrentText("OROCORR_SIMPLELAPSE")
+            self.dlg.combo_soilmod.setCurrentText("SOIL_MULTILAYER")
+            self.dlg.spin_soilmod.setValue(4)
+            self.dlg.chk_snaphydro.setChecked(True)
+
+            #Sets the hydrological processes
+            for i in range(15):
+                self.addTableRow()
+
+            combo_proc = table.cellWidget(0,0)
+            combo_proc.setCurrentText("Precipitation")
+            combo_alg = table.cellWidget(0,1)
+            combo_alg.setCurrentText("PRECIP_RAVEN")
+            combo_from = table.cellWidget(0,2)
+            combo_from.setCurrentText("ATMOS_PRECIP")
+            combo_to = table.cellWidget(0,3)
+            combo_to.setCurrentText("MULTIPLE")
+
+            combo_proc = table.cellWidget(1,0)
+            combo_proc.setCurrentText("SnowTempEvolve")
+            combo_alg = table.cellWidget(1,1)
+            combo_alg.setCurrentText("SNOTEMP_NEWTONS")
+            combo_from = table.cellWidget(1,2)
+            combo_from.setCurrentText("SNOW_TEMP")
+        
+            combo_proc = table.cellWidget(2,0)
+            combo_proc.setCurrentText("SnowBalance")
+            combo_alg = table.cellWidget(2,1)
+            combo_alg.setCurrentText("SNOBAL_CEMA_NEIGE")
+            combo_from = table.cellWidget(2,2)
+            combo_from.setCurrentText("SNOW")
+            combo_to = table.cellWidget(2,3)
+            combo_to.setCurrentText("PONDED_WATER")
+            
+            combo_proc = table.cellWidget(3,0)
+            combo_proc.setCurrentText("OpenWaterEvaporation")
+            combo_alg = table.cellWidget(3,1)
+            combo_alg.setCurrentText("OPEN_WATER_EVAP")
+            combo_from = table.cellWidget(3,2)
+            combo_from.setCurrentText("PONDED_WATER")
+            combo_to = table.cellWidget(3,3)
+            combo_to.setCurrentText("ATMOSPHERE")
+
+            combo_proc = table.cellWidget(4,0)
+            combo_proc.setCurrentText("Infiltration")
+            combo_alg = table.cellWidget(4,1)
+            combo_alg.setCurrentText("INF_GR4J")
+            combo_from = table.cellWidget(4,2)
+            combo_from.setCurrentText("PONDED_WATER")
+            combo_to = table.cellWidget(4,3)
+            combo_to.setCurrentText("MULTIPLE")
+
+            combo_proc = table.cellWidget(5,0)
+            combo_proc.setCurrentText("SoilEvaporation")
+            combo_alg = table.cellWidget(5,1)
+            combo_alg.setCurrentText("SOILEVAP_GR4J")
+            combo_from = table.cellWidget(5,2)
+            combo_from.setCurrentText("SOIL[0]")
+            combo_to = table.cellWidget(5,3)
+            combo_to.setCurrentText("ATMOSPHERE")
+
+            combo_proc = table.cellWidget(6,0)
+            combo_proc.setCurrentText("Percolation")
+            combo_alg = table.cellWidget(6,1)
+            combo_alg.setCurrentText("PERC_GR4J")
+            combo_from = table.cellWidget(6,2)
+            combo_from.setCurrentText("SOIL[0]")
+            combo_to = table.cellWidget(6,3)
+            combo_to.setCurrentText("SOIL[2]")
+
+            combo_proc = table.cellWidget(7,0)
+            combo_proc.setCurrentText("Flush")
+            combo_alg = table.cellWidget(7,1)
+            combo_alg.setCurrentText("RAVEN_DEFAULT")
+            combo_from = table.cellWidget(7,2)
+            combo_from.setCurrentText("SURFACE_WATER")
+            combo_to = table.cellWidget(7,3)
+            combo_to.setCurrentText("SOIL[2]")
+            
+            #NEED MODIFICATION IN GUI TO SUPPORT SPLIT COMMAND
+            combo_proc = table.cellWidget(8,0)
+            combo_proc.setCurrentText("Split")
+            combo_alg = table.cellWidget(8,1)
+            combo_alg.setCurrentText("RAVEN_DEFAULT")
+            # combo_from = table.cellWidget(8,2)
+            # combo_from.setCurrentText("PONDED_WATER")
+            # combo_to = table.cellWidget(8,3)
+            # combo_to.setCurrentText("MULTIPLE")
+
+            combo_proc = table.cellWidget(9,0)
+            combo_proc.setCurrentText("Convolve")
+            combo_alg = table.cellWidget(9,1)
+            combo_alg.setCurrentText("CONVOL_GR4J_1")
+            combo_from = table.cellWidget(9,2)
+            combo_from.setCurrentText("CONVOLUTION[0]")
+            combo_to = table.cellWidget(9,3)
+            combo_to.setCurrentText("SOIL[1]")
+
+            combo_proc = table.cellWidget(10,0)
+            combo_proc.setCurrentText("Convolve")
+            combo_alg = table.cellWidget(10,1)
+            combo_alg.setCurrentText("CONVOL_GR4J_2")
+            combo_from = table.cellWidget(10,2)
+            combo_from.setCurrentText("CONVOLUTION[1]")
+            combo_to = table.cellWidget(10,3)
+            combo_to.setCurrentText("SOIL[2]")
+
+            combo_proc = table.cellWidget(11,0)
+            combo_proc.setCurrentText("Percolation")
+            combo_alg = table.cellWidget(11,1)
+            combo_alg.setCurrentText("PERC_GR4JEXCH")
+            combo_from = table.cellWidget(11,2)
+            combo_from.setCurrentText("SOIL[1]")
+            combo_to = table.cellWidget(11,3)
+            combo_to.setCurrentText("SOIL[3]")
+
+            combo_proc = table.cellWidget(12,0)
+            combo_proc.setCurrentText("Percolation")
+            combo_alg = table.cellWidget(12,1)
+            combo_alg.setCurrentText("PERC_GR4JEXCH2")
+            combo_from = table.cellWidget(12,2)
+            combo_from.setCurrentText("SOIL[2]")
+            combo_to = table.cellWidget(12,3)
+            combo_to.setCurrentText("SOIL[3]")
+
+            combo_proc = table.cellWidget(13,0)
+            combo_proc.setCurrentText("Flush")
+            combo_alg = table.cellWidget(13,1)
+            combo_alg.setCurrentText("RAVEN_DEFAULT")
+            combo_from = table.cellWidget(13,2)
+            combo_from.setCurrentText("SOIL[2]")
+            combo_to = table.cellWidget(13,3)
+            combo_to.setCurrentText("SURFACE_WATER")
+
+            combo_proc = table.cellWidget(14,0)
+            combo_proc.setCurrentText("Baseflow")
+            combo_alg = table.cellWidget(14,1)
+            combo_alg.setCurrentText("BASE_GR4J")
+            combo_from = table.cellWidget(14,2)
+            combo_from.setCurrentText("SOIL[1]")
+            combo_to = table.cellWidget(14,3)
+            combo_to.setCurrentText("SURFACE_WATER")
+
+            table.resizeColumnsToContents() #Resizes the width of the column automatically
+            
+            print("GR4J template loaded.")
+            self.iface.messageBar().pushSuccess("Success", "Loaded GR4J template successfully")
+        except Exception as e:
+            print('An error occured while loading GR4J template.')
+            print(e)     
+
 #This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
 def checkOS():
     '''Makes a simple check to verify which operating system the user is using.
@@ -2829,7 +3003,7 @@ computerOS, separator = checkOS()
 procname =['','Precipitation','CanopyEvaporation','CanopySublimation','SoilEvaporation','LakeEvaporation',
                 'OpenWaterEvaporation','Infiltration','Percolation','CapillaryRise',
                 'Baseflow','Interflow','Seepage','DepressionOverflow','LakeRelease',
-                'Abstraction','SnowMelt','SnowRefreeze','SnowBalance','Sublimation',
+                'Abstraction','SnowMelt','SnowRefreeze','SnowBalance','SnowTempEvolve','Sublimation',
                 'SnowAlbedoEvolve','CanopyDrip','CropHeatUnitEvolve','GlacierMelt','GlacierInfiltration',
                 'GlacierRelease','Flush','Overflow','Split','Convolve','LateralFlush'
     ]
@@ -2837,13 +3011,13 @@ procname =['','Precipitation','CanopyEvaporation','CanopySublimation','SoilEvapo
 #Lists with all of the Raven algorithms
 precipalg =['PRECIP_RAVEN','RAVEN_DEFAULT']
 canopevapAlg = ['CANEVP_RUTTER','CANEVP_MAXIMUM','CANEVP_ALL']
-soilevapAlg = ['SOILEVAP_VIC','SOILEVAP_HBV','SOILEVAP_CHU','SOILEVAP_TOPMODEL','SOILEVAP_SEQUEN','SOILEVAP_ROOTFRAC','SOILEVAP_GAWSER','SOILEVAP_UBC','SOILEVAP_ALL']
+soilevapAlg = ['SOILEVAP_VIC','SOILEVAP_HBV','SOILEVAP_GR4J','SOILEVAP_CHU','SOILEVAP_TOPMODEL','SOILEVAP_SEQUEN','SOILEVAP_ROOTFRAC','SOILEVAP_GAWSER','SOILEVAP_UBC','SOILEVAP_ALL']
 lakeevapAlg = ['LAKE_EVAP_BASIC']
 openwaterevapAlg = ['OPEN_WATER_EVAP']
 infiltrationAlg = ['INF_RATIONAL','INF_SCS','INF_ALL_INFILTRATES','INF_GREEN_AMPT','INF_GA_SIMPLE',
-                    'INF_UPSCALED_GREEN_AMPT','INF_HBV','INF_UBC','INF_VIC','INF_VIC_ARNO','INF_PRMS','INF_HMETS'
+                    'INF_UPSCALED_GREEN_AMPT','INF_HBV','INF_UBC','INF_VIC','INF_VIC_ARNO','INF_PRMS','INF_HMETS','INF_GR4J'
                     ]
-percolationAlg = ['PERC_GAWSER','PERC_LINEAR','PERC_LINEAR_ANALYTIC','PERC_POWER_LAW','PERC_PRMS','PERC_SACRAMENTO','PERC_CONSTANT','PERC_GR4J']
+percolationAlg = ['PERC_GAWSER','PERC_LINEAR','PERC_LINEAR_ANALYTIC','PERC_POWER_LAW','PERC_PRMS','PERC_SACRAMENTO','PERC_CONSTANT','PERC_GR4J','PERC_GR4JEXCH','PERC_GR4JEXCH2']
 cappilaryriseAlg = ['CRISE_HBV']
 baseflowAlg = ['BASE_LINEAR','BASE_POWER_LAW','BASE_CONSTANT','BASE_VIC','BASE_THRESH_POWER','BASE_GR4J','BASE_TOPMODEL']
 interflowAlg = ['PRMS']
@@ -2856,6 +3030,7 @@ snowrefreezeAlg = ['FREEZE_DEGREE_DAY']
 snowbalanceAlg = ['SNOBAL_SIMPLE_MELT','SNOBAL_COLD_CONTENT','SNOBAL_HBV','SNOBAL_TWO_LAYER','SNOBAL_CEMA_NEIGE',
                     'SNOBAL_GAWSER','SNOBAL_UBC', 'SNOBAL_HMETS','SNOBAL_UBCWM'
                     ]
+snowtempevolveAlg = ['SNOTEMP_NEWTONS']
 glacierinfiltrationAlg = ["GINFIL_UBCWM"]    #Cannot be found in doc, must verify                
 sublimationAlg = ['SUBLIM_SVERDRUP','SUBLIM_KUZMIN','SUBLIM_CENTRAL_SIERRA','SUBLIM_PSBM','SUBLIM_WILLIAMS']
 snowalbedoevolveAlg = ['SNOALB_UBC','SNOALB_UBCWM']
@@ -2866,7 +3041,7 @@ glacierreleaseAlg = ['GRELEASE_LINEAR','GRELEASE_HBV_EC']
 flushAlg = ['FLUSH_RAVEN','RAVEN_DEFAULT']
 overflowAlg = ['OVERFLOW_RAVEN','RAVEN_DEFAULT']
 splitAlg = ['RAVEN_DEFAULT']
-convolutionAlg = ['CONVOL_GR4J1','CONVOL_GR4J2','CONVOL_GAMMA','CONVOL_GAMMA2']
+convolutionAlg = ['CONVOL_GR4J_1','CONVOL_GR4J_2','CONVOL_GAMMA','CONVOL_GAMMA2']
 lateralflushAlg = ['RAVEN_DEFAULT']
 
 
@@ -2922,6 +3097,8 @@ fromSnowbalUBCWM = ['MULTIPLE']
 toSnowbalUBCWM = ['MULTIPLE']
 fromSnowbalHMETS = ['MULTIPLE']
 toSnowbalHMETS = ['MULTIPLE']
+fromSnowtempEvolve = ['SNOW_TEMP']
+toSnowtempEvolve = ['']
 fromSublimation = ['SNOW']
 toSublimation = ['ATMOSPHERE']
 fromCanopydrip = ['CANOPY']
