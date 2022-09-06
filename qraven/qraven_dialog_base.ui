@@ -54,7 +54,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -1564,7 +1564,7 @@
           <number>0</number>
          </property>
          <property name="columnCount">
-          <number>8</number>
+          <number>10</number>
          </property>
          <attribute name="horizontalHeaderCascadingSectionResizes">
           <bool>false</bool>
@@ -1584,12 +1584,12 @@
          </column>
          <column>
           <property name="text">
-           <string>From</string>
+           <string>From/HRU</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>To</string>
+           <string>To/SV</string>
           </property>
          </column>
          <column>
@@ -1610,6 +1610,16 @@
          <column>
           <property name="text">
            <string>Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>pct</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Interbasin</string>
           </property>
          </column>
         </widget>

@@ -571,10 +571,15 @@ class QRaven:
         combo_basedtype = QComboBox()
         combo_comparison = QComboBox()
         txt_hrutype = QLineEdit()
+        spin_pct = QDoubleSpinBox()
+        chk_interbasin = QCheckBox()
         combo_proc.addItems(procname)   #Add a combobox in the new row with all the available processes
         combo_basedtype.setEnabled(False)
         combo_comparison.setEnabled(False)
         txt_hrutype.setEnabled(False)
+        spin_pct.setEnabled(False)
+        spin_pct.setDecimals(1)
+        chk_interbasin.setEnabled(False)
         table.setCellWidget(currentRow, 0, combo_proc)  #Sets the new combobox in the first column and in the new row
         table.setCellWidget(currentRow, 1, combo_alg)
         table.setCellWidget(currentRow, 2, combo_from)
@@ -583,6 +588,8 @@ class QRaven:
         table.setCellWidget(currentRow, 5, combo_basedtype)
         table.setCellWidget(currentRow, 6, combo_comparison)
         table.setCellWidget(currentRow, 7, txt_hrutype)
+        table.setCellWidget(currentRow, 8, spin_pct)
+        table.setCellWidget(currentRow, 9, chk_interbasin)
 
         table.resizeColumnsToContents() #Resizes the width of the column automatically
         combo_proc.currentIndexChanged.connect(self.setProcAlg)  #Updates the algorithm combobox if the process changes
@@ -599,6 +606,11 @@ class QRaven:
         combo_alg = QComboBox()
         combo_from = QComboBox()
         combo_to = QComboBox()
+        spin_pct = QDoubleSpinBox()
+        chk_interbasin = QCheckBox()
+        spin_pct.setEnabled(False)
+        
+        chk_interbasin.setEnabled(False)
         currentWidget = self.dlg.sender()
         #print(currentWidget)
         index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())
@@ -663,6 +675,7 @@ class QRaven:
                 combo_alg.addItems(glacierinfiltrationAlg)
             elif selectedProc == 'Flush':
                 combo_alg.addItems(flushAlg)
+                spin_pct.setEnabled(True)
             elif selectedProc == 'Overflow':
                 combo_alg.addItems(overflowAlg)
             elif selectedProc == 'Split':
@@ -671,9 +684,19 @@ class QRaven:
                 combo_alg.addItems(convolutionAlg)
             elif selectedProc == 'LateralFlush':
                 combo_alg.addItems(lateralflushAlg)
+            elif selectedProc == 'LateralEquilibrate':
+                combo_alg.addItems(lateralequilibrateAlg)
+                spin_pct.setEnabled(True)
+                spin_pct.setSingleStep(0.1)
+                spin_pct.setMaximum(1.0)
+                spin_pct.setMinimum(0.0)
+                spin_pct.setDecimals(1)
+                chk_interbasin.setEnabled(True)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 1, combo_alg)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 2, combo_from)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 3, combo_to)
+        self.dlg.table_hydroprocess.setCellWidget(widgetRow, 8, spin_pct)
+        self.dlg.table_hydroprocess.setCellWidget(widgetRow, 9, chk_interbasin)
         self.dlg.table_hydroprocess.resizeColumnsToContents()
         combo_alg.currentIndexChanged.connect(self.setStorage)   #Updates the compartments combobox if the algorithm changed
 
@@ -713,6 +736,10 @@ class QRaven:
         #Sets the value of the compartments based on the selected algorithm
         if isinstance(currentWidget, QComboBox):
             selectedAlg = currentWidget.currentText()
+            
+            #hrugroups = [x.strip() for x in self.dlg.txt_defhru.toPlainText().split(',')]
+            #combo_from.addItems(hrugroups)
+            
             if selectedAlg == 'RAVEN_DEFAULT':
                 combo_from.addItems(tmpanyCompartment)
                 combo_to.addItems(tmpanyCompartment)
@@ -3005,7 +3032,7 @@ procname =['','Precipitation','CanopyEvaporation','CanopySublimation','SoilEvapo
                 'Baseflow','Interflow','Seepage','DepressionOverflow','LakeRelease',
                 'Abstraction','SnowMelt','SnowRefreeze','SnowBalance','SnowTempEvolve','Sublimation',
                 'SnowAlbedoEvolve','CanopyDrip','CropHeatUnitEvolve','GlacierMelt','GlacierInfiltration',
-                'GlacierRelease','Flush','Overflow','Split','Convolve','LateralFlush'
+                'GlacierRelease','Flush','Overflow','Split','Convolve','LateralFlush','LateralEquilibrate'
     ]
 
 #Lists with all of the Raven algorithms
@@ -3043,7 +3070,7 @@ overflowAlg = ['OVERFLOW_RAVEN','RAVEN_DEFAULT']
 splitAlg = ['RAVEN_DEFAULT']
 convolutionAlg = ['CONVOL_GR4J_1','CONVOL_GR4J_2','CONVOL_GAMMA','CONVOL_GAMMA2']
 lateralflushAlg = ['RAVEN_DEFAULT']
-
+lateralequilibrateAlg = ['RAVEN_DEFAULT']
 
 #Lists of the compartments of each algorithm. Can easily add new compartments if new compartments are added in Raven
 fromPrecip = ["ATMOS_PRECIP"]
@@ -3109,6 +3136,7 @@ fromGlacierInfiltration = ['PONDED_WATER']  #Cannot be found in doc, must verify
 toGlacierInfiltration = ['MULTIPLE']
 fromGlacierRelease = ['GLACIER']
 toGlacierRelease = ['SURFACE_WATER']
-anyCompartment = ['ATMOS_PRECIP','MULTIPLE','CANOPY','ATMOSPHERE','LAKE','SURFACE_WATER',
-                    'DEPRESSION','PONDED_WATER','SNOW','SNOW_LIQ','GLACIER_ICE','GLACIER'
+anyCompartment = ['ATMOS_PRECIP','MULTIPLE','CANOPY','CANOPY_SNOW','ATMOSPHERE','LAKE','SURFACE_WATER','SOIL',
+                  'GROUNDWATER','DEPRESSION','PONDED_WATER','SNOW','SNOW_LIQ','GLACIER_ICE','GLACIER','TRUNK',
+                  'ROOT', 'WETLAND','LAKE_STORAGE','CONVOLUTION','CONV_STOR',  
                     ]
