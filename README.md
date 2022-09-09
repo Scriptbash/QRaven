@@ -14,7 +14,8 @@ QRaven aims to simplify the creation of the primary input file (RVI) and HRU/Bas
 * To use the BasinMaker options and the GridWeights generator, Docker must be installed on your computer and be properly configured. Also make sure that the Docker daemon is running before running BasinMaker or the GridWeights generator. Linux users must make sure to follow the post-installation steps provided by Docker, more specifically the "Manage Docker as a non-root user" steps.
   * https://docs.docker.com/get-docker/ 
   * https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user
-* QRaven works on Linux and Windows. It should work on Mac as well, but until now remains untested
+* QRaven works on Linux and Windows. It currently works partially on MacOS, only BasinMaker and the GridWeightsGenerator script do not work at the moment. Make sure to read the extra steps for MacOS if you are planning on running models with QRaven.
+
 
 ### Installing
 
@@ -29,6 +30,20 @@ QRaven aims to simplify the creation of the primary input file (RVI) and HRU/Bas
 * The plugin also searches for an available update on startup. If it finds one, it will let you know and you will need to follow the same steps as the installation. The message will show at the bottom of the plugin.
   ![image](https://user-images.githubusercontent.com/98601298/188141266-755cd342-9105-4143-b93a-4a12c77b3cb7.png)
 
+
+### MacOS extra steps
+If you want to run a model within QRaven, you will need to give the proper permissions to the raven executable and allow it to run. 
+First, to give the proper permissions, Open a __Terminal__ and use the cd command to get inside the directory that contains the executable. If your path has spaces, surround it with quotes like the example below.
+
+Example:  cd /Downloads/'Raven Directory'
+
+You can then use the command: sudo chmod 755 name_of_executable.exe
+
+Where "name_of_executable is the name of the raven executable
+
+Try to run the executable by typing: ./RavenExecutableMacOS_v3.5.exe
+
+You should receive a popup saying it cannot be opened because the developper cannot be verified. Click on cancel to close the popup. Then open the "Security & Privacy" settings in the system preferences. Click on the lock, authenticate and then click on "Allow anyway". Raven should now be able to run properly.
 
 ### How to use QRaven
 
@@ -60,7 +75,6 @@ QRaven aims to simplify the creation of the primary input file (RVI) and HRU/Bas
     
 * BasinMaker RVH tab
   * Use this tab to launch BasinMaker and generate the RVH files
-  * This section was tested on Linux and Windows, but needs to be tested MacOS
   * Like the RVI file, select the parameters values and select the files to process
   * When a file is added, more parameters fields unlock and will need to be filled
   * At the end of the process, the shapefile results are added to the QGIS canvas and the results folder is copied in the output directory chosen
