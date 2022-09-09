@@ -42,8 +42,11 @@ You can then use the command: sudo chmod 755 name_of_executable.exe
 Where "name_of_executable is the name of the raven executable
 
 Try to run the executable by typing: ./RavenExecutableMacOS_v3.5.exe
+*You will need to use the proper file name after the ./
 
-You should receive a popup saying it cannot be opened because the developper cannot be verified. Click on cancel to close the popup. Then open the "Security & Privacy" settings in the system preferences. Click on the lock, authenticate and then click on "Allow anyway". Raven should now be able to run properly.
+You should receive a popup saying it cannot be opened because the developper cannot be verified. Click on cancel to close the popup. Then open the "Security & Privacy" settings in the system preferences. Click on the lock, authenticate and then click on "Allow anyway".
+
+Try to run the executable again with ./RavenExecutableMacOS_v3.5.exe. There should be the final popup. Click on Open and Raven should now be able to run properly.
 
 ### How to use QRaven
 
