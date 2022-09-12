@@ -1870,9 +1870,14 @@ class QRaven:
             dockerCommand()
         '''
         try:
-            print("Trying to pull the scriptbash/qraven image...")
-            cmd='docker', 'pull', 'scriptbash/qraven:latest'  
-            self.dockerCommand(cmd)
+            if computerOS !='macos':
+                print("Trying to pull the scriptbash/qraven image...")
+                cmd='docker', 'pull', 'scriptbash/qraven:latest'  
+                self.dockerCommand(cmd)
+            else:
+                print("Trying to pull the scriptbash/qraven_arm image...")
+                cmd='docker', 'pull', 'scriptbash/qraven_arm:latest'  
+                self.dockerCommand(cmd)
             print("The pull was successfull")
         except Exception as e:
             print(e)
@@ -1888,8 +1893,12 @@ class QRaven:
         '''
         try:
             print("Attempting to start the container...")
-            cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','--name', 'qraven', 'scriptbash/qraven'
-            self.dockerCommand(cmd)
+            if computerOS != 'macos':
+                cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','--name', 'qraven', 'scriptbash/qraven'
+                self.dockerCommand(cmd)
+            else:
+                cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','--name', 'qraven', 'scriptbash/qraven_arm'
+                self.dockerCommand(cmd)
             print("The container was started successfully")
         except Exception as e:
             print(e)
@@ -2106,8 +2115,12 @@ class QRaven:
         self.dockerPull()                   #Calls the function to pull the container
         try:
             print("Attempting to start the container...")
-            cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven'
-            self.dockerCommand(cmd)
+            if computerOS != 'macos':
+                cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven'
+                self.dockerCommand(cmd)
+            else:
+                cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven_arm'
+                self.dockerCommand(cmd)
             print("The container was started successfully")
         except Exception as e:
             print(e)
@@ -2182,8 +2195,12 @@ class QRaven:
     #This method opens a new tab in the default web browser and points to the RavenView tool
     def openRavenView(self):
         url = 'http://raven.uwaterloo.ca/RavenView/RavenView.html'
-        webbrowser.open(url, new = 2)
-    
+        if computerOS !='macos':
+            webbrowser.open(url, new = 2)
+        else:
+            cmd='/usr/bin/open '+ url
+            os.system(cmd)
+
     #This method plots the resulting hydrograph
     def drawHydrographs(self):
         '''Plots the hydrograph from the ouput of a Raven model'''
@@ -3064,7 +3081,9 @@ def checkOS():
     if platform == "linux" or platform == "linux2":
         return "linux","/"
     elif platform == "darwin":
+        os.environ["PATH"] = "/Applications/Docker.app/Contents/Resources/bin" #This is needed for docker to work on MacOS
         return "macos", "/"
+
     elif platform == "win32":
         os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"    #This is needed so that the docker commands work on Windows
         return "windows", "\\"
