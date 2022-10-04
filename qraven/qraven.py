@@ -35,19 +35,15 @@ from .qraven_dialog import QRavenDialog
 from qgis.core import Qgis, QgsVectorLayer, QgsRasterLayer, QgsProject
 import os.path
 from sys import platform
-import subprocess
-from subprocess import Popen, PIPE
 import matplotlib.pyplot as plt
 import csv, datetime, webbrowser, ntpath
 import requests
-
-# try:
-#     import netCDF4 as nc
-#     netcdf_installed = True
-# except Exception as e:
-#     netcdf_installed = False
-#     print(e)
-
+from .modules.docker import dockercmd as docker
+from .modules.resetgui import resetGUI
+from .modules.templates.hmets import loadHmets 
+from .modules.templates.hbvec import loadHbvec
+from .modules.templates.ubcwm import loadUbcwm
+from .modules.templates.gr4j import loadGr4j
 
 class QRaven:
     """QGIS Plugin Implementation."""
@@ -205,13 +201,13 @@ class QRaven:
             self.dlg = QRavenDialog()
 
             self.checkUpdate()
-
+        
             #-------------Raven RVI-------------#
-            self.dlg.btn_load_hmets.clicked.connect(self.loadHmets)
-            self.dlg.btn_load_hbvec.clicked.connect(self.loadHbvec)
-            self.dlg.btn_load_ubcwm.clicked.connect(self.loadUbcwm)
-            self.dlg.btn_load_gr4j.clicked.connect(self.loadGr4j)
-            self.dlg.btn_reset.clicked.connect(self.resetGUI)
+            self.dlg.btn_load_hmets.clicked.connect(self.loadModels)
+            self.dlg.btn_load_hbvec.clicked.connect(self.loadModels)
+            self.dlg.btn_load_ubcwm.clicked.connect(self.loadModels)
+            self.dlg.btn_load_gr4j.clicked.connect(self.loadModels)
+            self.dlg.btn_reset.clicked.connect(self.loadModels)
             #If the checkbox is checked/unchecked, enables/disables the associated widget
             self.dlg.chk_duration.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_runname.stateChanged.connect(self.toggleWidget)
@@ -1537,8 +1533,6 @@ class QRaven:
         #             customOutputList.append(" ") #If the line edit is empty, places an empty space at its place in the list
         # print(customOutputList)
         
-
-
         return customOutputList 
 
     #This method gets all the RVH parameters and returns them into a dictionary
@@ -1835,7 +1829,7 @@ class QRaven:
         self.iface.mainWindow().repaint()
         paramsDict = self.getRVHparams()    #Calls the function to get the RVH parameters
         self.exportRVHparams(paramsDict)    #Calls the function to export the RVH parameters into a file
-        self.dockerPull()                   #Calls the function to pull the container
+        docker.dockerPull(computerOS)  #Calls the function to pull the container
         self.dockerStart()                  #Calls the function that starts the container
         self.dockerCopy(paramsDict)         #Calls the function that copies the parameters file to the docker container, as well as the data
         self.runBasinMaker()                #Calls the function that runs BasinMaker with the provided data and parameters
@@ -1847,41 +1841,8 @@ class QRaven:
     #This method fully removes the container, as well as the image to free up space
     def dockerdelete(self):
         '''Stops the Docker container, removes it as well as the image'''
-        try:
-            print("Making sure the container is stopped > docker stop qraven")
-            os.system("docker stop qraven")
-            print("Removing the docker container > docker rm qraven")
-            os.system("docker rm qraven")
-            print("Removing the image > docker rmi scriptbash/qraven")
-            os.system("docker rmi scriptbash/qraven")
-            print("container stopped and removed")
-            self.iface.messageBar().pushSuccess("Success", "The docker container and the image were removed")
-        except Exception as e:
-            print("An error occured while attempting to remove the docker container and image")
-            print(e)
+        docker.dockerdelete(self)
 
-
-    #This method pulls the scriptbash/qraven docker container
-    def dockerPull(self):
-        '''Pulls the scriptbash/qraven docker container
-        
-            Depends on the following method:
-
-            dockerCommand()
-        '''
-        try:
-            if computerOS !='macos':
-                print("Trying to pull the scriptbash/qraven image...")
-                cmd='docker', 'pull', 'scriptbash/qraven:latest'  
-                self.dockerCommand(cmd)
-            else:
-                print("Trying to pull the scriptbash/qraven_arm image...")
-                cmd='docker', 'pull', 'scriptbash/qraven_arm:latest'  
-                self.dockerCommand(cmd)
-            print("The pull was successfull")
-        except Exception as e:
-            print(e)
-    
 
     #This method starts the docker container
     def dockerStart(self):
@@ -1895,10 +1856,10 @@ class QRaven:
             print("Attempting to start the container...")
             if computerOS != 'macos':
                 cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','--name', 'qraven', 'scriptbash/qraven'
-                self.dockerCommand(cmd)
+                docker.dockerCommand(cmd, computerOS)
             else:
                 cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','--name', 'qraven', 'scriptbash/qraven_arm'
-                self.dockerCommand(cmd)
+                docker.dockerCommand(cmd, computerOS)
             print("The container was started successfully")
         except Exception as e:
             print(e)
@@ -1939,7 +1900,7 @@ class QRaven:
         shpExt = ['cfg', 'dbf', 'prj','qmd','shp', 'shx']   #List with the shapefile extensions
         rvhScript = outputdir+separator+ "parameters.txt"   #Get the path to the exported parameters file
         cmd='docker', 'cp', rvhScript, 'qraven:'+ dockerBMpath
-        self.dockerCommand(cmd)
+        docker.dockerCommand(cmd, computerOS)
         
         #Loop through the dictionary of paths
         for key, path in datapaths.items():
@@ -1948,87 +1909,64 @@ class QRaven:
                 folder = os.path.dirname(path)  #Get only the file path (without the file name)
                 if key == 'dem':
                     cmdData='docker', 'cp', params['pathdem'], 'qraven:'+ dockerDEMPath
-                    self.dockerCommand(cmdData) #Sends the DEM to the container
+                    docker.dockerCommand(cmdData, computerOS) #Sends the DEM to the container
                 elif key == 'landusepoly':
                     for extension in shpExt:
                         file = folder+separator+filename + '.' + extension
                         cmdData='docker', 'cp', file, 'qraven:'+ dockerLandusePath
-                        self.dockerCommand(cmdData) #Sends the complete landuse polygon shapefile to the container
+                        docker.dockerCommand(cmdData, computerOS) #Sends the complete landuse polygon shapefile to the container
                 elif key == 'landuserast':
                     cmdData='docker', 'cp', params['pathlanduserast'], 'qraven:'+ dockerLandusePath
-                    self.dockerCommand(cmdData) #Sends the landuse raster to the container
+                    docker.dockerCommand(cmdData, computerOS) #Sends the landuse raster to the container
                 elif key == 'lakes':
                     for extension in shpExt:
                         file = folder+separator+filename + '.' + extension
                         cmdData='docker', 'cp', file, 'qraven:'+ dockerLakesPath
-                        self.dockerCommand(cmdData) #Sends the complete lakes shapefile to the container
+                        docker.dockerCommand(cmdData, computerOS) #Sends the complete lakes shapefile to the container
                 elif key == 'bankfull':
                     for extension in shpExt:
                         file = folder+separator+filename + '.' + extension
                         cmdData='docker', 'cp', file, 'qraven:'+ dockerBankfullPath
-                        self.dockerCommand(cmdData) #Sends the complete bankfull width shapefile to the container
+                        docker.dockerCommand(cmdData, computerOS) #Sends the complete bankfull width shapefile to the container
                 elif key == 'soil':
                     for extension in shpExt:
                         file = folder+separator+filename + '.' + extension
                         cmdData='docker', 'cp', file, 'qraven:'+ dockerSoilPath
-                        self.dockerCommand(cmdData)     #Sends the complete soil shapefile to the container
+                        docker.dockerCommand(cmdData, computerOS)     #Sends the complete soil shapefile to the container
                 elif key == 'pointinterest':
                     for extension in shpExt:
                         file = folder+separator+filename + '.' + extension
                         cmdData='docker', 'cp', file, 'qraven:'+ dockerPoIPath
-                        self.dockerCommand(cmdData) #Sends the complete point of interest shapefile to the container
+                        docker.dockerCommand(cmdData, computerOS) #Sends the complete point of interest shapefile to the container
                 elif key == 'hybasin':
                     for extension in shpExt:
                         file = folder+separator+filename + '.' + extension
                         cmdData='docker', 'cp', file, 'qraven:'+ dockerHybasinPath
-                        self.dockerCommand(cmdData) #Sends the complete hydro basin shapefile to the container
+                        docker.dockerCommand(cmdData, computerOS) #Sends the complete hydro basin shapefile to the container
                 elif key == 'provpoly':
                     for extension in shpExt:
                         file = folder+separator+filename + '.' + extension
                         cmdData='docker', 'cp', file, 'qraven:'+ dockerProvPolyPath
-                        self.dockerCommand(cmdData) #Sends the complete extent polygon shapefile to the container
+                        docker.dockerCommand(cmdData, computerOS) #Sends the complete extent polygon shapefile to the container
                 elif key == 'manning':
                     for extension in shpExt:
                         cmdData='docker', 'cp', params['landusemanning'], 'qraven:'+ dockerLandusePath
-                        self.dockerCommand(cmdData) #Sends the landuse manning table to the container
+                        docker.dockerCommand(cmdData, computerOS) #Sends the landuse manning table to the container
                 elif key == 'flowdirection':
                     for extension in shpExt:
                         cmdData='docker', 'cp', params['pathfdr'], 'qraven:'+ dockerFDRPath
-                        self.dockerCommand(cmdData)  #Sends flow direction file to the container
+                        docker.dockerCommand(cmdData, computerOS)  #Sends flow direction file to the container
                 elif key == 'landuseinfo':
                     cmdData='docker', 'cp', params['pathlanduseinfo'], 'qraven:'+ dockerLandusePath
-                    self.dockerCommand(cmdData)     #Sends landuse info csv file to the container
+                    docker.dockerCommand(cmdData, computerOS)     #Sends landuse info csv file to the container
                 elif key == 'soilinfo':
                     cmdData='docker', 'cp', params['pathsoilinfo'], 'qraven:'+ dockerSoilPath
-                    self.dockerCommand(cmdData) #Sends soil info csv file to the container
+                    docker.dockerCommand(cmdData, computerOS) #Sends soil info csv file to the container
                 elif key == 'veginfo':
                     cmdData='docker', 'cp', params['pathveginfo'], 'qraven:'+ dockerLandusePath
-                    self.dockerCommand(cmdData) #Sends vegetation csv file to the container
+                    docker.dockerCommand(cmdData, computerOS) #Sends vegetation csv file to the container
 
         print("Done copying the files to the container")  
-
-
-    #This method runs the command that it receives with subprocess
-    def dockerCommand(self,cmd): 
-        '''Executes the command it receives with subprocess.Popen
-        
-            param cmd: The command to run (string or tuple)
-        ''' 
-        if computerOS == 'windows':
-            startupinfo = subprocess.STARTUPINFO()
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            startupinfo.wShowWindow = subprocess.SW_HIDE
-            process = subprocess.Popen(cmd, stdout=subprocess.PIPE,startupinfo=startupinfo)
-        else:
-            process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-        while True:
-            output = process.stdout.readline()
-            if output == b'':
-                break
-            if output:
-                print(output.strip().decode("utf-8","ignore").replace('',''))  #Surely there's a better way to remove the %08 character (shows as BS in str format)
-        rc = process.poll()      
-
 
     #This method starts the create_RVH.py script
     def runBasinMaker(self):
@@ -2045,7 +1983,7 @@ class QRaven:
         cmd ='docker', 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
         try:
             os.system("docker start qraven")    #Make sure the container is started. Only needed when the plugin is run a second time
-            self.dockerCommand(cmd)
+            docker.dockerCommand(cmd, computerOS)
             print("BasinMaker has finished processing the files")  
         except Exception as e:
             print("The BasinMaker process failed...")
@@ -2065,7 +2003,7 @@ class QRaven:
         print("Grabbing the results, this could take a while...")
         cmd ='docker', 'cp','qraven:'+dockerBMResultsPath, outputdir
         try:
-            self.dockerCommand(cmd)
+            docker.dockerCommand(cmd, computerOS)
             print("The results are now in " + outputdir) 
         except Exception as e:
             print("Failed to retrieve the results...")
@@ -2112,15 +2050,15 @@ class QRaven:
             self.iface.actionShowPythonDialog().trigger()
         self.iface.messageBar().pushInfo("Info", "The GridWeights generator process has started. This could take a while.")
         self.iface.mainWindow().repaint()
-        self.dockerPull()                   #Calls the function to pull the container
+        docker.dockerPull(computerOS)                   #Calls the function to pull the container
         try:
             print("Attempting to start the container...")
             if computerOS != 'macos':
                 cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven'
-                self.dockerCommand(cmd)
+                docker.dockerCommand(cmd, computerOS)
             else:
                 cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven_arm'
-                self.dockerCommand(cmd)
+                docker.dockerCommand(cmd, computerOS)
             print("The container was started successfully")
         except Exception as e:
             print(e)
@@ -2135,9 +2073,9 @@ class QRaven:
         cmd ='docker', 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
         try:
             os.system("docker start qraven")    #Make sure the container is started. Only needed when the plugin is run a second time
-            self.dockerCommand(cmd)
+            docker.dockerCommand(cmd, computerOS)
             cmd = 'docker', 'cp', 'qraven:/root/Gridweights/'+outputfile, outputfolder
-            self.dockerCommand(cmd)
+            docker.dockerCommand(cmd, computerOS)
             print("GridWeights generator has finished processing the files")  
         except Exception as e:
             print("The GridWeights generator process failed...")
@@ -2187,7 +2125,7 @@ class QRaven:
 
         try:
             cmd = ravenExe, pathtomodel,"-o",outputdir, "-r",runname    #Command that launches the Raven model
-            self.dockerCommand(cmd)
+            docker.dockerCommand(cmd, computerOS)
         except Exception as e:
             print(e)
             self.iface.messageBar().pushMessage("Error", "An error occured while running Raven. Check the python console for more details.",level=Qgis.Critical)
@@ -2287,791 +2225,26 @@ class QRaven:
             print(e)
             print("Could not check for an update. Verify your internet connection.")
     
-    #This method loads a template of HMETS into the GUI
-    def loadHmets(self):
-        try:
-            self.resetGUI()
-            table = self.dlg.table_hydroprocess #Get the hydrological processes table
-
-            #Sets the model parameters 
-            self.dlg.combo_potentialmelt.setCurrentText("POTMELT_HMETS")
-            self.dlg.combo_rainsnowfrac.setCurrentText("RAINSNOW_DATA")
-            self.dlg.combo_evapo.setCurrentText("PET_OUDIN")
-            self.dlg.combo_catchment.setCurrentText("ROUTE_DUMP")
-            self.dlg.combo_routing.setCurrentText("ROUTE_NONE")
-            self.dlg.combo_soilmod.setCurrentText("SOIL_TWO_LAYER")
-
-            #Sets the hydrological processes
-            for i in range(11):
-                self.addTableRow()
-            
-            combo_proc = table.cellWidget(0,0)
-            combo_proc.setCurrentText("SnowBalance")
-            combo_alg = table.cellWidget(0,1)
-            combo_alg.setCurrentText("SNOBAL_HMETS")
-            combo_from = table.cellWidget(0,2)
-            combo_from.setCurrentText("MULTIPLE")
-            combo_to = table.cellWidget(0,3)
-            combo_to.setCurrentText("MULTIPLE")
+    #This method loads the models parameters into the GUI
+    def loadModels(self):
+        widget = self.dlg.sender()  #Get the widget name
         
-            combo_proc = table.cellWidget(1,0)
-            combo_proc.setCurrentText("Precipitation")
-            combo_alg = table.cellWidget(1,1)
-            combo_alg.setCurrentText("RAVEN_DEFAULT")
-            combo_from = table.cellWidget(1,2)
-            combo_from.setCurrentText("ATMOS_PRECIP")
-            combo_to = table.cellWidget(1,3)
-            combo_to.setCurrentText("MULTIPLE")
-
-            combo_proc = table.cellWidget(2,0)
-            combo_proc.setCurrentText("Infiltration")
-            combo_alg = table.cellWidget(2,1)
-            combo_alg.setCurrentText("INF_HMETS")
-            combo_from = table.cellWidget(2,2)
-            combo_from.setCurrentText("PONDED_WATER")
-            combo_to = table.cellWidget(2,3)
-            combo_to.setCurrentText("MULTIPLE")
-
-            combo_proc = table.cellWidget(3,0)
-            combo_proc.setCurrentText("Overflow")
-            combo_alg = table.cellWidget(3,1)
-            combo_alg.setCurrentText("OVERFLOW_RAVEN")
-            combo_from = table.cellWidget(3,2)
-            combo_from.setCurrentText("SOIL[0]")
-            combo_to = table.cellWidget(3,3)
-            combo_to.setCurrentText("CONVOLUTION[1]")
-
-            combo_proc = table.cellWidget(4,0)
-            combo_proc.setCurrentText("Baseflow")
-            combo_alg = table.cellWidget(4,1)
-            combo_alg.setCurrentText("BASE_LINEAR")
-            combo_from = table.cellWidget(4,2)
-            combo_from.setCurrentText("SOIL[0]")
-            combo_to = table.cellWidget(4,3)
-            combo_to.setCurrentText("SURFACE_WATER")
-
-            combo_proc = table.cellWidget(5,0)
-            combo_proc.setCurrentText("Percolation")
-            combo_alg = table.cellWidget(5,1)
-            combo_alg.setCurrentText("PERC_LINEAR")
-            combo_from = table.cellWidget(5,2)
-            combo_from.setCurrentText("SOIL[0]")
-            combo_to = table.cellWidget(5,3)
-            combo_to.setCurrentText("SOIL[1]")
-
-            combo_proc = table.cellWidget(6,0)
-            combo_proc.setCurrentText("Overflow")
-            combo_alg = table.cellWidget(6,1)
-            combo_alg.setCurrentText("OVERFLOW_RAVEN")
-            combo_from = table.cellWidget(6,2)
-            combo_from.setCurrentText("SOIL[1]")
-            combo_to = table.cellWidget(6,3)
-            combo_to.setCurrentText("CONVOLUTION[1]")
-
-            combo_proc = table.cellWidget(7,0)
-            combo_proc.setCurrentText("SoilEvaporation")
-            combo_alg = table.cellWidget(7,1)
-            combo_alg.setCurrentText("SOILEVAP_ALL")
-            combo_from = table.cellWidget(7,2)
-            combo_from.setCurrentText("SOIL[0]")
-            combo_to = table.cellWidget(7,3)
-            combo_to.setCurrentText("ATMOSPHERE")
-
-            combo_proc = table.cellWidget(8,0)
-            combo_proc.setCurrentText("Convolve")
-            combo_alg = table.cellWidget(8,1)
-            combo_alg.setCurrentText("CONVOL_GAMMA")
-            combo_from = table.cellWidget(8,2)
-            combo_from.setCurrentText("CONVOLUTION[0]")
-            combo_to = table.cellWidget(8,3)
-            combo_to.setCurrentText("SURFACE_WATER")
-
-            combo_proc = table.cellWidget(9,0)
-            combo_proc.setCurrentText("Convolve")
-            combo_alg = table.cellWidget(9,1)
-            combo_alg.setCurrentText("CONVOL_GAMMA2")
-            combo_from = table.cellWidget(9,2)
-            combo_from.setCurrentText("CONVOLUTION[1]")
-            combo_to = table.cellWidget(9,3)
-            combo_to.setCurrentText("SURFACE_WATER")
-
-            combo_proc = table.cellWidget(10,0)
-            combo_proc.setCurrentText("Baseflow")
-            combo_alg = table.cellWidget(10,1)
-            combo_alg.setCurrentText("BASE_LINEAR")
-            combo_from = table.cellWidget(10,2)
-            combo_from.setCurrentText("SOIL[1]")
-            combo_to = table.cellWidget(10,3)
-            combo_to.setCurrentText("SURFACE_WATER")
-
-            table.resizeColumnsToContents() #Resizes the width of the column automatically
-            
-            print("HMETS template loaded.")
-            self.iface.messageBar().pushSuccess("Success", "Loaded HMETS template successfully")
-        except Exception as e:
-            print('An error occured while loading HMETS template.')
-            print(e)
-
-
-    #This method loads a template of HBV-EC into the GUI
-    def loadHbvec(self):
-        try:
-            self.resetGUI()
-            table = self.dlg.table_hydroprocess #Get the hydrological processes table
-
-            #Sets the model parameters 
-            self.dlg.combo_method.setCurrentText("ORDERED_SERIES")
-            self.dlg.combo_interpo.setCurrentText("INTERP_NEAREST_NEIGHBOR")
-            self.dlg.combo_routing.setCurrentText("ROUTE_NONE")
-            self.dlg.combo_catchment.setCurrentText("ROUTE_TRI_CONVOLUTION")
-            self.dlg.combo_evapo.setCurrentText("PET_FROMMONTHLY")
-            self.dlg.combo_owevapo.setCurrentText("PET_FROMMONTHLY")
-            self.dlg.combo_swradation.setCurrentText("SW_RAD_DEFAULT")
-            self.dlg.combo_swcloud.setCurrentText("SW_CLOUD_CORR_NONE")
-            self.dlg.combo_swcanopy.setCurrentText("SW_CANOPY_CORR_NONE")
-            self.dlg.combo_lwradation.setCurrentText("LW_RAD_DEFAULT")
-            self.dlg.combo_rainsnowfrac.setCurrentText("RAINSNOW_HBV")
-            self.dlg.combo_potentialmelt.setCurrentText("POTMELT_HBV")    
-            self.dlg.combo_orotemp.setCurrentText("OROCORR_HBV")
-            self.dlg.combo_oroprecip.setCurrentText("OROCORR_HBV")
-            self.dlg.combo_oropet.setCurrentText("OROCORR_HBV")
-            self.dlg.combo_cloudcover.setCurrentText("CLOUDCOV_NONE")
-            self.dlg.combo_soilmod.setCurrentText("SOIL_TWO_LAYER")
-            self.dlg.combo_precipicept.setCurrentText("PRECIP_ICEPT_USER")
-            self.dlg.combo_monthlyinterpo.setCurrentText("MONTHINT_LINEAR_21")
-            #NEED TO SET THE LAKESTORAGE PROPERLY!!!!
-            self.dlg.combo_lakestorage.setCurrentText("SOIL[1]")
-            self.dlg.combo_soilmod.setCurrentText("SOIL_MULTILAYER")
-            self.dlg.spin_soilmod.setValue(3)
-
-            #Sets the hydrological processes
-            for i in range(21):
-                self.addTableRow()
-            
-            combo_proc = table.cellWidget(0,0)
-            combo_proc.setCurrentText("SnowRefreeze")
-            combo_alg = table.cellWidget(0,1)
-            combo_alg.setCurrentText("FREEZE_DEGREE_DAY")
-            combo_from = table.cellWidget(0,2)
-            combo_from.setCurrentText("SNOW_LIQ")
-            combo_to = table.cellWidget(0,3)
-            combo_to.setCurrentText("SNOW")
-        
-            combo_proc = table.cellWidget(1,0)
-            combo_proc.setCurrentText("Precipitation")
-            combo_alg = table.cellWidget(1,1)
-            combo_alg.setCurrentText("RAVEN_DEFAULT")
-            combo_from = table.cellWidget(1,2)
-            combo_from.setCurrentText("ATMOS_PRECIP")
-            combo_to = table.cellWidget(1,3)
-            combo_to.setCurrentText("MULTIPLE")
-
-            combo_proc = table.cellWidget(2,0)
-            combo_proc.setCurrentText("CanopyEvaporation")
-            combo_alg = table.cellWidget(2,1)
-            combo_alg.setCurrentText("CANEVP_ALL")
-            combo_from = table.cellWidget(2,2)
-            combo_from.setCurrentText("CANOPY")
-            combo_to = table.cellWidget(2,3)
-            combo_to.setCurrentText("ATMOSPHERE")
-
-            combo_proc = table.cellWidget(3,0)
-            combo_proc.setCurrentText("CanopySublimation")
-            combo_alg = table.cellWidget(3,1)
-            combo_alg.setCurrentText("CANEVP_ALL")
-            combo_from = table.cellWidget(3,2)
-            combo_from.setCurrentText("CANOPY_SNOW")
-            combo_to = table.cellWidget(3,3)
-            combo_to.setCurrentText("ATMOSPHERE")
-
-            combo_proc = table.cellWidget(4,0)
-            combo_proc.setCurrentText("SnowBalance")
-            combo_alg = table.cellWidget(4,1)
-            combo_alg.setCurrentText("SNOBAL_SIMPLE_MELT")
-            combo_from = table.cellWidget(4,2)
-            combo_from.setCurrentText("SNOW")
-            combo_to = table.cellWidget(4,3)
-            combo_to.setCurrentText("SNOW_LIQ")
-
-            combo_proc = table.cellWidget(5,0)
-            combo_proc.setCurrentText("Overflow")
-            combo_alg = table.cellWidget(5,1)
-            combo_alg.setCurrentText("RAVEN_DEFAULT")
-            combo_from = table.cellWidget(5,2)
-            combo_from.setCurrentText("SNOW_LIQ")
-            combo_to = table.cellWidget(5,3)
-            combo_to.setCurrentText("PONDED_WATER")
-
-            combo_proc = table.cellWidget(6,0)
-            combo_proc.setCurrentText("Flush")
-            combo_alg = table.cellWidget(6,1)
-            combo_alg.setCurrentText("RAVEN_DEFAULT")
-            combo_from = table.cellWidget(6,2)
-            combo_from.setCurrentText("PONDED_WATER")
-            combo_to = table.cellWidget(6,3)
-            combo_to.setCurrentText("GLACIER")
-            checkconditional = table.cellWidget(6,4)
-            checkconditional.setChecked(True)
-            combo_basedtype = table.cellWidget(6,5)
-            combo_basedtype.setCurrentText("HRU_TYPE")
-            combo_comparison = table.cellWidget(6,6)
-            combo_comparison.setCurrentText("IS")
-            txt_hrutype = table.cellWidget(6,7)
-            txt_hrutype.setText("GLACIER")
-
-            combo_proc = table.cellWidget(7,0)
-            combo_proc.setCurrentText("GlacierMelt")
-            combo_alg = table.cellWidget(7,1)
-            combo_alg.setCurrentText("GMELT_HBV")
-            combo_from = table.cellWidget(7,2)
-            combo_from.setCurrentText("GLACIER_ICE")
-            combo_to = table.cellWidget(7,3)
-            combo_to.setCurrentText("GLACIER")
-
-            combo_proc = table.cellWidget(8,0)
-            combo_proc.setCurrentText("GlacierRelease")
-            combo_alg = table.cellWidget(8,1)
-            combo_alg.setCurrentText("GRELEASE_HBV_EC")
-            combo_from = table.cellWidget(8,2)
-            combo_from.setCurrentText("GLACIER")
-            combo_to = table.cellWidget(8,3)
-            combo_to.setCurrentText("SURFACE_WATER")
-
-            combo_proc = table.cellWidget(9,0)
-            combo_proc.setCurrentText("Infiltration")
-            combo_alg = table.cellWidget(9,1)
-            combo_alg.setCurrentText("INF_HBV")
-            combo_from = table.cellWidget(9,2)
-            combo_from.setCurrentText("PONDED_WATER")
-            combo_to = table.cellWidget(9,3)
-            combo_to.setCurrentText("MULTIPLE")
-
-            combo_proc = table.cellWidget(10,0)
-            combo_proc.setCurrentText("Flush")
-            combo_alg = table.cellWidget(10,1)
-            combo_alg.setCurrentText("RAVEN_DEFAULT")
-            combo_from = table.cellWidget(10,2)
-            combo_from.setCurrentText("SURFACE_WATER")
-            combo_to = table.cellWidget(10,3)
-            combo_to.setCurrentText("SOIL[1]")
-            checkconditional = table.cellWidget(10,4)
-            checkconditional.setChecked(True)
-            combo_basedtype = table.cellWidget(10,5)
-            combo_basedtype.setCurrentText("HRU_TYPE")
-            combo_comparison = table.cellWidget(10,6)
-            combo_comparison.setCurrentText("IS_NOT")
-            txt_hrutype = table.cellWidget(10,7)
-            txt_hrutype.setText("GLACIER")
-
-            combo_proc = table.cellWidget(11,0)
-            combo_proc.setCurrentText("Flush")
-            combo_alg = table.cellWidget(11,1)
-            combo_alg.setCurrentText("RAVEN_DEFAULT")
-            combo_from = table.cellWidget(11,2)
-            combo_from.setCurrentText("SOIL[2]")
-            combo_to = table.cellWidget(11,3)
-            combo_to.setCurrentText("SURFACE_WATER")
-            checkconditional = table.cellWidget(11,4)
-            checkconditional.setChecked(True)
-            combo_basedtype = table.cellWidget(11,5)
-            combo_basedtype.setCurrentText("HRU_TYPE")
-            combo_comparison = table.cellWidget(11,6)
-            combo_comparison.setCurrentText("IS")
-            txt_hrutype = table.cellWidget(11,7)
-            txt_hrutype.setText("LAKE")
-
-            combo_proc = table.cellWidget(12,0)
-            combo_proc.setCurrentText("SoilEvaporation")
-            combo_alg = table.cellWidget(12,1)
-            combo_alg.setCurrentText("SOILEVAP_HBV")
-            combo_from = table.cellWidget(12,2)
-            combo_from.setCurrentText("SOIL[0]")
-            combo_to = table.cellWidget(12,3)
-            combo_to.setCurrentText("ATMOSPHERE")
-
-            combo_proc = table.cellWidget(13,0)
-            combo_proc.setCurrentText("CapillaryRise")
-            combo_alg = table.cellWidget(13,1)
-            combo_alg.setCurrentText("CRISE_HBV")
-            combo_from = table.cellWidget(13,2)
-            combo_from.setCurrentText("SOIL[1]")
-            combo_to = table.cellWidget(13,3)
-            combo_to.setCurrentText("SOIL[0]")
-
-            combo_proc = table.cellWidget(14,0)
-            combo_proc.setCurrentText("LakeEvaporation")
-            combo_alg = table.cellWidget(14,1)
-            combo_alg.setCurrentText("LAKE_EVAP_BASIC")
-            combo_from = table.cellWidget(14,2)
-            combo_from.setCurrentText("SOIL[0]")
-            combo_to = table.cellWidget(14,3)
-            combo_to.setCurrentText("ATMOSPHERE")
-
-            combo_proc = table.cellWidget(15,0)
-            combo_proc.setCurrentText("SoilEvaporation")
-            combo_alg = table.cellWidget(15,1)
-            combo_alg.setCurrentText("SOILEVAP_HBV")
-            combo_from = table.cellWidget(15,2)
-            combo_from.setCurrentText("SOIL[2]")
-            combo_to = table.cellWidget(15,3)
-            combo_to.setCurrentText("ATMOSPHERE")
-
-            combo_proc = table.cellWidget(16,0)
-            combo_proc.setCurrentText("Percolation")
-            combo_alg = table.cellWidget(16,1)
-            combo_alg.setCurrentText("PERC_CONSTANT")
-            combo_from = table.cellWidget(16,2)
-            combo_from.setCurrentText("SOIL[1]")
-            combo_to = table.cellWidget(16,3)
-            combo_to.setCurrentText("SOIL[2]")
-
-            combo_proc = table.cellWidget(17,0)
-            combo_proc.setCurrentText("Baseflow")
-            combo_alg = table.cellWidget(17,1)
-            combo_alg.setCurrentText("BASE_POWER_LAW")
-            combo_from = table.cellWidget(17,2)
-            combo_from.setCurrentText("SOIL[1]")
-            combo_to = table.cellWidget(17,3)
-            combo_to.setCurrentText("SURFACE_WATER")
-
-            combo_proc = table.cellWidget(18,0)
-            combo_proc.setCurrentText("Baseflow")
-            combo_alg = table.cellWidget(18,1)
-            combo_alg.setCurrentText("BASE_LINEAR")
-            combo_from = table.cellWidget(18,2)
-            combo_from.setCurrentText("SOIL[2]")
-            combo_to = table.cellWidget(18,3)
-            combo_to.setCurrentText("SURFACE_WATER")
-
-            #MUST CHANGE TWO NEXT PERCOLATION FOR LATERALFLUSH EQUILIBRATE
-            #ONCE PCT IS ADDED TO THE TABLE
-            combo_proc = table.cellWidget(19,0)
-            combo_proc.setCurrentText("Percolation")
-            combo_alg = table.cellWidget(19,1)
-            combo_alg.setCurrentText("PERC_CONSTANT")
-            combo_from = table.cellWidget(19,2)
-            combo_from.setCurrentText("SOIL[1]")
-            combo_to = table.cellWidget(19,3)
-            combo_to.setCurrentText("SOIL[2]")
-
-            combo_proc = table.cellWidget(20,0)
-            combo_proc.setCurrentText("Percolation")
-            combo_alg = table.cellWidget(20,1)
-            combo_alg.setCurrentText("PERC_CONSTANT")
-            combo_from = table.cellWidget(20,2)
-            combo_from.setCurrentText("SOIL[1]")
-            combo_to = table.cellWidget(20,3)
-            combo_to.setCurrentText("SOIL[2]")
-
-            table.resizeColumnsToContents() #Resizes the width of the column automatically
-            
-            print("HBV-EC template loaded.")
-            self.iface.messageBar().pushSuccess("Success", "Loaded HBV-EC template successfully")
-        except Exception as e:
-            print('An error occured while loading HBV-EC template.')
-            print(e)        
-
-
-    #This method loads a UBCWM template into the GUI
-    def loadUbcwm(self):
-        try:
-            self.resetGUI()
-            table = self.dlg.table_hydroprocess #Get the hydrological processes table
-
-            #Sets the model parameters 
-            self.dlg.combo_method.setCurrentText("ORDERED_SERIES")
-            self.dlg.combo_interpo.setCurrentText("INTERP_NEAREST_NEIGHBOR")
-            self.dlg.combo_routing.setCurrentText("ROUTE_NONE")
-            self.dlg.combo_catchment.setCurrentText("ROUTE_DUMP")
-            self.dlg.combo_evapo.setCurrentText("PET_MONTHLY_FACTOR")
-            self.dlg.combo_owevapo.setCurrentText("PET_MONTHLY_FACTOR")
-            self.dlg.combo_swradation.setCurrentText("SW_RAD_UBCWM")
-            self.dlg.combo_swcloud.setCurrentText("SW_CLOUD_CORR_UBCWM")
-            self.dlg.combo_swcanopy.setCurrentText("SW_CANOPY_CORR_UBCWM")
-            self.dlg.combo_lwradation.setCurrentText("LW_RAD_UBCWM")
-            self.dlg.combo_windspeed.setCurrentText("WINDVEL_UBCWM")
-            self.dlg.combo_rainsnowfrac.setCurrentText("RAINSNOW_UBCWM")
-            self.dlg.combo_potentialmelt.setCurrentText("POTMELT_UBCWM")    
-            self.dlg.combo_orotemp.setCurrentText("OROCORR_UBCWM")
-            self.dlg.combo_oroprecip.setCurrentText("OROCORR_UBCWM2")
-            self.dlg.combo_oropet.setCurrentText("OROCORR_UBCWM")
-            self.dlg.combo_cloudcover.setCurrentText("CLOUDCOV_UBCWM")
-            self.dlg.combo_precipicept.setCurrentText("PRECIP_ICEPT_USER")
-            self.dlg.combo_monthlyinterpo.setCurrentText("MONTHINT_LINEAR_21")
-            self.dlg.combo_soilmod.setCurrentText("SOIL_MULTILAYER")
-            self.dlg.spin_soilmod.setValue(6)
-            self.dlg.chk_snaphydro.setChecked(True)
-
-            #Sets the hydrological processes
-            for i in range(15):
-                self.addTableRow()
-
-            combo_proc = table.cellWidget(0,0)
-            combo_proc.setCurrentText("SnowAlbedoEvolve")
-            combo_alg = table.cellWidget(0,1)
-            combo_alg.setCurrentText("SNOALB_UBCWM")
-
-            combo_proc = table.cellWidget(1,0)
-            combo_proc.setCurrentText("SnowBalance")
-            combo_alg = table.cellWidget(1,1)
-            combo_alg.setCurrentText("SNOBAL_UBCWM")
-            combo_from = table.cellWidget(1,2)
-            combo_from.setCurrentText("MULTIPLE")
-            combo_to = table.cellWidget(1,3)
-            combo_to.setCurrentText("MULTIPLE")
-
-            combo_proc = table.cellWidget(2,0)
-            combo_proc.setCurrentText("Flush")
-            combo_alg = table.cellWidget(2,1)
-            combo_alg.setCurrentText("RAVEN_DEFAULT")
-            combo_from = table.cellWidget(2,2)
-            combo_from.setCurrentText("PONDED_WATER")
-            combo_to = table.cellWidget(2,3)
-            combo_to.setCurrentText("SOIL[4]")
-            checkconditional = table.cellWidget(2,4)
-            checkconditional.setChecked(True)
-            combo_basedtype = table.cellWidget(2,5)
-            combo_basedtype.setCurrentText("HRU_TYPE")
-            combo_comparison = table.cellWidget(2,6)
-            combo_comparison.setCurrentText("IS")
-            txt_hrutype = table.cellWidget(2,7)
-            txt_hrutype.setText("GLACIER")
-
-            combo_proc = table.cellWidget(3,0)
-            combo_proc.setCurrentText("GlacierMelt")
-            combo_alg = table.cellWidget(3,1)
-            combo_alg.setCurrentText("GMELT_UBC")
-            combo_from = table.cellWidget(3,2)
-            combo_from.setCurrentText("GLACIER_ICE")
-            combo_to = table.cellWidget(3,3)
-            combo_to.setCurrentText("PONDED_WATER")
-
-            combo_proc = table.cellWidget(4,0)
-            combo_proc.setCurrentText("Precipitation")
-            combo_alg = table.cellWidget(4,1)
-            combo_alg.setCurrentText("PRECIP_RAVEN")
-            combo_from = table.cellWidget(4,2)
-            combo_from.setCurrentText("ATMOS_PRECIP")
-            combo_to = table.cellWidget(4,3)
-            combo_to.setCurrentText("MULTIPLE")
-
-            combo_proc = table.cellWidget(5,0)
-            combo_proc.setCurrentText("SoilEvaporation")
-            combo_alg = table.cellWidget(5,1)
-            combo_alg.setCurrentText("SOILEVAP_UBC")
-            combo_from = table.cellWidget(5,2)
-            combo_from.setCurrentText("MULTIPLE")
-            combo_to = table.cellWidget(5,3)
-            combo_to.setCurrentText("ATMOSPHERE")
-
-            combo_proc = table.cellWidget(6,0)
-            combo_proc.setCurrentText("Infiltration")
-            combo_alg = table.cellWidget(6,1)
-            combo_alg.setCurrentText("INF_UBC")
-            combo_from = table.cellWidget(6,2)
-            combo_from.setCurrentText("PONDED_WATER")
-            combo_to = table.cellWidget(6,3)
-            combo_to.setCurrentText("MULTIPLE")
-
-            combo_proc = table.cellWidget(7,0)
-            combo_proc.setCurrentText("Flush")
-            combo_alg = table.cellWidget(7,1)
-            combo_alg.setCurrentText("RAVEN_DEFAULT")
-            combo_from = table.cellWidget(7,2)
-            combo_from.setCurrentText("SURFACE_WATER")
-            combo_to = table.cellWidget(7,3)
-            combo_to.setCurrentText("SOIL[4]")
-            checkconditional = table.cellWidget(7,4)
-            checkconditional.setChecked(True)
-            combo_basedtype = table.cellWidget(7,5)
-            combo_basedtype.setCurrentText("HRU_TYPE")
-            combo_comparison = table.cellWidget(7,6)
-            combo_comparison.setCurrentText("IS_NOT")
-            txt_hrutype = table.cellWidget(7,7)
-            txt_hrutype.setText("LAKE")
-
-            combo_proc = table.cellWidget(8,0)
-            combo_proc.setCurrentText("GlacierInfiltration")
-            combo_alg = table.cellWidget(8,1)
-            combo_alg.setCurrentText("GINFIL_UBCWM")
-            combo_from = table.cellWidget(8,2)
-            combo_from.setCurrentText("PONDED_WATER")
-            combo_to = table.cellWidget(8,3)
-            combo_to.setCurrentText("MULTIPLE")
-
-            combo_proc = table.cellWidget(9,0)
-            combo_proc.setCurrentText("Percolation")
-            combo_alg = table.cellWidget(9,1)
-            combo_alg.setCurrentText("PERC_LINEAR_ANALYTIC")
-            combo_from = table.cellWidget(9,2)
-            combo_from.setCurrentText("SOIL[1]")
-            combo_to = table.cellWidget(9,3)
-            combo_to.setCurrentText("SOIL[4]")
-
-            combo_proc = table.cellWidget(10,0)
-            combo_proc.setCurrentText("Percolation")
-            combo_alg = table.cellWidget(10,1)
-            combo_alg.setCurrentText("PERC_LINEAR_ANALYTIC")
-            combo_from = table.cellWidget(10,2)
-            combo_from.setCurrentText("SOIL[4]")
-            combo_to = table.cellWidget(10,3)
-            combo_to.setCurrentText("SOIL[5]")
-
-            combo_proc = table.cellWidget(11,0)
-            combo_proc.setCurrentText("Baseflow")
-            combo_alg = table.cellWidget(11,1)
-            combo_alg.setCurrentText("BASE_LINEAR")
-            combo_from = table.cellWidget(11,2)
-            combo_from.setCurrentText("SOIL[5]")
-            combo_to = table.cellWidget(11,3)
-            combo_to.setCurrentText("SURFACE_WATER")
-
-            combo_proc = table.cellWidget(12,0)
-            combo_proc.setCurrentText("Baseflow")
-            combo_alg = table.cellWidget(12,1)
-            combo_alg.setCurrentText("BASE_LINEAR")
-            combo_from = table.cellWidget(12,2)
-            combo_from.setCurrentText("SOIL[2]")
-            combo_to = table.cellWidget(12,3)
-            combo_to.setCurrentText("SURFACE_WATER")
-
-            combo_proc = table.cellWidget(13,0)
-            combo_proc.setCurrentText("Baseflow")
-            combo_alg = table.cellWidget(13,1)
-            combo_alg.setCurrentText("BASE_LINEAR")
-            combo_from = table.cellWidget(13,2)
-            combo_from.setCurrentText("SOIL[3]")
-            combo_to = table.cellWidget(13,3)
-            combo_to.setCurrentText("SURFACE_WATER")
-
-            combo_proc = table.cellWidget(14,0)
-            combo_proc.setCurrentText("GlacierRelease")
-            combo_alg = table.cellWidget(14,1)
-            combo_alg.setCurrentText("GRELEASE_LINEAR")
-            combo_from = table.cellWidget(14,2)
-            combo_from.setCurrentText("GLACIER")
-            combo_to = table.cellWidget(14,3)
-            combo_to.setCurrentText("SURFACE_WATER")
-
-            table.resizeColumnsToContents() #Resizes the width of the column automatically
-            
-            print("UBCWM template loaded.")
-            self.iface.messageBar().pushSuccess("Success", "Loaded UBCWM template successfully")
-        except Exception as e:
-            print('An error occured while loading UBCWM template.')
-            print(e)     
-
-
-
-    #This method loads a GR4J template into the GUI
-    def loadGr4j(self):
-        try:
-            self.resetGUI()
-            table = self.dlg.table_hydroprocess #Get the hydrological processes table
-
-            #Sets the model parameters 
-            self.dlg.combo_method.setCurrentText("ORDERED_SERIES")
-            self.dlg.combo_interpo.setCurrentText("INTERP_NEAREST_NEIGHBOR")
-            self.dlg.combo_routing.setCurrentText("ROUTE_NONE")
-            self.dlg.combo_catchment.setCurrentText("ROUTE_DUMP")
-
-            self.dlg.combo_evapo.setCurrentText("PET_DATA")
-            self.dlg.combo_rainsnowfrac.setCurrentText("RAINSNOW_DINGMAN")
-            self.dlg.combo_potentialmelt.setCurrentText("POTMELT_DEGREE_DAY")  
-            self.dlg.combo_orotemp.setCurrentText("OROCORR_SIMPLELAPSE")
-            self.dlg.combo_oroprecip.setCurrentText("OROCORR_SIMPLELAPSE")
-            self.dlg.combo_soilmod.setCurrentText("SOIL_MULTILAYER")
-            self.dlg.spin_soilmod.setValue(4)
-            self.dlg.chk_snaphydro.setChecked(True)
-
-            #Sets the hydrological processes
-            for i in range(15):
-                self.addTableRow()
-
-            combo_proc = table.cellWidget(0,0)
-            combo_proc.setCurrentText("Precipitation")
-            combo_alg = table.cellWidget(0,1)
-            combo_alg.setCurrentText("PRECIP_RAVEN")
-            combo_from = table.cellWidget(0,2)
-            combo_from.setCurrentText("ATMOS_PRECIP")
-            combo_to = table.cellWidget(0,3)
-            combo_to.setCurrentText("MULTIPLE")
-
-            combo_proc = table.cellWidget(1,0)
-            combo_proc.setCurrentText("SnowTempEvolve")
-            combo_alg = table.cellWidget(1,1)
-            combo_alg.setCurrentText("SNOTEMP_NEWTONS")
-            combo_from = table.cellWidget(1,2)
-            combo_from.setCurrentText("SNOW_TEMP")
-        
-            combo_proc = table.cellWidget(2,0)
-            combo_proc.setCurrentText("SnowBalance")
-            combo_alg = table.cellWidget(2,1)
-            combo_alg.setCurrentText("SNOBAL_CEMA_NEIGE")
-            combo_from = table.cellWidget(2,2)
-            combo_from.setCurrentText("SNOW")
-            combo_to = table.cellWidget(2,3)
-            combo_to.setCurrentText("PONDED_WATER")
-            
-            combo_proc = table.cellWidget(3,0)
-            combo_proc.setCurrentText("OpenWaterEvaporation")
-            combo_alg = table.cellWidget(3,1)
-            combo_alg.setCurrentText("OPEN_WATER_EVAP")
-            combo_from = table.cellWidget(3,2)
-            combo_from.setCurrentText("PONDED_WATER")
-            combo_to = table.cellWidget(3,3)
-            combo_to.setCurrentText("ATMOSPHERE")
-
-            combo_proc = table.cellWidget(4,0)
-            combo_proc.setCurrentText("Infiltration")
-            combo_alg = table.cellWidget(4,1)
-            combo_alg.setCurrentText("INF_GR4J")
-            combo_from = table.cellWidget(4,2)
-            combo_from.setCurrentText("PONDED_WATER")
-            combo_to = table.cellWidget(4,3)
-            combo_to.setCurrentText("MULTIPLE")
-
-            combo_proc = table.cellWidget(5,0)
-            combo_proc.setCurrentText("SoilEvaporation")
-            combo_alg = table.cellWidget(5,1)
-            combo_alg.setCurrentText("SOILEVAP_GR4J")
-            combo_from = table.cellWidget(5,2)
-            combo_from.setCurrentText("SOIL[0]")
-            combo_to = table.cellWidget(5,3)
-            combo_to.setCurrentText("ATMOSPHERE")
-
-            combo_proc = table.cellWidget(6,0)
-            combo_proc.setCurrentText("Percolation")
-            combo_alg = table.cellWidget(6,1)
-            combo_alg.setCurrentText("PERC_GR4J")
-            combo_from = table.cellWidget(6,2)
-            combo_from.setCurrentText("SOIL[0]")
-            combo_to = table.cellWidget(6,3)
-            combo_to.setCurrentText("SOIL[2]")
-
-            combo_proc = table.cellWidget(7,0)
-            combo_proc.setCurrentText("Flush")
-            combo_alg = table.cellWidget(7,1)
-            combo_alg.setCurrentText("RAVEN_DEFAULT")
-            combo_from = table.cellWidget(7,2)
-            combo_from.setCurrentText("SURFACE_WATER")
-            combo_to = table.cellWidget(7,3)
-            combo_to.setCurrentText("SOIL[2]")
-            
-            #NEED MODIFICATION IN GUI TO SUPPORT SPLIT COMMAND
-            combo_proc = table.cellWidget(8,0)
-            combo_proc.setCurrentText("Split")
-            combo_alg = table.cellWidget(8,1)
-            combo_alg.setCurrentText("RAVEN_DEFAULT")
-            # combo_from = table.cellWidget(8,2)
-            # combo_from.setCurrentText("PONDED_WATER")
-            # combo_to = table.cellWidget(8,3)
-            # combo_to.setCurrentText("MULTIPLE")
-
-            combo_proc = table.cellWidget(9,0)
-            combo_proc.setCurrentText("Convolve")
-            combo_alg = table.cellWidget(9,1)
-            combo_alg.setCurrentText("CONVOL_GR4J_1")
-            combo_from = table.cellWidget(9,2)
-            combo_from.setCurrentText("CONVOLUTION[0]")
-            combo_to = table.cellWidget(9,3)
-            combo_to.setCurrentText("SOIL[1]")
-
-            combo_proc = table.cellWidget(10,0)
-            combo_proc.setCurrentText("Convolve")
-            combo_alg = table.cellWidget(10,1)
-            combo_alg.setCurrentText("CONVOL_GR4J_2")
-            combo_from = table.cellWidget(10,2)
-            combo_from.setCurrentText("CONVOLUTION[1]")
-            combo_to = table.cellWidget(10,3)
-            combo_to.setCurrentText("SOIL[2]")
-
-            combo_proc = table.cellWidget(11,0)
-            combo_proc.setCurrentText("Percolation")
-            combo_alg = table.cellWidget(11,1)
-            combo_alg.setCurrentText("PERC_GR4JEXCH")
-            combo_from = table.cellWidget(11,2)
-            combo_from.setCurrentText("SOIL[1]")
-            combo_to = table.cellWidget(11,3)
-            combo_to.setCurrentText("SOIL[3]")
-
-            combo_proc = table.cellWidget(12,0)
-            combo_proc.setCurrentText("Percolation")
-            combo_alg = table.cellWidget(12,1)
-            combo_alg.setCurrentText("PERC_GR4JEXCH2")
-            combo_from = table.cellWidget(12,2)
-            combo_from.setCurrentText("SOIL[2]")
-            combo_to = table.cellWidget(12,3)
-            combo_to.setCurrentText("SOIL[3]")
-
-            combo_proc = table.cellWidget(13,0)
-            combo_proc.setCurrentText("Flush")
-            combo_alg = table.cellWidget(13,1)
-            combo_alg.setCurrentText("RAVEN_DEFAULT")
-            combo_from = table.cellWidget(13,2)
-            combo_from.setCurrentText("SOIL[2]")
-            combo_to = table.cellWidget(13,3)
-            combo_to.setCurrentText("SURFACE_WATER")
-
-            combo_proc = table.cellWidget(14,0)
-            combo_proc.setCurrentText("Baseflow")
-            combo_alg = table.cellWidget(14,1)
-            combo_alg.setCurrentText("BASE_GR4J")
-            combo_from = table.cellWidget(14,2)
-            combo_from.setCurrentText("SOIL[1]")
-            combo_to = table.cellWidget(14,3)
-            combo_to.setCurrentText("SURFACE_WATER")
-
-            table.resizeColumnsToContents() #Resizes the width of the column automatically
-            
-            print("GR4J template loaded.")
-            self.iface.messageBar().pushSuccess("Success", "Loaded GR4J template successfully")
-        except Exception as e:
-            print('An error occured while loading GR4J template.')
-            print(e)     
-
-    #This method reset the RVI section to the default values
-    def resetGUI(self):
-        table = self.dlg.table_hydroprocess #Get the hydrological processes table
-        #Deletes all the table rows
-        while(table.rowCount()>0):
-            table.removeRow(0)
-        #Revert back all the RVI options to the default values
-        self.dlg.combo_soilmod.setCurrentText("SOIL_ONE_LAYER")
-        self.dlg.spin_soilmod.setValue(0)
-        self.dlg.combo_catchment.setCurrentText("ROUTE_DUMP")
-        self.dlg.combo_routing.setCurrentText("ROUTE_DIFFUSIVE_WAVE")
-        self.dlg.combo_evapo.setCurrentText("PET_HARGREAVES_1985")
-
-        self.dlg.combo_method.setCurrentText("")
-        self.dlg.combo_interpo.setCurrentText("")
-        self.dlg.combo_rainsnowfrac.setCurrentText("")
-        self.dlg.combo_owevapo.setCurrentText("")
-        self.dlg.combo_oroprecip.setCurrentText("")
-        self.dlg.combo_orotemp.setCurrentText("")
-        self.dlg.combo_oropet.setCurrentText("")
-        self.dlg.combo_cloudcover.setCurrentText("")
-        self.dlg.combo_airpressure.setCurrentText("")
-        self.dlg.combo_potentialmelt.setCurrentText("")
-        self.dlg.combo_monthlyinterpo.setCurrentText("")
-        self.dlg.combo_lakestorage.setCurrentText("")
-        self.dlg.txt_interpofile.clear()
-        self.dlg.combo_swradation.setCurrentText("")
-        self.dlg.combo_swcanopy.setCurrentText("")
-        self.dlg.combo_swcloud.setCurrentText("")
-        self.dlg.combo_lwradation.setCurrentText("")
-        self.dlg.combo_windspeed.setCurrentText("")
-        self.dlg.combo_relhumidity.setCurrentText("")
-        self.dlg.combo_precipicept.setCurrentText("")
-        self.dlg.combo_recharge.setCurrentText("")
-        self.dlg.combo_subdaily.setCurrentText("")
-        self.dlg.combo_calendar.setCurrentText("")
-        self.dlg.chk_directevapo.setChecked(False)
-        self.dlg.chk_snowsuppressespet.setChecked(False)
-        self.dlg.chk_suppresscomppet.setChecked(False)
-        self.dlg.chk_snaphydro.setChecked(False)
-          
-        
+        #Calls the function linked to the proper model to load
+        if widget.objectName() == 'btn_reset': 
+            resetGUI(self)
+        elif widget.objectName() == 'btn_load_hmets':
+            resetGUI(self)
+            loadHmets(self)
+        elif widget.objectName() == 'btn_load_hbvec':
+            resetGUI(self)
+            loadHbvec(self)
+        elif widget.objectName() == 'btn_load_ubcwm':
+            resetGUI(self)
+            loadUbcwm(self)
+        elif widget.objectName() == 'btn_load_gr4j':
+            resetGUI(self)
+            loadGr4j(self)
+ 
 #This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
 def checkOS():
     '''Makes a simple check to verify which operating system the user is using.
