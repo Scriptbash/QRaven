@@ -621,8 +621,10 @@ class QRaven:
             #print(selectedProc)
             if selectedProc == 'Precipitation':
                 combo_alg.addItems(precipalg)
-            elif selectedProc == 'CanopyEvaporation' or selectedProc == 'CanopySublimation':
+            elif selectedProc == 'CanopyEvaporation':
                 combo_alg.addItems(canopevapAlg)
+            elif selectedProc == 'CanopySublimation':
+                combo_alg.addItems(canopysublimationAlg)
             elif selectedProc == 'SoilEvaporation':
                 combo_alg.addItems(soilevapAlg)
             elif selectedProc == 'LakeEvaporation':
@@ -659,6 +661,8 @@ class QRaven:
                 combo_alg.addItems(sublimationAlg)
             elif selectedProc == 'SnowAlbedoEvolve':
                 combo_alg.addItems(snowalbedoevolveAlg)
+            elif selectedProc == 'SnowSqueeze':
+                combo_alg.addItems(snowsqueezeAlg)
             elif selectedProc == 'CanopyDrip':
                 combo_alg.addItems(canopydripAlg)
             elif selectedProc == 'CropHeatUnitEvolve':
@@ -674,6 +678,8 @@ class QRaven:
                 spin_pct.setEnabled(True)
             elif selectedProc == 'Overflow':
                 combo_alg.addItems(overflowAlg)
+            elif selectedProc == 'Abstraction':
+                combo_alg.addItems(abstractionAlg)
             elif selectedProc == 'Split':
                 combo_alg.addItems(splitAlg)
             elif selectedProc == 'Convolve':
@@ -688,6 +694,14 @@ class QRaven:
                 spin_pct.setMinimum(0.0)
                 spin_pct.setDecimals(1)
                 chk_interbasin.setEnabled(True)
+            elif selectedProc == 'ExchangeFlow':
+                combo_alg.addItems(exchangeflowAlg)
+            elif selectedProc == 'Recharge':
+                combo_alg.addItems(rechargeAlg)
+            elif selectedProc == 'BlowingSnow':
+                combo_alg.addItems(blowingsnowAlg)
+            elif selectedProc == 'SoilBalance':
+                combo_alg.addItems(soilbalanceAlg)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 1, combo_alg)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 2, combo_from)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 3, combo_to)
@@ -853,7 +867,7 @@ class QRaven:
         #tmpanyCompartment.clear() 
                
     def enableConditionalProc(self):
-        basedtype = ['HRU_TYPE','LAND_CLASS','HRU_GROUP']
+        basedtype = ['HRU_TYPE','HRU_GROUP','LAND_CLASS','VEGETATION']
         comparison = ['IS', 'IS_NOT']
         table = self.dlg.table_hydroprocess
         currentWidget = self.dlg.sender()
@@ -2070,50 +2084,81 @@ def checkOS():
 computerOS, separator = checkOS()
 
 #List that contains every process name
-procname =['','Precipitation','CanopyEvaporation','CanopySublimation','SoilEvaporation','LakeEvaporation',
-                'OpenWaterEvaporation','Infiltration','Percolation','CapillaryRise',
-                'Baseflow','Interflow','Seepage','DepressionOverflow','LakeRelease',
-                'Abstraction','SnowMelt','SnowRefreeze','SnowBalance','SnowTempEvolve','Sublimation',
-                'SnowAlbedoEvolve','CanopyDrip','CropHeatUnitEvolve','GlacierMelt','GlacierInfiltration',
-                'GlacierRelease','Flush','Overflow','Split','Convolve','LateralFlush','LateralEquilibrate'
-    ]
+procname = ['','Baseflow','CanopyEvaporation','CanopyDrip','Infiltration',
+            'Percolation','SnowMelt','SoilEvaporation','SnowBalance',
+            'Sublimation','OpenWaterEvaporation','Precipitation','Interflow',
+            'SnowRefreeze','Flush','CapillaryRise','LakeEvaporation','SnowSqueeze',
+            'GlacierMelt','GlacierRelease','CanopySnowEvaporation','CanopySublimation',
+            'Overflow','SnowAlbedoEvolve','CropHeatUnitEvolve','Abstraction','GlacierInfiltration',
+            'Split','Convolve','SnowTempEvolve','DepressionOverflow','ExchangeFlow',
+            'LateralFlush','Seepage','Recharge','BlowingSnow','LakeRelease','SoilBalance','LateralEquilibrate'
+           ]
+procname.sort() #Sorts the list ascending
 
 #Lists with all of the Raven algorithms
-precipalg =['PRECIP_RAVEN','RAVEN_DEFAULT']
+baseflowAlg = ['BASE_VIC','BASE_TOPMODEL','BASE_LINEAR','BASE_LINEAR_CONSTRAIN',
+               'BASE_LINEAR_ANALYTIC','BASE_POWER_LAW','BASE_CONSTANT',
+               'BASE_THRESH_POWER','BASE_THRESH_STOR','BASE_GR4J'
+              ]
 canopevapAlg = ['CANEVP_RUTTER','CANEVP_MAXIMUM','CANEVP_ALL']
-soilevapAlg = ['SOILEVAP_VIC','SOILEVAP_HBV','SOILEVAP_GR4J','SOILEVAP_CHU','SOILEVAP_TOPMODEL','SOILEVAP_SEQUEN','SOILEVAP_ROOTFRAC','SOILEVAP_GAWSER','SOILEVAP_UBC','SOILEVAP_ALL']
-lakeevapAlg = ['LAKE_EVAP_BASIC']
-openwaterevapAlg = ['OPEN_WATER_EVAP']
-infiltrationAlg = ['INF_RATIONAL','INF_SCS','INF_ALL_INFILTRATES','INF_GREEN_AMPT','INF_GA_SIMPLE',
-                    'INF_UPSCALED_GREEN_AMPT','INF_HBV','INF_UBC','INF_VIC','INF_VIC_ARNO','INF_PRMS','INF_HMETS','INF_GR4J'
-                    ]
-percolationAlg = ['PERC_GAWSER','PERC_LINEAR','PERC_LINEAR_ANALYTIC','PERC_POWER_LAW','PERC_PRMS','PERC_SACRAMENTO','PERC_CONSTANT','PERC_GR4J','PERC_GR4JEXCH','PERC_GR4JEXCH2']
-cappilaryriseAlg = ['CRISE_HBV']
-baseflowAlg = ['BASE_LINEAR','BASE_POWER_LAW','BASE_CONSTANT','BASE_VIC','BASE_THRESH_POWER','BASE_GR4J','BASE_TOPMODEL']
-interflowAlg = ['PRMS']
-seepageAlg = ['SEEP_LINEAR']
-depresoverflowAlg = ['DFLOW_THRESHPOW','DFLOW_LINEAR']
-lakereleaseAlg = ['LAKEREL_LINEAR']
-abstractionAlg = ['ABST_PERCENTAGE','ABST_FILL','ABST_SCS']
-snowmeltAlg = ['MELT_POTMELT']
-snowrefreezeAlg = ['FREEZE_DEGREE_DAY']
-snowbalanceAlg = ['SNOBAL_SIMPLE_MELT','SNOBAL_COLD_CONTENT','SNOBAL_HBV','SNOBAL_TWO_LAYER','SNOBAL_CEMA_NEIGE',
-                    'SNOBAL_GAWSER','SNOBAL_UBC', 'SNOBAL_HMETS','SNOBAL_UBCWM'
-                    ]
-snowtempevolveAlg = ['SNOTEMP_NEWTONS']
-glacierinfiltrationAlg = ["GINFIL_UBCWM"]    #Cannot be found in doc, must verify                
-sublimationAlg = ['SUBLIM_SVERDRUP','SUBLIM_KUZMIN','SUBLIM_CENTRAL_SIERRA','SUBLIM_PSBM','SUBLIM_WILLIAMS']
-snowalbedoevolveAlg = ['SNOALB_UBC','SNOALB_UBCWM']
 canopydripAlg = ['CANDRIP_RUTTER','CANDRIP_SLOWDRAIN']
-cropheatunitevAlg = ['CHU_ONTARIO']
-glaciermeltAlg = ['GMELT_SIMPLET_MELT','GMELT_HBV','GMELT_UBC']
-glacierreleaseAlg = ['GRELEASE_LINEAR','GRELEASE_HBV_EC']
+infiltrationAlg = ['INF_GREEN_AMPT','INF_GA_SIMPLE','INF_VIC_ARNO','INF_VIC',
+                   'INF_RATIONAL','INF_PRMS','INF_HBV','INF_UBC','INF_PARTITION',
+                   'INF_GR4J','INF_SCS','INF_SCS_NOABSTRACTION','INF_HMETS',
+                   'INF_ALL_INFILTRATES','INF_XINANXIANG','INF_PDM'
+                  ]
+percolationAlg = ['PERC_POWER_LAW','POWER_LAW','PERC_GAWSER','PERC_GAWSER_CONSTRAIN',
+                  'PERC_PRMS','PERC_SACRAMENTO','PERC_CONSTANT','PERC_LINEAR',
+                  'PERC_LINEAR_ANALYTIC','PERC_GR4J','PERC_GR4JEXCH','PERC_GR4JEXCH2','PERC_ASPEN'
+                 ]
+snowmeltAlg = ['MELT_POTMELT']  #Obsolete
+soilevapAlg = ['SOILEVAP_VIC','SOILEVAP_TOPMODEL','SOILEVAP_SEQUEN','SOILEVAP_ROOT',
+               'SOILEVAP_ROOT_CONSTRAIN','SOILEVAP_HBV','SOILEVAP_HYPR','SOILEVAP_UBC',
+               'SOILEVAP_PDM','SOILEVAP_CHU','SOILEVAP_GR4J','SOILEVAP_LINEAR',
+               'SOILEVAP_SACSMA','SOILEVAP_ALL'
+              ]
+snowbalanceAlg = ['SNOBAL_COLD_CONTENT','SNOBAL_SIMPLE_MELT','SNOBAL_UBCWM',
+                  'SNOBAL_HBV','SNOBAL_CEMA_NEIGE','SNOBAL_TWO_LAYER'
+                  'SNOBAL_GAWSER','SNOBAL_CRHM_EBSM','SNOBAL_HMETS'
+                 ]
+sublimationAlg = ['SUBLIM_SVERDRUP','SUBLIM_KUZMIN','SUBLIM_CENTRAL_SIERRA',
+                  'SUBLIM_PBSM','SUBLIM_KUCHMENT_GELFAN','SUBLIM_BULK_AERO'
+                 ]
+openwaterevapAlg = ['OPEN_WATER_EVAP','OPEN_WATER_RIPARIAN','OPEN_WATER_UWFS']
+precipalg = ['PRECIP_RAVEN','RAVEN_DEFAULT']
+interflowAlg = ['PRMS']
+snowrefreezeAlg = ['FREEZE_DEGREE_DAY']
 flushAlg = ['FLUSH_RAVEN','RAVEN_DEFAULT']
+cappilaryriseAlg = ['RISE_HBV','CRISE_HBV']
+lakeevapAlg = ['BASIC','LAKE_EVAP_BASIC']
+snowsqueezeAlg = ['SQUEEZE_RAVEN']  #:SnowSqueeze SQUEEZE_RAVEN SNOW_LIQ [state_var to_index]
+glaciermeltAlg = ['GMELT_HBV','GMELT_UBC','GMELT_SIMPLE_MELT']
+glacierreleaseAlg = ['GRELEASE_HBV_EC','LINEAR_STORAGE','GRELEASE_LINEAR','GRELEASE_LINEAR_ANALYTIC']
+canopysublimationAlg = ['CANEVP_ALL','CANEVP_MAXIMUM','SUBLIM_ALL','SUBLIM_MAXIMUM','SUBLIM_SVERDRUP',
+                        'SUBLIM_KUZMIN','SUBLIM_CENTRAL_SIERRA','SUBLIM_PBSM',
+                        'SUBLIM_KUCHMENT_GELFAN','SUBLIM_BULK_AERO'
+                       ]
 overflowAlg = ['OVERFLOW_RAVEN','RAVEN_DEFAULT']
+snowalbedoevolveAlg = ['SNOALB_UBCWM','SNOALB_CRHM_ESSERY','SNOALB_BAKER']
+cropheatunitevAlg = ['CHU_ONTARIO']
+abstractionAlg = ['ABST_SCS','ABST_PERCENTAGE','ABST_FILL',
+                  'ABST_PDMROF','ABST_UWFS'
+                 ]  #:Abstraction [string method] PONDED_WATER DEPRESSION/MULTIPLE
+glacierinfiltrationAlg = ["GINFIL_UBCWM"] 
 splitAlg = ['RAVEN_DEFAULT']
 convolutionAlg = ['CONVOL_GR4J_1','CONVOL_GR4J_2','CONVOL_GAMMA','CONVOL_GAMMA2']
-lateralflushAlg = ['RAVEN_DEFAULT']
-lateralequilibrateAlg = ['RAVEN_DEFAULT']
+snowtempevolveAlg = ['SNOTEMP_NEWTONS']
+depresoverflowAlg = ['DFLOW_THRESHPOW','DFLOW_LINEAR','DFLOW_WEIR']
+exchangeflowAlg = ['RAVEN_DEFAULT']#:ExchangeFlow RAVEN_DEFAULT [state_var from] [state_var mixing_zone]
+lateralflushAlg = ['RAVEN_DEFAULT'] #Interbasin
+seepageAlg = ['SEEP_LINEAR']
+rechargeAlg = ['RECHARGE_CONSTANT','RECHARGE_FROMFILE','RAVEN_DEFAULT',
+               'RECHARGE_CONSTANT_OVERLAP','RECHARGE_DATA','RECHARGE_FLUX'
+              ] #:Recharge RECHARGE_FROMFILE ATMOS_PRECIP SOIL[?]
+blowingsnowAlg = ['PBSM']   #:BlowingSnow PBSM MULTIPLE MULTIPLE
+lakereleaseAlg = ['LAKEREL_LINEAR']
+soilbalanceAlg = ['SOILBAL_SACSMA'] #:SoilBalance SOILBAL_SACSMA MULTIPLE MULTIPLE
+lateralequilibrateAlg = ['RAVEN_DEFAULT']   #Interbasin
 
 #Lists of the compartments of each algorithm. Can easily add new compartments if new compartments are added in Raven
 fromPrecip = ["ATMOS_PRECIP"]
