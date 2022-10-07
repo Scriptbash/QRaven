@@ -47,6 +47,7 @@ from .modules.templates.ubcwm import loadUbcwm
 from .modules.templates.gr4j import loadGr4j
 from .modules.templates.canshield import loadCanshield
 from .modules.templates.mohyse import loadMohyse
+from .modules.templates.HYPR import loadHypr
 
 class QRaven:
     """QGIS Plugin Implementation."""
@@ -212,6 +213,7 @@ class QRaven:
             self.dlg.btn_load_gr4j.clicked.connect(self.loadModels)
             self.dlg.btn_load_canadianshield.clicked.connect(self.loadModels)
             self.dlg.btn_load_mohyse.clicked.connect(self.loadModels)
+            self.dlg.btn_load_hypr.clicked.connect(self.loadModels)
             self.dlg.btn_reset.clicked.connect(self.loadModels)
             #If the checkbox is checked/unchecked, enables/disables the associated widget
             self.dlg.chk_duration.stateChanged.connect(self.toggleWidget)
@@ -2111,6 +2113,9 @@ class QRaven:
         elif widget.objectName() == 'btn_load_mohyse':
             resetGUI(self)
             loadMohyse(self)
+        elif widget.objectName() == 'btn_load_hypr':
+            resetGUI(self)
+            loadHypr(self)
             
  
 #This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
