@@ -566,12 +566,14 @@ class QRaven:
         combo_basedtype = QComboBox()
         combo_comparison = QComboBox()
         txt_hrutype = QLineEdit()
+        chk_mixingrate = QCheckBox()
         spin_pct = QDoubleSpinBox()
         chk_interbasin = QCheckBox()
         combo_proc.addItems(procname)   #Add a combobox in the new row with all the available processes
         combo_basedtype.setEnabled(False)
         combo_comparison.setEnabled(False)
         txt_hrutype.setEnabled(False)
+        chk_mixingrate.setEnabled(False)
         spin_pct.setEnabled(False)
         spin_pct.setDecimals(1)
         chk_interbasin.setEnabled(False)
@@ -583,13 +585,14 @@ class QRaven:
         table.setCellWidget(currentRow, 5, combo_basedtype)
         table.setCellWidget(currentRow, 6, combo_comparison)
         table.setCellWidget(currentRow, 7, txt_hrutype)
-        table.setCellWidget(currentRow, 8, spin_pct)
-        table.setCellWidget(currentRow, 9, chk_interbasin)
+        table.setCellWidget(currentRow, 8, chk_mixingrate)
+        table.setCellWidget(currentRow, 9, spin_pct)
+        table.setCellWidget(currentRow, 10, chk_interbasin)
 
         table.resizeColumnsToContents() #Resizes the width of the column automatically
         combo_proc.currentIndexChanged.connect(self.setProcAlg)  #Updates the algorithm combobox if the process changes
         chk_isconditional.stateChanged.connect(self.enableConditionalProc)
-
+    
     def removeTableRow(self):
         table = self.dlg.table_hydroprocess
         selectedRow = table.currentRow()
@@ -603,18 +606,16 @@ class QRaven:
         combo_to = QComboBox()
         spin_pct = QDoubleSpinBox()
         chk_interbasin = QCheckBox()
+        chk_mixingrate = QCheckBox()
         spin_pct.setEnabled(False)
-        
         chk_interbasin.setEnabled(False)
+        chk_mixingrate.setEnabled(False)
         currentWidget = self.dlg.sender()
-        #print(currentWidget)
         index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())
-        #print(index)
         widgetRow = index.row()
-        #print(index.row())
         combo_alg.clear()
         combo_alg.addItem('')
-       
+
         if isinstance(currentWidget, QComboBox):
             selectedProc = currentWidget.currentText()
             #print(selectedProc)
@@ -674,13 +675,14 @@ class QRaven:
                 combo_alg.addItems(glacierinfiltrationAlg)
             elif selectedProc == 'Flush':
                 combo_alg.addItems(flushAlg)
-                spin_pct.setEnabled(True)
+                chk_mixingrate.setEnabled(True)
             elif selectedProc == 'Overflow':
                 combo_alg.addItems(overflowAlg)
             elif selectedProc == 'Abstraction':
                 combo_alg.addItems(abstractionAlg)
             elif selectedProc == 'Split':
                 combo_alg.addItems(splitAlg)
+                chk_mixingrate.setEnabled(True)
             elif selectedProc == 'Convolve':
                 combo_alg.addItems(convolutionAlg)
             elif selectedProc == 'LateralFlush':
@@ -701,14 +703,20 @@ class QRaven:
                 combo_alg.addItems(blowingsnowAlg)
             elif selectedProc == 'SoilBalance':
                 combo_alg.addItems(soilbalanceAlg)
+            elif selectedProc == 'RedirectFlow':
+                combo_alg.setEnabled(False)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 1, combo_alg)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 2, combo_from)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 3, combo_to)
-        self.dlg.table_hydroprocess.setCellWidget(widgetRow, 8, spin_pct)
-        self.dlg.table_hydroprocess.setCellWidget(widgetRow, 9, chk_interbasin)
-        self.dlg.table_hydroprocess.resizeColumnsToContents()
-        combo_alg.currentIndexChanged.connect(lambda:self.setStorage(selectedProc))   #Updates the compartments combobox if the algorithm changed
+        self.dlg.table_hydroprocess.setCellWidget(widgetRow, 8, chk_mixingrate)
+        self.dlg.table_hydroprocess.setCellWidget(widgetRow, 9, spin_pct)
 
+        self.dlg.table_hydroprocess.setCellWidget(widgetRow, 10, chk_interbasin)
+        self.dlg.table_hydroprocess.resizeColumnsToContents()
+        chk_mixingrate.stateChanged.connect(self.enableMixingRate)
+
+        combo_alg.currentIndexChanged.connect(lambda:self.setStorage(selectedProc))   #Updates the compartments combobox if the algorithm changed
+        self.setStorage(selectedProc)   #Needed for RedirectFlow... there's probably a better way
 
     #This method sets the combobox values for the from and to compartments based on the selected algorithm
     def setStorage(self,selectedProc):
@@ -899,6 +907,11 @@ class QRaven:
             elif selectedAlg in cropheatunitevAlg:
                 combo_from.addItems(fromCropheatunit)
                 combo_to.addItems(toCropheatunit)
+            elif selectedProc == 'RedirectFlow':
+                #fromredirectflow = self.dlg.table_hydroprocess.cellWidget(widgetRow-1,2).currentText()
+                #toredirectflow = self.dlg.table_hydroprocess.cellWidget(widgetRow-1,3).currentText()
+                combo_from.addItems(tmpanyCompartment)
+                combo_to.addItems(tmpanyCompartment) 
             elif selectedProc == 'Flush' or selectedProc == "Overflow" or selectedProc == 'Split' or selectedProc == 'LateralFlush':
                 combo_from.addItems(tmpanyCompartment)
                 combo_to.addItems(tmpanyCompartment)
@@ -932,6 +945,23 @@ class QRaven:
             table.setCellWidget(widgetRow, 6, combo_comparison)
             table.setCellWidget(widgetRow, 7, txt_hrutype)
             table.resizeColumnsToContents() #Resizes the width of the column automatically
+
+    def enableMixingRate(self):
+        table = self.dlg.table_hydroprocess
+        currentWidget = self.dlg.sender()
+        index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())
+        widgetRow = index.row()
+        spin_pct = QDoubleSpinBox()
+        spin_pct.setSingleStep(0.1)
+        spin_pct.setMaximum(1.0)
+        spin_pct.setMinimum(0.0)
+        spin_pct.setDecimals(1)
+        if isinstance(currentWidget, QCheckBox):
+            if currentWidget.isChecked():
+                spin_pct.setEnabled(True)
+            else:
+                spin_pct.setEnabled(False)
+        table.setCellWidget(widgetRow, 9, spin_pct)
 
 
     def addTransportProc(self):
@@ -2144,7 +2174,7 @@ procname = ['','Baseflow','CanopyEvaporation','CanopyDrip','Infiltration',
             'GlacierMelt','GlacierRelease','CanopySnowEvaporation','CanopySublimation',
             'Overflow','SnowAlbedoEvolve','CropHeatUnitEvolve','Abstraction','GlacierInfiltration',
             'Split','Convolve','SnowTempEvolve','DepressionOverflow','ExchangeFlow',
-            'LateralFlush','Seepage','Recharge','BlowingSnow','LakeRelease','SoilBalance','LateralEquilibrate'
+            'LateralFlush','Seepage','Recharge','BlowingSnow','LakeRelease','SoilBalance','LateralEquilibrate','RedirectFlow'
            ]
 procname.sort() #Sorts the list ascending
 
