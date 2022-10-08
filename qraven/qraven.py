@@ -47,7 +47,7 @@ from .modules.templates.ubcwm import loadUbcwm
 from .modules.templates.gr4j import loadGr4j
 from .modules.templates.canshield import loadCanshield
 from .modules.templates.mohyse import loadMohyse
-from .modules.templates.HYPR import loadHypr
+from .modules.templates.hypr import loadHypr
 
 class QRaven:
     """QGIS Plugin Implementation."""
@@ -2249,7 +2249,7 @@ fromSeepage = ['DEPRESSION']
 toSeepage = []
 fromDepressOverflow = ['DEPRESSION']
 toDepressOverflow = ['SURFACE_WATER']
-fromLakeRelease = ['LAKE']      #!!!! THIS ONE IS INCORRECT
+fromLakeRelease = ['LAKE_STORAGE','SURFACE_WATER']      #!!!! THIS ONE IS INCORRECT
 toLakeRelease = ['SURFACE_WATER']
 fromAbstraction = ['PONDED_WATER']
 toAbstraction = ['DEPRESSION']
