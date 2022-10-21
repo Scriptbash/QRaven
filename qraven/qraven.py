@@ -282,6 +282,7 @@ class QRaven:
             self.dlg.btn_runraven.clicked.connect(self.runRaven)
             self.dlg.btn_gatheroutput.clicked.connect(self.drawHydrographs)
             self.dlg.btn_ravenview.clicked.connect(self.openRavenView)
+            self.dlg.btn_fillrvptemplate.clicked.connect(self.fillRVPTemplate)
             #----------------------------------------#
 
         # show the dialog
@@ -2033,7 +2034,7 @@ class QRaven:
         prefix = self.dlg.txt_runnameprefix.text()  #Get the chosen prefix
         runname = self.dlg.txt_runrunname.text()    #Get the runname (this can be empty)
         pathtomodel =inputdir+separator+prefix      #Get the complete path to the model
-
+       
         pythonConsole = self.iface.mainWindow().findChild(QDockWidget, 'PythonConsole')
         if not pythonConsole or not pythonConsole.isVisible():  #If the python console is closed, open it
             self.iface.actionShowPythonDialog().trigger()       #It allows the user to see the Raven progress
@@ -2046,6 +2047,55 @@ class QRaven:
         except Exception as e:
             print(e)
             self.iface.messageBar().pushMessage("Error", "An error occured while running Raven. Check the python console for more details.",level=Qgis.Critical)
+    
+    #This method is a direct port of RavenR rvn_rvp_fill_template function
+    #All credits go to Robert Chlumsky
+    #https://github.com/rchlumsk/RavenR/blob/master/R/rvn_rvp_fill_template.R
+    def fillRVPTemplate(self):
+        inputdir = self.dlg.file_runinputdir.filePath() #Get the path where the model files are stored
+        outputdir = self.dlg.file_runoutputdir.filePath()   #Get the path where to save the results of the simulation
+        prefix = self.dlg.txt_runnameprefix.text()  #Get the chosen prefix
+        rvifile = prefix+'.rvi'
+        rvhfile = prefix+'.rvh'
+        rvptemplatefile = prefix+'.rvp_temp.rvp'
+        
+        try:
+            with open(inputdir+separator+rvifile, "r") as rvi:
+                rvilines = rvi.readlines()
+                for line in rvilines:
+                    if ':SoilModel' in line:
+                        soilmodelline = line.split()
+                        soilmodel = soilmodelline[soilmodelline.index(':SoilModel')+1]
+                        if soilmodel == 'SOIL_ONE_LAYER':
+                            soil_layers = 1
+                        elif soilmodel == 'SOIL_TWO_LAYER':
+                            soil_layers = 2
+                        elif soilmodel == 'SOIL_MULTILAYER':
+                            soil_layers = int(soilmodelline[soilmodelline.index(':SoilModel')+2])
+                        else:
+                            print('Unknown soil model, please check your rvi file')
+                            #Raise exception?
+        except Exception as e:
+            print('An error occured when reading the rvi file.')
+            print(e)
+            self.iface.messageBar().pushMessage("Error", "An error occured when reading the rvi file. Check the python console for more details.",level=Qgis.Critical)
+        try:
+            with open(inputdir+separator+rvhfile, "r") as rvh:
+                rvhlines = rvh.readlines()
+
+        except Exception as e:
+            print('An error occured when reading the rvh file.')
+            print(e)
+            self.iface.messageBar().pushMessage("Error", "An error occured when reading the rvh file. Check the python console for more details.",level=Qgis.Critical)
+        try:
+            with open(inputdir+separator+rvptemplatefile, "r") as rvptmp:
+                rvptmplines = rvptmp.readlines()
+
+        except Exception as e:
+            print('An error occured when reading the rvp template file.')
+            print(e)
+            self.iface.messageBar().pushMessage("Error", "An error occured when reading the rvp template file. Check the python console for more details.",level=Qgis.Critical)
+
 
     #This method opens a new tab in the default web browser and points to the RavenView tool
     def openRavenView(self):
