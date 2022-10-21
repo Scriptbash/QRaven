@@ -762,6 +762,7 @@ class QRaven:
             compartment = "CONVOLUTION["+str(layer)+']'
             fromConvolution.append(compartment) 
             tmpanyCompartment.append(compartment)
+        tmpanyCompartment.sort()
         currentWidget = self.dlg.sender()   #Get the widget that was triggered
         index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())    #Get the index of the widget
         widgetRow = index.row() #Get the row in which the widget is set
@@ -1485,7 +1486,6 @@ class QRaven:
                     else:
                         processesList.append('')
             processesList.append("NewLine")
-        print(processesList)
         return processesList
 
 
@@ -2316,7 +2316,7 @@ toSnowbalColdcontent = ['SNOW','SNOW_LIQ','SURFACE_WATER',"COLD_CONTENT","ENERGY
 fromSnowbalHBV = ['SNOW','SNOW_LIQ']
 toSnowbalHBV = ['SNOW_LIQ','SOIL[0]']
 fromSnowbaltwolayer = ['NEW_SNOW','PONDED_WATER','SNOW','SNOW_LIQ[0]','SNOW_LIQ[1]','COLD_CONTENT[0]','COLD_CONTENT[1]','SNOW_TEMP','CUM_SNOWMELT']
-toSnowbaltwolayer = ['SNOW',' SNOW_LIQ[0]','SNOW_LIQ[1]','PONDED_WATER','COLD_CONTENT[0]','COLD_CONTENT[1]','SNOW_TEMP','CUM_SNOWMELT']
+toSnowbaltwolayer = ['SNOW','SNOW_LIQ[0]','SNOW_LIQ[1]','PONDED_WATER','COLD_CONTENT[0]','COLD_CONTENT[1]','SNOW_TEMP','CUM_SNOWMELT']
 fromSnowbalCema = ['SNOW','SNOW_COVER']
 toSnowbalCema = ['PONDED_WATER','SNOW_COVER']
 fromSnowbalGawser = ['SNOW','SNOW_LIQ','COLD_CONTENT']
@@ -2350,12 +2350,19 @@ toExchangeflow = []
 fromConvolution = []
 fromCropheatunit = ['CROP_HEAT_UNIT']
 toCropheatunit = ['CROP_HEAT_UNIT']
-# Must finish to add all the possible compartments in this list
-anyCompartment = ["SNOW","PONDED_WATER","DEPRESSION","WETLAND","CANOPY","CANOPY_SNOW",
-                  "SURFACE_WATER", "ATMOSPHERE","SNOW_LIQ","SNOW_DEFICIT","NEW_SNOW",
-                  "COLD_CONTENT","SNOW_DEPTH","MULTIPLE","CROP_HEAT_UNIT"
-                 ]
-                #'ATMOS_PRECIP','LAKE','SOIL',
-                #'GROUNDWATER','PONDED_WATER','GLACIER_ICE','GLACIER','TRUNK',
-                #'ROOT','LAKE_STORAGE','CONVOLUTION','CONV_STOR',  
-                 
+
+anyCompartment = list(set().union(
+                                  fromPrecip,toPrecip,fromCanevp,toCanevp,fromSoilevap,toSoilevap,
+                                  toLakeevap,fromOpenwaterevap,toOpenwaterevap,fromInfiltration,toInfiltration,
+                                  toInfiltUBC,toInfiltHMETS,fromInfiltGAsimple,toInfiltGAsimple,toBaseflow,fromRecharge,
+                                  fromSnowsqueeze,toInterflow,fromSeepage,fromDepressOverflow,toDepressOverflow,
+                                  fromLakeRelease,toLakeRelease,fromAbstraction,toAbstraction,toAbstractionPDMROF,fromSnowmelt,
+                                  toSnowmelt,fromSnowrefreeze,fromSnowbalSimple,toSnowbalSimple,fromSnowbalColdcontent,toSnowbalColdcontent,
+                                  fromSnowbalHBV,toSnowbalHBV,fromSnowbaltwolayer,toSnowbaltwolayer,fromSnowbalCema,
+                                  toSnowbalCema,fromSnowbalGawser,toSnowbalGawser,fromSnowbalUBCWM,toSnowbalUBCWM,fromSnowbalHMETS,
+                                  toSnowbalHMETS,fromSnowbalCRHM,toSnowbalCRHM,fromSnowtempEvolve,toSnowtempEvolve,
+                                  fromBlowingsnow,toBlowingsnow,fromSublimation,toSublimation,fromSnowalbevo,toSnowalbevo,
+                                  fromSnowalbevoBaker,toSnowalbevoBaker,fromCanopydrip,toCanopydrip,fromGlaciermelt,toGlaciermelt,
+                                  fromGlacierInfiltration,toGlacierInfiltration,fromGlacierRelease,toGlacierRelease,
+                                  fromCropheatunit,toCropheatunit
+                                  ))
