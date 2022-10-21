@@ -1091,8 +1091,8 @@ class QRaven:
                     rvi.write(":HydrologicProcesses")
                     for process in hydroProcessesList:
                         if firstprocess == True:
-                            if process == 'Overflow':   #If the process is :Overflow
-                                rvi.write('\n\t   :-->Overflow'.ljust(30))
+                            if process == 'RedirectFlow':   #If the process is :Overflow
+                                rvi.write('\n\t   :-->RedirectFlow'.ljust(30))
                                 #processcount +=1
                                 firstprocess = False
                             else:
@@ -1108,10 +1108,14 @@ class QRaven:
                                 #processcount +=1
                                 firstprocess = False
                                 pass
-                            elif process == 'True': #The process is conditional
+                            elif process == 'condTrue': #The process is conditional
                                 rvi.write('\n\t   :-->Conditional'.ljust(30))
                                 #processcount += 1
                                 firstprocess = False
+                            elif process == 'mixTrue':
+                                pass
+                            elif process == 'interbasinTrue':
+                                rvi.write('INTERBASIN'.ljust(30))
                             else:
                                 rvi.write(' {:<20}'.format(process))
                     rvi.write("\n:EndHydrologicProcesses")
@@ -1450,7 +1454,7 @@ class QRaven:
         return paramsDict
 
 
-
+    #This method creates a list with all the hydrologic processes, which is then used to write them into the rvi file
     def getHydroProcess(self):
         table = self.dlg.table_hydroprocess
         rows = table.rowCount()
@@ -1463,12 +1467,25 @@ class QRaven:
                     processesList.append(currentWidget.currentText())
                 elif isinstance(currentWidget, QCheckBox):
                     if currentWidget.isChecked():
-                        processesList.append('True')
+                        if col == 4:
+                            processesList.append('condTrue')    #The checkbox is Conditional
+                        elif col == 8:
+                            processesList.append('mixTrue') #The checkbox is Mixing rate
+                        elif col == 10:
+                            #processesList.append('interbasinTrue')  #The checkbox is Interbasin
+                            processesList.insert(-5,'interbasinTrue')
                     else:
                         processesList.append('False')
                 elif isinstance(currentWidget, QLineEdit):
                     processesList.append(currentWidget.text().upper())
+                elif isinstance(currentWidget, QDoubleSpinBox):
+                    if table.cellWidget(row,8).isChecked() or table.cellWidget(row,0).currentText() == 'LateralEquilibrate':
+                        #processesList.append("{:.1f}".format(currentWidget.value()))
+                        processesList.insert(-5,"{:.1f}".format(currentWidget.value()))
+                    else:
+                        processesList.append('')
             processesList.append("NewLine")
+        print(processesList)
         return processesList
 
 
