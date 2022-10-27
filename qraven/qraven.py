@@ -22,7 +22,6 @@
  ***************************************************************************/
 """
 
-from cgitb import reset
 from pathlib import Path
 from qgis.PyQt.QtCore import *
 from qgis.PyQt.QtGui import QIcon
@@ -49,6 +48,7 @@ from .modules.templates.canshield import loadCanshield
 from .modules.templates.mohyse import loadMohyse
 from .modules.templates.hypr import loadHypr
 from .modules.templates.hymod import loadHymod
+from .modules.PyRavenR import *
 
 class QRaven:
     """QGIS Plugin Implementation."""
@@ -2048,133 +2048,57 @@ class QRaven:
             print(e)
             self.iface.messageBar().pushMessage("Error", "An error occured while running Raven. Check the python console for more details.",level=Qgis.Critical)
     
-    #This method is a direct port of RavenR rvn_rvp_fill_template function
+    #This method is a port of the RavenR rvn_rvp_fill_template function
     #All credits go to Robert Chlumsky
     #https://github.com/rchlumsk/RavenR/blob/master/R/rvn_rvp_fill_template.R
     def fillRVPTemplate(self):
         inputdir = self.dlg.file_runinputdir.filePath() #Get the path where the model files are stored
-        outputdir = self.dlg.file_runoutputdir.filePath()   #Get the path where to save the results of the simulation
         prefix = self.dlg.txt_runnameprefix.text()  #Get the chosen prefix
         rvifile = prefix+'.rvi'
         rvhfile = prefix+'.rvh'
+        rvpfile = prefix+'.rvp'
         rvptemplatefile = prefix+'.rvp_temp.rvp'
-        
-        try:
-            with open(inputdir+separator+rvifile, "r") as rvi:
-                rvilines = rvi.readlines()
-                for line in rvilines:
-                    if ':SoilModel' in line:
-                        soilmodelline = line.split()
-                        soilmodel = soilmodelline[soilmodelline.index(':SoilModel')+1]
-                        if soilmodel == 'SOIL_ONE_LAYER':
-                            soil_layers = 1
-                        elif soilmodel == 'SOIL_TWO_LAYER':
-                            soil_layers = 2
-                        elif soilmodel == 'SOIL_MULTILAYER':
-                            soil_layers = int(soilmodelline[soilmodelline.index(':SoilModel')+2])
-                        else:
-                            print('Unknown soil model, please check your rvi file')
-                            #Raise exception?
-        except Exception as e:
-            print('An error occured when reading the rvi file.')
-            print(e)
-            self.iface.messageBar().pushMessage("Error", "An error occured when reading the rvi file. Check the python console for more details.",level=Qgis.Critical)
-        try:
-            soilclasses = []
-            landuseclasses = []
-            vegclasses = []
-            terrainclasses = []
-            soilprofileclasses = []
-            data=[] #List with the raw HRUs text
-            hrudata=[] #List with the HRUs text cleaned up (no units, no comments)
-            isheadertext = True #The line read is before the HRUs information
-            isfootertext = False   #The line read is after the HRUs information
-            with open(inputdir+separator+rvhfile, "r") as rvh:
-                rvhlines = rvh.readlines()
-                for line in rvhlines:
-                    if ':HRUs' in line:
-                        isheadertext = False
-                        #Reached the HRUs information block
-                    elif ':EndHRUs' in line:
-                        isfootertext = True
-                        #Reached the end of the HRUs information block
-                    if isheadertext == False and isfootertext == False:
-                        line = line.replace('\t','')
-                        cells = line.strip().split(',')
-                        data.append(cells)
-                    else:
-                        pass
-                #Removes the useless rows
-                for row in range(len(data)):
-                    if ':HRUs' in data[row]:
-                        pass
-                    elif ':Units' in data[row]:
-                        pass
-                    # elif '#' in data[row]:
-                    #     pass
-                    else:
-                        hrudata.append(data[row])
-                
-                #Extracts the column index of the useful info
-                for col in range(len(hrudata[0])):
-                    if 'LAND_USE_CLASS' in hrudata[0][col]:
-                        landuseclasscol = col-1
-                    elif 'TERRAIN_CLASS' in hrudata[0][col]:
-                        terrainclasscol = col-1
-                    elif 'VEG_CLASS' in hrudata[0][col]:
-                        vegclasscol = col-1
-                    elif 'SOIL_PROFILE' in hrudata[0][col]:
-                        soilprofilecol = col-1
-                    else:
-                        pass
-                del hrudata[0]
-                #Get the classes information
-                for row in range(len(hrudata)):
-                    if hrudata[row][landuseclasscol].strip() not in landuseclasses:
-                        landuseclasses.append(hrudata[row][landuseclasscol].strip())
-                    if hrudata[row][terrainclasscol].strip() not in terrainclasses:
-                        terrainclasses.append(hrudata[row][terrainclasscol].strip())
-                    if  hrudata[row][vegclasscol].strip() not in vegclasses:
-                        vegclasses.append(hrudata[row][vegclasscol].strip())
-                    if hrudata[row][soilprofilecol].strip() not in soilprofileclasses:
-                        soilprofileclasses.append(hrudata[row][soilprofilecol].strip())
-                # print(soilprofileclasses)
-                # print(landuseclasses)
-                # print(terrainclasses)
-                # print(vegclasses)
-
-        except Exception as e:
-            print('An error occured when reading the rvh file.')
-            print(e)
-            self.iface.messageBar().pushMessage("Error", "An error occured when reading the rvh file. Check the python console for more details.",level=Qgis.Critical)
-        try:
-            with open(inputdir+separator+rvptemplatefile, "r") as rvptmp:
-                rvptmplines = rvptmp.readlines()
-
-        except Exception as e:
-            print('An error occured when reading the rvp template file.')
-            print(e)
-            self.iface.messageBar().pushMessage("Error", "An error occured when reading the rvp template file. Check the python console for more details.",level=Qgis.Critical)
+        ravenparametersfile = Path(__file__).parent / "RavenParameters.dat"
+        soil_layers = getSoilLayers(inputdir,separator,rvifile)
+        #!!Simplify the functions to only process the requested information!!
+        landuseclasses,terrainclasses,vegclasses,soilprofileclasses = extractRVHhrus(inputdir,separator,rvhfile)
+        rvptemplate = readRVPtemplate(inputdir,separator,rvptemplatefile)
         #Read the RavenParameters.dat file and create a 2d list of its values
+        rvn_paramsList = readRavenParams(ravenparametersfile)
         try:
-            rvn_paramsList = []
-            paramscolname = ["param", "class_type", "units", "auto","default", "min", "max"]
-            ravenparametersfile = Path(__file__).parent / "RavenParameters.dat"
-            with open(ravenparametersfile, "r") as rvn_params:
-                rdr = csv.DictReader(filter(lambda row: row[0]!='#', rvn_params))
-                dictlist = list(rdr)
-                rvn_paramsDict = [d[None] for d in dictlist if None in d] 
-                for row in range(len(rvn_paramsDict)):
-                    for col in range(len(rvn_paramsDict[row])):
-                        cell = rvn_paramsDict[row][col].split(' ') 
-                        rvn_paramsList.append(cell)
-                rvn_paramsList.insert(0,paramscolname)  #Add the columns names
-                print(rvn_paramsList)
-            
+            with open(inputdir+separator+rvpfile, "w") as rvp:
+                #Write header
+                rvp.write("#".ljust(74, '=')+"#"
+                          "\n# Generated by QRaven".ljust(76)+"#"+
+                          "\n# Please report any issues on https://github.com/Scriptbash/QRaven/issues #\n"+
+                          "#".ljust(74, '=')+"#\n\n")
+                #Write soil classes
+                rvp.write(("#".ljust(10, '-')+"SOIL CLASSES".ljust(21,'-')+"#\n\n"))
+                rvp.write(":SoilClasses\n"+
+                          " ".ljust(3)+":Attributes,\n"+
+                          " ".ljust(3)+":Units,\n")
+                for soil in range(soil_layers):
+                    #rvp.write("SOIL_"+str((soil+1)).zfill(2))
+                    rvp.write(" ".ljust(5)+"SOIL_"+str(soil+1)+",\n")
+                rvp.write(":EndSoilSoilClasses\n\n")
+                #Write land use classes
+                writeAttributes(':LandUseClasses',rvp,rvptemplate,rvn_paramsList,landuseclasses,soil_layers)
+                #Write vegetation classes
+                writeAttributes(':VegetationClasses',rvp,rvptemplate,rvn_paramsList,vegclasses,soil_layers)
+                #Write soil profiles
+                writeAttributes(':SoilProfiles',rvp,rvptemplate,rvn_paramsList,soilprofileclasses,soil_layers)
+                #Write global parameters
+                writeGlobalParameters(rvp,rvptemplate,rvn_paramsList)
+                #Write soil parameters
+                writeParametersList(':SoilParameterList',rvp,rvptemplate,rvn_paramsList,soil_layers)
+                #Write land use parameters
+                writeParametersList(':LandUseParameterList',rvp,rvptemplate,rvn_paramsList,landuseclasses)
+                #Write vegetation parameters
+                writeParametersList(':VegetationParameterList',rvp,rvptemplate,rvn_paramsList,vegclasses)
+            self.iface.messageBar().pushSuccess("Success", "RVP file written successfully")
         except Exception as e:
-            print('An error occured when reading the RavenParameters.dat file.')
+            print('An error occured when attempting to write the RVP file.')
             print(e)
-            self.iface.messageBar().pushMessage("Error", "An error occured when reading the Raven parameters file. Check the python console for more details.",level=Qgis.Critical)
 
     #This method opens a new tab in the default web browser and points to the RavenView tool
     def openRavenView(self):
@@ -2234,7 +2158,6 @@ class QRaven:
                 except:
                     data[headers[5]][i] = 0
                     print("Warning : A value could not be converted from string to float. Overwritting with 0.")
-
             fig, ax = plt.subplots()
             ax.plot(data["date"], data[headers[3]], label=headers[3]) #Plots the precipitations by dates
             ax.plot(data["date"], data[headers[4]],label=headers[4])  #Plots the flow by dates
