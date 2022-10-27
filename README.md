@@ -3,7 +3,7 @@ A QGIS Plugin to help generate input files for Raven
 
 ## Description
 
-QRaven aims to simplify the creation of the primary input file (RVI) and HRU/Basin definition file (RVH) for the Raven hydrological modelling framework. It allows the user to choose all the options for the RVI file and it automates the setup, as well as the use of the BasinMaker python library and the GridWeight Generator. It can run a model, draw the hydrograph and open RavenView using the default web browser.
+QRaven aims to simplify the creation of the input files for the Raven hydrological modelling framework. It allows the user to choose all the options for the primary input file (.rvi) and it automates the setup, as well as the use of the BasinMaker python library for the HRU/Basin definition file (.rvh). It can run models, draw hydrographs and open RavenView using the default web browser. QRaven can also automatically fill the classed parameter input file (.rvp) using default values and it can generate grid weights blocks using the GridWeightGenerator script.
 
 ## Getting Started
 
@@ -105,6 +105,7 @@ Try to run the executable again with ./RavenExecutableMacOS_v3.5.exe. There shou
   * The RunName is only required if the command :RunName is used in the .rvi file. It should be added automatically after selecting an input folder
   * Once Raven has finished processing the model, the hydrograph can be viewed by clicking on the "Draw hydrograph" button
   * By clicking on the RavenView button, RavenView will open in a new tab in the user's default web browser
+  * If the :CreateRVPTemplate command was used in the .rvi file before processing the model, the Auto fill rvp template button can be used to automatically generate a .rvp file with default values
   * Screenshots
     
     ![image](https://user-images.githubusercontent.com/98601298/188149995-0dbed886-7906-412a-b798-09bae286959e.png)
@@ -114,6 +115,7 @@ Try to run the executable again with ./RavenExecutableMacOS_v3.5.exe. There shou
 ## Credits
 * The BasinMaker tools used in the plugins are developped by Ming and its official website can be found at : http://hydrology.uwaterloo.ca/basinmaker/
 * The GridWeights Generator is made by Julie and the script can be found at : https://github.com/julemai/GridWeightsGenerator 
+* The Auto fill rvp template feature is heavily based on RavenR's rvn_rvp_fill_template function by Robert Chlumsky : https://github.com/rchlumsk/RavenR/blob/master/R/rvn_rvp_fill_template.R
 
 ## Help
 
