@@ -1,4 +1,7 @@
-# QRaven
+<img src= "https://user-images.githubusercontent.com/98601298/206937821-d1d04252-11ac-4094-974f-fda63e1f4cca.png" width = 25% align="right">
+
+# QRaven 
+
 A QGIS Plugin to help generate input files for Raven
 
 ## Description
