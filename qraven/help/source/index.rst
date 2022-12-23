@@ -19,7 +19,7 @@ Contents:
    installation.rst
 
 .. toctree::
-   :caption: Usage
+   :caption: User documentation
 
    usage.rst
    
