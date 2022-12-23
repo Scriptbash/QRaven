@@ -8,13 +8,22 @@ Welcome to QRaven's documentation!
 
 Contents:
 
+
 .. toctree::
    :maxdepth: 2
+  
+   
+.. toctree::
+   :caption: Installation
+   
+   installation.rst
 
-Indices and tables
-==================
+.. toctree::
+   :caption: Usage
 
-* :ref:`Installation`
-* :ref:`modindex`
-* :ref:`search`
+   usage.rst
+   
+.. toctree::
+   :caption: Contribute
 
+   contribute.rst
