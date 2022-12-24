@@ -10,7 +10,7 @@ To use QRaven, first install a recent version of QGIS (3.20 and above):
 `https://qgis.org/en/site/forusers/download.html <https://qgis.org/en/site/forusers/download.html>`_
 
 
-Some features, such as the BasinMaker tools and the GridWeight Generator, require Docker to be installed. You can get Docker here:
+Some features, such as the BasinMaker tools and the GridWeight Generator, require Docker to be installed. If you are not planning on using those features, you can skip this step. Otherwise, you can get Docker here:
 `https://docs.docker.com/get-docker <https://docs.docker.com/get-docker>`_
 
 
