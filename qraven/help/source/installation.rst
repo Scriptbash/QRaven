@@ -20,8 +20,8 @@ Some features, such as the BasinMaker tools and the GridWeight Generator, requir
 
       sudo usermod -aG docker $USER
 
-For more information, go to:
-`https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user <https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user>`_
+   For more information, go to:
+   `https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user <https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user>`_
 
 
 Plugin installation
