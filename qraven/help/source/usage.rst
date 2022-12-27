@@ -35,8 +35,8 @@ Create a RVH file
 
 .. _gridweights:
 
-Associate a NetCDF grid to HRUs
--------------------------------
+Associate a NetCDF grid to the HRUs
+-----------------------------------
 .. warning::
   The Docker daemon must be running to use this feature.
 

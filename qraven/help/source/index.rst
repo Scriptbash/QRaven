@@ -28,3 +28,8 @@ If you find any errors or typos, please `report them <https://github.com/Scriptb
    :caption: Contribute
 
    contribute.rst
+
+.. toctree::
+   :caption: Tutorial
+
+   tutorial.rst
