@@ -71,6 +71,11 @@ If an error occurs and they are not filled automatically, please submit a `bug r
 1. **Filename prefix** : The name of the .rvi file (without the file extension)
 2. **RunName** : The text following the command ":RunName" if used in the .rvi file. 
 
+.. figure:: https://user-images.githubusercontent.com/98601298/188149995-0dbed886-7906-412a-b798-09bae286959e.png
+  :width: 600
+  
+  Example of a the Run Model interface.
+
 Draw the hydrograph
 -------------------
 After running a Raven model successfully (with or without QRaven), you will be able to draw the resulting hydrograph.
@@ -92,7 +97,7 @@ In order to use this feature, a few steps are required.
 1. Make sure the ":CreateRVPTemplate" command is used inside the .rvi file.
 2. Run the model.
 3. Click on the "Auto fill rvp template".
-4. Review the generated .rvp file for any values that doe not have a default value. Those values will show as "0.12345".
+4. Review the generated .rvp file for any values that do not have a default value. Those values will show as "0.12345".
 
 .. note::
   This feature needs more testing and could have many oversights. To help improve it, please submit any problems you encounter by opening a `new issue <https://github.com/Scriptbash/QRaven/issues>`_.
