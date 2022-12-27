@@ -5,11 +5,16 @@
 <h3 align="center">A QGIS Plugin to help generate input files for Raven</h3>
 
 <p align="center">
-<img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Scriptbash/QRaven?display_name=tag">
+
+<a href="https://github.com/Scriptbash/QRaven/releases">
+    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Scriptbash/QRaven?display_name=tag">
+</a>
 <a href='https://qraven.readthedocs.io/en/latest/?badge=latest'>
     <img src='https://readthedocs.org/projects/qraven/badge/?version=latest' alt='Documentation Status' />
 </a>
-<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Scriptbash/Qraven">
+<a href="https://github.com/Scriptbash/QRaven/commits/main">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Scriptbash/Qraven">
+</a>
 </p>
 
 ---
