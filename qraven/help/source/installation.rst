@@ -1,5 +1,5 @@
 Installation
-=====
+============
 
 .. _Installation:
 
@@ -25,7 +25,7 @@ Some features, such as the BasinMaker tools and the GridWeight Generator, requir
 
 
 Plugin installation
---------------
+-------------------
 Now that QGIS is installed, simply download the latest release of QRaven here:
 `https://github.com/Scriptbash/QRaven/releases/latest/download/qraven.zip <https://github.com/Scriptbash/QRaven/releases/latest/download/qraven.zip>`_
 
