@@ -6,7 +6,8 @@
 Welcome to QRaven's documentation!
 ============================================
 
-Contents:
+You will find all the information about QRaven, from installing it to contributing to its development.
+If you find any errors or typos, please `report them <https://github.com/Scriptbash/QRaven/issues>`_.
 
 
 .. toctree::

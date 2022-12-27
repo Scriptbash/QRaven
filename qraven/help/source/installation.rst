@@ -44,4 +44,4 @@ Finally, click on "Install from ZIP", select the downloaded qraven.zip file and 
   :width: 600
 
 .. note::
-   The plugin will look for an update each time QGIS is started. If it finds one, you will have a small notification at the bottom of the plugin window.
+   The plugin will look for an update each time QGIS is started. If it finds one, you will have a small notification at the bottom of the plugin window. Simply follow the previous steps to install the new update.
