@@ -35,7 +35,7 @@ To get started, head over to the QRaven <a href='https://qraven.readthedocs.io'>
 
 ## Contribute
 <p align ="justify">
-If you want to get involve with QRaven's development, please read the <a href="https://qraven.readthedocs.io/en/latest/contribute.html">contribution guide.</a>
+If you want to get involved with QRaven's development, please read the <a href="https://qraven.readthedocs.io/en/latest/contribute.html">contribution guide.</a>
 </p>
 
 ## Credits
