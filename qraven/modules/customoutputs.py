@@ -82,3 +82,31 @@ def toggleVariable(self,row):
         combo_variable2.setEnabled(True)
     else:
         combo_variable2.setEnabled(False)
+
+def getOutputs(self):
+
+    table = self.dlg.table_customoutputs
+    rows = table.rowCount()
+    cols = table.columnCount()
+    outputs = []
+    for row in range(rows):
+        tmpoutput = []
+        for col in range(cols):
+            currentWidget = table.cellWidget(row,col)
+            if isinstance(currentWidget, QComboBox):
+                if currentWidget.isEnabled():
+                    if col == 7:
+                        tmpoutput.append('.And. ' + currentWidget.currentText())
+                    else:
+                        tmpoutput.append(currentWidget.currentText())
+                else:
+                    tmpoutput.append('')
+    
+            elif isinstance(currentWidget, QDoubleSpinBox):
+                if currentWidget.isEnabled():
+                    tmpoutput.append("{:.1f}".format(currentWidget.value()))
+                else:
+                    tmpoutput.append('')
+        outputs.append(tmpoutput) 
+    print(outputs)
+    return outputs

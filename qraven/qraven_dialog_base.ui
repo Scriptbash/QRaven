@@ -2485,10 +2485,10 @@
         <widget class="QTableWidget" name="table_customoutputs">
          <property name="geometry">
           <rect>
-           <x>0</x>
-           <y>30</y>
-           <width>1061</width>
-           <height>511</height>
+           <x>-1</x>
+           <y>43</y>
+           <width>1071</width>
+           <height>491</height>
           </rect>
          </property>
          <column>
@@ -2540,8 +2540,8 @@
         <widget class="QPushButton" name="btn_rmoutput">
          <property name="geometry">
           <rect>
-           <x>200</x>
-           <y>0</y>
+           <x>210</x>
+           <y>20</y>
            <width>181</width>
            <height>21</height>
           </rect>
@@ -2553,8 +2553,8 @@
         <widget class="QPushButton" name="btn_addoutput">
          <property name="geometry">
           <rect>
-           <x>0</x>
-           <y>0</y>
+           <x>10</x>
+           <y>20</y>
            <width>181</width>
            <height>21</height>
           </rect>
