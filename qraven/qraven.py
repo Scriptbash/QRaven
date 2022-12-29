@@ -49,6 +49,7 @@ from .modules.templates.mohyse import loadMohyse
 from .modules.templates.hypr import loadHypr
 from .modules.templates.hymod import loadHymod
 from .modules.PyRavenR import *
+from .modules import customoutputs
 
 class QRaven:
     """QGIS Plugin Implementation."""
@@ -233,13 +234,16 @@ class QRaven:
             self.dlg.chk_chunksize.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_readlivefile.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_disablehru.stateChanged.connect(self.toggleWidget)
-            self.dlg.combo_stat1.activated.connect(self.toggleWidget)
-            self.dlg.combo_stat2.activated.connect(self.toggleWidget)
-            self.dlg.combo_stat3.activated.connect(self.toggleWidget)
-            self.dlg.combo_stat4.activated.connect(self.toggleWidget)
-            self.dlg.combo_stat5.activated.connect(self.toggleWidget)
-            self.dlg.combo_stat6.activated.connect(self.toggleWidget)
-            self.dlg.combo_stat7.activated.connect(self.toggleWidget)
+
+            self.dlg.btn_addoutput.clicked.connect(lambda:customoutputs.addoutput(self))
+            self.dlg.btn_rmoutput.clicked.connect(lambda:customoutputs.removeoutput(self))
+            # self.dlg.combo_stat1.activated.connect(self.toggleWidget)
+            # self.dlg.combo_stat2.activated.connect(self.toggleWidget)
+            # self.dlg.combo_stat3.activated.connect(self.toggleWidget)
+            # self.dlg.combo_stat4.activated.connect(self.toggleWidget)
+            # self.dlg.combo_stat5.activated.connect(self.toggleWidget)
+            # self.dlg.combo_stat6.activated.connect(self.toggleWidget)
+            # self.dlg.combo_stat7.activated.connect(self.toggleWidget)
             #Calls the function to enable/disable the spinbox for the soilmodel and the interpolation lineedit
             self.dlg.combo_soilmod.currentIndexChanged.connect(self.toggleSoilModel)
             self.dlg.combo_interpo.activated.connect(self.toggleInterpolation)
@@ -373,69 +377,69 @@ class QRaven:
                 self.dlg.txt_disablehru.setEnabled(True)
             else:
                 self.dlg.txt_disablehru.setEnabled(False)
-        elif widget.objectName() == "combo_stat1":
-            if self.dlg.combo_stat1.currentText().lower() == "histogram":
-                self.dlg.spin_min1.setEnabled(True)
-                self.dlg.spin_max1.setEnabled(True)
-                self.dlg.spin_bin1.setEnabled(True)
-            else:
-                self.dlg.spin_min1.setEnabled(False)
-                self.dlg.spin_max1.setEnabled(False)
-                self.dlg.spin_bin1.setEnabled(False)
-        elif widget.objectName() == "combo_stat2":
-            if self.dlg.combo_stat2.currentText().lower() == "histogram":
-                self.dlg.spin_min2.setEnabled(True)
-                self.dlg.spin_max2.setEnabled(True)
-                self.dlg.spin_bin2.setEnabled(True)
-            else:
-                self.dlg.spin_min2.setEnabled(False)
-                self.dlg.spin_max2.setEnabled(False)
-                self.dlg.spin_bin2.setEnabled(False)
-        elif widget.objectName() == "combo_stat3":
-            if self.dlg.combo_stat3.currentText().lower() == "histogram":
-                self.dlg.spin_min3.setEnabled(True)
-                self.dlg.spin_max3.setEnabled(True)
-                self.dlg.spin_bin3.setEnabled(True)
-            else:
-                self.dlg.spin_min3.setEnabled(False)
-                self.dlg.spin_max3.setEnabled(False)
-                self.dlg.spin_bin3.setEnabled(False)
-        elif widget.objectName() == "combo_stat4":
-            if self.dlg.combo_stat4.currentText().lower() == "histogram":
-                self.dlg.spin_min4.setEnabled(True)
-                self.dlg.spin_max4.setEnabled(True)
-                self.dlg.spin_bin4.setEnabled(True)
-            else:
-                self.dlg.spin_min4.setEnabled(False)
-                self.dlg.spin_max4.setEnabled(False)
-                self.dlg.spin_bin4.setEnabled(False)
-        elif widget.objectName() == "combo_stat5":
-            if self.dlg.combo_stat5.currentText().lower() == "histogram":
-                self.dlg.spin_min5.setEnabled(True)
-                self.dlg.spin_max5.setEnabled(True)
-                self.dlg.spin_bin5.setEnabled(True)
-            else:
-                self.dlg.spin_min5.setEnabled(False)
-                self.dlg.spin_max5.setEnabled(False)
-                self.dlg.spin_bin5.setEnabled(False)
-        elif widget.objectName() == "combo_stat6":
-            if self.dlg.combo_stat6.currentText().lower() == "histogram":
-                self.dlg.spin_min6.setEnabled(True)
-                self.dlg.spin_max6.setEnabled(True)
-                self.dlg.spin_bin6.setEnabled(True)
-            else:
-                self.dlg.spin_min6.setEnabled(False)
-                self.dlg.spin_max6.setEnabled(False)
-                self.dlg.spin_bin6.setEnabled(False)
-        elif widget.objectName() == "combo_stat7":
-            if self.dlg.combo_stat7.currentText().lower() == "histogram":
-                self.dlg.spin_min7.setEnabled(True)
-                self.dlg.spin_max7.setEnabled(True)
-                self.dlg.spin_bin7.setEnabled(True)
-            else:
-                self.dlg.spin_min7.setEnabled(False)
-                self.dlg.spin_max7.setEnabled(False)
-                self.dlg.spin_bin7.setEnabled(False)
+        # elif widget.objectName() == "combo_stat1":
+        #     if self.dlg.combo_stat1.currentText().lower() == "histogram":
+        #         self.dlg.spin_min1.setEnabled(True)
+        #         self.dlg.spin_max1.setEnabled(True)
+        #         self.dlg.spin_bin1.setEnabled(True)
+        #     else:
+        #         self.dlg.spin_min1.setEnabled(False)
+        #         self.dlg.spin_max1.setEnabled(False)
+        #         self.dlg.spin_bin1.setEnabled(False)
+        # elif widget.objectName() == "combo_stat2":
+        #     if self.dlg.combo_stat2.currentText().lower() == "histogram":
+        #         self.dlg.spin_min2.setEnabled(True)
+        #         self.dlg.spin_max2.setEnabled(True)
+        #         self.dlg.spin_bin2.setEnabled(True)
+        #     else:
+        #         self.dlg.spin_min2.setEnabled(False)
+        #         self.dlg.spin_max2.setEnabled(False)
+        #         self.dlg.spin_bin2.setEnabled(False)
+        # elif widget.objectName() == "combo_stat3":
+        #     if self.dlg.combo_stat3.currentText().lower() == "histogram":
+        #         self.dlg.spin_min3.setEnabled(True)
+        #         self.dlg.spin_max3.setEnabled(True)
+        #         self.dlg.spin_bin3.setEnabled(True)
+        #     else:
+        #         self.dlg.spin_min3.setEnabled(False)
+        #         self.dlg.spin_max3.setEnabled(False)
+        #         self.dlg.spin_bin3.setEnabled(False)
+        # elif widget.objectName() == "combo_stat4":
+        #     if self.dlg.combo_stat4.currentText().lower() == "histogram":
+        #         self.dlg.spin_min4.setEnabled(True)
+        #         self.dlg.spin_max4.setEnabled(True)
+        #         self.dlg.spin_bin4.setEnabled(True)
+        #     else:
+        #         self.dlg.spin_min4.setEnabled(False)
+        #         self.dlg.spin_max4.setEnabled(False)
+        #         self.dlg.spin_bin4.setEnabled(False)
+        # elif widget.objectName() == "combo_stat5":
+        #     if self.dlg.combo_stat5.currentText().lower() == "histogram":
+        #         self.dlg.spin_min5.setEnabled(True)
+        #         self.dlg.spin_max5.setEnabled(True)
+        #         self.dlg.spin_bin5.setEnabled(True)
+        #     else:
+        #         self.dlg.spin_min5.setEnabled(False)
+        #         self.dlg.spin_max5.setEnabled(False)
+        #         self.dlg.spin_bin5.setEnabled(False)
+        # elif widget.objectName() == "combo_stat6":
+        #     if self.dlg.combo_stat6.currentText().lower() == "histogram":
+        #         self.dlg.spin_min6.setEnabled(True)
+        #         self.dlg.spin_max6.setEnabled(True)
+        #         self.dlg.spin_bin6.setEnabled(True)
+        #     else:
+        #         self.dlg.spin_min6.setEnabled(False)
+        #         self.dlg.spin_max6.setEnabled(False)
+        #         self.dlg.spin_bin6.setEnabled(False)
+        # elif widget.objectName() == "combo_stat7":
+        #     if self.dlg.combo_stat7.currentText().lower() == "histogram":
+        #         self.dlg.spin_min7.setEnabled(True)
+        #         self.dlg.spin_max7.setEnabled(True)
+        #         self.dlg.spin_bin7.setEnabled(True)
+        #     else:
+        #         self.dlg.spin_min7.setEnabled(False)
+        #         self.dlg.spin_max7.setEnabled(False)
+        #         self.dlg.spin_bin7.setEnabled(False)
         #Conditions for the BasinMaker RVH section below
         elif widget.objectName() == 'buttonGroup':  #buttonGroup is the group of radiobuttons for the mode of define project spatial extent
             if self.dlg.rb_modehybasin.isChecked(): #If the selected mode is using_hybasin
@@ -764,7 +768,7 @@ class QRaven:
             compartment = "CONVOLUTION["+str(layer)+']'
             fromConvolution.append(compartment) 
             tmpanyCompartment.append(compartment)
-            
+
         tmpanyCompartment = list(dict.fromkeys(tmpanyCompartment))
         tmpanyCompartment.sort()
         currentWidget = self.dlg.sender()   #Get the widget that was triggered
@@ -1526,136 +1530,136 @@ class QRaven:
         return processesList
 
 
-    #This method fetches the custom output widgets' values and returns them into a list
-    def getCustomOutput(self):
-        '''Loops through all the custom output widgets to retrieve their values
+    # #This method fetches the custom output widgets' values and returns them into a list
+    # def getCustomOutput(self):
+    #     '''Loops through all the custom output widgets to retrieve their values
         
-           Returns a list
-        '''
-        #Get the values of the comboboxes
-        timeperiod1 = self.dlg.combo_time1.currentText()
-        timeperiod2 = self.dlg.combo_time2.currentText()
-        timeperiod3 = self.dlg.combo_time3.currentText()
-        timeperiod4 = self.dlg.combo_time4.currentText()
-        timeperiod5 = self.dlg.combo_time5.currentText()
-        timeperiod6 = self.dlg.combo_time6.currentText()
-        timeperiod7 = self.dlg.combo_time7.currentText()
-        combostat1 = self.dlg.combo_stat1.currentText()
-        combostat2 = self.dlg.combo_stat2.currentText()
-        combostat3 = self.dlg.combo_stat3.currentText()
-        combostat4 = self.dlg.combo_stat4.currentText()
-        combostat5 = self.dlg.combo_stat5.currentText()
-        combostat6 = self.dlg.combo_stat6.currentText()
-        combostat7 = self.dlg.combo_stat7.currentText()
+    #        Returns a list
+    #     '''
+    #     #Get the values of the comboboxes
+    #     timeperiod1 = self.dlg.combo_time1.currentText()
+    #     timeperiod2 = self.dlg.combo_time2.currentText()
+    #     timeperiod3 = self.dlg.combo_time3.currentText()
+    #     timeperiod4 = self.dlg.combo_time4.currentText()
+    #     timeperiod5 = self.dlg.combo_time5.currentText()
+    #     timeperiod6 = self.dlg.combo_time6.currentText()
+    #     timeperiod7 = self.dlg.combo_time7.currentText()
+    #     combostat1 = self.dlg.combo_stat1.currentText()
+    #     combostat2 = self.dlg.combo_stat2.currentText()
+    #     combostat3 = self.dlg.combo_stat3.currentText()
+    #     combostat4 = self.dlg.combo_stat4.currentText()
+    #     combostat5 = self.dlg.combo_stat5.currentText()
+    #     combostat6 = self.dlg.combo_stat6.currentText()
+    #     combostat7 = self.dlg.combo_stat7.currentText()
 
-        #Sets an empty string for the spinboxes if the statistic is not histogram. Otherwise, gets the value of the spinboxes
-        if combostat1 != 'HISTOGRAM':
-            spinmin1 = ''
-            spinmax1 = ''
-            spinbin1 = ''
-        else:
-            spinmin1 = str(self.dlg.spin_min1.value())
-            spinmax1 = str(self.dlg.spin_max1.value())
-            spinbin1 = str(self.dlg.spin_bin1.value())
+    #     #Sets an empty string for the spinboxes if the statistic is not histogram. Otherwise, gets the value of the spinboxes
+    #     if combostat1 != 'HISTOGRAM':
+    #         spinmin1 = ''
+    #         spinmax1 = ''
+    #         spinbin1 = ''
+    #     else:
+    #         spinmin1 = str(self.dlg.spin_min1.value())
+    #         spinmax1 = str(self.dlg.spin_max1.value())
+    #         spinbin1 = str(self.dlg.spin_bin1.value())
         
-        if combostat2 != 'HISTOGRAM':
-            spinmin2 = ''
-            spinmax2 = ''
-            spinbin2 = ''
-        else:
-            spinmin2 = str(self.dlg.spin_min1.value())
-            spinmax2 = str(self.dlg.spin_max1.value())
-            spinbin2 = str(self.dlg.spin_bin1.value())
+    #     if combostat2 != 'HISTOGRAM':
+    #         spinmin2 = ''
+    #         spinmax2 = ''
+    #         spinbin2 = ''
+    #     else:
+    #         spinmin2 = str(self.dlg.spin_min1.value())
+    #         spinmax2 = str(self.dlg.spin_max1.value())
+    #         spinbin2 = str(self.dlg.spin_bin1.value())
                     
-        if combostat3 != 'HISTOGRAM':
-            spinmin3 = ''
-            spinmax3 = ''
-            spinbin3 = ''
-        else:
-            spinmin3 = str(self.dlg.spin_min1.value())
-            spinmax3 = str(self.dlg.spin_max1.value())
-            spinbin3 = str(self.dlg.spin_bin1.value())
+    #     if combostat3 != 'HISTOGRAM':
+    #         spinmin3 = ''
+    #         spinmax3 = ''
+    #         spinbin3 = ''
+    #     else:
+    #         spinmin3 = str(self.dlg.spin_min1.value())
+    #         spinmax3 = str(self.dlg.spin_max1.value())
+    #         spinbin3 = str(self.dlg.spin_bin1.value())
         
-        if combostat4 != 'HISTOGRAM':
-            spinmin4 = ''
-            spinmax4 = ''
-            spinbin4 = ''
-        else:
-            spinmin4 = str(self.dlg.spin_min1.value())
-            spinmax4 = str(self.dlg.spin_max1.value())
-            spinbin4 = str(self.dlg.spin_bin1.value())
+    #     if combostat4 != 'HISTOGRAM':
+    #         spinmin4 = ''
+    #         spinmax4 = ''
+    #         spinbin4 = ''
+    #     else:
+    #         spinmin4 = str(self.dlg.spin_min1.value())
+    #         spinmax4 = str(self.dlg.spin_max1.value())
+    #         spinbin4 = str(self.dlg.spin_bin1.value())
 
-        if combostat5 != 'HISTOGRAM':
-            spinmin5 = ''
-            spinmax5 = ''
-            spinbin5 = ''
-        else:
-            spinmin5 = str(self.dlg.spin_min1.value())
-            spinmax5 = str(self.dlg.spin_max1.value())
-            spinbin5 = str(self.dlg.spin_bin1.value())
+    #     if combostat5 != 'HISTOGRAM':
+    #         spinmin5 = ''
+    #         spinmax5 = ''
+    #         spinbin5 = ''
+    #     else:
+    #         spinmin5 = str(self.dlg.spin_min1.value())
+    #         spinmax5 = str(self.dlg.spin_max1.value())
+    #         spinbin5 = str(self.dlg.spin_bin1.value())
         
-        if combostat6 != 'HISTOGRAM':
-            spinmin6 = ''
-            spinmax6 = ''
-            spinbin6 = ''
-        else:
-            spinmin6 = str(self.dlg.spin_min1.value())
-            spinmax6 = str(self.dlg.spin_max1.value())
-            spinbin6 = str(self.dlg.spin_bin1.value())
+    #     if combostat6 != 'HISTOGRAM':
+    #         spinmin6 = ''
+    #         spinmax6 = ''
+    #         spinbin6 = ''
+    #     else:
+    #         spinmin6 = str(self.dlg.spin_min1.value())
+    #         spinmax6 = str(self.dlg.spin_max1.value())
+    #         spinbin6 = str(self.dlg.spin_bin1.value())
         
-        if combostat7 != 'HISTOGRAM':
-            spinmin7 = ''
-            spinmax7 = ''
-            spinbin7 = ''
-        else:
-            spinmin7 = str(self.dlg.spin_min1.value())
-            spinmax7 = str(self.dlg.spin_max1.value())
-            spinbin7 = str(self.dlg.spin_bin1.value())
-        #Gets the variable value
-        txtvariable1 = self.dlg.txt_var1.text() 
-        txtvariable2 = self.dlg.txt_var2.text() 
-        txtvariable3 = self.dlg.txt_var3.text() 
-        txtvariable4 = self.dlg.txt_var4.text() 
-        txtvariable5 = self.dlg.txt_var5.text() 
-        txtvariable6 = self.dlg.txt_var6.text() 
-        txtvariable7 = self.dlg.txt_var7.text() 
-        #Gets the combobox the spatial evaluation 
-        comboeval1 = self.dlg.combo_eval1.currentText()
-        comboeval2 = self.dlg.combo_eval2.currentText()
-        comboeval3 = self.dlg.combo_eval3.currentText()
-        comboeval4 = self.dlg.combo_eval4.currentText()
-        comboeval5 = self.dlg.combo_eval5.currentText()
-        comboeval6 = self.dlg.combo_eval6.currentText()
-        comboeval7 = self.dlg.combo_eval7.currentText()
-        #Creates the list containing all the custom output information
-        customOutputList = [ timeperiod1, combostat1, spinmin1, spinmax1, spinbin1, txtvariable1,comboeval1,
-                             timeperiod2, combostat2, spinmin2, spinmax2, spinbin2,txtvariable2,comboeval2,
-                             timeperiod3, combostat3, spinmin3, spinmax3, spinbin3,txtvariable3,comboeval3,
-                             timeperiod4, combostat4, spinmin4, spinmax4, spinbin4,txtvariable4,comboeval4,
-                             timeperiod5, combostat5, spinmin5, spinmax5, spinbin5,txtvariable5,comboeval5,
-                             timeperiod6, combostat6, spinmin6, spinmax6, spinbin6,txtvariable6,comboeval6,
-                             timeperiod7, combostat7, spinmin7, spinmax7, spinbin7,txtvariable7,comboeval7,
-                           ]
-        # #Loop through all the Custom Ouput widgets in order to get their values and add them to a list
-        # for i in range(self.dlg.gridLayout.count()):
-        #     if isinstance(self.dlg.gridLayout.itemAt(i).widget(),QComboBox):    #Get the combobox values
-        #         if self.dlg.gridLayout.itemAt(i).widget().currentText() != '':
-        #             customOutputList.append(self.dlg.gridLayout.itemAt(i).widget().currentText())
-        #         else: 
-        #             customOutputList.append(" ")    #If the combobox is empty, places an empty space at its place in the list
-        #     elif isinstance(self.dlg.gridLayout.itemAt(i).widget(),QSpinBox):
-        #         if self.dlg.gridLayout.itemAt(i).widget().isEnabled() == True:
-        #             customOutputList.append(str(self.dlg.gridLayout.itemAt(i).widget().value()))
-        #         else:
-        #             customOutputList.append(" ")
-        #     else:
-        #         if self.dlg.gridLayout.itemAt(i).widget().text() != '': #Get the line edit values
-        #             customOutputList.append(self.dlg.gridLayout.itemAt(i).widget().text())
-        #         else: 
-        #             customOutputList.append(" ") #If the line edit is empty, places an empty space at its place in the list
-        # print(customOutputList)
+    #     if combostat7 != 'HISTOGRAM':
+    #         spinmin7 = ''
+    #         spinmax7 = ''
+    #         spinbin7 = ''
+    #     else:
+    #         spinmin7 = str(self.dlg.spin_min1.value())
+    #         spinmax7 = str(self.dlg.spin_max1.value())
+    #         spinbin7 = str(self.dlg.spin_bin1.value())
+    #     #Gets the variable value
+    #     txtvariable1 = self.dlg.txt_var1.text() 
+    #     txtvariable2 = self.dlg.txt_var2.text() 
+    #     txtvariable3 = self.dlg.txt_var3.text() 
+    #     txtvariable4 = self.dlg.txt_var4.text() 
+    #     txtvariable5 = self.dlg.txt_var5.text() 
+    #     txtvariable6 = self.dlg.txt_var6.text() 
+    #     txtvariable7 = self.dlg.txt_var7.text() 
+    #     #Gets the combobox the spatial evaluation 
+    #     comboeval1 = self.dlg.combo_eval1.currentText()
+    #     comboeval2 = self.dlg.combo_eval2.currentText()
+    #     comboeval3 = self.dlg.combo_eval3.currentText()
+    #     comboeval4 = self.dlg.combo_eval4.currentText()
+    #     comboeval5 = self.dlg.combo_eval5.currentText()
+    #     comboeval6 = self.dlg.combo_eval6.currentText()
+    #     comboeval7 = self.dlg.combo_eval7.currentText()
+    #     #Creates the list containing all the custom output information
+    #     customOutputList = [ timeperiod1, combostat1, spinmin1, spinmax1, spinbin1, txtvariable1,comboeval1,
+    #                          timeperiod2, combostat2, spinmin2, spinmax2, spinbin2,txtvariable2,comboeval2,
+    #                          timeperiod3, combostat3, spinmin3, spinmax3, spinbin3,txtvariable3,comboeval3,
+    #                          timeperiod4, combostat4, spinmin4, spinmax4, spinbin4,txtvariable4,comboeval4,
+    #                          timeperiod5, combostat5, spinmin5, spinmax5, spinbin5,txtvariable5,comboeval5,
+    #                          timeperiod6, combostat6, spinmin6, spinmax6, spinbin6,txtvariable6,comboeval6,
+    #                          timeperiod7, combostat7, spinmin7, spinmax7, spinbin7,txtvariable7,comboeval7,
+    #                        ]
+    #     # #Loop through all the Custom Ouput widgets in order to get their values and add them to a list
+    #     # for i in range(self.dlg.gridLayout.count()):
+    #     #     if isinstance(self.dlg.gridLayout.itemAt(i).widget(),QComboBox):    #Get the combobox values
+    #     #         if self.dlg.gridLayout.itemAt(i).widget().currentText() != '':
+    #     #             customOutputList.append(self.dlg.gridLayout.itemAt(i).widget().currentText())
+    #     #         else: 
+    #     #             customOutputList.append(" ")    #If the combobox is empty, places an empty space at its place in the list
+    #     #     elif isinstance(self.dlg.gridLayout.itemAt(i).widget(),QSpinBox):
+    #     #         if self.dlg.gridLayout.itemAt(i).widget().isEnabled() == True:
+    #     #             customOutputList.append(str(self.dlg.gridLayout.itemAt(i).widget().value()))
+    #     #         else:
+    #     #             customOutputList.append(" ")
+    #     #     else:
+    #     #         if self.dlg.gridLayout.itemAt(i).widget().text() != '': #Get the line edit values
+    #     #             customOutputList.append(self.dlg.gridLayout.itemAt(i).widget().text())
+    #     #         else: 
+    #     #             customOutputList.append(" ") #If the line edit is empty, places an empty space at its place in the list
+    #     # print(customOutputList)
         
-        return customOutputList 
+    #     return customOutputList 
 
     #This method gets all the RVH parameters and returns them into a dictionary
     def getRVHparams(self):
