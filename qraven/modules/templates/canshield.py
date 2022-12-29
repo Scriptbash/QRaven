@@ -54,7 +54,7 @@ def loadCanshield(self):
         combo_proc = table.cellWidget(3,0)
         combo_proc.setCurrentText("CanopySublimation")
         combo_alg = table.cellWidget(3,1)
-        combo_alg.setCurrentText("CANEVP_MAXIMUM")
+        combo_alg.setCurrentText("SUBLIM_MAXIMUM")
         combo_from = table.cellWidget(3,2)
         combo_from.setCurrentText("CANOPY_SNOW")
         combo_to = table.cellWidget(3,3)
