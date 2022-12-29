@@ -44,7 +44,7 @@ def loadHbvec(self):
         combo_proc = table.cellWidget(1,0)
         combo_proc.setCurrentText("Precipitation")
         combo_alg = table.cellWidget(1,1)
-        combo_alg.setCurrentText("RAVEN_DEFAULT")
+        combo_alg.setCurrentText("PRECIP_RAVEN")
         combo_from = table.cellWidget(1,2)
         combo_from.setCurrentText("ATMOS_PRECIP")
         combo_to = table.cellWidget(1,3)
@@ -62,7 +62,7 @@ def loadHbvec(self):
         combo_proc = table.cellWidget(3,0)
         combo_proc.setCurrentText("CanopySublimation")
         combo_alg = table.cellWidget(3,1)
-        combo_alg.setCurrentText("CANEVP_ALL")
+        combo_alg.setCurrentText("SUBLIM_ALL")
         combo_from = table.cellWidget(3,2)
         combo_from.setCurrentText("CANOPY_SNOW")
         combo_to = table.cellWidget(3,3)
@@ -187,7 +187,7 @@ def loadHbvec(self):
         combo_alg = table.cellWidget(14,1)
         combo_alg.setCurrentText("LAKE_EVAP_BASIC")
         combo_from = table.cellWidget(14,2)
-        combo_from.setCurrentText("SOIL[0]")
+        combo_from.setCurrentText("SOIL[2]")
         combo_to = table.cellWidget(14,3)
         combo_to.setCurrentText("ATMOSPHERE")
 
@@ -227,25 +227,27 @@ def loadHbvec(self):
         combo_to = table.cellWidget(18,3)
         combo_to.setCurrentText("SURFACE_WATER")
 
-        #MUST CHANGE TWO NEXT PERCOLATION FOR LATERALFLUSH EQUILIBRATE
-        #ONCE PCT IS ADDED TO THE TABLE
         combo_proc = table.cellWidget(19,0)
-        combo_proc.setCurrentText("Percolation")
+        combo_proc.setCurrentText("LateralEquilibrate")
         combo_alg = table.cellWidget(19,1)
-        combo_alg.setCurrentText("PERC_CONSTANT")
+        combo_alg.setCurrentText("RAVEN_DEFAULT")
         combo_from = table.cellWidget(19,2)
-        combo_from.setCurrentText("SOIL[1]")
+        combo_from.setCurrentText("AllHRUs")
         combo_to = table.cellWidget(19,3)
-        combo_to.setCurrentText("SOIL[2]")
+        combo_to.setCurrentText("SOIL[1]")
+        spin_pct = table.cellWidget(19,9)
+        spin_pct.setValue(1.0)
 
         combo_proc = table.cellWidget(20,0)
-        combo_proc.setCurrentText("Percolation")
+        combo_proc.setCurrentText("LateralEquilibrate")
         combo_alg = table.cellWidget(20,1)
-        combo_alg.setCurrentText("PERC_CONSTANT")
+        combo_alg.setCurrentText("RAVEN_DEFAULT")
         combo_from = table.cellWidget(20,2)
-        combo_from.setCurrentText("SOIL[1]")
+        combo_from.setCurrentText("AllHRUs")
         combo_to = table.cellWidget(20,3)
         combo_to.setCurrentText("SOIL[2]")
+        spin_pct = table.cellWidget(20,9)
+        spin_pct.setValue(1.0)
 
         table.resizeColumnsToContents() #Resizes the width of the column automatically
         

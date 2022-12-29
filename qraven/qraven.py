@@ -788,6 +788,9 @@ class QRaven:
             elif selectedAlg in canopevapAlg:
                 combo_from.addItems(fromCanevp)
                 combo_to.addItems(toCanevp)
+            elif selectedAlg in canopysublimationAlg:
+                combo_from.addItems(fromCanopySublimation)
+                combo_to.addItems(toCanopySublimation)
             elif selectedAlg in soilevapAlg:
                 combo_from.addItems(fromSoilevap)
                 combo_to.addItems(toSoilevap) 
@@ -921,6 +924,8 @@ class QRaven:
                 combo_from.addItems(tmpanyCompartment)
                 combo_to.addItems(tmpanyCompartment) 
             elif selectedProc == 'Flush' or selectedProc == "Overflow" or selectedProc == 'Split' or selectedProc == 'LateralFlush' or selectedProc == 'LateralEquilibrate':
+                if selectedProc == 'LateralEquilibrate':
+                    tmpanyCompartment.append('AllHRUs')
                 combo_from.addItems(tmpanyCompartment)
                 combo_to.addItems(tmpanyCompartment)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 2, combo_from) #Set the combobox for the from compartment
@@ -2298,7 +2303,7 @@ lakeevapAlg = ['BASIC','LAKE_EVAP_BASIC']
 snowsqueezeAlg = ['SQUEEZE_RAVEN']  #:SnowSqueeze SQUEEZE_RAVEN SNOW_LIQ [state_var to_index]
 glaciermeltAlg = ['GMELT_HBV','GMELT_UBC','GMELT_SIMPLE_MELT']
 glacierreleaseAlg = ['GRELEASE_HBV_EC','LINEAR_STORAGE','GRELEASE_LINEAR','GRELEASE_LINEAR_ANALYTIC']
-canopysublimationAlg = ['CANEVP_ALL','CANEVP_MAXIMUM','SUBLIM_ALL','SUBLIM_MAXIMUM','SUBLIM_SVERDRUP',
+canopysublimationAlg = ['SUBLIM_ALL','SUBLIM_MAXIMUM','SUBLIM_SVERDRUP',
                         'SUBLIM_KUZMIN','SUBLIM_CENTRAL_SIERRA','SUBLIM_PBSM',
                         'SUBLIM_KUCHMENT_GELFAN','SUBLIM_BULK_AERO'
                        ]
@@ -2333,6 +2338,8 @@ toPrecip = ["SNOW","PONDED_WATER","DEPRESSION","WETLAND","CANOPY","CANOPY_SNOW",
            ]
 fromCanevp = ["CANOPY",'']
 toCanevp = ["ATMOSPHERE",'']
+fromCanopySublimation = ['CANOPY_SNOW','']
+toCanopySublimation = ['ATRMOSPHERE','']
 fromSoilevap = ["SOIL[0]",'MULTIPLE','']
 toSoilevap = ["ATMOSPHERE",'']
 toLakeevap = ["ATMOSPHERE",'']
