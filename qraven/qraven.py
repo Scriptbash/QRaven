@@ -709,6 +709,7 @@ class QRaven:
                 combo_alg.addItems(soilbalanceAlg)
             elif selectedProc == 'RedirectFlow':
                 combo_alg.setEnabled(False)
+            
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 1, combo_alg)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 2, combo_from)
         self.dlg.table_hydroprocess.setCellWidget(widgetRow, 3, combo_to)
@@ -763,6 +764,8 @@ class QRaven:
             compartment = "CONVOLUTION["+str(layer)+']'
             fromConvolution.append(compartment) 
             tmpanyCompartment.append(compartment)
+            
+        tmpanyCompartment = list(dict.fromkeys(tmpanyCompartment))
         tmpanyCompartment.sort()
         currentWidget = self.dlg.sender()   #Get the widget that was triggered
         index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())    #Get the index of the widget
@@ -2257,7 +2260,7 @@ procname = ['','Baseflow','CanopyEvaporation','CanopyDrip','Infiltration',
             'Percolation','SnowMelt','SoilEvaporation','SnowBalance',
             'Sublimation','OpenWaterEvaporation','Precipitation','Interflow',
             'SnowRefreeze','Flush','CapillaryRise','LakeEvaporation','SnowSqueeze',
-            'GlacierMelt','GlacierRelease','CanopySnowEvaporation','CanopySublimation',
+            'GlacierMelt','GlacierRelease','CanopySublimation',
             'Overflow','SnowAlbedoEvolve','CropHeatUnitEvolve','Abstraction','GlacierInfiltration',
             'Split','Convolve','SnowTempEvolve','DepressionOverflow','ExchangeFlow',
             'LateralFlush','Seepage','Recharge','BlowingSnow','LakeRelease','SoilBalance','LateralEquilibrate','RedirectFlow'
