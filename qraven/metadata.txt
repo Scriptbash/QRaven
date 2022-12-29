@@ -6,7 +6,7 @@
 name=QRaven
 qgisMinimumVersion=3.20
 description=A QGIS plugin to help generate input files for Raven
-version=2.1.1
+version=2.2.0
 author=Francis Lapointe
 email=francis.lapointe5@usherbrooke.ca
 
