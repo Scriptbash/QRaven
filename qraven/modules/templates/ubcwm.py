@@ -35,6 +35,10 @@ def loadUbcwm(self):
         combo_proc.setCurrentText("SnowAlbedoEvolve")
         combo_alg = table.cellWidget(0,1)
         combo_alg.setCurrentText("SNOALB_UBCWM")
+        combo_from = table.cellWidget(0,2)
+        combo_from.setCurrentText('')
+        combo_to = table.cellWidget(0,3)
+        combo_to.setCurrentText('')
 
         combo_proc = table.cellWidget(1,0)
         combo_proc.setCurrentText("SnowBalance")
