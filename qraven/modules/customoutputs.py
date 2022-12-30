@@ -19,6 +19,8 @@ def addoutput(self):
     spin_min = QDoubleSpinBox()
     spin_max = QDoubleSpinBox()
     spin_bin = QDoubleSpinBox()
+
+    txt_filename = QLineEdit()
    
     spin_min.setEnabled(False)
     spin_bin.setEnabled(False)
@@ -45,6 +47,7 @@ def addoutput(self):
     table.setCellWidget(currentRow, 6, combo_variable1)
     table.setCellWidget(currentRow, 7, combo_variable2)
     table.setCellWidget(currentRow, 8, combo_eval)
+    table.setCellWidget(currentRow, 9, txt_filename)
 
     table.resizeColumnsToContents() #Resizes the width of the column automatically
 
@@ -105,6 +108,11 @@ def getOutputs(self):
             elif isinstance(currentWidget, QDoubleSpinBox):
                 if currentWidget.isEnabled():
                     tmpoutput.append("{:.1f}".format(currentWidget.value()))
+                else:
+                    tmpoutput.append('')
+            elif isinstance(currentWidget, QLineEdit):
+                if currentWidget.text() !='':
+                    tmpoutput.append(currentWidget.text())
                 else:
                     tmpoutput.append('')
         outputs.append(tmpoutput) 

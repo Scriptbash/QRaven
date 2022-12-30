@@ -2536,6 +2536,11 @@
            <string>Spatial evaluation</string>
           </property>
          </column>
+         <column>
+          <property name="text">
+           <string>Filename</string>
+          </property>
+         </column>
         </widget>
         <widget class="QPushButton" name="btn_rmoutput">
          <property name="geometry">
