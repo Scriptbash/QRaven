@@ -31,12 +31,20 @@ def addoutput(self):
     timeperiod = ['DAILY','MONTHLY','YEARLY','WATER_YEARLY','CONTINUOUS']
     statistic = ['AVERAGE','MINIMUM','MAXIMUM','RANGE','MEDIAN','QUARTILES','HISTOGRAM']
     evaluation = ['BY_BASIN','BY_HRU','BY_HRU_GROUP','BY_SB_GROUP','ENTIRE_WATERSHED']
+    variable = ['','SURFACE_WATER','ATMOSPHERE','ATMOS_PRECIP','PONDED_WATER','GROUNDWATER','CANOPY','CANOPY_SNOW','SNOW',
+                'SNOW_LIQ','GLACIER','GLACIER_ICE','CONVOLUTION','SNOW_TEMP','COLD_CONTENT','SOIL_TEMP','CANOPY_TEMP',
+                'SURFACE_WATER_TEMP','SNOW_DEPTH','PERMAFROST_DEPTH','SNOW_COVER','SNOW_AGE','SNOW_ALBEDO','CUM_INFIL','CUM_SNOWMELT',
+                'CONSTITUENT','PRECIP','SNOW_FRAC','SNOWFALL','RAINFALL','RECHARGE','TEMP_AVE','WIND_VEL','PET','OW_PET','POTENTIAL_MELT',
+               ]
+    variable.sort()
     option = ['','From:','To:','Between:']
 
     combo_time.addItems(timeperiod)
     combo_stat.addItems(statistic)
     combo_eval.addItems(evaluation)
     combo_option.addItems(option)
+    combo_variable1.addItems(variable)
+    combo_variable2.addItems(variable)
 
     table.setCellWidget(currentRow, 0, combo_time)  #Sets the new combobox in the first column and in the new row
     table.setCellWidget(currentRow, 1, combo_stat)

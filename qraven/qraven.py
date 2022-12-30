@@ -1087,14 +1087,14 @@ class QRaven:
                         rvi.write("\n:"+transport)
                 
                 #Write custom outputs
-                for row in customOutputList:
-                    rvi.write("\n:CustomOutput")
-                    for output in row:
-                        if output == '':
-                            pass
-                        else:
-                            rvi.write(' '+output)
-
+                if customOutputList:
+                    for row in customOutputList:
+                        rvi.write("\n:CustomOutput")
+                        for output in row:
+                            if output == '':
+                                pass
+                            else:
+                                rvi.write(' '+output)
 
             print("RVI file written successfully")
             self.iface.messageBar().pushSuccess("Success", "RVI file written successfully")
