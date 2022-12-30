@@ -1,3 +1,4 @@
+from ..hydrologicproc import addprocess
 #This method loads a GR4J template into the GUI
 def loadCanshield(self):
     try:
@@ -22,7 +23,7 @@ def loadCanshield(self):
 
         #Sets the hydrological processes
         for i in range(15):
-            self.addTableRow()
+            addprocess(self)
 
         combo_proc = table.cellWidget(0,0)
         combo_proc.setCurrentText("SnowRefreeze")

@@ -1,3 +1,5 @@
+from ..hydrologicproc import addprocess
+
 #This method loads a HYPR template into the GUI
 def loadHypr(self):
     try:
@@ -20,7 +22,7 @@ def loadHypr(self):
 
         #Sets the hydrological processes
         for i in range(12):
-            self.addTableRow()
+            addprocess(self)
 
         combo_proc = table.cellWidget(0,0)
         combo_proc.setCurrentText("SnowRefreeze")

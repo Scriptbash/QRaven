@@ -1,3 +1,5 @@
+from ..hydrologicproc import addprocess
+
 #This method loads a template of HYMOD into the GUI
 def loadHymod(self):
     try:
@@ -19,7 +21,7 @@ def loadHymod(self):
 
         #Sets the hydrological processes
         for i in range(6):
-            self.addTableRow()
+            addprocess(self)
         
         combo_proc = table.cellWidget(0,0)
         combo_proc.setCurrentText("Precipitation")

@@ -1,3 +1,5 @@
+from ..hydrologicproc import addprocess
+
 #This method loads a GR4J template into the GUI
 def loadGr4j(self):
     try:
@@ -20,7 +22,7 @@ def loadGr4j(self):
 
         #Sets the hydrological processes
         for i in range(15):
-            self.addTableRow()
+            addprocess(self)
 
         combo_proc = table.cellWidget(0,0)
         combo_proc.setCurrentText("Precipitation")

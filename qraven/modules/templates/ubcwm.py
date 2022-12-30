@@ -1,3 +1,5 @@
+from ..hydrologicproc import addprocess
+
 #This method loads a UBCWM template into the GUI
 def loadUbcwm(self):
     try:
@@ -29,7 +31,7 @@ def loadUbcwm(self):
 
         #Sets the hydrological processes
         for i in range(15):
-            self.addTableRow()
+            addprocess(self)
 
         combo_proc = table.cellWidget(0,0)
         combo_proc.setCurrentText("SnowAlbedoEvolve")
