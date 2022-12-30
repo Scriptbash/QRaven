@@ -1,3 +1,5 @@
+from ..hydrologicproc import addprocess
+
 #This method loads a MOHYSE template into the GUI
 def loadMohyse(self):
     try:
@@ -17,7 +19,7 @@ def loadMohyse(self):
 
         #Sets the hydrological processes
         for i in range(7):
-            self.addTableRow()
+            addprocess(self)
 
         combo_proc = table.cellWidget(0,0)
         combo_proc.setCurrentText("SoilEvaporation")

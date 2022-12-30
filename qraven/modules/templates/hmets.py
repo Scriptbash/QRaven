@@ -1,3 +1,5 @@
+from ..hydrologicproc import addprocess
+
 #This method loads a template of HMETS into the GUI
 def loadHmets(self):
     try:
@@ -13,7 +15,7 @@ def loadHmets(self):
 
         #Sets the hydrological processes
         for i in range(11):
-            self.addTableRow()
+            addprocess(self)
         
         combo_proc = table.cellWidget(0,0)
         combo_proc.setCurrentText("SnowBalance")

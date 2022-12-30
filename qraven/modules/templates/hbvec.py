@@ -1,3 +1,5 @@
+from ..hydrologicproc import addprocess
+
 #This method loads a template of HBV-EC into the GUI
 def loadHbvec(self):
     try:
@@ -30,7 +32,7 @@ def loadHbvec(self):
 
         #Sets the hydrological processes
         for i in range(21):
-            self.addTableRow()
+            addprocess(self)
         
         combo_proc = table.cellWidget(0,0)
         combo_proc.setCurrentText("SnowRefreeze")
