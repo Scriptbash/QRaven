@@ -124,5 +124,4 @@ def getOutputs(self):
                 else:
                     tmpoutput.append('')
         outputs.append(tmpoutput) 
-    print(outputs)
     return outputs
