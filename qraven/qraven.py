@@ -1010,7 +1010,7 @@ class QRaven:
             getCustomOutput()
         '''
         paramDict = self.getParams()    #Calls the function to retrieve the widgets values
-        hydroProcessesList = self.getHydroProcess()
+        hydroProcessesList = hydrologicproc.getHydroProcess(self)
         transportProcessesList = self.getTransportProcess()
         customOutputList = customoutputs.getOutputs(self) #Calls the function to get the custom output values
         outputdir = self.dlg.file_rvioutputdir.filePath()   #Get the output directory chosen by the use

@@ -45,7 +45,7 @@ def addprocess(self):
 
     table.resizeColumnsToContents() #Resizes the width of the column automatically
     combo_proc.currentIndexChanged.connect(lambda:setProcAlg(self,currentRow))  #Updates the algorithm combobox if the process changes
-    #chk_isconditional.stateChanged.connect(self.enableConditionalProc)
+    chk_isconditional.stateChanged.connect(lambda:enableConditionalProc(self, currentRow))
 
 
 def removeprocess(self):
@@ -65,8 +65,11 @@ def setProcAlg(self,row):
     spin_pct = table.cellWidget(row, 9)
     chk_interbasin = table.cellWidget(row, 10)
 
+    combo_alg.setEnabled(True)
     spin_pct.setEnabled(False)
+    chk_interbasin.setChecked(False)
     chk_interbasin.setEnabled(False)
+    chk_mixingrate.setChecked(False)
     chk_mixingrate.setEnabled(False)
     #currentWidget = self.dlg.sender()
     # index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())
@@ -173,7 +176,7 @@ def setProcAlg(self,row):
 
     table.resizeColumnsToContents()
 
-    #chk_mixingrate.stateChanged.connect(self.enableMixingRate)
+    chk_mixingrate.stateChanged.connect(lambda:enableMixingRate(self,row))
     combo_alg.currentIndexChanged.connect(lambda:setStorage(self, selectedProc, row))   #Updates the compartments combobox if the algorithm changed
     #self.setStorage(selectedProc)   #Needed for RedirectFlow... there's probably a better way
 
@@ -223,7 +226,7 @@ def setStorage(self,selectedProc, row):
         tmpanyCompartment.append(compartment)
 
     tmpanyCompartment = list(dict.fromkeys(tmpanyCompartment))
-    tmpanyCompartment.sort()
+    #tmpanyCompartment.sort()
     #currentWidget = self.dlg.sender()   #Get the widget that was triggered
     #index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())    #Get the index of the widget
     #widgetRow = index.row() #Get the row in which the widget is set
@@ -400,49 +403,85 @@ def setStorage(self,selectedProc, row):
     table.resizeColumnsToContents()   #Resizes automatically the columns
     
             
-# def enableConditionalProc(self):
-#     basedtype = ['HRU_TYPE','HRU_GROUP','LAND_CLASS','VEGETATION']
-#     comparison = ['IS', 'IS_NOT']
-#     table = self.dlg.table_hydroprocess
-#     currentWidget = self.dlg.sender()
-#     index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())
-#     widgetRow = index.row()
-#     combo_basedtype = QComboBox()
-#     combo_comparison = QComboBox()
-#     txt_hrutype = QLineEdit()
-#     if isinstance(currentWidget, QCheckBox):
-#         if currentWidget.isChecked():
-#             combo_basedtype.addItems(basedtype)
-#             combo_basedtype.setEnabled(True)
-#             combo_comparison.addItems(comparison)
-#             combo_comparison.setEnabled(True)
-#             txt_hrutype.setEnabled(True)
-#         else:
-#             combo_basedtype.setEnabled(False)
-#             combo_comparison.setEnabled(False)
-#             txt_hrutype.setEnabled(False)
-#         table.setCellWidget(widgetRow, 5, combo_basedtype)
-#         table.setCellWidget(widgetRow, 6, combo_comparison)
-#         table.setCellWidget(widgetRow, 7, txt_hrutype)
-#         table.resizeColumnsToContents() #Resizes the width of the column automatically
+def enableConditionalProc(self,row):
+    
+    basedtype = ['HRU_TYPE','HRU_GROUP','LAND_CLASS','VEGETATION']
+    comparison = ['IS', 'IS_NOT']
+    
+    table = self.dlg.table_hydroprocess
+  
+    chk_isConditional = table.cellWidget(row, 4)
+    combo_basedtype = table.cellWidget(row, 5)
+    combo_comparison = table.cellWidget(row, 6)
+    txt_hrutype = table.cellWidget(row, 7)
 
-# def enableMixingRate(self):
-#     table = self.dlg.table_hydroprocess
-#     currentWidget = self.dlg.sender()
-#     index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())
-#     widgetRow = index.row()
-#     spin_pct = QDoubleSpinBox()
-#     spin_pct.setSingleStep(0.1)
-#     spin_pct.setMaximum(1.0)
-#     spin_pct.setMinimum(0.0)
-#     spin_pct.setDecimals(1)
-#     if isinstance(currentWidget, QCheckBox):
-#         if currentWidget.isChecked():
-#             spin_pct.setEnabled(True)
-#         else:
-#             spin_pct.setEnabled(False)
-#     table.setCellWidget(widgetRow, 9, spin_pct)
+    combo_basedtype.clear()
+    combo_comparison.clear()
+    txt_hrutype.clear()
+    if chk_isConditional.isChecked():
+        combo_basedtype.addItems(basedtype)
+        combo_basedtype.setEnabled(True)
+        combo_comparison.addItems(comparison)
+        combo_comparison.setEnabled(True)
+        txt_hrutype.setEnabled(True)
+    else:
+        combo_basedtype.setEnabled(False)
+        combo_comparison.setEnabled(False)
+        txt_hrutype.setEnabled(False)
+    table.resizeColumnsToContents() #Resizes the width of the column automatically
 
+def enableMixingRate(self, row):
+    table = self.dlg.table_hydroprocess
+    # currentWidget = self.dlg.sender()
+    # index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())
+    # widgetRow = index.row()
+    chk_mixingrate = table.cellWidget(row, 8)
+    spin_pct = table.cellWidget(row, 9)
+    
+    spin_pct.setSingleStep(0.1)
+    spin_pct.setMaximum(1.0)
+    spin_pct.setMinimum(0.0)
+    spin_pct.setDecimals(1)
+    
+    if chk_mixingrate.isChecked():
+        spin_pct.setEnabled(True)
+    else:
+        spin_pct.setEnabled(False)
+    #table.setCellWidget(row, 9, spin_pct)
+
+
+#This method creates a list with all the hydrologic processes, which is then used to write them into the rvi file
+def getHydroProcess(self):
+    table = self.dlg.table_hydroprocess
+    rows = table.rowCount()
+    cols = table.columnCount()
+    processesList = []
+    for row in range(rows):
+        for col in range(cols):
+            currentWidget = table.cellWidget(row,col)
+            if isinstance(currentWidget, QComboBox):
+                processesList.append(currentWidget.currentText())
+            elif isinstance(currentWidget, QCheckBox):
+                if currentWidget.isChecked():
+                    if col == 4:
+                        processesList.append('condTrue')    #The checkbox is Conditional
+                    elif col == 8:
+                        processesList.append('mixTrue') #The checkbox is Mixing rate
+                    elif col == 10:
+                        #processesList.append('interbasinTrue')  #The checkbox is Interbasin
+                        processesList.insert(-5,'interbasinTrue')
+                else:
+                    processesList.append('False')
+            elif isinstance(currentWidget, QLineEdit):
+                processesList.append(currentWidget.text().upper())
+            elif isinstance(currentWidget, QDoubleSpinBox):
+                if table.cellWidget(row,8).isChecked() or table.cellWidget(row,0).currentText() == 'LateralEquilibrate':
+                    #processesList.append("{:.1f}".format(currentWidget.value()))
+                    processesList.insert(-5,"{:.1f}".format(currentWidget.value()))
+                else:
+                    processesList.append('')
+        processesList.append("NewLine")
+    return processesList
 
 
 #List that contains every process name
