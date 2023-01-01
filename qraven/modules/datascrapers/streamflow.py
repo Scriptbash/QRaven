@@ -9,7 +9,7 @@ class cehq:
         headers = {'User-Agent': 'Mozilla/5.0'}
         payload = {'lstStation':'',
                    'BtnRechercher1':'Rechercher',
-                   'lstMunicipalite':'Sainte-Catherine',
+                   'lstMunicipalite':'Coaticook',
                    'lstRiviere':'',
                    'lstRegion':''  
                   }
@@ -22,33 +22,86 @@ class cehq:
     def parseTable(data):
         valu= []
         for line in data:
-
             line = line.splitlines()
             if line != '' and line[0] !='':
-            #print(line)
                 valu.append(line)
-
-        newlist = []
+        stations = []
         tmplist = []
-        reached = False
+        reachedtable = False
         for data in valu:
             if data[0].isnumeric() and len(data[0]) > 1:
                 count = 0
-                reached = True
+                reachedtable = True
                 tmplist.append(data[0])
-                #print(data)
-            elif reached == False:
+            elif reachedtable == False:
                 pass
             elif count <=8:
                 text = data[0].replace('\xa0','')
                 if text !='':
                     tmplist.append(text)
                 count+=1
-                if count == 8 and reached == True:
-                    newlist.append(tmplist.copy())
+                if count == 8 and reachedtable == True:
+                    stations.append(tmplist.copy())
                     tmplist.clear()
-                    reached = False
-        print(newlist)
+                    reachedtable = False
+        print(stations)
+    
+    def downloadData(station):
+        baseurl = 'https://www.cehq.gouv.qc.ca/depot/historique_donnees/fichier/'
+        sufix = '_N.txt'
+
+        link = baseurl + station + sufix
+        page = requests.get(link)
+        content = page.text
+        print(content)
+
+
+
+class watersurvey:
+    # def __init__(self):
+    #     print('ok')
+    def sendRequest():
+        #print('ok')
+        searchtype = 'station_name'   #could be province
+        province = 'Coaticook'
+        paramtype = 'flows'
+        start_year = '1850'
+        end_year = '2023'
+        
+        baseurl = 'https://wateroffice.ec.gc.ca/search/historical_results_e.html?search_type='+searchtype
+        url = baseurl + '&station_name='+province+'&parameter_type='+paramtype+'&start_year='+start_year+'&end_year='+end_year+'&minimum_years=&gross_drainage_operator=>&gross_drainage_area=&effective_drainage_operator=>&effective_drainage_area='
+
+        # params = { 'province': province, 'parameter_type': 'levels',
+        #            'start_year':'1850', 'end_year':'2023',
+        #            'gross_drainage_operator':'', 'gross_drainage_area':'',
+        #            'effective_drainage_operator':'','effective_drainage_area':''
+        #          }
+        params = { 'station_name': 'Coaticook', 'parameter_type': 'flows',
+                   'start_year':'1850', 'end_year':'2023',
+                   'gross_drainage_operator':'', 'gross_drainage_area':'',
+                   'effective_drainage_operator':'','effective_drainage_area':''
+                 }
+    
+        r = requests.get(url=url)
+        return r.text
+        #print(url)
+    def parseTable(data):
+        results = []
+        tmplist = []
+        for line in data:
+            line = line.splitlines()
+            #print(line[0])
+            if len(tmplist) > 7:
+                del tmplist[-3:]
+                results.append(tmplist.copy())
+                tmplist.clear()
+                tmplist.append(line[0])
+            else:
+                tmplist.append(line[0])
+        del tmplist[-3:]
+        results.append(tmplist) #Could rework this a little
+        print(results)
+        
 
 class MyHTMLParser(HTMLParser):
 
@@ -76,6 +129,14 @@ parser.feed(html)
 data= parser.data
 cehq.parseTable(data)
 
+#cehq.downloadData('043206')
 
+parser = MyHTMLParser()
+html2 = watersurvey.sendRequest()
+
+parser.feed(html2)
+data = parser.data
+#print(data2)
+watersurvey.parseTable(data)
 
 
