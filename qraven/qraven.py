@@ -50,6 +50,8 @@ from .modules.templates.hypr import loadHypr
 from .modules.templates.hymod import loadHymod
 from .modules.PyRavenR import *
 from .modules import customoutputs, hydrologicproc
+from .modules.datascrapers import streamflow
+
 
 class QRaven:
     """QGIS Plugin Implementation."""
@@ -207,7 +209,7 @@ class QRaven:
             self.dlg = QRavenDialog()
 
             self.checkUpdate()
-        
+            
             #-------------Raven RVI-------------#
             self.dlg.btn_load_hmets.clicked.connect(self.loadModels)
             self.dlg.btn_load_hbvec.clicked.connect(self.loadModels)

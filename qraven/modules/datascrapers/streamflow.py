@@ -193,13 +193,13 @@ class MyHTMLParser(HTMLParser):
 # streamflowfile = cehq.downloadData('043206')
 # cehq.exportRVT(streamflowfile)
 
-parser = MyHTMLParser()
-html2 = watersurvey.sendRequest()
+# parser = MyHTMLParser()
+# html2 = watersurvey.sendRequest()
 
-parser.feed(html2)
-data = parser.data
-watersurvey.parseTable(data)
-streamflowfile = watersurvey.downloadData()
-watersurvey.exportRVT(streamflowfile)
+# parser.feed(html2)
+# data = parser.data
+# watersurvey.parseTable(data)
+# streamflowfile = watersurvey.downloadData()
+# watersurvey.exportRVT(streamflowfile)
 
 
