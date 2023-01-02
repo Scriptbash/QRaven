@@ -1,4 +1,4 @@
-import requests
+import requests, csv
 from html.parser import HTMLParser
 
 class cehq:
@@ -90,7 +90,9 @@ class watersurvey:
         end_year = '2023'
         
         baseurl = 'https://wateroffice.ec.gc.ca/search/historical_results_e.html?search_type='+searchtype
-        url = baseurl + '&station_name='+province+'&parameter_type='+paramtype+'&start_year='+start_year+'&end_year='+end_year+'&minimum_years=&gross_drainage_operator=>&gross_drainage_area=&effective_drainage_operator=>&effective_drainage_area='
+        url = (baseurl + '&station_name='+province+'&parameter_type='+
+               paramtype+'&start_year='+start_year+'&end_year='+end_year+
+               '&minimum_years=&gross_drainage_operator=>&gross_drainage_area=&effective_drainage_operator=>&effective_drainage_area=')
 
         # params = { 'province': province, 'parameter_type': 'levels',
         #            'start_year':'1850', 'end_year':'2023',
@@ -121,8 +123,46 @@ class watersurvey:
                 tmplist.append(line[0])
         del tmplist[-3:]
         results.append(tmplist) #Could rework this a little
-        print(results)
+
+    def downloadData():
+        url = 'https://wateroffice.ec.gc.ca/search/relay_e.html'
+        headers = {'results_type': 'historical',
+                   'download': 'download?',
+                   'check[]': '02OE022,1,1959,2021,Flow'
+                  }
         
+        s=requests.session()
+        s.get(url,params=headers,)
+
+        headers2 = {'dt': 'dd',
+                   'df': 'ddf',
+                   'md': '1',
+                   'ext': 'csv'
+                  }
+
+        url2= 'https://wateroffice.ec.gc.ca/download/report_e.html'
+        r = s.get(url2,params=headers2,)
+        return r.text
+        
+        
+    def exportRVT(data):
+        reader = csv.reader(data.split('\n'))
+        observation =[]
+        
+        for row in reader:
+            observation.append(row)
+        del observation[:2]
+        observation = [x for x in observation if x != []]
+        with open('/Users/francis/Documents/test.rvt','w') as rvt:
+            rvt.write(':ObservationData HYDROGRAPH <Basin_ID or HRU_ID> m3/s \n')
+            rvt.write('\t'+observation[0][2].replace('/','-') + ' 00:00:00 ' + str(len(observation)))
+            for line in observation:
+                if line[3] != '':
+                    rvt.write('\n\t' + line[3])
+                else:
+                    rvt.write('\n\t' + '-1.2345')
+        print('Wrote rvt file')
+
 
 class MyHTMLParser(HTMLParser):
 
@@ -143,22 +183,23 @@ class MyHTMLParser(HTMLParser):
         if self.capture:
             self.data.append(data)
 
-test = cehq()
-html=cehq.sendRequest(test)
-parser = MyHTMLParser()
-parser.feed(html)
-data= parser.data
-cehq.parseTable(data)
-
-streamflowfile = cehq.downloadData('043206')
-cehq.exportRVT(streamflowfile)
-
+# test = cehq()
+# html=cehq.sendRequest(test)
 # parser = MyHTMLParser()
-# html2 = watersurvey.sendRequest()
+# parser.feed(html)
+# data= parser.data
+# cehq.parseTable(data)
 
-# parser.feed(html2)
-# data = parser.data
-# #print(data2)
-# watersurvey.parseTable(data)
+# streamflowfile = cehq.downloadData('043206')
+# cehq.exportRVT(streamflowfile)
+
+parser = MyHTMLParser()
+html2 = watersurvey.sendRequest()
+
+parser.feed(html2)
+data = parser.data
+watersurvey.parseTable(data)
+streamflowfile = watersurvey.downloadData()
+watersurvey.exportRVT(streamflowfile)
 
 
