@@ -17,7 +17,6 @@ class cehq:
         r= requests.post(self.url,headers=headers,data=payload)
         self.html = r.text
         return r.text
-        #self.parseTable()
 
     def parseTable(data):
         valu= []
@@ -44,17 +43,39 @@ class cehq:
                     stations.append(tmplist.copy())
                     tmplist.clear()
                     reachedtable = False
-        print(stations)
     
     def downloadData(station):
         baseurl = 'https://www.cehq.gouv.qc.ca/depot/historique_donnees/fichier/'
         sufix = '_N.txt'
-
         link = baseurl + station + sufix
         page = requests.get(link)
         content = page.text
-        print(content)
+        return content
 
+    def exportRVT(data):
+        totalLines = 0
+        isContent = False
+        observation = []
+        for i, line in enumerate(data.split('\n')):
+            if 'Station' in line and 'Date' in line and 'Niveau' in line:
+                isContent = True
+            elif isContent:
+                if line !='':
+                    content = line.split()
+                    try:
+                        content[2]
+                        observation.append(content)
+                    except:
+                        text = content[0] + ' ' + content[1] + ' -1.2345' + ' MJ'
+                        observation.append(text.split())
+                    totalLines +=1
+        with open('/Users/francis/Documents/test.rvt','w') as rvt:
+            rvt.write(':ObservationData HYDROGRAPH <Basin_ID or HRU_ID> m3/s \n')
+            rvt.write('\t'+observation[0][1].replace('/','-') + ' 00:00:00 ' + str(totalLines))
+            for line in observation:
+                rvt.write('\n\t'+line[2])
+            rvt.write('\n:EndObservationData')
+        print('Wrote RVT')
 
 
 class watersurvey:
@@ -84,7 +105,7 @@ class watersurvey:
     
         r = requests.get(url=url)
         return r.text
-        #print(url)
+
     def parseTable(data):
         results = []
         tmplist = []
@@ -129,14 +150,15 @@ parser.feed(html)
 data= parser.data
 cehq.parseTable(data)
 
-#cehq.downloadData('043206')
+streamflowfile = cehq.downloadData('043206')
+cehq.exportRVT(streamflowfile)
 
-parser = MyHTMLParser()
-html2 = watersurvey.sendRequest()
+# parser = MyHTMLParser()
+# html2 = watersurvey.sendRequest()
 
-parser.feed(html2)
-data = parser.data
-#print(data2)
-watersurvey.parseTable(data)
+# parser.feed(html2)
+# data = parser.data
+# #print(data2)
+# watersurvey.parseTable(data)
 
 
