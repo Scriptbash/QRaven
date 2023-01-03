@@ -50,6 +50,8 @@ from .modules.templates.hypr import loadHypr
 from .modules.templates.hymod import loadHymod
 from .modules.PyRavenR import *
 from .modules import customoutputs, hydrologicproc
+from .modules.datascrapers import streamflow
+
 
 class QRaven:
     """QGIS Plugin Implementation."""
@@ -207,7 +209,8 @@ class QRaven:
             self.dlg = QRavenDialog()
 
             self.checkUpdate()
-        
+            self.setStreamflowComboboxes()
+            
             #-------------Raven RVI-------------#
             self.dlg.btn_load_hmets.clicked.connect(self.loadModels)
             self.dlg.btn_load_hbvec.clicked.connect(self.loadModels)
@@ -273,6 +276,17 @@ class QRaven:
             self.dlg.file_netcdf.fileChanged.connect(self.toggleWidget)
             self.dlg.btn_rungridweight.clicked.connect(self.generateGridWeights)
             self.dlg.btn_rmigridweight.clicked.connect(lambda:docker.dockerdelete(self))
+            #----------------------------------------#
+
+            #---------------Stream flow---------------#
+            self.dlg.btn_cehqsearch.clicked.connect(self.searchStreamflow)
+            self.dlg.btn_cehqdownload.clicked.connect(self.downloadStreamflow)
+            self.dlg.btn_cehqprocess.clicked.connect(self.downloadStreamflow)
+
+            self.dlg.buttonGroup_4.buttonToggled.connect(self.toggleWidget)
+            self.dlg.btn_watersurveysearch.clicked.connect(self.searchStreamflow)
+            self.dlg.btn_watersurveydownload.clicked.connect(self.downloadStreamflow)
+            self.dlg.btn_watersurveyprocess.clicked.connect(self.downloadStreamflow)
             #----------------------------------------#
 
             #-------------Run Raven Model-------------#
@@ -466,6 +480,13 @@ class QRaven:
                 self.dlg.txt_dimlat.setEnabled(True)
                 self.dlg.txt_varlon.setEnabled(True)
                 self.dlg.txt_varlat.setEnabled(True)
+        elif widget.objectName() == 'buttonGroup_4':
+            if self.dlg.rd_watersurveyname.isChecked():
+                self.dlg.txt_watersurveyname.setEnabled(True)
+                self.dlg.combo_watersurveyprovince.setEnabled(False)
+            else:
+                self.dlg.txt_watersurveyname.setEnabled(False)
+                self.dlg.combo_watersurveyprovince.setEnabled(True)
              
 
     #This method enables and disables the spinbox next to the SoilModel combobox depending on the selected value of the combobox
@@ -1345,7 +1366,151 @@ class QRaven:
         self.iface.messageBar().pushInfo("Info", "The GridWeights generator process has finished. Check the python logs for more details.")
         docker.dockerStop()
    
-   
+    def searchStreamflow(self):
+        widget = self.dlg.sender().objectName()  #Get the widget name
+
+        if widget == 'btn_cehqsearch':
+            self.dlg.txt_cehqresults.clear()
+            city = self.dlg.combo_cehqmunicipality.currentText()
+            river = self.dlg.combo_cehqriver.currentText()
+            region = self.dlg.combo_cehqadminregion.currentText()
+
+            parser = streamflow.MyHTMLParser()
+
+            html = streamflow.cehq.sendRequest(city,river,region)
+            parser.feed(html)
+            data= parser.data
+            stations = streamflow.cehq.parseTable(data)
+            if not stations:
+                self.dlg.txt_cehqresults.appendPlainText('No stations found.')
+            else:
+                for line in stations:
+                    isId = True
+                    text = ''
+                    for info in line:
+                        if isId:
+                            text += info.strip()+' - | '
+                            isId = False
+                        else:
+                            text+= info.strip()+' | '
+                    text+='\n'
+                    self.dlg.txt_cehqresults.appendPlainText(text)
+
+        elif widget == 'btn_watersurveysearch':
+            self.dlg.txt_watersurveyresults.clear()
+            if self.dlg.rd_watersurveyname.isChecked() and self.dlg.txt_watersurveyname.text() !='':
+                search_type = 'station_name'
+                value = self.dlg.txt_watersurveyname.text()
+            else:
+                watersurvey_provinces= {'All Provinces':'all',
+                                    'Alberta':'AB',
+                                    'British Columbia':'BC',
+                                    'Manitoba':'MB',
+                                    'New Brunswick':'NB',
+                                    'Newfoundland and Labrador':'NL',
+                                    'Northwest Territories':'NT',
+                                    'Nova Scotia':'NS',
+                                    'Nunavut':'NU',
+                                    'Ontario':'ON',
+                                    'Prince Edward Island':'PE',
+                                    'Quebec':'QC',
+                                    'Saskatchewan':'SK',
+                                    'Yukon':'YT',
+                                }
+                search_type = 'province'
+                value = self.dlg.combo_watersurveyprovince.currentText()
+                value = watersurvey_provinces[value]
+            regulation = self.dlg.combo_watersurveyregul.currentText()
+            
+            if regulation == 'All':
+                regulation = 'all'
+            elif regulation == 'Regulated':
+                regulation = 'R'
+            else:
+                regulation = 'N'
+            status = self.dlg.combo_watersurveystatus.currentText()
+            if status == 'All':
+                status = 'all'
+            elif status == 'Active':
+                status = 'A'
+            else:
+                status = 'D'
+
+            parser = streamflow.MyHTMLParser()
+
+            html = streamflow.watersurvey.sendRequest(search_type,value,regulation,status)
+            parser.feed(html)
+            data= parser.data
+            stations = streamflow.watersurvey.parseTable(data)
+            
+            for line in stations:
+                    isId = True
+                    text = ''
+                    for info in line:
+                        if isId:
+                            text += info.strip()+' - | '
+                            isId = False
+                        else:
+                            text+= info.strip()+' | '
+                    text+='\n'
+                    self.dlg.txt_watersurveyresults.appendPlainText(text)
+            
+
+    def downloadStreamflow(self):
+        widget = self.dlg.sender().objectName()  #Get the widget name
+
+        if widget == 'btn_cehqdownload':
+            id = self.dlg.txt_cehqid.text().strip()
+            output = self.dlg.file_cehqoutput.filePath()
+            if id and output:
+                try:
+                    streamflowdata = streamflow.cehq.downloadData(id)
+                    streamflow.cehq.exportRVT(streamflowdata,output,'web')
+                    self.iface.messageBar().pushSuccess("Success", "RVT file written successfully")
+                except:
+                    self.iface.messageBar().pushMessage("Couldn't download the data. Please verify the station ID",level=Qgis.Critical)
+            else:
+                self.iface.messageBar().pushMessage("A station ID and an output file are required.",level=Qgis.Critical)
+        elif widget == 'btn_cehqprocess':
+            streamflowpath = self.dlg.file_cehqlocalinput.filePath()
+            output = self.dlg.file_cehqlocaloutput.filePath()
+            if streamflowpath and output:
+                try:
+                    streamflow.cehq.exportRVT(streamflowpath,output,'local')
+                    self.iface.messageBar().pushSuccess("Success", "RVT file written successfully")
+                except Exception as e:
+                    self.iface.messageBar().pushMessage("Couldn't process the file. Please verify the input file",level=Qgis.Critical)
+                    print(e)
+            else:
+                self.iface.messageBar().pushMessage("An input and output file are required.",level=Qgis.Critical)
+        elif widget == 'btn_watersurveydownload':
+            id = self.dlg.txt_watersurveyid.text().strip()
+            output = self.dlg.file_watersurveyoutput.filePath()
+
+            if id and output:
+                try: 
+                    streamflowdata = streamflow.watersurvey.downloadData(id)
+                    streamflow.watersurvey.exportRVT(streamflowdata,output)
+                    self.iface.messageBar().pushSuccess("Success", "RVT file written successfully")
+                except:
+                    self.iface.messageBar().pushMessage("Couldn't download the data. Please verify the station ID",level=Qgis.Critical)
+            else:
+                self.iface.messageBar().pushMessage("A station ID and an output file are required.",level=Qgis.Critical)
+        elif widget == 'btn_watersurveyprocess':
+            streamflowpath = self.dlg.file_watersurveylocalinput.filePath()
+            output = self.dlg.file_watersurveylocaloutput.filePath()
+            if streamflowpath and output:
+                try:
+                    with open(streamflowpath,'r') as file:
+                        streamflowdata = file.read()
+                        streamflow.watersurvey.exportRVT(streamflowdata,output)
+                    self.iface.messageBar().pushSuccess("Success", "RVT file written successfully")
+                except Exception as e:
+                    self.iface.messageBar().pushMessage("Couldn't process the file. Please verify the input file",level=Qgis.Critical)
+                    print(e)
+            else:
+                self.iface.messageBar().pushMessage("An input and output file are required.",level=Qgis.Critical)
+
     #This method opens the rvi file from the input directory and gets two values to populate them in the GUI
     def setModelname(self):
         inputdir = self.dlg.file_runinputdir.filePath() #Get the model input directory
@@ -1568,7 +1733,51 @@ class QRaven:
             loadHypr(self)
         elif widget.objectName() == 'btn_load_hymod':
             resetGUI(self)
-            loadHymod(self)         
+            loadHymod(self) 
+
+    def setStreamflowComboboxes(self):
+        script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
+        citiespath = "ext_data/cities.txt"
+        regionspath = "ext_data/regions.txt"
+        riverspath = "ext_data/rivers.txt"
+        citiesfile = os.path.join(script_dir, citiespath)
+        regionsfile = os.path.join(script_dir, regionspath)
+        riversfile = os.path.join(script_dir, riverspath)
+
+        cities = []
+        with open(citiesfile) as file:
+            for line in file:
+                city = line.strip()
+                if city:
+                    cities.append(city)
+        self.dlg.combo_cehqmunicipality.addItem("")
+        self.dlg.combo_cehqmunicipality.addItems(cities)
+
+        regions = []
+        with open(regionsfile) as file:
+            for line in file:
+                region = line.strip()
+                if region:
+                    regions.append(region)
+        self.dlg.combo_cehqadminregion.addItem("")            
+        self.dlg.combo_cehqadminregion.addItems(regions)
+
+        rivers = []
+        with open(riversfile) as file:
+            for line in file:
+                river = line.strip('\n')
+                if river:
+                    rivers.append(river)
+        self.dlg.combo_cehqriver.addItem("")            
+        self.dlg.combo_cehqriver.addItems(rivers)
+
+        provinces = ['All Provinces','Alberta','British Columbia','Manitoba',
+                     'New Brunswick','Newfoundland and Labrador', 'Northwest Territories',
+                     'Nova Scotia','Nunavut','Ontario','Prince Edward Island',
+                      'Quebec','Saskatchewan','Yukon'
+                    ]
+        self.dlg.combo_watersurveyprovince.addItems(provinces)
+       
  
 #This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
 def checkOS():

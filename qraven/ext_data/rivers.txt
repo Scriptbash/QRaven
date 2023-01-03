@@ -1,0 +1,787 @@
+Abénaquis, Rivière des
+
+Abercromby, Rivière
+
+Abitibi, Lac
+
+Achigan, Lac de l'
+
+Achigan, Rivière de l'
+
+Aguanish, Rivière
+
+Allard, Rivière
+
+Anges, Ruisseau des
+
+Anglais, Rivière aux
+
+Anglais, Rivière des
+
+Anistuwach, Rivière
+
+Archambault, Lac
+
+Argent, Lac d'
+
+Arnold, Rivière
+
+Ashuapmushuan, Rivière
+
+Aulnaies, Ruisseau des
+
+Aylmer, Lac
+
+Baleine, Grande rivière de la
+
+Baleine, Petite rivière de la
+
+Baleine, Rivière à la
+
+Baptiste, Lac
+
+Barrière, Lac
+
+Batiscan, Rivière
+
+Bayonne, Rivière
+
+Beau Portage, Lac du
+
+Beaudet, Réservoir
+
+Beaudet, Ruisseau
+
+Beauport, Rivière
+
+Beaurivage, Rivière
+
+Beaven, Lac
+
+Bécancour, Rivière
+
+Bécard, Lac
+
+Bell, Rivière
+
+Belle Rivière, La
+
+Bellefeuille, Rivière
+
+Berger, Rivière du
+
+Betsiamites, Rivière
+
+Birchton, Ruisseau
+
+Blanc, Lac
+
+Blanche, Rivière
+
+Bluets, Rivière aux
+
+Bonaventure, Rivière
+
+Bonniebrook, Ruisseau
+
+Bouchette, Lac
+
+Bourbon, Rivière
+
+Bourlamaque, Rivière
+
+Boutin, Rivière
+
+Boyer Nord, Rivière
+
+Boyer Sud, Rivière
+
+Boyer, Rivière
+
+Brador, Rivière
+
+Broadback, Rivière
+
+Brochets, Rivière aux
+
+Brome, Lac
+
+Brompton, Lac
+
+Brûlé, Lac
+
+Bullard, Ruisseau
+
+Bulstrode, Rivière
+
+Cabano, Rivière
+
+Canard, Rivière au
+
+Caniapiscau, Rivière
+
+Cap Rouge, Rivière du
+
+Cap-Chat, Rivière
+
+Capitachouane, Rivière
+
+Cascapédia, Petite rivière
+
+Cascapédia, Rivière
+
+Cassette, Rivière à
+
+Castor, Ruisseau au
+
+Champlain, Lac
+
+Chapleau, Lac
+
+Châteauguay, Rivière
+
+Chaudière, Rivière
+
+Chêne, Petite rivière du
+
+Chêne, Rivière du
+
+Chibouet, Rivière
+
+Chibougamau, Lac
+
+Chibougamau, Rivière
+
+Chicoutimi, Rivière
+
+Coaticook, Rivière
+
+Commissaires, Lac des
+
+Cornu, Lac
+
+Coulonge, Rivière
+
+Coxipi, Rivière
+
+Cranberry, Ruisseau
+
+Croche, Rivière
+
+Cyriac, Rivière
+
+Daaquam, Rivière
+
+Danville, Rivière
+
+Dany, Rivière
+
+Dartmouth, Rivière
+
+Dauphine, Rivière
+
+David, Rivière
+
+De Pas, Rivière
+
+De Pontois, Rivière
+
+Decoumte, Rivière
+
+Delorme, Rivière
+
+Denys, Rivière
+
+Désert, Rivière
+
+Deux Montagnes, Lac des
+
+Diable, Rivière du
+
+Doncaster, Rivière
+
+Dorés, Lac aux
+
+Dumoine, Rivière
+
+Duvivier, Lac
+
+Eastmain, Rivière
+
+Eaton Nord, Rivière
+
+Eaton, Rivière
+
+Eau Claire, Rivière à l'
+
+Eaux Volées, Ruisseau des
+
+Écho, Lac
+
+Écorces, Lac des
+
+Écorces, Rivière aux
+
+Escalier, Lac
+
+Escoumins, Rivière des
+
+Étamamiou, Rivière
+
+Etchemin, Rivière
+
+Ewing, Ruisseau
+
+False, Rivière
+
+Famine, Rivière
+
+Fermes, Rivière des
+
+Feuilles, Rivière aux
+
+Fouquette, Rivière
+
+Fourchette, Ruisseau
+
+Fourchue, Rivière
+
+Gatineau, Rivière
+
+Gentilly, Rivière
+
+George, Rivière
+
+Giard, Rivière
+
+Gibeault-Delisle, Ruisseau
+
+Gipouloux, Rivière
+
+Godbout, Rivière
+
+Gordon, Ruisseau
+
+Gouffre, Rivière du
+
+Grande Rivière, La
+
+Grande Vallée, Rivière de la
+
+Gunn, Ruisseau
+
+Ha! Ha!, Rivière
+
+Hamelin, Rivière
+
+Harricana, Rivière
+
+Henri, Bras d'
+
+Highfall, Ruisseau
+
+Huile, Rivière à l'
+
+Hurons, Rivière des
+
+Îles Brûlées, Rivière des
+
+Îles, Lac des
+
+Innuksuac, Rivière
+
+Iroquois, Rivière aux
+
+Jack, Lac à
+
+Jacques-Cartier, Rivière
+
+Jaune, Rivière
+
+Jim, Lac à
+
+Jupiter, Rivière
+
+Kamouraska, Rivière
+
+Kanaaupscow, Rivière
+
+Kazabazua, Rivière
+
+Kee, Ruisseau
+
+Kénogami, Lac
+
+Kiamika, Réservoir
+
+Kiamika, Rivière
+
+Kinojévis, Rivière
+
+Kipawa, Lac
+
+Kipawa, Rivière
+
+Klotz, Lac
+
+Kogaluc, Rivière
+
+La Chevrotière, Rivière
+
+La Goudalie, Rivière
+
+La Sarre, Rivière
+
+Lac la Pêche, Décharge du
+
+L'Acadie, Rivière
+
+Lacolle, Rivière
+
+Laforge, Rivière
+
+L'Assomption, Rivière
+
+Lepellé, Rivière
+
+Lièvre, Rivière du
+
+Long, Lac
+
+Lorette, Rivière
+
+Louis, Lac à
+
+Louise, Lac
+
+Loup, Rivière du
+
+Loups Marins, Lac des
+
+Loutre, Ruisseau de la
+
+Lovering, Lac
+
+Ludger, Lac
+
+Lyster, Lac
+
+Macamic, Lac
+
+MacDonald, Grand lac
+
+Madawaska, Rivière
+
+Madeleine, Rivière
+
+Maganasipi, Rivière
+
+Magpie, Lac
+
+Magpie, Rivière
+
+Malbaie, Rivière
+
+Manitou, Lac
+
+Manouane, Rivière
+
+Marguerite, Rivière
+
+Marois, Lac
+
+Mars, Rivière à
+
+Marte, Rivière à la
+
+Mascouche, Rivière
+
+Maskinongé, Lac
+
+Maskinongé, Rivière
+
+Massawippi, Lac
+
+Massawippi, Rivière
+
+Masson, Lac
+
+Mastigouche, Rivière
+
+Matamec, Rivière
+
+Matane, Lac
+
+Matane, Rivière
+
+Matapédia, Lac
+
+Matapédia, Rivière
+
+Matawin, Rivière
+
+Mégantic, Lac
+
+Mégiscane, Rivière
+
+Mékinac, Rivière
+
+Mélèzes, Rivière aux
+
+Métabetchouane, Rivière
+
+Mille Îles, Rivière des
+
+Minto, Lac
+
+Mistassibi, Rivière
+
+Mistassini, Lac
+
+Mistassini, Rivière
+
+Mitchinamecus, Réservoir
+
+Mitchinamecus, Rivière
+
+Mitis, Rivière
+
+Moisie, Rivière
+
+Monroe, Lac
+
+Montagne Noire, Lac de la
+
+Montmorency, Rivière
+
+Morency, Rivière
+
+Morin, Lac
+
+Morpions, Ruisseau
+
+Moulin, Rivière du
+
+Nadeau, Rivière
+
+Nastapoka, Rivière
+
+Natashquan, Rivière
+
+Neiges, Lac des
+
+Neigette, Petite rivière
+
+Neigette, Rivière
+
+Neilson, Rivière
+
+Nelson, Rivière
+
+Nemiscau, Lac
+
+Nichicun, Lac
+
+Nicolet Sud-Ouest, Rivière
+
+Nicolet, Rivière
+
+Noire, Rivière
+
+Nord, Bras du
+
+Nord, Rivière du
+
+Norton, Ruisseau
+
+Nottaway, Rivière
+
+Nouvelle, Rivière
+
+Ontaritzi, Rivière
+
+Opinaca, Rivière
+
+Orford, Lac
+
+Osgood, Rivière
+
+Ouareau, Lac
+
+Ouareau, Rivière
+
+Ouasiemsca, Rivière
+
+Ouelle, Rivière
+
+Ouest, Rivière de l'
+
+Ouiatchouan, Rivière
+
+Ouiqui, Lac
+
+Ours, Ruisseau à l'
+
+Outaouais, Rivière des
+
+Outardes Est, Rivière aux
+
+Palmer, Rivière
+
+Papineau, Lac
+
+Pat, Rivière à
+
+Payne, Lac
+
+Pêche, Rivière la
+
+Pékans, Rivière aux
+
+Péribonka, Petite rivière
+
+Petit Mécatina, Rivière du
+
+Petit Saguenay, Rivière
+
+Petite Nation, Rivière de la
+
+Picanoc, Rivière
+
+Pikauba, Rivière
+
+Piles, Lac des
+
+Pohénégamook, Lac
+
+Point du Jour, Ruisseau du
+
+Poisson Blanc, Lac du
+
+Pommes, Rivière aux
+
+Pontax, Rivière
+
+Portage, Ruisseau du
+
+Portneuf, Rivière
+
+Pozer, Rivière
+
+Prairies, Rivière des
+
+Qalluviartuuq, Lac
+
+Quilliams, Ruisseau
+
+Quinze, Lac des 
+
+Qurlutuq, Rivière
+
+Rapides, Rivière des
+
+Rapin, ruisseau
+
+Rawdon, Lac
+
+Renard, Rivière au
+
+René-Lévesque, Rivière
+
+Renne, Rivière le
+
+Richelieu, Rivière
+
+Rimouski, Rivière
+
+Riverin, Rivière
+
+Robertson, Lac
+
+Roche, Rivière de la
+
+Rocheux, Bras
+
+Roggan, Rivière
+
+Romaine, Rivière
+
+Rond, Lac
+
+Rouge, Rivière
+
+Rouge, Ruisseau
+
+Runnels, Ruisseau
+
+Rupert, Rivière
+
+Sables, Lac aux
+
+Sables, Lac des
+
+Sables, Rivière aux
+
+Sacacomie, Lac
+
+Sacacomie, Rivière
+
+Saint-Alexis, Lac
+
+Saint-Augustin, Rivière
+
+Saint-Charles, Rivière
+
+Sainte-Anne, Rivière
+
+Sainte-Marguerite Nord-Est, Rivière
+
+Saint-Esprit, Rivière
+
+Saint-François, Grand lac
+
+Saint-François, Rivière
+
+Saint-Germain, Rivière
+
+Saint-Jacques, Rivière
+
+Saint-Jean, Lac
+
+Saint-Jean, Rivière
+
+Saint-Joseph, Lac
+
+Saint-Louis, Rivière
+
+Saint-Louis, Ruisseau
+
+Saint-Maurice, Rivière
+
+Saint-Nicolas, Bras
+
+Saint-Paul, Rivière
+
+Saint-Pierre, Ruisseau
+
+Saint-Régis, Rivière
+
+Saint-Victor, Bras
+
+Sakami, Rivière
+
+Salvail, Rivière
+
+Samson, Rivière
+
+Sault à la Puce, Rivière du
+
+Saults, Rivière des
+
+Saumon, Rivière au
+
+Saumons, Rivière aux
+
+Savane, Lac de la
+
+Schryer, Lac
+
+Schryer, Ruisseau
+
+Seize Îles, Lac des
+
+Serpent, Rivière au
+
+Shawinigan, Rivière
+
+Simard, Lac
+
+Simon, Lac
+
+Simon, Rivière à
+
+Simoncouche, Rivière
+
+Souris, Lac des
+
+Stoke, Rivière
+
+Stukely, Lac
+
+Sud, Rivière du
+
+Sud-Ouest, Rivière du
+
+Suffolk, Ruisseau
+
+Swampy Bay, Rivière
+
+Tantaré, Lac
+
+Taschereau, Lac
+
+Témiscamie, Rivière
+
+Théodore, Lac
+
+Ticouapé, Rivière
+
+Tomifobia, Rivière
+
+Tonnerre, Rivière au
+
+Tourilli, Rivière
+
+Trente et Un Milles, Lac des
+
+Trib.45D.23M.31S.-72D.40M.07S.
+
+Trib.46D.29M.02S.-73D.13M.54S.
+
+Trib.46D.58M.15S.-71D.39M.29S.
+
+Trib.49D.12M.59S.-73D.39M.28S.
+
+Trois Lacs, Les
+
+Trois Pistoles, Rivière des
+
+Trois Saumons, Lac
+
+Trout, Rivière
+
+Truite, Étang à la
+
+Truite, Rivière à la
+
+Turgeon, Rivière
+
+Vacher, Ruisseau
+
+Valin, Rivière
+
+Valois, Lac
+
+Veilleux, Rivière
+
+Vermillon, Rivière
+
+Victoria, Grand lac
+
+Villebon, Lac
+
+Walbridge, Ruisseau
+
+Waswanipi, Rivière
+
+Waterloo, Lac
+
+Watopeka, Rivière
+
+Yamaska Nord, Rivière
+
+Yamaska Sud-Est, Rivière
+
+Yamaska, Rivière
+
+York, Rivière
