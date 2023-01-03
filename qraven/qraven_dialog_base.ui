@@ -3849,8 +3849,8 @@
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_15">
-             <item row="19" column="3">
-              <widget class="QPushButton" name="pushButton_3">
+             <item row="20" column="3">
+              <widget class="QPushButton" name="btn_cehqprocess">
                <property name="text">
                 <string>Process</string>
                </property>
@@ -3875,7 +3875,7 @@
                </property>
               </widget>
              </item>
-             <item row="17" column="2">
+             <item row="18" column="2">
               <widget class="QLabel" name="label_94">
                <property name="text">
                 <string>File</string>
@@ -3886,13 +3886,13 @@
               </widget>
              </item>
              <item row="5" column="3">
-              <widget class="QComboBox" name="comboBox_2">
+              <widget class="QComboBox" name="combo_cehqadminregion">
                <property name="editable">
                 <bool>true</bool>
                </property>
               </widget>
              </item>
-             <item row="15" column="3">
+             <item row="16" column="3">
               <spacer name="verticalSpacer">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -3905,8 +3905,8 @@
                </property>
               </spacer>
              </item>
-             <item row="14" column="3">
-              <widget class="QPushButton" name="pushButton_2">
+             <item row="15" column="3">
+              <widget class="QPushButton" name="btn_cehqdownload">
                <property name="text">
                 <string>Download</string>
                </property>
@@ -3923,14 +3923,14 @@
               </widget>
              </item>
              <item row="13" column="3">
-              <widget class="QLineEdit" name="lineEdit_2">
+              <widget class="QLineEdit" name="txt_cehqid">
                <property name="text">
                 <string/>
                </property>
               </widget>
              </item>
-             <item row="17" column="3">
-              <widget class="QgsFileWidget" name="mQgsFileWidget"/>
+             <item row="18" column="3">
+              <widget class="QgsFileWidget" name="file_cehqlocalfile"/>
              </item>
              <item row="5" column="1">
               <widget class="QLabel" name="label_32">
@@ -3943,7 +3943,7 @@
               </widget>
              </item>
              <item row="4" column="3">
-              <widget class="QLineEdit" name="lineEdit"/>
+              <widget class="QLineEdit" name="txt_cehqriver"/>
              </item>
              <item row="2" column="1">
               <widget class="QLabel" name="label_30">
@@ -3952,13 +3952,6 @@
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="10" column="3">
-              <widget class="QPushButton" name="pushButton">
-               <property name="text">
-                <string>Search</string>
                </property>
               </widget>
              </item>
@@ -3978,6 +3971,13 @@
                </property>
               </spacer>
              </item>
+             <item row="10" column="3">
+              <widget class="QPushButton" name="btn_cehqsearch">
+               <property name="text">
+                <string>Search</string>
+               </property>
+              </widget>
+             </item>
              <item row="12" column="3">
               <widget class="QLabel" name="label_79">
                <property name="text">
@@ -3988,7 +3988,7 @@
                </property>
               </widget>
              </item>
-             <item row="16" column="3">
+             <item row="17" column="3">
               <widget class="QLabel" name="label_81">
                <property name="text">
                 <string>Process local file</string>
@@ -4008,20 +4008,6 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="3">
-              <widget class="QComboBox" name="comboBox">
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="3">
-              <widget class="QPlainTextEdit" name="plainTextEdit">
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
              <item row="11" column="3">
               <spacer name="verticalSpacer_2">
                <property name="orientation">
@@ -4037,6 +4023,40 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="2" column="3">
+              <widget class="QComboBox" name="combo_cehqmunicipality">
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="3">
+              <widget class="QPlainTextEdit" name="txt_cehqresults">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="3">
+              <widget class="QgsFileWidget" name="file_cehqoutput">
+               <property name="filter">
+                <string>*.rvt</string>
+               </property>
+               <property name="storageMode">
+                <enum>QgsFileWidget::SaveFile</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="1">
+              <widget class="QLabel" name="label_95">
+               <property name="text">
+                <string>Output file</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

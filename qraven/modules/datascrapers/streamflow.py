@@ -2,20 +2,18 @@ import requests, csv
 from html.parser import HTMLParser
 
 class cehq:
-    def __init__(self):
-        self.url = "https://www.cehq.gouv.qc.ca/hydrometrie/historique_donnees/ListeStation.asp?regionhydro=aucune&Tri=Non"
-        
-    def sendRequest(self):
+    
+    def sendRequest(city,river,region):
+        url = "https://www.cehq.gouv.qc.ca/hydrometrie/historique_donnees/ListeStation.asp?regionhydro=aucune&Tri=Non"
         headers = {'User-Agent': 'Mozilla/5.0'}
         payload = {'lstStation':'',
                    'BtnRechercher1':'Rechercher',
-                   'lstMunicipalite':'Coaticook',
-                   'lstRiviere':'',
-                   'lstRegion':''  
+                   'lstMunicipalite':city,
+                   'lstRiviere':river,
+                   'lstRegion':region  
                   }
 
-        r= requests.post(self.url,headers=headers,data=payload)
-        self.html = r.text
+        r= requests.post(url,headers=headers,data=payload)
         return r.text
 
     def parseTable(data):
@@ -43,21 +41,23 @@ class cehq:
                     stations.append(tmplist.copy())
                     tmplist.clear()
                     reachedtable = False
+        return stations
     
     def downloadData(station):
         baseurl = 'https://www.cehq.gouv.qc.ca/depot/historique_donnees/fichier/'
-        sufix = '_N.txt'
+        sufix = '_Q.txt'
         link = baseurl + station + sufix
         page = requests.get(link)
         content = page.text
         return content
 
-    def exportRVT(data):
+    def exportRVT(data,path):
         totalLines = 0
         isContent = False
         observation = []
+
         for i, line in enumerate(data.split('\n')):
-            if 'Station' in line and 'Date' in line and 'Niveau' in line:
+            if 'Station' in line and 'Date' in line and 'Débit' in line:
                 isContent = True
             elif isContent:
                 if line !='':
@@ -69,7 +69,9 @@ class cehq:
                         text = content[0] + ' ' + content[1] + ' -1.2345' + ' MJ'
                         observation.append(text.split())
                     totalLines +=1
-        with open('/Users/francis/Documents/test.rvt','w') as rvt:
+
+
+        with open(path,'w') as rvt:
             rvt.write(':ObservationData HYDROGRAPH <Basin_ID or HRU_ID> m3/s \n')
             rvt.write('\t'+observation[0][1].replace('/','-') + ' 00:00:00 ' + str(totalLines))
             for line in observation:
@@ -184,14 +186,14 @@ class MyHTMLParser(HTMLParser):
             self.data.append(data)
 
 # test = cehq()
-# html=cehq.sendRequest(test)
+# html=cehq.sendRequest('Amos','','')
 # parser = MyHTMLParser()
 # parser.feed(html)
 # data= parser.data
 # cehq.parseTable(data)
 
-# streamflowfile = cehq.downloadData('043206')
-# cehq.exportRVT(streamflowfile)
+# streamflowfile = cehq.downloadData('041902')
+# cehq.exportRVT(streamflowfile,'/Users/francis/Documents/test.rvt')
 
 # parser = MyHTMLParser()
 # html2 = watersurvey.sendRequest()
