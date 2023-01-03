@@ -281,6 +281,7 @@ class QRaven:
             #---------------Stream flow---------------#
             self.dlg.btn_cehqsearch.clicked.connect(self.searchStreamflow)
             self.dlg.btn_cehqdownload.clicked.connect(self.downloadStreamflow)
+            self.dlg.btn_cehqprocess.clicked.connect(self.downloadStreamflow)
             #----------------------------------------#
 
             #-------------Run Raven Model-------------#
@@ -1371,12 +1372,15 @@ class QRaven:
             if not stations:
                 self.dlg.txt_cehqresults.appendPlainText('No stations found.')
             else:
-                count = 0
                 for line in stations:
-                    count+=1
-                    text = str(count)+'- '
+                    isId = True
+                    text = ''
                     for info in line:
-                        text+= info+' '
+                        if isId:
+                            text += info.strip()+' - | '
+                            isId = False
+                        else:
+                            text+= info.strip()+' | '
                     text+='\n'
                     self.dlg.txt_cehqresults.appendPlainText(text)
 
@@ -1385,17 +1389,30 @@ class QRaven:
         widget = self.dlg.sender().objectName()  #Get the widget name
 
         if widget == 'btn_cehqdownload':
-            id = self.dlg.txt_cehqid.text()
+            id = self.dlg.txt_cehqid.text().strip()
             output = self.dlg.file_cehqoutput.filePath()
             if id and output:
                 try:
                     streamflowdata = streamflow.cehq.downloadData(id)
-                    streamflow.cehq.exportRVT(streamflowdata,output)
+                    streamflow.cehq.exportRVT(streamflowdata,output,'web')
+                    self.iface.messageBar().pushSuccess("Success", "RVT file written successfully")
                 except:
                     self.iface.messageBar().pushMessage("Couldn't download the data. Please verify the station ID",level=Qgis.Critical)
             else:
                 self.iface.messageBar().pushMessage("A station ID and an output file are required.",level=Qgis.Critical)
-
+        
+        elif widget == 'btn_cehqprocess':
+            streamflowpath = self.dlg.file_cehqlocalinput.filePath()
+            output = self.dlg.file_cehqlocaloutput.filePath()
+            if streamflowpath and output:
+                try:
+                    streamflow.cehq.exportRVT(streamflowpath,output,'local')
+                    self.iface.messageBar().pushSuccess("Success", "RVT file written successfully")
+                except Exception as e:
+                    self.iface.messageBar().pushMessage("Couldn't process the file. Please verify the input file",level=Qgis.Critical)
+                    print(e)
+            else:
+                self.iface.messageBar().pushMessage("An input and output file are required.",level=Qgis.Critical)
 
     #This method opens the rvi file from the input directory and gets two values to populate them in the GUI
     def setModelname(self):

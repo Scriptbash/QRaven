@@ -52,33 +52,45 @@ class cehq:
         content = page.text
         return content
 
-    def exportRVT(data,path):
+    def exportRVT(data,path,mode):
         totalLines = 0
         isContent = False
         observation = []
 
-        for i, line in enumerate(data.split('\n')):
-            if 'Station' in line and 'Date' in line and 'Débit' in line:
-                isContent = True
-            elif isContent:
-                if line !='':
+        if mode == 'web':
+            for i, line in enumerate(data.split('\n')):
+                if 'Station' in line and 'Date' in line and 'Débit' in line:
+                    isContent = True
+                elif isContent:
+                    if line !='':
+                        content = line.split()
+                        try:
+                            content[2]
+                            observation.append(content)
+                        except:
+                            text = content[0] + ' ' + content[1] + ' -1.2345' + ' MJ'
+                            observation.append(text.split())
+                        totalLines +=1
+        elif mode == 'local':
+            with open(data,'r') as file:
+                for line in file:
                     content = line.split()
+                    #print(line)
                     try:
                         content[2]
                         observation.append(content)
                     except:
                         text = content[0] + ' ' + content[1] + ' -1.2345' + ' MJ'
                         observation.append(text.split())
-                    totalLines +=1
-
-
+            del observation[0]
+            totalLines = len(observation)
+        
         with open(path,'w') as rvt:
             rvt.write(':ObservationData HYDROGRAPH <Basin_ID or HRU_ID> m3/s \n')
             rvt.write('\t'+observation[0][1].replace('/','-') + ' 00:00:00 ' + str(totalLines))
             for line in observation:
                 rvt.write('\n\t'+line[2])
             rvt.write('\n:EndObservationData')
-        print('Wrote RVT')
 
 
 class watersurvey:
