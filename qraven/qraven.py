@@ -1359,7 +1359,7 @@ class QRaven:
         if widget == 'btn_cehqsearch':
             self.dlg.txt_cehqresults.clear()
             city = self.dlg.combo_cehqmunicipality.currentText()
-            river = self.dlg.txt_cehqriver.text()
+            river = self.dlg.combo_cehqriver.currentText()
             region = self.dlg.combo_cehqadminregion.currentText()
 
             parser = streamflow.MyHTMLParser()
@@ -1395,6 +1395,7 @@ class QRaven:
                     self.iface.messageBar().pushMessage("Couldn't download the data. Please verify the station ID",level=Qgis.Critical)
             else:
                 self.iface.messageBar().pushMessage("A station ID and an output file are required.",level=Qgis.Critical)
+
 
     #This method opens the rvi file from the input directory and gets two values to populate them in the GUI
     def setModelname(self):
@@ -1624,8 +1625,10 @@ class QRaven:
         script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
         citiespath = "ext_data/cities.txt"
         regionspath = "ext_data/regions.txt"
+        riverspath = "ext_data/rivers.txt"
         citiesfile = os.path.join(script_dir, citiespath)
         regionsfile = os.path.join(script_dir, regionspath)
+        riversfile = os.path.join(script_dir, riverspath)
 
         cities = []
         with open(citiesfile) as file:
@@ -1644,6 +1647,15 @@ class QRaven:
                     regions.append(region)
         self.dlg.combo_cehqadminregion.addItem("")            
         self.dlg.combo_cehqadminregion.addItems(regions)
+
+        rivers = []
+        with open(riversfile) as file:
+            for line in file:
+                river = line.strip('\n')
+                if river:
+                    rivers.append(river)
+        self.dlg.combo_cehqriver.addItem("")            
+        self.dlg.combo_cehqriver.addItems(rivers)
  
 #This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
 def checkOS():

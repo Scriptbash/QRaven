@@ -8,9 +8,9 @@ class cehq:
         headers = {'User-Agent': 'Mozilla/5.0'}
         payload = {'lstStation':'',
                    'BtnRechercher1':'Rechercher',
-                   'lstMunicipalite':city,
-                   'lstRiviere':river,
-                   'lstRegion':region  
+                   'lstMunicipalite':city.encode("latin-1"),
+                   'lstRiviere':river.encode("latin-1"),
+                   'lstRegion':region.encode("latin-1")  
                   }
 
         r= requests.post(url,headers=headers,data=payload)
@@ -41,6 +41,7 @@ class cehq:
                     stations.append(tmplist.copy())
                     tmplist.clear()
                     reachedtable = False
+        stations = [x for x in stations if x[7] != 'Niveau']
         return stations
     
     def downloadData(station):
