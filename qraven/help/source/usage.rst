@@ -9,28 +9,66 @@ Open QRaven
 .. |qrvn_ico| image:: https://github.com/Scriptbash/QRaven/blob/main/qraven/icon.png?raw=true
   :width: 20
 
-Click on the QRaven icon in your toolbar |qrvn_ico| or go in the "Plugins" menu, select the QRaven option and click on "Generate Raven input files"
+Click on the QRaven icon |qrvn_ico| in your toolbar or go in the "Plugins" menu, select the QRaven option and click on "Generate Raven input files"
 
 .. image:: https://user-images.githubusercontent.com/98601298/170999781-22514c96-7611-424a-b946-69fd465c5181.png
   :width: 600
 
-You will have four main tabs
+You will have five main tabs
 
  * :ref:`Raven RVI<createRVI>`
  * :ref:`BasinMaker RVH<createRVH>`
  * :ref:`GridWeights<gridweights>`
+ * :ref:`Streamflow<datascrapers>`
  * :ref:`Run Model<runrvn>`
 
 .. _createRVI:
 
 Create a RVI file
 -----------------
-*To-do
+QRaven all started with this feature in mind. This tab can be used to create a rvi file from scratch or from a template.
+The templates available are UBCWM, HBV-EC, GR4J, Canadian Shield,
+MOHYSE, HMETS, HYPE and HYMOD. Those models structures were taken directly from the Raven official documentation.
+
+The parameters are separated in different sections; 
+
+- Model info
+   - Templates buttons. Simply click on the one needed and the interface will load its configuration. 
+   - Basic information like the name of the model, the start/end date, time step, etc.
+- Sim. parameters
+   - Simulation parameters such as the catchment route, the routing method, evaporation, etc.
+- Hydro. processes
+   - A table that allows to set up the hydrologic processes.
+   - Click on "Add process" to add a new row or "Remove selected process" to remove the selected row.
+   - After selecting a process, the available algorithms for that process will be inside the algorithm drop down list. The from and to
+     compartments drop down list will contain the available compartments for the select process and algorithm.
+- Transport cmd
+   - This work the same way as the hydrologic processes, but for the transport commands.
+- Optional I/O
+   - All kind of optional options like CreateRVPTemplate, evaluation metrics, debug mode, etc.
+- Custom output
+   - This is similar to the hydrologic processes table, but for custom outputs.
+
+This section of the plugin is pretty straight forward to use. Check/uncheck/ options, select entries in drop down lists, etc.
+When ready, click on the "Write" button to write the rvi file. Otherwise, you can click on "Reset" to revert the options back to their default values.
+
+.. figure:: ./images/modelinfo_ui.png
+  :width: 600
+
+  The model info section.
+
+.. figure:: ./images/hydroproc_ui.png
+  :width: 600
+
+  The hydrologic process table.
 
 .. _createRVH:
 
 Create a RVH file
 -----------------
+.. warning::
+  The Docker daemon must be running to use this feature.
+
 *To-do
 
 .. _gridweights:
@@ -55,6 +93,44 @@ Associate a NetCDF grid to the HRUs
   
   Example of the gridweights generator interface.
 
+.. _datascrapers:
+
+Download streamflow data
+------------------------
+QRaven can fetch hydrometric data from two providers at this time, which are the 
+direction principale des prévisions hydriques et de la cartographie (DPPHC) and the Water office. Not only can it fetch data automatically,
+it can also generate rvt files from the data. Only flow data is supported, level data is unsupported.
+
+Both data scrapers work the same, but their search criterias differ a little bit. This documentation will only cover the Water office scraper.
+
+- Search a station
+   1. Select either "Station name" or "Province".
+   2. If "Station name" is selected, type in the full or patial name of the station. If "Province" is selected, select a province in the drop down list.
+   3. Use the "Regulation" and "Station status" drop down list to refine your search if needed.
+   4. Click on "Search".
+   5. Results will show up in the text area above the "Search" button.
+   
+   .. note:: 
+    The station ID is always the first information in the search results. Simply copy/paste an ID into the "Station ID" field in the download section.
+
+
+- Download hydrometric data
+   1. In the "Station ID" field, type in the hydrometric station ID from which the data will be downloaded.
+   2. In the "Output file" field, select a directory and name for the output file. The extension will always be ".rvt".
+   3. Click the "Download" button.
+
+If you have already downloaded data from one of the two providers, use the following option.
+
+- Process a local file
+   1. In the "Input file" field, select the file you want to process.
+   2. In the "Output file" field, select a directory and a name for the rvt file.
+   3. Click on the "Process" button. 
+
+.. figure:: ./images/watersurvey_ui.png
+  :width: 600
+
+  Example of the Water office UI
+
 .. _runrvn:
 
 Run a Raven model
@@ -74,7 +150,7 @@ If an error occurs and they are not filled automatically, please submit a `bug r
 .. figure:: https://user-images.githubusercontent.com/98601298/188149995-0dbed886-7906-412a-b798-09bae286959e.png
   :width: 600
   
-  Example of a the Run Model interface.
+  Example of the Run Model interface.
 
 Draw the hydrograph
 -------------------
