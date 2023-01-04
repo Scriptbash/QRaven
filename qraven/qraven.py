@@ -1567,7 +1567,9 @@ class QRaven:
         rvhfile = prefix+'.rvh'
         rvpfile = prefix+'.rvp'
         rvptemplatefile = prefix+'.rvp_temp.rvp'
-        ravenparametersfile = Path(__file__).parent / "RavenParameters.dat"
+        script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
+        ravenparametersfile ="ext_data/RavenParameters.dat"
+        ravenparametersfile = os.path.join(script_dir, ravenparametersfile)
         soil_layers = getSoilLayers(inputdir,separator,rvifile)
         #!!Simplify the functions to only process the requested information!!
         landuseclasses,terrainclasses,vegclasses,soilprofileclasses = extractRVHhrus(inputdir,separator,rvhfile)
@@ -1688,14 +1690,37 @@ class QRaven:
                     if 'version=' in line:  #loops through the metadata file and searches for the plugin version
                         pluginversion = line.split()
                         print(pluginversion[0])
+                        installedversion =""
+                        for letters in pluginversion[0]:
+                            installedversion +=letters+' '
+                        installedversion=[int(s) for s in installedversion.split() if s.isdigit()]
             print("Looking for updates")
             link = "https://raw.githubusercontent.com/Scriptbash/QRaven/main/qraven/metadata.txt"
             page = requests.get(link)
             content = page.text     
-            keywords = content.split()
-            if pluginversion[0] in keywords:
-                print("version is up to date")
-            else:
+            keywords = content.splitlines()
+            for word in keywords:
+                if 'version=' in word:
+                    latestrelease = word.split()
+                    latestversion =""
+                    for letters in latestrelease[0]:
+                        latestversion +=letters+' '
+                    latestversion=[int(s) for s in latestversion.split() if s.isdigit()]
+            instver = ''
+            relver = ''
+            for number in installedversion:
+                instver += str(number)
+            for number in latestversion:
+                relver += str(number)
+            installedversion = int(instver)
+            latestversion = int(relver)
+            if installedversion == latestversion:
+                print('QRaven is up to date')
+            elif installedversion > latestversion:
+                print('Running a pre-release version')
+                self.dlg.lbl_update.setText('Pre-release version. Please report any issues.')
+            elif installedversion < latestversion:
+                print('An update is available')
                 print("Found an update. Please install the latest version of the plugin here: https://github.com/Scriptbash/QRaven/releases")
                 self.dlg.lbl_update.setText('An update is available, please install the latest version <a href="https://github.com/Scriptbash/QRaven/releases">https://github.com/Scriptbash/QRaven/releases</a>')
                 #self.iface.messageBar().pushInfo("Info", "A QRaven update is available, please install the latest version https://github.com/Scriptbash/QRaven/releases")
