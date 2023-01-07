@@ -26,7 +26,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>4</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -3828,7 +3828,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>653</width>
+              <width>313</width>
               <height>631</height>
              </rect>
             </property>
@@ -4335,6 +4335,163 @@
        </widget>
       </widget>
      </widget>
+     <widget class="QWidget" name="tab_14">
+      <attribute name="title">
+       <string>GIS</string>
+      </attribute>
+      <widget class="QScrollArea" name="scrollArea_6">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>701</width>
+         <height>601</height>
+        </rect>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents_6">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>699</width>
+          <height>599</height>
+         </rect>
+        </property>
+        <layout class="QFormLayout" name="formLayout_2">
+         <item row="1" column="1">
+          <widget class="QLabel" name="label_106">
+           <property name="text">
+            <string>Download data</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QgsFileWidget" name="file_fetchdem">
+           <property name="filter">
+            <string>*.zip</string>
+           </property>
+           <property name="storageMode">
+            <enum>QgsFileWidget::SaveFile</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_108">
+           <property name="text">
+            <string>DEM</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QgsFileWidget" name="file_fetchflowdir">
+           <property name="filter">
+            <string>*.zip</string>
+           </property>
+           <property name="storageMode">
+            <enum>QgsFileWidget::SaveFile</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_111">
+           <property name="text">
+            <string>Flow direction</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QgsFileWidget" name="file_fetchlakes">
+           <property name="filter">
+            <string>*.zip</string>
+           </property>
+           <property name="storageMode">
+            <enum>QgsFileWidget::SaveFile</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_114">
+           <property name="text">
+            <string>Lakes</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QgsFileWidget" name="file_fetchbankfull">
+           <property name="filter">
+            <string>*.tgz</string>
+           </property>
+           <property name="storageMode">
+            <enum>QgsFileWidget::SaveFile</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_113">
+           <property name="text">
+            <string>Bankfull width</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QgsFileWidget" name="file_fetchsoil">
+           <property name="filter">
+            <string>*.zip</string>
+           </property>
+           <property name="storageMode">
+            <enum>QgsFileWidget::SaveFile</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="label_110">
+           <property name="text">
+            <string>Soil</string>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="1">
+          <widget class="QPushButton" name="btn_downloadgisdata">
+           <property name="text">
+            <string>Download</string>
+           </property>
+          </widget>
+         </item>
+         <item row="13" column="1">
+          <widget class="QLabel" name="label_107">
+           <property name="text">
+            <string>Process data</string>
+           </property>
+          </widget>
+         </item>
+         <item row="12" column="0" colspan="2">
+          <widget class="QPlainTextEdit" name="txt_gisdatalogs">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="1">
+          <widget class="QProgressBar" name="progressBar">
+           <property name="value">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="1">
+          <widget class="QLabel" name="lbl_progressbar">
+           <property name="text">
+            <string>l</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </widget>
      <widget class="QWidget" name="tab_8">
       <attribute name="title">
        <string>Run Model</string>
@@ -4619,9 +4776,9 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_3"/>
  </buttongroups>
 </ui>

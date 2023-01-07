@@ -51,6 +51,7 @@ from .modules.templates.hymod import loadHymod
 from .modules.PyRavenR import *
 from .modules import customoutputs, hydrologicproc
 from .modules.datascrapers import streamflow
+from .modules.datascrapers.gisdata import gisScraper
 
 
 class QRaven:
@@ -287,6 +288,10 @@ class QRaven:
             self.dlg.btn_watersurveysearch.clicked.connect(self.searchStreamflow)
             self.dlg.btn_watersurveydownload.clicked.connect(self.downloadStreamflow)
             self.dlg.btn_watersurveyprocess.clicked.connect(self.downloadStreamflow)
+            #----------------------------------------#
+
+            #---------------GIS Data ----------------#
+            self.dlg.btn_downloadgisdata.clicked.connect(self.downloadGISdata)
             #----------------------------------------#
 
             #-------------Run Raven Model-------------#
@@ -1510,6 +1515,28 @@ class QRaven:
                     print(e)
             else:
                 self.iface.messageBar().pushMessage("An input and output file are required.",level=Qgis.Critical)
+
+
+    def downloadGISdata(self):
+        outputdem = self.dlg.file_fetchdem.filePath()
+        outputflowdir = self.dlg.file_fetchflowdir.filePath()
+        outputlakes = self.dlg.file_fetchlakes.filePath()
+        outputbankfull = self.dlg.file_fetchbankfull.filePath()
+        outputsoil = self.dlg.file_fetchsoil.filePath()
+
+        if outputdem:
+            gisScraper.dem(self,outputdem)
+        if outputflowdir:     
+            gisScraper.flowdirection(self,outputflowdir)
+        if outputlakes:
+            gisScraper.lakes(self,outputlakes)
+        if outputbankfull:
+            gisScraper.bankfull(self,outputbankfull)
+        if outputsoil:
+            gisScraper.soil(self,outputsoil)
+        self.dlg.lbl_progressbar.setText('Download complete.')
+        self.dlg.progressBar.setValue(0) 
+
 
     #This method opens the rvi file from the input directory and gets two values to populate them in the GUI
     def setModelname(self):
