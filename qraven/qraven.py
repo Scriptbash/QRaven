@@ -1523,19 +1523,31 @@ class QRaven:
         outputlakes = self.dlg.file_fetchlakes.filePath()
         outputbankfull = self.dlg.file_fetchbankfull.filePath()
         outputsoil = self.dlg.file_fetchsoil.filePath()
-
+        outputlanduse = self.dlg.file_fetchlanduse.filePath()
+        file_is_chosen = False
         if outputdem:
+            file_is_chosen = True
             gisScraper.dem(self,outputdem)
         if outputflowdir:     
+            file_is_chosen = True
             gisScraper.flowdirection(self,outputflowdir)
         if outputlakes:
+            file_is_chosen = True
             gisScraper.lakes(self,outputlakes)
         if outputbankfull:
+            file_is_chosen = True
             gisScraper.bankfull(self,outputbankfull)
+        if outputlanduse:
+            file_is_chosen = True
+            gisScraper.landuse(self,outputlanduse)
         if outputsoil:
+            file_is_chosen = True
             gisScraper.soil(self,outputsoil)
-        self.dlg.lbl_progressbar.setText('Download complete.')
-        self.dlg.progressBar.setValue(0) 
+        if file_is_chosen:
+            self.dlg.lbl_progressbar.setText('Download complete.')
+            self.dlg.progress_gisdownload.setValue(0) 
+        else:
+            self.dlg.lbl_progressbar.setText('Select files first!')
 
 
     #This method opens the rvi file from the input directory and gets two values to populate them in the GUI

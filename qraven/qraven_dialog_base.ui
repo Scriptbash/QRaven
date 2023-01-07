@@ -4366,15 +4366,8 @@
            <property name="text">
             <string>Download data</string>
            </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QgsFileWidget" name="file_fetchdem">
-           <property name="filter">
-            <string>*.zip</string>
-           </property>
-           <property name="storageMode">
-            <enum>QgsFileWidget::SaveFile</enum>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -4385,8 +4378,8 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
-          <widget class="QgsFileWidget" name="file_fetchflowdir">
+         <item row="2" column="1">
+          <widget class="QgsFileWidget" name="file_fetchdem">
            <property name="filter">
             <string>*.zip</string>
            </property>
@@ -4402,8 +4395,8 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
-          <widget class="QgsFileWidget" name="file_fetchlakes">
+         <item row="3" column="1">
+          <widget class="QgsFileWidget" name="file_fetchflowdir">
            <property name="filter">
             <string>*.zip</string>
            </property>
@@ -4419,10 +4412,10 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
-          <widget class="QgsFileWidget" name="file_fetchbankfull">
+         <item row="4" column="1">
+          <widget class="QgsFileWidget" name="file_fetchlakes">
            <property name="filter">
-            <string>*.tgz</string>
+            <string>*.zip</string>
            </property>
            <property name="storageMode">
             <enum>QgsFileWidget::SaveFile</enum>
@@ -4436,7 +4429,24 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="1">
+         <item row="5" column="1">
+          <widget class="QgsFileWidget" name="file_fetchbankfull">
+           <property name="filter">
+            <string>*.tgz</string>
+           </property>
+           <property name="storageMode">
+            <enum>QgsFileWidget::SaveFile</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="label_110">
+           <property name="text">
+            <string>Soil</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="1">
           <widget class="QgsFileWidget" name="file_fetchsoil">
            <property name="filter">
             <string>*.zip</string>
@@ -4446,45 +4456,85 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="label_110">
+         <item row="8" column="1">
+          <widget class="QLabel" name="lbl_progressbar">
            <property name="text">
-            <string>Soil</string>
+            <string>l</string>
            </property>
           </widget>
          </item>
          <item row="9" column="1">
+          <widget class="QProgressBar" name="progress_gisdownload">
+           <property name="value">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="1">
           <widget class="QPushButton" name="btn_downloadgisdata">
            <property name="text">
             <string>Download</string>
            </property>
           </widget>
          </item>
-         <item row="13" column="1">
+         <item row="12" column="1">
           <widget class="QLabel" name="label_107">
            <property name="text">
-            <string>Process data</string>
+            <string>Data processing</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
-         <item row="12" column="0" colspan="2">
-          <widget class="QPlainTextEdit" name="txt_gisdatalogs">
-           <property name="readOnly">
-            <bool>true</bool>
+         <item row="11" column="1">
+          <spacer name="verticalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="13" column="1">
+          <widget class="QgsFileWidget" name="file_giscliplayer">
+           <property name="filter">
+            <string>*.shp</string>
            </property>
           </widget>
          </item>
-         <item row="8" column="1">
-          <widget class="QProgressBar" name="progressBar">
-           <property name="value">
-            <number>0</number>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="1">
-          <widget class="QLabel" name="lbl_progressbar">
+         <item row="13" column="0">
+          <widget class="QLabel" name="label_109">
            <property name="text">
-            <string>l</string>
+            <string>Clip layer</string>
+           </property>
+          </widget>
+         </item>
+         <item row="14" column="1">
+          <widget class="QPushButton" name="btn_gisprocess">
+           <property name="text">
+            <string>Process</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QgsFileWidget" name="file_fetchlanduse">
+           <property name="filter">
+            <string>*.tif</string>
+           </property>
+           <property name="storageMode">
+            <enum>QgsFileWidget::SaveFile</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="label_112">
+           <property name="text">
+            <string>Landuse</string>
            </property>
           </widget>
          </item>
