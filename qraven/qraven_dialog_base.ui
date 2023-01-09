@@ -54,7 +54,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -4357,7 +4357,7 @@
           <x>0</x>
           <y>0</y>
           <width>699</width>
-          <height>676</height>
+          <height>725</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_2">
@@ -4459,7 +4459,7 @@
          <item row="8" column="1">
           <widget class="QLabel" name="lbl_progressbar">
            <property name="text">
-            <string>l</string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -4500,21 +4500,21 @@
            </property>
           </spacer>
          </item>
-         <item row="14" column="1">
+         <item row="15" column="1">
           <widget class="QgsFileWidget" name="file_giscliplayer">
            <property name="filter">
             <string>*.shp</string>
            </property>
           </widget>
          </item>
-         <item row="14" column="0">
+         <item row="15" column="0">
           <widget class="QLabel" name="label_109">
            <property name="text">
             <string>Clip layer</string>
            </property>
           </widget>
          </item>
-         <item row="22" column="1">
+         <item row="24" column="1">
           <widget class="QPushButton" name="btn_gisprocess">
            <property name="text">
             <string>Process</string>
@@ -4538,75 +4538,82 @@
            </property>
           </widget>
          </item>
-         <item row="15" column="1">
-          <widget class="QgsFileWidget" name="mQgsFileWidget"/>
-         </item>
          <item row="16" column="1">
-          <widget class="QgsFileWidget" name="mQgsFileWidget_2"/>
+          <widget class="QgsFileWidget" name="file_processdem"/>
          </item>
          <item row="17" column="1">
-          <widget class="QgsFileWidget" name="mQgsFileWidget_3"/>
+          <widget class="QgsFileWidget" name="file_processflowdir"/>
          </item>
          <item row="18" column="1">
-          <widget class="QgsFileWidget" name="mQgsFileWidget_4"/>
+          <widget class="QgsFileWidget" name="file_processlakes"/>
          </item>
          <item row="19" column="1">
-          <widget class="QgsFileWidget" name="mQgsFileWidget_5"/>
+          <widget class="QgsFileWidget" name="file_processbankfull"/>
          </item>
          <item row="20" column="1">
-          <widget class="QgsFileWidget" name="mQgsFileWidget_6"/>
+          <widget class="QgsFileWidget" name="file_processlanduse"/>
          </item>
-         <item row="15" column="0">
+         <item row="21" column="1">
+          <widget class="QgsFileWidget" name="file_processsoil"/>
+         </item>
+         <item row="16" column="0">
           <widget class="QLabel" name="label_115">
            <property name="text">
             <string>DEM</string>
            </property>
           </widget>
          </item>
-         <item row="16" column="0">
+         <item row="17" column="0">
           <widget class="QLabel" name="label_116">
            <property name="text">
             <string>Flow direction</string>
            </property>
           </widget>
          </item>
-         <item row="17" column="0">
+         <item row="18" column="0">
           <widget class="QLabel" name="label_117">
            <property name="text">
             <string>Lakes</string>
            </property>
           </widget>
          </item>
-         <item row="18" column="0">
+         <item row="19" column="0">
           <widget class="QLabel" name="label_118">
            <property name="text">
             <string>Bankfull width</string>
            </property>
           </widget>
          </item>
-         <item row="19" column="0">
+         <item row="20" column="0">
           <widget class="QLabel" name="label_119">
            <property name="text">
             <string>Landuse</string>
            </property>
           </widget>
          </item>
-         <item row="20" column="0">
+         <item row="21" column="0">
           <widget class="QLabel" name="label_120">
            <property name="text">
             <string>Soil</string>
            </property>
           </widget>
          </item>
-         <item row="21" column="1">
-          <widget class="QProgressBar" name="progressBar">
+         <item row="23" column="1">
+          <widget class="QProgressBar" name="progress_gisprocess">
            <property name="value">
             <number>0</number>
            </property>
           </widget>
          </item>
-         <item row="12" column="0">
-          <widget class="QCheckBox" name="checkBox">
+         <item row="22" column="1">
+          <widget class="QLabel" name="lbl_progressbar2">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="14" column="1">
+          <widget class="QCheckBox" name="chk_samefilegis">
            <property name="text">
             <string>Use the same files as above</string>
            </property>

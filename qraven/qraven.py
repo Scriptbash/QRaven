@@ -292,6 +292,8 @@ class QRaven:
 
             #---------------GIS Data ----------------#
             self.dlg.btn_downloadgisdata.clicked.connect(self.downloadGISdata)
+            self.dlg.chk_samefilegis.stateChanged.connect(self.copypaths)
+            self.dlg.btn_gisprocess.clicked.connect(self.processgisdata)
             #----------------------------------------#
 
             #-------------Run Raven Model-------------#
@@ -1548,6 +1550,65 @@ class QRaven:
             self.dlg.progress_gisdownload.setValue(0) 
         else:
             self.dlg.lbl_progressbar.setText('Select files first!')
+
+    def copypaths(self):
+        outputdem = os.path.dirname(self.dlg.file_fetchdem.filePath())
+        outputflowdir = os.path.dirname(self.dlg.file_fetchflowdir.filePath())
+        outputlakes = os.path.dirname(self.dlg.file_fetchlakes.filePath())
+        outputbankfull = os.path.dirname(self.dlg.file_fetchbankfull.filePath())
+        outputsoil = os.path.dirname(self.dlg.file_fetchsoil.filePath())
+        outputlanduse = self.dlg.file_fetchlanduse.filePath()
+
+        if self.dlg.chk_samefilegis.isChecked():
+            self.dlg.file_processdem.setFilePath(outputdem+'/na_con_3s.tif')
+            self.dlg.file_processflowdir.setFilePath(outputflowdir+'/hyd_na_dir_15s')
+            self.dlg.file_processlakes.setFilePath(outputlakes+'/HydroLAKES_polys_v10.shp')
+            self.dlg.file_processbankfull.setFilePath(outputbankfull+'/nariv.shp')
+            self.dlg.file_processsoil.setFilePath(outputsoil+'/slc_v2r2_canada.shp')
+            self.dlg.file_processlanduse.setFilePath(outputlanduse)
+        else:
+            self.dlg.file_processdem.setFilePath('')
+            self.dlg.file_processflowdir.setFilePath('')
+            self.dlg.file_processlakes.setFilePath('')
+            self.dlg.file_processbankfull.setFilePath('')
+            self.dlg.file_processsoil.setFilePath('')
+            self.dlg.file_processlanduse.setFilePath('')
+    
+    def processgisdata(self):
+        overlay = self.dlg.file_giscliplayer.filePath()
+        dem = self.dlg.file_processdem.filePath()
+        flowdir = self.dlg.file_processflowdir.filePath()
+        lakes = self.dlg.file_processlakes.filePath()
+        bankfull = self.dlg.file_processbankfull.filePath()
+        soil = self.dlg.file_processsoil.filePath()
+        landuse = self.dlg.file_processlanduse.filePath()
+        file_is_chosen = False
+
+        if dem:
+            file_is_chosen = True
+            gisScraper.cliplayer(self, overlay, dem)
+        if flowdir:
+            file_is_chosen = True
+            gisScraper.cliplayer(self, overlay, flowdir)
+        if lakes:
+            file_is_chosen = True
+            gisScraper.cliplayer(self, overlay, lakes)
+        if bankfull:
+            file_is_chosen = True
+            gisScraper.cliplayer(self, overlay, bankfull)
+        if soil:
+            file_is_chosen = True
+            gisScraper.cliplayer(self, overlay, soil)
+        if landuse:
+            file_is_chosen = True
+            gisScraper.cliplayer(self, overlay, landuse)
+
+        if file_is_chosen:
+            self.dlg.lbl_progressbar2.setText('File processing complete.')
+            self.dlg.progress_gisprocess.setValue(0) 
+        else:
+            self.dlg.lbl_progressbar2.setText('Select files first!')
+        
 
 
     #This method opens the rvi file from the input directory and gets two values to populate them in the GUI

@@ -1,5 +1,6 @@
-import urllib.request, os, zipfile, tarfile
+import urllib.request, os, zipfile, tarfile, processing
 from PyQt5.QtWidgets import *
+from qgis.core import Qgis, QgsVectorLayer, QgsRasterLayer,QgsCoordinateReferenceSystem,QgsProject,QgsProcessingFeedback
 
 class gisScraper:
         
@@ -37,17 +38,51 @@ class gisScraper:
         sendRequest(self,url,output)
     
     def soil(self, output):
-        url = 'https://sis.agr.gc.ca/nsdb/ca/cac003/cac003.20110308.v3.2/ca_all_slc_v3r2.zip'
+        url = 'https://sis.agr.gc.ca/cansis/nsdb/slc/v2.2/slc_v2r2_canada.zip'
         self.dlg.lbl_progressbar.setText('Downloading soil layer')
         sendRequest(self,url,output)
         self.dlg.lbl_progressbar.setText('Extracting...')
         extractarchives(output)
 
-        output = os.path.dirname(output)+'/soil.dbf'
-        url = 'https://sis.agr.gc.ca/soildata/canada/soil_name_canada_v2r20140529.dbf'
-        self.dlg.lbl_progressbar.setText('Downloading soil attribute table')
-        sendRequest(self,url,output)
+        # output = os.path.dirname(output)+'/soil.dbf'
+        # url = 'https://sis.agr.gc.ca/soildata/canada/soil_name_canada_v2r20140529.dbf'
+        # self.dlg.lbl_progressbar.setText('Downloading soil attribute table')
+        # sendRequest(self,url,output)
 
+    def cliplayer(self, overlay, inputlayer):
+        global progressbar 
+        progressbar =self.dlg.progress_gisprocess
+        filename, extension = os.path.splitext(inputlayer)
+        overlay = QgsVectorLayer(overlay, 'watershed', "ogr")
+        f = QgsProcessingFeedback()
+        f.progressChanged.connect(qgisprogressbar)
+
+        if extension == '.tif':
+            #inputlayer = QgsRasterLayer(inputlayer, 'rasterlayer')
+            result = processing.runAndLoadResults("gdal:cliprasterbymasklayer", 
+                            {'INPUT':inputlayer,
+                                'MASK':overlay,
+                                'SOURCE_CRS':None,
+                                'TARGET_CRS':QgsCoordinateReferenceSystem('EPSG:4326'),
+                                'TARGET_EXTENT':None,'NODATA':None,'ALPHA_BAND':False,'CROP_TO_CUTLINE':True,
+                                'KEEP_RESOLUTION':False,'SET_RESOLUTION':False,'X_RESOLUTION':None,'Y_RESOLUTION':None,
+                                'MULTITHREADING':True,'OPTIONS':'','DATA_TYPE':0,'EXTRA':'',
+                                'OUTPUT':'TEMPORARY_OUTPUT'
+                            },feedback=f)
+        else:
+            #inputlayer = QgsVectorLayer(inputlayer, 'vectorlayer', "ogr")
+            result = processing.run("native:clip", 
+                            {'INPUT':inputlayer,
+                                'OVERLAY':overlay,
+                                'OUTPUT':'TEMPORARY_OUTPUT'
+                            },feedback=f)
+            
+            layer = result['OUTPUT']
+        #layer.setName('grille_information')
+            QgsProject.instance().addMapLayer(layer)
+
+    def joinattributes(self, inputlayer):
+        print('OK')
 
 def sendRequest(self, url, output):
     
@@ -58,7 +93,7 @@ def sendRequest(self, url, output):
                                     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
                                 }
                                 )
-    response = urllib.request.urlopen(req)
+    response = urllib.request.urlopen(req, timeout=10)
 
     totalsize = response.info()['Content-Length']
     currentsize = 0
@@ -102,3 +137,9 @@ def extractarchives(file):
                     tar.extract(member,extractpath) # extract
                     QApplication.processEvents()  
     os.remove(file)
+
+
+def qgisprogressbar(progress):
+    progressbar.setValue(progress)
+    #self.dlg.progress_gisprocess.setValue(progress)
+    QApplication.processEvents()
