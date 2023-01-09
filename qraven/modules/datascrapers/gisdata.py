@@ -1,4 +1,4 @@
-import urllib.request, os, zipfile
+import urllib.request, os, zipfile, tarfile
 from PyQt5.QtWidgets import *
 
 class gisScraper:
@@ -86,6 +86,19 @@ def Handle_Progress(self,blocksize, totalsize):
 
 def extractarchives(file):
     extractpath = os.path.dirname(file)
-    with zipfile.ZipFile(file, 'r') as zip_ref:
-            zip_ref.extractall(extractpath)
+    filename, extension = os.path.splitext(file)
+    if extension == '.zip':
+        with zipfile.ZipFile(file, 'r') as zip_ref:
+            for elem in zip_ref.namelist() :
+                    zip_ref.extract(elem, extractpath)
+                    QApplication.processEvents() 
+
+    elif extension == '.tgz' or extension == '.tar':
+        tar = tarfile.open(file)
+        for member in tar.getmembers():
+            if member.isreg():  # skip if the TarInfo is not files
+                if 'nariv' in member.name:
+                    member.name = os.path.basename(member.name) # remove the path by reset it
+                    tar.extract(member,extractpath) # extract
+                    QApplication.processEvents()  
     os.remove(file)

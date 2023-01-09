@@ -4357,7 +4357,7 @@
           <x>0</x>
           <y>0</y>
           <width>699</width>
-          <height>599</height>
+          <height>676</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_2">
@@ -4500,21 +4500,21 @@
            </property>
           </spacer>
          </item>
-         <item row="13" column="1">
+         <item row="14" column="1">
           <widget class="QgsFileWidget" name="file_giscliplayer">
            <property name="filter">
             <string>*.shp</string>
            </property>
           </widget>
          </item>
-         <item row="13" column="0">
+         <item row="14" column="0">
           <widget class="QLabel" name="label_109">
            <property name="text">
             <string>Clip layer</string>
            </property>
           </widget>
          </item>
-         <item row="14" column="1">
+         <item row="22" column="1">
           <widget class="QPushButton" name="btn_gisprocess">
            <property name="text">
             <string>Process</string>
@@ -4535,6 +4535,80 @@
           <widget class="QLabel" name="label_112">
            <property name="text">
             <string>Landuse</string>
+           </property>
+          </widget>
+         </item>
+         <item row="15" column="1">
+          <widget class="QgsFileWidget" name="mQgsFileWidget"/>
+         </item>
+         <item row="16" column="1">
+          <widget class="QgsFileWidget" name="mQgsFileWidget_2"/>
+         </item>
+         <item row="17" column="1">
+          <widget class="QgsFileWidget" name="mQgsFileWidget_3"/>
+         </item>
+         <item row="18" column="1">
+          <widget class="QgsFileWidget" name="mQgsFileWidget_4"/>
+         </item>
+         <item row="19" column="1">
+          <widget class="QgsFileWidget" name="mQgsFileWidget_5"/>
+         </item>
+         <item row="20" column="1">
+          <widget class="QgsFileWidget" name="mQgsFileWidget_6"/>
+         </item>
+         <item row="15" column="0">
+          <widget class="QLabel" name="label_115">
+           <property name="text">
+            <string>DEM</string>
+           </property>
+          </widget>
+         </item>
+         <item row="16" column="0">
+          <widget class="QLabel" name="label_116">
+           <property name="text">
+            <string>Flow direction</string>
+           </property>
+          </widget>
+         </item>
+         <item row="17" column="0">
+          <widget class="QLabel" name="label_117">
+           <property name="text">
+            <string>Lakes</string>
+           </property>
+          </widget>
+         </item>
+         <item row="18" column="0">
+          <widget class="QLabel" name="label_118">
+           <property name="text">
+            <string>Bankfull width</string>
+           </property>
+          </widget>
+         </item>
+         <item row="19" column="0">
+          <widget class="QLabel" name="label_119">
+           <property name="text">
+            <string>Landuse</string>
+           </property>
+          </widget>
+         </item>
+         <item row="20" column="0">
+          <widget class="QLabel" name="label_120">
+           <property name="text">
+            <string>Soil</string>
+           </property>
+          </widget>
+         </item>
+         <item row="21" column="1">
+          <widget class="QProgressBar" name="progressBar">
+           <property name="value">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
+         <item row="12" column="0">
+          <widget class="QCheckBox" name="checkBox">
+           <property name="text">
+            <string>Use the same files as above</string>
            </property>
           </widget>
          </item>
