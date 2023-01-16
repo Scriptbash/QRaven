@@ -51,6 +51,7 @@ from .modules.templates.hymod import loadHymod
 from .modules.PyRavenR import *
 from .modules import customoutputs, hydrologicproc
 from .modules.datascrapers import streamflow
+from .modules.datascrapers.gisdata import gisScraper
 
 
 class QRaven:
@@ -287,6 +288,12 @@ class QRaven:
             self.dlg.btn_watersurveysearch.clicked.connect(self.searchStreamflow)
             self.dlg.btn_watersurveydownload.clicked.connect(self.downloadStreamflow)
             self.dlg.btn_watersurveyprocess.clicked.connect(self.downloadStreamflow)
+            #----------------------------------------#
+
+            #---------------GIS Data ----------------#
+            self.dlg.btn_downloadgisdata.clicked.connect(self.downloadGISdata)
+            self.dlg.chk_samefilegis.stateChanged.connect(self.copypaths)
+            self.dlg.btn_gisprocess.clicked.connect(self.processgisdata)
             #----------------------------------------#
 
             #-------------Run Raven Model-------------#
@@ -1510,6 +1517,119 @@ class QRaven:
                     print(e)
             else:
                 self.iface.messageBar().pushMessage("An input and output file are required.",level=Qgis.Critical)
+
+
+    def downloadGISdata(self):
+        outputdem = self.dlg.file_fetchdem.filePath()
+        outputflowdir = self.dlg.file_fetchflowdir.filePath()
+        outputlakes = self.dlg.file_fetchlakes.filePath()
+        outputbankfull = self.dlg.file_fetchbankfull.filePath()
+        outputsoil = self.dlg.file_fetchsoil.filePath()
+        outputlanduse = self.dlg.file_fetchlanduse.filePath()
+        file_is_chosen = False
+        if outputdem:
+            file_is_chosen = True
+            gisScraper.dem(self,outputdem)
+        if outputflowdir:  
+            file_is_chosen = True
+            gisScraper.flowdirection(self,outputflowdir)
+        if outputlakes:
+            file_is_chosen = True
+            gisScraper.lakes(self,outputlakes)
+        if outputbankfull:
+            file_is_chosen = True
+            gisScraper.bankfull(self,outputbankfull)
+        if outputlanduse:
+            file_is_chosen = True
+            gisScraper.landuse(self,outputlanduse)
+        if outputsoil:
+            file_is_chosen = True
+            gisScraper.soil(self,outputsoil)
+        if file_is_chosen:
+            self.dlg.lbl_progressbar.setText('Download complete.')
+            self.dlg.progress_gisdownload.setValue(0) 
+        else:
+            self.dlg.lbl_progressbar.setText('Select files first!')
+
+
+    def copypaths(self):
+        outputdem = self.dlg.file_fetchdem.filePath()
+        outputflowdir = self.dlg.file_fetchflowdir.filePath()
+        outputlakes = self.dlg.file_fetchlakes.filePath()
+        outputbankfull = self.dlg.file_fetchbankfull.filePath()
+        outputsoil = self.dlg.file_fetchsoil.filePath()
+        outputlanduse = self.dlg.file_fetchlanduse.filePath()
+
+        if self.dlg.chk_samefilegis.isChecked():
+            if outputdem:
+                self.dlg.file_processdem.setFilePath(outputdem+'/na_con_3s.tif')
+            if outputflowdir:
+                self.dlg.file_processflowdir.setFilePath(outputflowdir+'/hyd_na_dir_15s.tif')
+            if outputlakes:
+                self.dlg.file_processlakes.setFilePath(outputlakes+'/HydroLAKES_polys_v10.shp')
+            if outputbankfull:
+                self.dlg.file_processbankfull.setFilePath(outputbankfull+'/nariv.shp')
+            if outputsoil:
+                self.dlg.file_processsoil.setFilePath(outputsoil+'/slc_v2r2_canada.shp')
+            if outputlanduse:
+                self.dlg.file_processlanduse.setFilePath(outputlanduse+'/landuse.tif')
+        else:
+            self.dlg.file_processdem.setFilePath('')
+            self.dlg.file_processflowdir.setFilePath('')
+            self.dlg.file_processlakes.setFilePath('')
+            self.dlg.file_processbankfull.setFilePath('')
+            self.dlg.file_processsoil.setFilePath('')
+            self.dlg.file_processlanduse.setFilePath('')
+    
+    def processgisdata(self):
+        overlay = self.dlg.file_giscliplayer.filePath()
+        dem = self.dlg.file_processdem.filePath()
+        flowdir = self.dlg.file_processflowdir.filePath()
+        lakes = self.dlg.file_processlakes.filePath()
+        bankfull = self.dlg.file_processbankfull.filePath()
+        soil = self.dlg.file_processsoil.filePath()
+        landuse = self.dlg.file_processlanduse.filePath()
+        file_is_chosen = False
+
+        if dem:
+            file_is_chosen = True
+            self.dlg.lbl_progressbar2.setText('Clipping DEM.')
+            gisScraper.cliplayer(self, overlay, dem)
+        if flowdir:
+            file_is_chosen = True
+            self.dlg.lbl_progressbar2.setText('Clipping flow direction.')
+            gisScraper.cliplayer(self, overlay, flowdir)
+        if lakes:
+            file_is_chosen = True
+            self.dlg.lbl_progressbar2.setText('Clipping lakes.')
+            gisScraper.cliplayer(self, overlay, lakes)
+        if bankfull:
+            file_is_chosen = True
+            self.dlg.lbl_progressbar2.setText('Clipping bankfull width.')
+            gisScraper.cliplayer(self, overlay, bankfull)
+        if soil:
+            file_is_chosen = True
+            self.dlg.lbl_progressbar2.setText('Clipping soil.')
+            gisScraper.cliplayer(self, overlay, soil)
+            self.dlg.lbl_progressbar2.setText('Joining soil attributes.')
+            qrvn_soil = os.path.dirname(soil)+'/qrvn_soiltmp.shp'
+            attTable = os.path.dirname(soil)+'/slc_v2r2_canada_cmp.dbf'
+            gisScraper.joinattributes(self,qrvn_soil,attTable,'SL','SL','KINDMAT')
+            #Need to rename attributes abreviation for basinmaker 
+        if landuse:
+            file_is_chosen = True
+            self.dlg.lbl_progressbar2.setText('Clipping landuse.')
+            gisScraper.cliplayer(self, overlay, landuse)
+            self.dlg.lbl_progressbar2.setText('Polygonizing landuse raster.')
+            qrvn_landuse = os.path.dirname(landuse)+'/tmp_landuse.tif'
+            gisScraper.polygonize(self,qrvn_landuse)
+
+        if file_is_chosen:
+            self.dlg.lbl_progressbar2.setText('File processing complete.')
+            self.dlg.progress_gisprocess.setValue(0) 
+        else:
+            self.dlg.lbl_progressbar2.setText('Select files first!')
+        
 
     #This method opens the rvi file from the input directory and gets two values to populate them in the GUI
     def setModelname(self):

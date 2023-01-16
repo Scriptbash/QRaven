@@ -191,6 +191,7 @@ class watersurvey:
                     rvt.write('\n\t' + line[3])
                 else:
                     rvt.write('\n\t' + '-1.2345')
+            rvt.write('\n:EndObservationData')
 
 
 class MyHTMLParser(HTMLParser):
