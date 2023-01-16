@@ -1,4 +1,4 @@
-import requests, csv
+import requests, csv, datetime
 from html.parser import HTMLParser
 
 class cehq:
@@ -52,10 +52,9 @@ class cehq:
         content = page.text
         return content
 
-    def exportRVT(data,path,mode):
-        totalLines = 0
+    def exportRVT(data,path,mode,stardate,enddate):
         isContent = False
-        observation = []
+        observationtmp = []
 
         if mode == 'web':
             for i, line in enumerate(data.split('\n')):
@@ -66,25 +65,35 @@ class cehq:
                         content = line.split()
                         try:
                             content[2]
-                            observation.append(content)
+                            observationtmp.append(content)
                         except:
                             text = content[0] + ' ' + content[1] + ' -1.2345' + ' MJ'
-                            observation.append(text.split())
-                        totalLines +=1
+                            observationtmp.append(text.split())
         elif mode == 'local':
-            with open(data,'r') as file:
+            isContent = False
+            with open(data,'r',encoding = 'latin-1') as file:
                 for line in file:
                     content = line.split()
-                    #print(line)
-                    try:
-                        content[2]
-                        observation.append(content)
-                    except:
-                        text = content[0] + ' ' + content[1] + ' -1.2345' + ' MJ'
-                        observation.append(text.split())
-            del observation[0]
-            totalLines = len(observation)
+                    if 'Station' in content and 'Date' in line and 'Débit' in content:
+                        isContent = True
+                    elif isContent:
+                        try:
+                            content[2]
+                            observationtmp.append(content)
+                        except:
+                            text = content[0] + ' ' + content[1] + ' -1.2345' + ' MJ'
+                            observationtmp.append(text.split())
+            del observationtmp[0]
         
+        observation =[]
+        for row in observationtmp:
+            obsdate = datetime.datetime.strptime(row[1], '%Y/%m/%d')
+            if  obsdate.date() >= stardate and obsdate.date() < enddate:
+                observation.append(row)
+            else:
+                pass
+                
+        totalLines = len(observation)
         with open(path,'w') as rvt:
             rvt.write(':ObservationData HYDROGRAPH <Basin_ID or HRU_ID> m3/s \n')
             rvt.write('\t'+observation[0][1].replace('/','-') + ' 00:00:00 ' + str(totalLines))

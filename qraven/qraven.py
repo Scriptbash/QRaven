@@ -31,13 +31,10 @@ from qgis.PyQt.QtWidgets import *
 from .resources import *
 # Import the code for the dialog
 from .qraven_dialog import QRavenDialog
-
 from qgis.core import Qgis, QgsVectorLayer, QgsRasterLayer, QgsProject
-import os.path
 from sys import platform
 import matplotlib.pyplot as plt
-import csv, datetime, webbrowser, ntpath
-import requests
+import csv, datetime, webbrowser, ntpath, os.path, requests
 from .modules.docker import dockercmd as docker
 from .modules.resetgui import resetGUI
 from .modules.templates.hmets import loadHmets 
@@ -1465,17 +1462,20 @@ class QRaven:
 
     def downloadStreamflow(self):
         widget = self.dlg.sender().objectName()  #Get the widget name
-
+        startdate = self.dlg.date_cehqstartdate.date().toPyDate()
+        enddate = self.dlg.date_cehqenddate.date().toPyDate()
+       
         if widget == 'btn_cehqdownload':
             id = self.dlg.txt_cehqid.text().strip()
             output = self.dlg.file_cehqoutput.filePath()
             if id and output:
                 try:
                     streamflowdata = streamflow.cehq.downloadData(id)
-                    streamflow.cehq.exportRVT(streamflowdata,output,'web')
+                    streamflow.cehq.exportRVT(streamflowdata,output,'web',startdate,enddate)
                     self.iface.messageBar().pushSuccess("Success", "RVT file written successfully")
-                except:
+                except Exception as e:
                     self.iface.messageBar().pushMessage("Couldn't download the data. Please verify the station ID",level=Qgis.Critical)
+                    print(e)
             else:
                 self.iface.messageBar().pushMessage("A station ID and an output file are required.",level=Qgis.Critical)
         elif widget == 'btn_cehqprocess':
@@ -1483,7 +1483,7 @@ class QRaven:
             output = self.dlg.file_cehqlocaloutput.filePath()
             if streamflowpath and output:
                 try:
-                    streamflow.cehq.exportRVT(streamflowpath,output,'local')
+                    streamflow.cehq.exportRVT(streamflowpath,output,'local',startdate,enddate)
                     self.iface.messageBar().pushSuccess("Success", "RVT file written successfully")
                 except Exception as e:
                     self.iface.messageBar().pushMessage("Couldn't process the file. Please verify the input file",level=Qgis.Critical)
