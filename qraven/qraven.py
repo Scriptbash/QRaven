@@ -1337,6 +1337,12 @@ class QRaven:
         output = self.dlg.file_outputgridweight.filePath()
         outputfolder = folderhrus = os.path.dirname(output)
         outputfile = ntpath.basename(output)
+        containerization = self.dlg.combo_container.currentText() #Get the preferred containerization software
+        
+        if containerization == 'Docker':
+            contnrCMD = 'docker'
+        elif containerization == 'Podman':
+            contnrCMD = 'podman'
 
         if self.dlg.rb_subbasinid.isChecked():
             selectedid = ' -s '
@@ -1352,10 +1358,10 @@ class QRaven:
         try:
             print("Attempting to start the container...")
             if computerOS != 'macos':
-                cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven'
+                cmd=contnrCMD, 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven'
                 docker.dockerCommand(cmd, computerOS)
             else:
-                cmd='docker', 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven_arm'
+                cmd=contnrCMD, 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven_arm'
                 docker.dockerCommand(cmd, computerOS)
             print("The container was started successfully")
         except Exception as e:
@@ -1368,11 +1374,11 @@ class QRaven:
         else:
             pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/nc/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
         print(pythoncmd)
-        cmd ='docker', 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
+        cmd =containerization = self.dlg.combo_container.currentText() #Get the preferred containerization software, 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
         try:
-            os.system("docker start qraven")    #Make sure the container is started. Only needed when the plugin is run a second time
+            os.system(contnrCMD+" start qraven")    #Make sure the container is started. Only needed when the plugin is run a second time
             docker.dockerCommand(cmd, computerOS)
-            cmd = 'docker', 'cp', 'qraven:/root/Gridweights/'+outputfile, outputfolder
+            cmd = contnrCMD, 'cp', 'qraven:/root/Gridweights/'+outputfile, outputfolder
             docker.dockerCommand(cmd, computerOS)
             print("GridWeights generator has finished processing the files")  
         except Exception as e:
