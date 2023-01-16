@@ -31,7 +31,7 @@ from qgis.PyQt.QtWidgets import *
 from .resources import *
 # Import the code for the dialog
 from .qraven_dialog import QRavenDialog
-from qgis.core import Qgis, QgsVectorLayer, QgsRasterLayer, QgsProject
+from qgis.core import Qgis, QgsVectorLayer, QgsRasterLayer, QgsProject, QgsSettings
 from sys import platform
 import matplotlib.pyplot as plt
 import csv, datetime, webbrowser, ntpath, os.path, requests
@@ -206,6 +206,7 @@ class QRaven:
             self.first_start = False
             self.dlg = QRavenDialog()
 
+            self.loadsettings()
             self.checkUpdate()
             self.setStreamflowComboboxes()
             
@@ -301,6 +302,9 @@ class QRaven:
             self.dlg.btn_fillrvptemplate.clicked.connect(self.fillRVPTemplate)
             #----------------------------------------#
 
+            #----------------Settings----------------#
+            self.dlg.btn_savesettings.clicked.connect(self.storesettings)
+            #----------------------------------------#
         # show the dialog
         self.dlg.show()
         # Run the dialog event loop
@@ -1298,13 +1302,20 @@ class QRaven:
         self.iface.messageBar().pushInfo("Info", "The BasinMaker process is starting, this will take a while to complete.")
         self.iface.mainWindow().repaint()
         paramsDict = self.getRVHparams()    #Calls the function to get the RVH parameters
+        containerization = self.dlg.combo_container.currentText() #Get the preferred containerization software
+
+        if containerization == 'Docker':
+            contnrCMD = 'docker'
+        elif containerization == 'Podman':
+            contnrCMD = 'podman'
+
         self.exportRVHparams(paramsDict)    #Calls the function to export the RVH parameters into a file
-        docker.dockerPull(computerOS)       #Calls the function to pull the container
-        docker.dockerStart(computerOS)      #Calls the function that starts the container
-        docker.dockerCopy(self,paramsDict, computerOS, separator)    #Calls the function that copies the parameters file to the docker container, as well as the data
-        docker.runBasinMaker(computerOS)                #Calls the function that runs BasinMaker with the provided data and parameters
-        docker.getDockerResults(self, computerOS, separator)    #Calls the function that retrieves the results from BasinMaker
-        docker.dockerStop()
+        docker.dockerPull(computerOS, contnrCMD)       #Calls the function to pull the container
+        docker.dockerStart(computerOS, contnrCMD)      #Calls the function that starts the container
+        docker.dockerCopy(self,paramsDict, computerOS, separator, contnrCMD)    #Calls the function that copies the parameters file to the docker container, as well as the data
+        docker.runBasinMaker(computerOS, contnrCMD)                #Calls the function that runs BasinMaker with the provided data and parameters
+        docker.getDockerResults(self, computerOS, separator, contnrCMD)    #Calls the function that retrieves the results from BasinMaker
+        docker.dockerStop(contnrCMD)
 
     #This method runs the gridweight generator inside the Docker container
     def generateGridWeights(self):
@@ -1931,6 +1942,30 @@ class QRaven:
         self.dlg.combo_watersurveyprovince.addItems(provinces)
        
  
+    def storesettings(self):
+        containerization = self.dlg.combo_container.currentText()
+        username = self.dlg.txt_casparusername.text()
+        password = self.dlg.txt_casparpassword.text()
+
+        s = QgsSettings()
+        
+        s.setValue("qraven/container", containerization)
+        s.setValue("qraven/casparUsername", username)
+        s.setValue("qraven/casparPassword", password)
+
+        self.iface.messageBar().pushSuccess("Success", "Your settings have been saved.")
+
+    def loadsettings(self):
+        s = QgsSettings()
+        containerization = s.value("qraven/container", "Docker")
+        username = s.value("qraven/casparUsername", "")
+        password = s.value("qraven/casparPassword", "")
+        
+        self.dlg.combo_container.setCurrentText(containerization)
+        self.dlg.txt_casparusername.setText(username)
+        self.dlg.txt_casparpassword.setText(password)
+
+
 #This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
 def checkOS():
     '''Makes a simple check to verify which operating system the user is using.
@@ -1941,10 +1976,12 @@ def checkOS():
         return "linux","/"
     elif platform == "darwin":
         os.environ["PATH"] = "/Applications/Docker.app/Contents/Resources/bin" #This is needed for docker to work on MacOS
+        os.environ["PATH"] = "/opt/podman/bin"
         return "macos", "/"
 
     elif platform == "win32":
         os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"    #This is needed so that the docker commands work on Windows
+        os.environ["PATH"] = "C:\\Program Files\\RedHat\\Podman"
         return "windows", "\\"
 
 computerOS, separator = checkOS()
