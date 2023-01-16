@@ -1462,11 +1462,11 @@ class QRaven:
 
     def downloadStreamflow(self):
         widget = self.dlg.sender().objectName()  #Get the widget name
-        startdate = self.dlg.date_cehqstartdate.date().toPyDate()
-        enddate = self.dlg.date_cehqenddate.date().toPyDate()
        
         if widget == 'btn_cehqdownload':
             id = self.dlg.txt_cehqid.text().strip()
+            startdate = self.dlg.date_cehqstartdate.date().toPyDate()
+            enddate = self.dlg.date_cehqenddate.date().toPyDate()
             output = self.dlg.file_cehqoutput.filePath()
             if id and output:
                 try:
@@ -1479,6 +1479,8 @@ class QRaven:
             else:
                 self.iface.messageBar().pushMessage("A station ID and an output file are required.",level=Qgis.Critical)
         elif widget == 'btn_cehqprocess':
+            startdate = self.dlg.date_cehqstartdate.date().toPyDate()
+            enddate = self.dlg.date_cehqenddate.date().toPyDate()
             streamflowpath = self.dlg.file_cehqlocalinput.filePath()
             output = self.dlg.file_cehqlocaloutput.filePath()
             if streamflowpath and output:
@@ -1492,25 +1494,30 @@ class QRaven:
                 self.iface.messageBar().pushMessage("An input and output file are required.",level=Qgis.Critical)
         elif widget == 'btn_watersurveydownload':
             id = self.dlg.txt_watersurveyid.text().strip()
+            startdate = self.dlg.date_watersurveystartdate.date().toPyDate()
+            enddate = self.dlg.date_watersurveyenddate.date().toPyDate()
             output = self.dlg.file_watersurveyoutput.filePath()
 
             if id and output:
                 try: 
                     streamflowdata = streamflow.watersurvey.downloadData(id)
-                    streamflow.watersurvey.exportRVT(streamflowdata,output)
+                    streamflow.watersurvey.exportRVT(streamflowdata,output,startdate,enddate)
                     self.iface.messageBar().pushSuccess("Success", "RVT file written successfully")
-                except:
+                except Exception as e:
                     self.iface.messageBar().pushMessage("Couldn't download the data. Please verify the station ID",level=Qgis.Critical)
+                    print(e)
             else:
                 self.iface.messageBar().pushMessage("A station ID and an output file are required.",level=Qgis.Critical)
         elif widget == 'btn_watersurveyprocess':
+            startdate = self.dlg.date_watersurveystartdate.date().toPyDate()
+            enddate = self.dlg.date_watersurveyenddate.date().toPyDate()
             streamflowpath = self.dlg.file_watersurveylocalinput.filePath()
             output = self.dlg.file_watersurveylocaloutput.filePath()
             if streamflowpath and output:
                 try:
                     with open(streamflowpath,'r') as file:
                         streamflowdata = file.read()
-                        streamflow.watersurvey.exportRVT(streamflowdata,output)
+                        streamflow.watersurvey.exportRVT(streamflowdata,output,startdate,enddate)
                     self.iface.messageBar().pushSuccess("Success", "RVT file written successfully")
                 except Exception as e:
                     self.iface.messageBar().pushMessage("Couldn't process the file. Please verify the input file",level=Qgis.Critical)

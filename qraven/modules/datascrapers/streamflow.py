@@ -52,7 +52,7 @@ class cehq:
         content = page.text
         return content
 
-    def exportRVT(data,path,mode,stardate,enddate):
+    def exportRVT(data,path,mode,startdate,enddate):
         isContent = False
         observationtmp = []
 
@@ -88,7 +88,7 @@ class cehq:
         observation =[]
         for row in observationtmp:
             obsdate = datetime.datetime.strptime(row[1], '%Y/%m/%d')
-            if  obsdate.date() >= stardate and obsdate.date() < enddate:
+            if  obsdate.date() >= startdate and obsdate.date() < enddate:
                 observation.append(row)
             else:
                 pass
@@ -184,14 +184,24 @@ class watersurvey:
         return r.text
         
         
-    def exportRVT(data,path):
+    def exportRVT(data,path, startdate, enddate):
         reader = csv.reader(data.split('\n'))
-        observation =[]
+        observationtmp =[]
+        observation = []
         
         for row in reader:
-            observation.append(row)
-        del observation[:2]
-        observation = [x for x in observation if x != []]
+            observationtmp.append(row)
+        del observationtmp[:2]
+        observationtmp = [x for x in observationtmp if x != []]
+        
+        #print(observationtmp)
+        for row in observationtmp:
+            obsdate = datetime.datetime.strptime(row[2], '%Y/%m/%d')
+            if  obsdate.date() >= startdate and obsdate.date() < enddate:
+                observation.append(row)
+            else:
+                pass
+
         with open(path,'w') as rvt:
             rvt.write(':ObservationData HYDROGRAPH <Basin_ID or HRU_ID> m3/s \n')
             rvt.write('\t'+observation[0][2].replace('/','-') + ' 00:00:00 ' + str(len(observation)))
