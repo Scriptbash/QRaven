@@ -1,1 +1,67 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 118.96"><title>frame-grid</title><path d="M3.27,0H119.61a3.26,3.26,0,0,1,3.27,3.27V115.69a3.26,3.26,0,0,1-3.27,3.27H3.27A3.26,3.26,0,0,1,0,115.69V3.27A3.26,3.26,0,0,1,3.27,0ZM116.34,81.49H84.1v30.93h32.24V81.49Zm0-37.48H84.1V75h32.24V44ZM84.1,6.54V37.47h32.24V6.54ZM77.56,81.49H45.32v30.93H77.56V81.49Zm0-37.48H45.32V75H77.56V44ZM45.32,6.54V37.47H77.56V6.54ZM38.78,81.49H6.54v30.93H38.78V81.49Zm0-37.48H6.54V75H38.78V44Zm0-37.47H6.54V37.47H38.78V6.54Z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Layer_1"
+   data-name="Layer 1"
+   viewBox="-1 0 124.72439 109.6063"
+   version="1.1"
+   sodipodi:docname="gridweights2.svg"
+   width="33mm"
+   height="29mm"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+  <metadata
+     id="metadata3790">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>toolbox-repairing</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1049"
+     id="namedview3788"
+     showgrid="false"
+     scale-x="1.4"
+     height="1"
+     units="mm"
+     viewbox-width="95.6"
+     viewbox-x="-1"
+     inkscape:zoom="2.14995"
+     inkscape:cx="61.439999"
+     inkscape:cy="92.095167"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" />
+  <defs
+     id="defs3781">
+    <style
+       id="style3779">.cls-1{fill-rule:evenodd;}</style>
+  </defs>
+  <title
+     id="title3783">toolbox-repairing</title>
+  <path
+     id="path3855"
+     d="M 3.1570315,1.287952 H 119.49702 a 3.26,2.9413396 0 0 1 3.27,2.9503624 V 105.66942 a 3.26,2.9413396 0 0 1 -3.27,2.95036 H 3.1570315 a 3.26,2.9413396 0 0 1 -3.26999958,-2.95036 V 4.2383144 A 3.26,2.9413396 0 0 1 3.1570315,1.287952 Z M 116.22702,74.812418 H 83.987033 v 27.906632 h 32.239987 z m 0,-33.816381 H 83.987033 V 68.956806 H 116.22702 V 40.987013 Z M 83.987033,7.1886767 V 35.095312 H 116.22702 V 7.1886767 Z m -6.54,67.6237413 h -32.24 v 27.906632 h 32.24 z m 0,-33.816381 h -32.24 v 27.960769 h 32.24 V 40.987013 Z m -32.24,-33.8073603 V 35.095312 h 32.24 V 7.1886767 Z m -6.54,67.6237413 H 6.4270321 V 102.71905 H 38.667033 Z m 0,-33.816381 H 6.4270321 V 68.956806 H 38.667033 V 40.987013 Z m 0,-33.8073603 H 6.4270321 V 35.095312 H 38.667033 Z"
+     inkscape:connector-curvature="0"
+     style="stroke-width:0.9498691" />
+</svg>
