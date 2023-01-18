@@ -206,6 +206,21 @@ class QRaven:
             self.first_start = False
             self.dlg = QRavenDialog()
 
+            #Sets up the left menu
+            #self.dlg.sidemenu.addItem(QListWidgetItem(icon, name))
+            menuitems = ['Raven RVI','BasinMaker','Gridweights',
+                         'Streamflow', 'GIS','Run Raven','Settings']
+            icons = ['rvifile.svg','basinmaker.svg','gridweights.svg',
+                     'streamflow.svg','gis.svg','raven.svg','settings.svg']
+            script_dir = os.path.dirname(__file__)
+            for i, menuitem in enumerate(menuitems):
+                icon = QIcon(os.path.join(script_dir+'/ext_data/icons/'+icons[i]))
+                self.dlg.sidemenu.addItem(QListWidgetItem(icon, menuitem))
+            
+
+            #Select the first menu item
+            self.dlg.sidemenu.setCurrentRow(0)
+            self.dlg.sidemenu.currentRowChanged.connect(self.display)
             self.loadsettings()
             self.checkUpdate()
             self.setStreamflowComboboxes()
@@ -314,6 +329,10 @@ class QRaven:
         if result:
             print('The plugin is already opened in another window.' )
     
+    #Changes the view depending on the side menu click
+    def display(self, i):
+        self.dlg.stackedWidget.setCurrentIndex(i)
+
     #This method enables and disables widgets based on their checkboxes/radiobutton state
     def toggleWidget(self):
         '''Enables/disables widgets based on the widget calling the method'''
