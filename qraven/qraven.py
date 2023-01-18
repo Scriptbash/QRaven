@@ -206,10 +206,14 @@ class QRaven:
             self.first_start = False
             self.dlg = QRavenDialog()
 
+            
             self.loadsettings()
+            self.setupMenubar()
             self.checkUpdate()
             self.setStreamflowComboboxes()
             
+            self.dlg.sidemenu.currentRowChanged.connect(self.display)
+            self.dlg.combo_menubar.currentTextChanged.connect(self.setMenuStyle)
             #-------------Raven RVI-------------#
             self.dlg.btn_load_hmets.clicked.connect(self.loadModels)
             self.dlg.btn_load_hbvec.clicked.connect(self.loadModels)
@@ -312,8 +316,36 @@ class QRaven:
 
         # See if OK was pressed
         if result:
+            self.iface.messageBar().pushInfo("Info", "QRaven is already opened in another window.")
             print('The plugin is already opened in another window.' )
     
+
+    def setupMenubar(self):
+        #Sets up the left menu
+            menuitems = ['Raven RVI','BasinMaker','Gridweights',
+                         'Streamflow', 'GIS','Run Raven','Settings']
+            icons = ['rvifile.svg','basinmaker.svg','gridweights.svg',
+                     'streamflow.svg','gis.svg','raven.svg','settings.svg']
+            script_dir = os.path.dirname(__file__)
+            for i, menuitem in enumerate(menuitems):
+                icon = QIcon(os.path.join(script_dir+'/ext_data/icons/'+icons[i]))
+                self.dlg.sidemenu.addItem(QListWidgetItem(icon, menuitem))
+            
+            self.setMenuStyle()
+            #Select the first menu item
+            self.dlg.sidemenu.setCurrentRow(0)
+
+    def setMenuStyle(self):
+        if self.dlg.combo_menubar.currentText() == 'Collapsed':
+            self.dlg.sidemenu.setMaximumWidth(50)
+            self.dlg.sidemenu.setMinimumWidth(50)
+        else:
+            self.dlg.sidemenu.setMaximumWidth(175)
+
+    #Changes the view depending on the side menu click
+    def display(self, i):
+        self.dlg.stackedWidget.setCurrentIndex(i)
+
     #This method enables and disables widgets based on their checkboxes/radiobutton state
     def toggleWidget(self):
         '''Enables/disables widgets based on the widget calling the method'''
@@ -1303,15 +1335,24 @@ class QRaven:
         self.iface.mainWindow().repaint()
         paramsDict = self.getRVHparams()    #Calls the function to get the RVH parameters
         containerization = self.dlg.combo_container.currentText() #Get the preferred containerization software
+        containerimage = self.dlg.combo_dockerimage.currentText() #Get the image 
 
         if containerization == 'Docker':
             contnrCMD = 'docker'
+            if computerOS == 'macos':
+                os.environ["PATH"] = "/Applications/Docker.app/Contents/Resources/bin" #This is needed for docker to work on MacOS
+            elif computerOS == 'windows':
+                os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"    #This is needed so that the docker commands work on Windows
         elif containerization == 'Podman':
             contnrCMD = 'podman'
+            if computerOS == 'macos':
+                os.environ["PATH"] = "/opt/podman/bin"
+            elif computerOS == 'windows':
+                os.environ["PATH"] = "C:\\Program Files\\RedHat\\Podman"
 
         self.exportRVHparams(paramsDict)    #Calls the function to export the RVH parameters into a file
-        docker.dockerPull(computerOS, contnrCMD)       #Calls the function to pull the container
-        docker.dockerStart(computerOS, contnrCMD)      #Calls the function that starts the container
+        docker.dockerPull(computerOS, contnrCMD, containerimage)       #Calls the function to pull the container
+        docker.dockerStart(computerOS, contnrCMD, containerimage)      #Calls the function that starts the container
         docker.dockerCopy(self,paramsDict, computerOS, separator, contnrCMD)    #Calls the function that copies the parameters file to the docker container, as well as the data
         docker.runBasinMaker(computerOS, contnrCMD)                #Calls the function that runs BasinMaker with the provided data and parameters
         docker.getDockerResults(self, computerOS, separator, contnrCMD)    #Calls the function that retrieves the results from BasinMaker
@@ -1338,11 +1379,20 @@ class QRaven:
         outputfolder = folderhrus = os.path.dirname(output)
         outputfile = ntpath.basename(output)
         containerization = self.dlg.combo_container.currentText() #Get the preferred containerization software
-        
+        containerimage = self.dlg.combo_dockerimage.currentText() #Get the image 
+
         if containerization == 'Docker':
             contnrCMD = 'docker'
+            if computerOS == 'macos':
+                os.environ["PATH"] = "/Applications/Docker.app/Contents/Resources/bin" #This is needed for docker to work on MacOS
+            elif computerOS == 'windows':
+                os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"    #This is needed so that the docker commands work on Windows
         elif containerization == 'Podman':
             contnrCMD = 'podman'
+            if computerOS == 'macos':
+                os.environ["PATH"] = "/opt/podman/bin"
+            elif computerOS == 'windows':
+                os.environ["PATH"] = "C:\\Program Files\\RedHat\\Podman"
 
         if self.dlg.rb_subbasinid.isChecked():
             selectedid = ' -s '
@@ -1357,12 +1407,9 @@ class QRaven:
         docker.dockerPull(computerOS)                   #Calls the function to pull the container
         try:
             print("Attempting to start the container...")
-            if computerOS != 'macos':
-                cmd=contnrCMD, 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven'
-                docker.dockerCommand(cmd, computerOS)
-            else:
-                cmd=contnrCMD, 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven_arm'
-                docker.dockerCommand(cmd, computerOS)
+            cmd=contnrCMD, 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', containerimage
+            docker.dockerCommand(cmd, computerOS)
+        
             print("The container was started successfully")
         except Exception as e:
             print(e)
@@ -1374,7 +1421,7 @@ class QRaven:
         else:
             pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/nc/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
         print(pythoncmd)
-        cmd =containerization = self.dlg.combo_container.currentText() #Get the preferred containerization software, 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
+        cmd =containerization, 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
         try:
             os.system(contnrCMD+" start qraven")    #Make sure the container is started. Only needed when the plugin is run a second time
             docker.dockerCommand(cmd, computerOS)
@@ -1950,26 +1997,40 @@ class QRaven:
  
     def storesettings(self):
         containerization = self.dlg.combo_container.currentText()
+        containerimage = self.dlg.combo_dockerimage.currentText()
         username = self.dlg.txt_casparusername.text()
         password = self.dlg.txt_casparpassword.text()
+        menubar = self.dlg.combo_menubar.currentText()
+        
 
         s = QgsSettings()
         
         s.setValue("qraven/container", containerization)
+        s.setValue("qraven/image",containerimage)
         s.setValue("qraven/casparUsername", username)
         s.setValue("qraven/casparPassword", password)
+        s.setValue("qraven/menubar",menubar)
 
         self.iface.messageBar().pushSuccess("Success", "Your settings have been saved.")
 
     def loadsettings(self):
         s = QgsSettings()
+        if computerOS == 'macos':
+            defaultimage = 'scriptbash/qraven_arm:latest'
+        else:
+            defaultimage = 'scriptnash/qraven:latest'
+
         containerization = s.value("qraven/container", "Docker")
+        containerimage = s.value("qraven/image",defaultimage)
         username = s.value("qraven/casparUsername", "")
         password = s.value("qraven/casparPassword", "")
+        menubar = s.value("qraven/menubar",'Default')
         
         self.dlg.combo_container.setCurrentText(containerization)
+        self.dlg.combo_dockerimage.setCurrentText(containerimage)
         self.dlg.txt_casparusername.setText(username)
         self.dlg.txt_casparpassword.setText(password)
+        self.dlg.combo_menubar.setCurrentText(menubar)
 
 
 #This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
@@ -1981,13 +2042,9 @@ def checkOS():
     if platform == "linux" or platform == "linux2":
         return "linux","/"
     elif platform == "darwin":
-        os.environ["PATH"] = "/Applications/Docker.app/Contents/Resources/bin" #This is needed for docker to work on MacOS
-        os.environ["PATH"] = "/opt/podman/bin"
         return "macos", "/"
 
     elif platform == "win32":
-        os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"    #This is needed so that the docker commands work on Windows
-        os.environ["PATH"] = "C:\\Program Files\\RedHat\\Podman"
         return "windows", "\\"
 
 computerOS, separator = checkOS()
