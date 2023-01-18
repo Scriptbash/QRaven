@@ -206,25 +206,14 @@ class QRaven:
             self.first_start = False
             self.dlg = QRavenDialog()
 
-            #Sets up the left menu
-            #self.dlg.sidemenu.addItem(QListWidgetItem(icon, name))
-            menuitems = ['Raven RVI','BasinMaker','Gridweights',
-                         'Streamflow', 'GIS','Run Raven','Settings']
-            icons = ['rvifile.svg','basinmaker.svg','gridweights.svg',
-                     'streamflow.svg','gis.svg','raven.svg','settings.svg']
-            script_dir = os.path.dirname(__file__)
-            for i, menuitem in enumerate(menuitems):
-                icon = QIcon(os.path.join(script_dir+'/ext_data/icons/'+icons[i]))
-                self.dlg.sidemenu.addItem(QListWidgetItem(icon, menuitem))
             
-
-            #Select the first menu item
-            self.dlg.sidemenu.setCurrentRow(0)
-            self.dlg.sidemenu.currentRowChanged.connect(self.display)
             self.loadsettings()
+            self.setupMenubar()
             self.checkUpdate()
             self.setStreamflowComboboxes()
             
+            self.dlg.sidemenu.currentRowChanged.connect(self.display)
+            self.dlg.combo_menubar.currentTextChanged.connect(self.setMenuStyle)
             #-------------Raven RVI-------------#
             self.dlg.btn_load_hmets.clicked.connect(self.loadModels)
             self.dlg.btn_load_hbvec.clicked.connect(self.loadModels)
@@ -329,6 +318,29 @@ class QRaven:
         if result:
             print('The plugin is already opened in another window.' )
     
+    def setupMenubar(self):
+        #Sets up the left menu
+            #self.dlg.sidemenu.addItem(QListWidgetItem(icon, name))
+            menuitems = ['Raven RVI','BasinMaker','Gridweights',
+                         'Streamflow', 'GIS','Run Raven','Settings']
+            icons = ['rvifile.svg','basinmaker.svg','gridweights.svg',
+                     'streamflow.svg','gis.svg','raven.svg','settings.svg']
+            script_dir = os.path.dirname(__file__)
+            for i, menuitem in enumerate(menuitems):
+                icon = QIcon(os.path.join(script_dir+'/ext_data/icons/'+icons[i]))
+                self.dlg.sidemenu.addItem(QListWidgetItem(icon, menuitem))
+            
+            self.setMenuStyle()
+            #Select the first menu item
+            self.dlg.sidemenu.setCurrentRow(0)
+
+    def setMenuStyle(self):
+        if self.dlg.combo_menubar.currentText() == 'Collapsed':
+            self.dlg.sidemenu.setMaximumWidth(50)
+            self.dlg.sidemenu.setMinimumWidth(50)
+        else:
+            self.dlg.sidemenu.setMaximumWidth(175)
+
     #Changes the view depending on the side menu click
     def display(self, i):
         self.dlg.stackedWidget.setCurrentIndex(i)
@@ -1969,26 +1981,40 @@ class QRaven:
  
     def storesettings(self):
         containerization = self.dlg.combo_container.currentText()
+        containerimage = self.dlg.combo_dockerimage.currentText()
         username = self.dlg.txt_casparusername.text()
         password = self.dlg.txt_casparpassword.text()
+        menubar = self.dlg.combo_menubar.currentText()
+        
 
         s = QgsSettings()
         
         s.setValue("qraven/container", containerization)
+        s.setValue("qraven/image",containerimage)
         s.setValue("qraven/casparUsername", username)
         s.setValue("qraven/casparPassword", password)
+        s.setValue("qraven/menubar",menubar)
 
         self.iface.messageBar().pushSuccess("Success", "Your settings have been saved.")
 
     def loadsettings(self):
         s = QgsSettings()
+        if computerOS == 'macos':
+            defaultimage = 'scriptbash/qraven_arm:latest'
+        else:
+            defaultimage = 'scriptnash/qraven:latest'
+
         containerization = s.value("qraven/container", "Docker")
+        containerimage = s.value("qraven/image",defaultimage)
         username = s.value("qraven/casparUsername", "")
         password = s.value("qraven/casparPassword", "")
+        menubar = s.value("qraven/menubar",'Default')
         
         self.dlg.combo_container.setCurrentText(containerization)
+        self.dlg.combo_dockerimage.setCurrentText(containerimage)
         self.dlg.txt_casparusername.setText(username)
         self.dlg.txt_casparpassword.setText(password)
+        self.dlg.combo_menubar.setCurrentText(menubar)
 
 
 #This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            

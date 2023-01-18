@@ -37,6 +37,12 @@
           <bold>true</bold>
          </font>
         </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
         <property name="iconSize">
          <size>
           <width>45</width>
@@ -64,7 +70,7 @@
           <item>
            <widget class="QTabWidget" name="tabWidget">
             <property name="currentIndex">
-             <number>0</number>
+             <number>4</number>
             </property>
             <widget class="QWidget" name="tab">
              <attribute name="title">
@@ -1948,6 +1954,9 @@
                     </property>
                     <property name="selectionMode">
                      <enum>QAbstractItemView::MultiSelection</enum>
+                    </property>
+                    <property name="sortingEnabled">
+                     <bool>false</bool>
                     </property>
                     <item>
                      <property name="text">
@@ -4952,12 +4961,12 @@
               <widget class="QComboBox" name="combo_dockerimage">
                <item>
                 <property name="text">
-                 <string>qraven:latest</string>
+                 <string>scriptbash/qraven:latest</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>qraven_arm:latest</string>
+                 <string>scriptbash/qraven_arm:latest</string>
                 </property>
                </item>
               </widget>
@@ -5014,7 +5023,7 @@
               </widget>
              </item>
              <item row="8" column="2">
-              <widget class="QComboBox" name="comboBox">
+              <widget class="QComboBox" name="combo_menubar">
                <item>
                 <property name="text">
                  <string>Default</string>
