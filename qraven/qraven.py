@@ -316,11 +316,12 @@ class QRaven:
 
         # See if OK was pressed
         if result:
+            self.iface.messageBar().pushInfo("Info", "QRaven is already opened in another window.")
             print('The plugin is already opened in another window.' )
     
+
     def setupMenubar(self):
         #Sets up the left menu
-            #self.dlg.sidemenu.addItem(QListWidgetItem(icon, name))
             menuitems = ['Raven RVI','BasinMaker','Gridweights',
                          'Streamflow', 'GIS','Run Raven','Settings']
             icons = ['rvifile.svg','basinmaker.svg','gridweights.svg',
@@ -1334,6 +1335,7 @@ class QRaven:
         self.iface.mainWindow().repaint()
         paramsDict = self.getRVHparams()    #Calls the function to get the RVH parameters
         containerization = self.dlg.combo_container.currentText() #Get the preferred containerization software
+        containerimage = self.dlg.combo_dockerimage.currentText() #Get the image 
 
         if containerization == 'Docker':
             contnrCMD = 'docker'
@@ -1341,8 +1343,8 @@ class QRaven:
             contnrCMD = 'podman'
 
         self.exportRVHparams(paramsDict)    #Calls the function to export the RVH parameters into a file
-        docker.dockerPull(computerOS, contnrCMD)       #Calls the function to pull the container
-        docker.dockerStart(computerOS, contnrCMD)      #Calls the function that starts the container
+        docker.dockerPull(computerOS, contnrCMD, containerimage)       #Calls the function to pull the container
+        docker.dockerStart(computerOS, contnrCMD, containerimage)      #Calls the function that starts the container
         docker.dockerCopy(self,paramsDict, computerOS, separator, contnrCMD)    #Calls the function that copies the parameters file to the docker container, as well as the data
         docker.runBasinMaker(computerOS, contnrCMD)                #Calls the function that runs BasinMaker with the provided data and parameters
         docker.getDockerResults(self, computerOS, separator, contnrCMD)    #Calls the function that retrieves the results from BasinMaker

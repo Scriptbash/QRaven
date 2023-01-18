@@ -2,6 +2,7 @@ import os
 import subprocess
 from pathlib import Path
 from qgis.core import QgsVectorLayer, QgsProject
+from PyQt5.QtWidgets import *
 
 #This method runs the command that it receives with subprocess
 def dockerCommand(cmd, computerOS): 
@@ -17,6 +18,7 @@ def dockerCommand(cmd, computerOS):
     else:
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
     while True:
+        QApplication.processEvents()
         output = process.stdout.readline()
         if output == b'':
             break
@@ -42,7 +44,7 @@ def dockerdelete(self):
         print(e)
 
 #This method pulls the scriptbash/qraven docker container
-def dockerPull(computerOS, contnrCMD):
+def dockerPull(computerOS, contnrCMD,image):
     '''Pulls the scriptbash/qraven docker container
     
         Depends on the following method:
@@ -50,20 +52,16 @@ def dockerPull(computerOS, contnrCMD):
         dockerCommand()
     '''
     try:
-        if computerOS !='macos':
-            print("Trying to pull the scriptbash/qraven image...")
-            cmd=contnrCMD, 'pull', 'scriptbash/qraven:latest'  
-            dockerCommand(cmd, computerOS)
-        else:
-            print("Trying to pull the scriptbash/qraven_arm image...")
-            cmd=contnrCMD, 'pull', 'scriptbash/qraven_arm:latest'  
-            dockerCommand(cmd,computerOS)
+        print("Trying to pull the "+image+" image...")
+        cmd=contnrCMD, 'pull', image  
+        dockerCommand(cmd, computerOS)
+       
         print("The pull was successfull")
     except Exception as e:
         print(e)
 
 #This method starts the docker container
-def dockerStart(computerOS,contnrCMD):
+def dockerStart(computerOS,contnrCMD, image):
     '''Starts the docker container detached, with a pseudo-tty. The working directory is /root/BasinMaker
     
         Depends on the following method:
@@ -71,13 +69,8 @@ def dockerStart(computerOS,contnrCMD):
         dockerCommand()
     '''
     try:
-        print("Attempting to start the container...")
-        if computerOS != 'macos':
-            cmd=contnrCMD, 'run', '-t', '-d','-w','/root/BasinMaker','--name', 'qraven', 'scriptbash/qraven'
-            dockerCommand(cmd, computerOS)
-        else:
-            cmd=contnrCMD, 'run', '-t', '-d','-w','/root/BasinMaker','--name', 'qraven', 'scriptbash/qraven_arm'
-            dockerCommand(cmd, computerOS)
+        cmd=contnrCMD, 'run', '-t', '-d','-w','/root/BasinMaker','--name', 'qraven', image
+        dockerCommand(cmd, computerOS)
         print("The container was started successfully")
     except Exception as e:
         print(e)
