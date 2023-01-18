@@ -1339,8 +1339,16 @@ class QRaven:
 
         if containerization == 'Docker':
             contnrCMD = 'docker'
+            if computerOS == 'macos':
+                os.environ["PATH"] = "/Applications/Docker.app/Contents/Resources/bin" #This is needed for docker to work on MacOS
+            elif computerOS == 'windows':
+                os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"    #This is needed so that the docker commands work on Windows
         elif containerization == 'Podman':
             contnrCMD = 'podman'
+            if computerOS == 'macos':
+                os.environ["PATH"] = "/opt/podman/bin"
+            elif computerOS == 'windows':
+                os.environ["PATH"] = "C:\\Program Files\\RedHat\\Podman"
 
         self.exportRVHparams(paramsDict)    #Calls the function to export the RVH parameters into a file
         docker.dockerPull(computerOS, contnrCMD, containerimage)       #Calls the function to pull the container
@@ -1371,11 +1379,20 @@ class QRaven:
         outputfolder = folderhrus = os.path.dirname(output)
         outputfile = ntpath.basename(output)
         containerization = self.dlg.combo_container.currentText() #Get the preferred containerization software
-        
+        containerimage = self.dlg.combo_dockerimage.currentText() #Get the image 
+
         if containerization == 'Docker':
             contnrCMD = 'docker'
+            if computerOS == 'macos':
+                os.environ["PATH"] = "/Applications/Docker.app/Contents/Resources/bin" #This is needed for docker to work on MacOS
+            elif computerOS == 'windows':
+                os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"    #This is needed so that the docker commands work on Windows
         elif containerization == 'Podman':
             contnrCMD = 'podman'
+            if computerOS == 'macos':
+                os.environ["PATH"] = "/opt/podman/bin"
+            elif computerOS == 'windows':
+                os.environ["PATH"] = "C:\\Program Files\\RedHat\\Podman"
 
         if self.dlg.rb_subbasinid.isChecked():
             selectedid = ' -s '
@@ -1390,12 +1407,9 @@ class QRaven:
         docker.dockerPull(computerOS)                   #Calls the function to pull the container
         try:
             print("Attempting to start the container...")
-            if computerOS != 'macos':
-                cmd=contnrCMD, 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven'
-                docker.dockerCommand(cmd, computerOS)
-            else:
-                cmd=contnrCMD, 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', 'scriptbash/qraven_arm'
-                docker.dockerCommand(cmd, computerOS)
+            cmd=contnrCMD, 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', containerimage
+            docker.dockerCommand(cmd, computerOS)
+        
             print("The container was started successfully")
         except Exception as e:
             print(e)
@@ -1407,7 +1421,7 @@ class QRaven:
         else:
             pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/nc/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
         print(pythoncmd)
-        cmd =containerization = self.dlg.combo_container.currentText() #Get the preferred containerization software, 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
+        cmd =containerization, 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
         try:
             os.system(contnrCMD+" start qraven")    #Make sure the container is started. Only needed when the plugin is run a second time
             docker.dockerCommand(cmd, computerOS)
@@ -2028,13 +2042,9 @@ def checkOS():
     if platform == "linux" or platform == "linux2":
         return "linux","/"
     elif platform == "darwin":
-        os.environ["PATH"] = "/Applications/Docker.app/Contents/Resources/bin" #This is needed for docker to work on MacOS
-        os.environ["PATH"] = "/opt/podman/bin"
         return "macos", "/"
 
     elif platform == "win32":
-        os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"    #This is needed so that the docker commands work on Windows
-        os.environ["PATH"] = "C:\\Program Files\\RedHat\\Podman"
         return "windows", "\\"
 
 computerOS, separator = checkOS()

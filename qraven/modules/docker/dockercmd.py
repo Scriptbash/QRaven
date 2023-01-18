@@ -17,8 +17,9 @@ def dockerCommand(cmd, computerOS):
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE,startupinfo=startupinfo)
     else:
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+    #QApplication.processEvents() #Unfreezes the GUI, but slows down the process heavily
     while True:
-        QApplication.processEvents()
+        
         output = process.stdout.readline()
         if output == b'':
             break
