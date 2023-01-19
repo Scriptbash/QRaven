@@ -6,22 +6,56 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1091</width>
-    <height>740</height>
+    <width>1137</width>
+    <height>774</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>QRaven</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icon.png</normaloff>icon.png</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QWidget" name="widget" native="true">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <layout class="QGridLayout" name="gridLayout_32">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item row="0" column="0">
        <widget class="QListWidget" name="sidemenu">
         <property name="minimumSize">
          <size>
-          <width>50</width>
+          <width>150</width>
           <height>0</height>
          </size>
         </property>
@@ -42,6 +76,10 @@
           <weight>75</weight>
           <bold>true</bold>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background:rgb(78, 78, 78);
+color:rgb(170, 170, 170)</string>
         </property>
         <property name="verticalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -73,6 +111,12 @@
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QTabWidget" name="tabWidget">
             <property name="currentIndex">
@@ -1875,8 +1919,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>841</width>
-                   <height>622</height>
+                   <width>905</width>
+                   <height>639</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -2591,6 +2635,12 @@
         </widget>
         <widget class="QWidget" name="rvh">
          <layout class="QGridLayout" name="gridLayout_10">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_2">
             <property name="currentIndex">
@@ -2611,8 +2661,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>841</width>
-                   <height>1264</height>
+                   <width>905</width>
+                   <height>1315</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -3371,8 +3421,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>854</width>
-                   <height>548</height>
+                   <width>905</width>
+                   <height>639</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -3583,6 +3633,12 @@
         </widget>
         <widget class="QWidget" name="gridweights">
          <layout class="QGridLayout" name="gridLayout_33">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <item row="10" column="1">
            <widget class="QgsFileWidget" name="file_outputgridweight">
             <property name="filter">
@@ -3820,6 +3876,12 @@
         </widget>
         <widget class="QWidget" name="streamflow">
          <layout class="QGridLayout" name="gridLayout_36">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_5">
             <property name="currentIndex">
@@ -3840,8 +3902,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>841</width>
-                   <height>634</height>
+                   <width>905</width>
+                   <height>705</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -4134,8 +4196,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>266</width>
-                   <height>680</height>
+                   <width>272</width>
+                   <height>730</height>
                   </rect>
                  </property>
                  <layout class="QFormLayout" name="formLayout">
@@ -4438,6 +4500,12 @@
         </widget>
         <widget class="QWidget" name="gis">
          <layout class="QGridLayout" name="gridLayout_39">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <item row="0" column="0">
            <widget class="QScrollArea" name="scrollArea_9">
             <property name="widgetResizable">
@@ -4448,8 +4516,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>863</width>
-               <height>713</height>
+               <width>951</width>
+               <height>766</height>
               </rect>
              </property>
              <layout class="QFormLayout" name="formLayout_2">
@@ -4743,6 +4811,12 @@
         </widget>
         <widget class="QWidget" name="runmodel">
          <layout class="QGridLayout" name="gridLayout_40">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <item row="0" column="0">
            <widget class="QWidget" name="widget_8" native="true">
             <layout class="QGridLayout" name="gridLayout_41">
@@ -4884,6 +4958,12 @@
         </widget>
         <widget class="QWidget" name="settings">
          <layout class="QGridLayout" name="gridLayout_43">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <item row="0" column="0">
            <widget class="QWidget" name="widget_10" native="true">
             <layout class="QGridLayout" name="gridLayout_44">
@@ -5052,16 +5132,6 @@
      </layout>
     </widget>
    </item>
-   <item>
-    <widget class="QDialogButtonBox" name="button_box">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Close</set>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -5072,44 +5142,11 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>button_box</sender>
-   <signal>accepted()</signal>
-   <receiver>QRavenDialogBase</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>29</x>
-     <y>619</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>button_box</sender>
-   <signal>rejected()</signal>
-   <receiver>QRavenDialogBase</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>29</x>
-     <y>619</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup_4"/>
  </buttongroups>
 </ui>
