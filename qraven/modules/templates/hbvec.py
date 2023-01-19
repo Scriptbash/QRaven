@@ -22,7 +22,6 @@ def loadHbvec(self):
         self.dlg.combo_oroprecip.setCurrentText("OROCORR_HBV")
         self.dlg.combo_oropet.setCurrentText("OROCORR_HBV")
         self.dlg.combo_cloudcover.setCurrentText("CLOUDCOV_NONE")
-        self.dlg.combo_soilmod.setCurrentText("SOIL_TWO_LAYER")
         self.dlg.combo_precipicept.setCurrentText("PRECIP_ICEPT_USER")
         self.dlg.combo_monthlyinterpo.setCurrentText("MONTHINT_LINEAR_21")
         #NEED TO SET THE LAKESTORAGE PROPERLY!!!!

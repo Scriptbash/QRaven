@@ -127,159 +127,7 @@ color:rgb(170, 170, 170)</string>
               <string>Model info</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout">
-              <item row="1" column="3">
-               <widget class="QPushButton" name="btn_load_canadianshield">
-                <property name="text">
-                 <string>Canadian Shield</string>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="0">
-               <widget class="QLabel" name="label_8">
-                <property name="text">
-                 <string>DefineHRUGroups</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QPushButton" name="btn_load_ubcwm">
-                <property name="text">
-                 <string>UBCWM</string>
-                </property>
-               </widget>
-              </item>
-              <item row="11" column="1" colspan="3">
-               <widget class="QTextEdit" name="txt_disablehru">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>60</height>
-                 </size>
-                </property>
-                <property name="placeholderText">
-                 <string>FOREST, GRASSLAND, WATER</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QPushButton" name="btn_load_mohyse">
-                <property name="text">
-                 <string>MOHYSE</string>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="3">
-               <widget class="QSpinBox" name="spin_soilmod">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1" colspan="3">
-               <widget class="QgsFileWidget" name="file_rvioutputdir">
-                <property name="storageMode">
-                 <enum>QgsFileWidget::GetDirectory</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="0">
-               <widget class="QCheckBox" name="chk_duration">
-                <property name="layoutDirection">
-                 <enum>Qt::LeftToRight</enum>
-                </property>
-                <property name="text">
-                 <string>Use Duration instead</string>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="1">
-               <widget class="QSpinBox" name="spin_duration">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximum">
-                 <number>999999999</number>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string>StartDate</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QPushButton" name="btn_load_hmets">
-                <property name="text">
-                 <string>HMETS</string>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="1" colspan="2">
-               <widget class="QComboBox" name="combo_soilmod">
-                <item>
-                 <property name="text">
-                  <string>SOIL_ONE_LAYER</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SOIL_TWO_LAYER</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SOIL_MULTILAYER</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="6" column="1" colspan="3">
-               <widget class="QDateTimeEdit" name="date_enddate">
-                <property name="displayFormat">
-                 <string>yyyy-MM-dd h:mm</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="2">
-               <widget class="QPushButton" name="btn_load_hypr">
-                <property name="text">
-                 <string>HYPR</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="1" colspan="3">
-               <widget class="QLineEdit" name="txt_modname"/>
-              </item>
-              <item row="1" column="2">
-               <widget class="QPushButton" name="btn_load_gr4j">
-                <property name="text">
-                 <string>GR4J</string>
-                </property>
-               </widget>
-              </item>
-              <item row="11" column="0">
-               <widget class="QCheckBox" name="chk_disablehru">
-                <property name="text">
-                 <string>DisableHRUGroup</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="3">
-               <widget class="QPushButton" name="btn_load_hymod">
-                <property name="text">
-                 <string>HYMOD</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="1" colspan="3">
+              <item row="10" column="1" colspan="3">
                <widget class="QWidget" name="widget_3" native="true">
                 <layout class="QGridLayout" name="gridLayout_3">
                  <property name="leftMargin">
@@ -339,20 +187,10 @@ color:rgb(170, 170, 170)</string>
                 </layout>
                </widget>
               </item>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="btn_load_hbvec">
+              <item row="12" column="0">
+               <widget class="QLabel" name="label_8">
                 <property name="text">
-                 <string>HBV-EC</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>Model name</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 <string>DefineHRUGroups</string>
                 </property>
                </widget>
               </item>
@@ -366,7 +204,46 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="0">
+              <item row="7" column="0">
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>StartDate</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="1" colspan="2">
+               <widget class="QComboBox" name="combo_soilmod">
+                <item>
+                 <property name="text">
+                  <string>SOIL_ONE_LAYER</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>SOIL_TWO_LAYER</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>SOIL_MULTILAYER</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="11" column="3">
+               <widget class="QSpinBox" name="spin_soilmod">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1" colspan="3">
+               <widget class="QLineEdit" name="txt_modname"/>
+              </item>
+              <item row="5" column="0">
                <widget class="QLabel" name="label_2">
                 <property name="text">
                  <string>Output directory</string>
@@ -376,21 +253,14 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
-              <item row="9" column="0">
-               <widget class="QLabel" name="label_7">
-                <property name="text">
-                 <string>SoilModel</string>
+              <item row="8" column="1" colspan="3">
+               <widget class="QDateTimeEdit" name="date_enddate">
+                <property name="displayFormat">
+                 <string>yyyy-MM-dd h:mm</string>
                 </property>
                </widget>
               </item>
-              <item row="8" column="0">
-               <widget class="QLabel" name="label_6">
-                <property name="text">
-                 <string>TimeStep</string>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="1" colspan="3">
+              <item row="12" column="1" colspan="3">
                <widget class="QTextEdit" name="txt_defhru">
                 <property name="maximumSize">
                  <size>
@@ -403,7 +273,57 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
+              <item row="13" column="0">
+               <widget class="QCheckBox" name="chk_disablehru">
+                <property name="text">
+                 <string>DisableHRUGroup</string>
+                </property>
+               </widget>
+              </item>
               <item row="6" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Model name</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="10" column="0">
+               <widget class="QLabel" name="label_6">
+                <property name="text">
+                 <string>TimeStep</string>
+                </property>
+               </widget>
+              </item>
+              <item row="13" column="1" colspan="3">
+               <widget class="QTextEdit" name="txt_disablehru">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="placeholderText">
+                 <string>FOREST, GRASSLAND, WATER</string>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="0">
+               <widget class="QCheckBox" name="chk_duration">
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
+                </property>
+                <property name="text">
+                 <string>Use Duration instead</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="0">
                <widget class="QLabel" name="label_5">
                 <property name="text">
                  <string>EndDate</string>
@@ -413,10 +333,104 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="1" colspan="3">
+              <item row="1" column="0">
+               <widget class="QPushButton" name="btn_load_ubcwm">
+                <property name="text">
+                 <string>UBCWM</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="btn_load_hbvec">
+                <property name="text">
+                 <string>HBV-EC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1" colspan="3">
                <widget class="QDateTimeEdit" name="date_startdate">
                 <property name="displayFormat">
                  <string>yyyy-MM-dd h:mm</string>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="0">
+               <widget class="QLabel" name="label_7">
+                <property name="text">
+                 <string>SoilModel</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1" colspan="3">
+               <widget class="QgsFileWidget" name="file_rvioutputdir">
+                <property name="storageMode">
+                 <enum>QgsFileWidget::GetDirectory</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="1">
+               <widget class="QSpinBox" name="spin_duration">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximum">
+                 <number>999999999</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QPushButton" name="btn_load_awbm">
+                <property name="text">
+                 <string>AWBM</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QPushButton" name="btn_load_hymod">
+                <property name="text">
+                 <string>HYMOD</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="3">
+               <widget class="QPushButton" name="btn_load_hypr">
+                <property name="text">
+                 <string>HYPR</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QPushButton" name="btn_load_hmets">
+                <property name="text">
+                 <string>HMETS</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QPushButton" name="btn_load_mohyse">
+                <property name="text">
+                 <string>MOHYSE</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QPushButton" name="btn_load_canadianshield">
+                <property name="text">
+                 <string>Canadian Shield</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QPushButton" name="btn_load_gr4j">
+                <property name="text">
+                 <string>GR4J</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="btn_load_hbvlight">
+                <property name="text">
+                 <string>HBV-Light</string>
                 </property>
                </widget>
               </item>

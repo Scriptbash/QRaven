@@ -39,12 +39,14 @@ from .modules.docker import dockercmd as docker
 from .modules.resetgui import resetGUI
 from .modules.templates.hmets import loadHmets 
 from .modules.templates.hbvec import loadHbvec
+from .modules.templates.hbvlight import loadHbvlight
 from .modules.templates.ubcwm import loadUbcwm
 from .modules.templates.gr4j import loadGr4j
 from .modules.templates.canshield import loadCanshield
 from .modules.templates.mohyse import loadMohyse
 from .modules.templates.hypr import loadHypr
 from .modules.templates.hymod import loadHymod
+from .modules.templates.awbm import loadAwbm
 from .modules.PyRavenR import *
 from .modules import customoutputs, hydrologicproc
 from .modules.datascrapers import streamflow
@@ -219,12 +221,14 @@ class QRaven:
             #-------------Raven RVI-------------#
             self.dlg.btn_load_hmets.clicked.connect(self.loadModels)
             self.dlg.btn_load_hbvec.clicked.connect(self.loadModels)
+            self.dlg.btn_load_hbvlight.clicked.connect(self.loadModels)
             self.dlg.btn_load_ubcwm.clicked.connect(self.loadModels)
             self.dlg.btn_load_gr4j.clicked.connect(self.loadModels)
             self.dlg.btn_load_canadianshield.clicked.connect(self.loadModels)
             self.dlg.btn_load_mohyse.clicked.connect(self.loadModels)
             self.dlg.btn_load_hypr.clicked.connect(self.loadModels)
             self.dlg.btn_load_hymod.clicked.connect(self.loadModels)
+            self.dlg.btn_load_awbm.clicked.connect(self.loadModels)
             self.dlg.btn_reset.clicked.connect(self.loadModels)
 
             #If the checkbox is checked/unchecked, enables/disables the associated widget
@@ -1945,6 +1949,9 @@ class QRaven:
         elif widget.objectName() == 'btn_load_hbvec':
             resetGUI(self)
             loadHbvec(self)
+        elif widget.objectName() == 'btn_load_hbvlight':
+            resetGUI(self)
+            loadHbvlight(self)
         elif widget.objectName() == 'btn_load_ubcwm':
             resetGUI(self)
             loadUbcwm(self)
@@ -1963,6 +1970,9 @@ class QRaven:
         elif widget.objectName() == 'btn_load_hymod':
             resetGUI(self)
             loadHymod(self) 
+        elif widget.objectName() == 'btn_load_awbm':
+            resetGUI(self)
+            loadAwbm(self)
 
     def setStreamflowComboboxes(self):
         script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
