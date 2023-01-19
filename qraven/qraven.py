@@ -340,7 +340,8 @@ class QRaven:
             self.dlg.sidemenu.setMaximumWidth(50)
             self.dlg.sidemenu.setMinimumWidth(50)
         else:
-            self.dlg.sidemenu.setMaximumWidth(175)
+            self.dlg.sidemenu.setMaximumWidth(150)
+            self.dlg.sidemenu.setMinimumWidth(150)
 
     #Changes the view depending on the side menu click
     def display(self, i):
