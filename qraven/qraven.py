@@ -212,6 +212,8 @@ class QRaven:
             self.checkUpdate()
             self.setStreamflowComboboxes()
             
+            self.dlg.list_evalmetrics.sortItems()
+
             self.dlg.sidemenu.currentRowChanged.connect(self.display)
             self.dlg.combo_menubar.currentTextChanged.connect(self.setMenuStyle)
             #-------------Raven RVI-------------#
@@ -889,6 +891,14 @@ class QRaven:
             wateryear = self.dlg.spin_wateryear.value()
         else:
             wateryear = ''
+        if self.dlg.chk_writemassloadings.isChecked():
+            writemassloadings = "checked"
+        else:
+            writemassloadings = ''
+        if self.dlg.chk_noisymode.isChecked():
+            noisymode = "checked"
+        else:
+            noisymode = ''
         if self.dlg.chk_disablehru.isChecked():
             disabledhru = self.dlg.txt_disablehru.toPlainText()
         else:
@@ -966,6 +976,8 @@ class QRaven:
 
         #Create the dictionary
         paramsDict = { 
+            "SilentMode"                 : silentmode,
+            "NoisyMode"                  : noisymode,
             "Calendar"                   : calendar,
             "StartDate"                  : startDate,
             keyDuration                  : duration,
@@ -1017,11 +1029,11 @@ class QRaven:
             "writeForcingFunctions"      : writeforcing,
             "EndPause"                   : endpause,
             "DebugMode"                  : debugmode,
-            "SilentMode"                 : silentmode,
             "WriteDemandFile"            : writedemand,
             "WriteEnergyStorage"         : writeenergy,
             "WriteExhaustiveMB"          : writeexausmb,
             "WriteEnsimFormat"           : writeensim,
+            "WriteMassLoadings"          : writemassloadings,
             "SuppressOutput"             : suppressoutput,
             "SnapshotHydrograph"         : snaphydro,
             "UseStopFile"                : usestopfile,
