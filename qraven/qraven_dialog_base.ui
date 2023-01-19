@@ -282,6 +282,18 @@ color:rgb(170, 170, 170)</string>
               <item row="8" column="1" colspan="3">
                <widget class="QWidget" name="widget_3" native="true">
                 <layout class="QGridLayout" name="gridLayout_3">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>15</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>33</number>
+                 </property>
                  <item row="0" column="1">
                   <widget class="QLabel" name="label_10">
                    <property name="text">
@@ -1919,8 +1931,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>905</width>
-                   <height>639</height>
+                   <width>889</width>
+                   <height>661</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -2661,8 +2673,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>905</width>
-                   <height>1315</height>
+                   <width>588</width>
+                   <height>1264</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -3421,8 +3433,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>905</width>
-                   <height>639</height>
+                   <width>406</width>
+                   <height>366</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -3902,8 +3914,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>905</width>
-                   <height>705</height>
+                   <width>231</width>
+                   <height>634</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -4196,8 +4208,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>272</width>
-                   <height>730</height>
+                   <width>266</width>
+                   <height>680</height>
                   </rect>
                  </property>
                  <layout class="QFormLayout" name="formLayout">
@@ -4516,8 +4528,8 @@ color:rgb(170, 170, 170)</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>951</width>
-               <height>766</height>
+               <width>308</width>
+               <height>713</height>
               </rect>
              </property>
              <layout class="QFormLayout" name="formLayout_2">
@@ -5144,9 +5156,9 @@ color:rgb(170, 170, 170)</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_3"/>
-  <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
