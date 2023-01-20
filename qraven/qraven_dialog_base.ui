@@ -3941,6 +3941,9 @@ color:rgb(170, 170, 170)</string>
           </property>
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_5">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="currentIndex">
              <number>0</number>
             </property>
@@ -3960,24 +3963,30 @@ color:rgb(170, 170, 170)</string>
                    <x>0</x>
                    <y>0</y>
                    <width>905</width>
-                   <height>699</height>
+                   <height>834</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
-                  <item row="20" column="1" colspan="2">
-                   <widget class="QLabel" name="label_182">
+                  <item row="23" column="2">
+                   <spacer name="horizontalSpacer_14">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="27" column="0">
+                   <widget class="QLabel" name="label_175">
                     <property name="text">
-                     <string>Process local file</string>
+                     <string>Output file</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="14" column="0">
-                   <widget class="QLabel" name="label_184">
-                    <property name="text">
-                     <string>End date</string>
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -3985,6 +3994,27 @@ color:rgb(170, 170, 170)</string>
                    <widget class="QPushButton" name="btn_cehqsearch">
                     <property name="text">
                      <string>Search</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="2">
+                   <widget class="QComboBox" name="combo_cehqmunicipality">
+                    <property name="editable">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="18" column="2">
+                   <widget class="QPushButton" name="btn_cehqdownload">
+                    <property name="text">
+                     <string>Download</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="28" column="2">
+                   <widget class="QPushButton" name="btn_cehqprocess">
+                    <property name="text">
+                     <string>Process</string>
                     </property>
                    </widget>
                   </item>
@@ -3999,12 +4029,52 @@ color:rgb(170, 170, 170)</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="13" column="0">
-                   <widget class="QLabel" name="label_183">
+                  <item row="15" column="2">
+                   <widget class="QLineEdit" name="txt_cehqid">
                     <property name="text">
-                     <string>Start date</string>
+                     <string/>
                     </property>
                    </widget>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QLabel" name="label_179">
+                    <property name="text">
+                     <string>Region</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="16" column="0">
+                   <widget class="QLabel" name="label_178">
+                    <property name="text">
+                     <string>Output file</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="22" column="2">
+                   <widget class="QPushButton" name="btn_cehqlayer">
+                    <property name="text">
+                     <string>Create layer</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="24" column="2">
+                   <spacer name="verticalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>150</height>
+                     </size>
+                    </property>
+                   </spacer>
                   </item>
                   <item row="5" column="2">
                    <widget class="QComboBox" name="combo_cehqadminregion">
@@ -4013,13 +4083,124 @@ color:rgb(170, 170, 170)</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="15" column="0">
-                   <widget class="QLabel" name="label_180">
+                  <item row="12" column="1" colspan="2">
+                   <widget class="QLabel" name="label_181">
                     <property name="text">
-                     <string>Station ID</string>
+                     <string>Download station data</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="14" column="0">
+                   <widget class="QLabel" name="label_184">
+                    <property name="text">
+                     <string>End date</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="20" column="2">
+                   <widget class="QLabel" name="label_69">
+                    <property name="text">
+                     <string>Generate points of interest layer</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="13" column="0">
+                   <widget class="QLabel" name="label_183">
+                    <property name="text">
+                     <string>Start date</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="13" column="2">
+                   <widget class="QDateEdit" name="date_cehqstartdate"/>
+                  </item>
+                  <item row="21" column="0">
+                   <widget class="QLabel" name="label_70">
+                    <property name="text">
+                     <string>Current IDs</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_176">
+                    <property name="text">
+                     <string>Municipality</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="11" column="2">
+                   <spacer name="horizontalSpacer_17">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="21" column="2">
+                   <widget class="QLineEdit" name="txt_cehqidlist">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="placeholderText">
+                     <string>No IDs</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="QLabel" name="label_177">
+                    <property name="text">
+                     <string>River or lake</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="26" column="2">
+                   <widget class="QgsFileWidget" name="file_cehqlocalinput">
+                    <property name="filter">
+                     <string>*.txt</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="17" column="2">
+                   <widget class="QPushButton" name="btn_cehqdate">
+                    <property name="text">
+                     <string>Fetch date range</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="26" column="0">
+                   <widget class="QLabel" name="label_173">
+                    <property name="text">
+                     <string>Input file</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="27" column="2">
+                   <widget class="QgsFileWidget" name="file_cehqlocaloutput">
+                    <property name="filter">
+                     <string>*.rvt</string>
+                    </property>
+                    <property name="storageMode">
+                     <enum>QgsFileWidget::SaveFile</enum>
                     </property>
                    </widget>
                   </item>
@@ -4030,13 +4211,6 @@ color:rgb(170, 170, 170)</string>
                     </property>
                     <property name="storageMode">
                      <enum>QgsFileWidget::SaveFile</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="15" column="2">
-                   <widget class="QLineEdit" name="txt_cehqid">
-                    <property name="text">
-                     <string/>
                     </property>
                    </widget>
                   </item>
@@ -4059,82 +4233,6 @@ color:rgb(170, 170, 170)</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="12" column="1" colspan="2">
-                   <widget class="QLabel" name="label_181">
-                    <property name="text">
-                     <string>Download station data</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="13" column="2">
-                   <widget class="QDateEdit" name="date_cehqstartdate"/>
-                  </item>
-                  <item row="21" column="0">
-                   <widget class="QLabel" name="label_173">
-                    <property name="text">
-                     <string>Input file</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="22" column="2">
-                   <widget class="QgsFileWidget" name="file_cehqlocaloutput">
-                    <property name="filter">
-                     <string>*.rvt</string>
-                    </property>
-                    <property name="storageMode">
-                     <enum>QgsFileWidget::SaveFile</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="18" column="2">
-                   <spacer name="horizontalSpacer_14">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="19" column="2">
-                   <spacer name="verticalSpacer">
-                    <property name="orientation">
-                     <enum>Qt::Vertical</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>20</width>
-                      <height>150</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="2" column="0">
-                   <widget class="QLabel" name="label_176">
-                    <property name="text">
-                     <string>Municipality</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="2">
-                   <widget class="QComboBox" name="combo_cehqmunicipality">
-                    <property name="editable">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="4" column="2">
                    <widget class="QComboBox" name="combo_cehqriver">
                     <property name="editable">
@@ -4142,30 +4240,13 @@ color:rgb(170, 170, 170)</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="17" column="2">
-                   <widget class="QPushButton" name="btn_cehqdownload">
+                  <item row="25" column="1" colspan="2">
+                   <widget class="QLabel" name="label_182">
                     <property name="text">
-                     <string>Download</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="4" column="0">
-                   <widget class="QLabel" name="label_177">
-                    <property name="text">
-                     <string>River or lake</string>
+                     <string>Process local file</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="5" column="0">
-                   <widget class="QLabel" name="label_179">
-                    <property name="text">
-                     <string>Region</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -4185,42 +4266,18 @@ color:rgb(170, 170, 170)</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="23" column="2">
-                   <widget class="QPushButton" name="btn_cehqprocess">
+                  <item row="15" column="0">
+                   <widget class="QLabel" name="label_180">
                     <property name="text">
-                     <string>Process</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="22" column="0">
-                   <widget class="QLabel" name="label_175">
-                    <property name="text">
-                     <string>Output file</string>
+                     <string>Station ID</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                     </property>
                    </widget>
                   </item>
-                  <item row="21" column="2">
-                   <widget class="QgsFileWidget" name="file_cehqlocalinput">
-                    <property name="filter">
-                     <string>*.txt</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="16" column="0">
-                   <widget class="QLabel" name="label_178">
-                    <property name="text">
-                     <string>Output file</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="11" column="2">
-                   <spacer name="horizontalSpacer_17">
+                  <item row="19" column="2">
+                   <spacer name="horizontalSpacer_19">
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
@@ -4253,22 +4310,161 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>272</width>
-                   <height>730</height>
+                   <width>905</width>
+                   <height>873</height>
                   </rect>
                  </property>
-                 <layout class="QFormLayout" name="formLayout">
-                  <item row="1" column="1">
-                   <widget class="QLabel" name="label_185">
+                 <layout class="QGridLayout" name="gridLayout_17">
+                  <item row="22" column="1">
+                   <widget class="QPushButton" name="btn_waterofficelayer">
                     <property name="text">
-                     <string>Station search</string>
+                     <string>Create layer</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="20" column="1">
+                   <widget class="QLabel" name="label_67">
+                    <property name="text">
+                     <string>Generate points of interest layer</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
-                  <item row="2" column="0">
+                  <item row="8" column="1">
+                   <spacer name="verticalSpacer_3">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="11" column="0">
+                   <widget class="QLabel" name="label_194">
+                    <property name="text">
+                     <string>Start date</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QLineEdit" name="txt_watersurveyname"/>
+                  </item>
+                  <item row="18" column="1">
+                   <widget class="QPushButton" name="btn_watersurveydownload">
+                    <property name="text">
+                     <string>Download</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="13" column="1">
+                   <widget class="QLineEdit" name="txt_watersurveyid"/>
+                  </item>
+                  <item row="21" column="0">
+                   <widget class="QLabel" name="label_68">
+                    <property name="text">
+                     <string>Current IDs</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="9" column="1">
+                   <widget class="QLabel" name="label_188">
+                    <property name="text">
+                     <string>Download station data</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="29" column="1">
+                   <widget class="QPushButton" name="btn_watersurveyprocess">
+                    <property name="text">
+                     <string>Process</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="12" column="1">
+                   <widget class="QDateEdit" name="date_watersurveyenddate">
+                    <property name="date">
+                     <date>
+                      <year>2030</year>
+                      <month>1</month>
+                      <day>1</day>
+                     </date>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QComboBox" name="combo_watersurveyprovince">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="21" column="1">
+                   <widget class="QLineEdit" name="txt_waterofficeidlist">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="readOnly">
+                     <bool>false</bool>
+                    </property>
+                    <property name="placeholderText">
+                     <string>No IDs</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="1">
+                   <spacer name="horizontalSpacer_15">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="13" column="0">
+                   <widget class="QLabel" name="label_189">
+                    <property name="text">
+                     <string>Station ID</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="27" column="0">
+                   <widget class="QLabel" name="label_192">
+                    <property name="text">
+                     <string>Input file</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="11" column="1">
+                   <widget class="QDateEdit" name="date_watersurveystartdate"/>
+                  </item>
+                  <item row="15" column="0">
+                   <widget class="QLabel" name="label_190">
+                    <property name="text">
+                     <string>Output file</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="16" column="1">
+                   <widget class="QPushButton" name="btn_waterofficedate">
+                    <property name="text">
+                     <string>Fetch date range</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
                    <widget class="QRadioButton" name="rd_watersurveyname">
                     <property name="text">
                      <string>Station name</string>
@@ -4281,10 +4477,54 @@ color:rgb(170, 170, 170)</string>
                     </attribute>
                    </widget>
                   </item>
-                  <item row="2" column="1">
-                   <widget class="QLineEdit" name="txt_watersurveyname"/>
+                  <item row="28" column="0">
+                   <widget class="QLabel" name="label_193">
+                    <property name="text">
+                     <string>Output file</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="28" column="1">
+                   <widget class="QgsFileWidget" name="file_watersurveylocaloutput">
+                    <property name="filter">
+                     <string>*.rvt</string>
+                    </property>
+                    <property name="storageMode">
+                     <enum>QgsFileWidget::SaveFile</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="15" column="1">
+                   <widget class="QgsFileWidget" name="file_watersurveyoutput">
+                    <property name="filter">
+                     <string>*.rvt</string>
+                    </property>
+                    <property name="storageMode">
+                     <enum>QgsFileWidget::SaveFile</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="1">
+                   <widget class="QPlainTextEdit" name="txt_watersurveyresults">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>100</height>
+                     </size>
+                    </property>
+                    <property name="readOnly">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
                   </item>
                   <item row="3" column="0">
+                   <widget class="QLabel" name="label_186">
+                    <property name="text">
+                     <string>Regulation</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
                    <widget class="QRadioButton" name="rd_watersurveyprovince">
                     <property name="text">
                      <string>Province</string>
@@ -4295,20 +4535,6 @@ color:rgb(170, 170, 170)</string>
                    </widget>
                   </item>
                   <item row="3" column="1">
-                   <widget class="QComboBox" name="combo_watersurveyprovince">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="4" column="0">
-                   <widget class="QLabel" name="label_186">
-                    <property name="text">
-                     <string>Regulation</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="4" column="1">
                    <widget class="QComboBox" name="combo_watersurveyregul">
                     <item>
                      <property name="text">
@@ -4327,14 +4553,27 @@ color:rgb(170, 170, 170)</string>
                     </item>
                    </widget>
                   </item>
-                  <item row="5" column="0">
-                   <widget class="QLabel" name="label_187">
-                    <property name="text">
-                     <string>Station status</string>
+                  <item row="24" column="1">
+                   <spacer name="verticalSpacer_4">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="27" column="1">
+                   <widget class="QgsFileWidget" name="file_watersurveylocalinput">
+                    <property name="filter">
+                     <string>*.csv</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="5" column="1">
+                  <item row="4" column="1">
                    <widget class="QComboBox" name="combo_watersurveystatus">
                     <item>
                      <property name="text">
@@ -4354,124 +4593,30 @@ color:rgb(170, 170, 170)</string>
                    </widget>
                   </item>
                   <item row="6" column="1">
-                   <widget class="QPlainTextEdit" name="txt_watersurveyresults">
-                    <property name="minimumSize">
-                     <size>
-                      <width>0</width>
-                      <height>100</height>
-                     </size>
-                    </property>
-                    <property name="readOnly">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="7" column="1">
                    <widget class="QPushButton" name="btn_watersurveysearch">
                     <property name="text">
                      <string>Search</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="9" column="1">
-                   <spacer name="verticalSpacer_3">
-                    <property name="orientation">
-                     <enum>Qt::Vertical</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>20</width>
-                      <height>40</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="10" column="1">
-                   <widget class="QLabel" name="label_188">
+                  <item row="4" column="0">
+                   <widget class="QLabel" name="label_187">
                     <property name="text">
-                     <string>Download station data</string>
+                     <string>Station status</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QLabel" name="label_185">
+                    <property name="text">
+                     <string>Station search</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
-                  <item row="11" column="0">
-                   <widget class="QLabel" name="label_194">
-                    <property name="text">
-                     <string>Start date</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="11" column="1">
-                   <widget class="QDateEdit" name="date_watersurveystartdate"/>
-                  </item>
-                  <item row="12" column="0">
-                   <widget class="QLabel" name="label_195">
-                    <property name="text">
-                     <string>End date</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="12" column="1">
-                   <widget class="QDateEdit" name="date_watersurveyenddate">
-                    <property name="date">
-                     <date>
-                      <year>2030</year>
-                      <month>1</month>
-                      <day>1</day>
-                     </date>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="13" column="0">
-                   <widget class="QLabel" name="label_189">
-                    <property name="text">
-                     <string>Station ID</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="13" column="1">
-                   <widget class="QLineEdit" name="txt_watersurveyid"/>
-                  </item>
-                  <item row="14" column="0">
-                   <widget class="QLabel" name="label_190">
-                    <property name="text">
-                     <string>Output file</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="14" column="1">
-                   <widget class="QgsFileWidget" name="file_watersurveyoutput">
-                    <property name="filter">
-                     <string>*.rvt</string>
-                    </property>
-                    <property name="storageMode">
-                     <enum>QgsFileWidget::SaveFile</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="15" column="1">
-                   <widget class="QPushButton" name="btn_watersurveydownload">
-                    <property name="text">
-                     <string>Download</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="17" column="1">
-                   <spacer name="verticalSpacer_4">
-                    <property name="orientation">
-                     <enum>Qt::Vertical</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>20</width>
-                      <height>40</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="18" column="1">
+                  <item row="25" column="1">
                    <widget class="QLabel" name="label_191">
                     <property name="text">
                      <string>Process local file</string>
@@ -4481,46 +4626,15 @@ color:rgb(170, 170, 170)</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="19" column="0">
-                   <widget class="QLabel" name="label_192">
+                  <item row="12" column="0">
+                   <widget class="QLabel" name="label_195">
                     <property name="text">
-                     <string>Input file</string>
+                     <string>End date</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="19" column="1">
-                   <widget class="QgsFileWidget" name="file_watersurveylocalinput">
-                    <property name="filter">
-                     <string>*.csv</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="20" column="0">
-                   <widget class="QLabel" name="label_193">
-                    <property name="text">
-                     <string>Output file</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="20" column="1">
-                   <widget class="QgsFileWidget" name="file_watersurveylocaloutput">
-                    <property name="filter">
-                     <string>*.rvt</string>
-                    </property>
-                    <property name="storageMode">
-                     <enum>QgsFileWidget::SaveFile</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="21" column="1">
-                   <widget class="QPushButton" name="btn_watersurveyprocess">
-                    <property name="text">
-                     <string>Process</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="8" column="1">
-                   <spacer name="horizontalSpacer_15">
+                  <item row="23" column="1">
+                   <spacer name="horizontalSpacer_16">
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
@@ -4532,8 +4646,8 @@ color:rgb(170, 170, 170)</string>
                     </property>
                    </spacer>
                   </item>
-                  <item row="16" column="1">
-                   <spacer name="horizontalSpacer_16">
+                  <item row="19" column="1">
+                   <spacer name="horizontalSpacer_18">
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>

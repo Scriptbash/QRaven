@@ -1,5 +1,6 @@
 import requests, csv, datetime
 from html.parser import HTMLParser
+import re
 
 class cehq:
     
@@ -55,9 +56,15 @@ class cehq:
     def exportRVT(data,path,mode,startdate,enddate):
         isContent = False
         observationtmp = []
+        lat = ""
+        lon = ""
 
         if mode == 'web':
             for i, line in enumerate(data.split('\n')):
+                if 'Coordonnées' in line:
+                    line = line.split()
+                    lat = line[2]+line[3]+line[4]   #Add the degrees minutes seconds coordinate of the station... could break at some point
+                    lon = line[6]+line[7]+line[8]
                 if 'Station' in line and 'Date' in line and 'Débit' in line:
                     isContent = True
                 elif isContent:
@@ -100,6 +107,10 @@ class cehq:
             for line in observation:
                 rvt.write('\n\t'+line[2])
             rvt.write('\n:EndObservationData')
+
+        lat = toLatLon(lat)
+        lon = toLatLon(lon)
+        #print(lat, lon)
 
 
 class watersurvey:
@@ -231,3 +242,9 @@ class MyHTMLParser(HTMLParser):
     def handle_data(self, data):
         if self.capture:
             self.data.append(data)
+
+
+def toLatLon(coord):
+    deg, minutes, seconds, direction =  re.split('[°\'"]', coord)
+    newcoord=(float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
+    return newcoord
