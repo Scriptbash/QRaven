@@ -5031,44 +5031,59 @@ color:rgb(170, 170, 170)</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="0" colspan="3">
-              <widget class="QLabel" name="label_62">
-               <property name="text">
-                <string>Containers</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
              <item row="5" column="2">
               <widget class="QLineEdit" name="txt_casparusername"/>
              </item>
-             <item row="3" column="0" colspan="3">
-              <widget class="QLabel" name="label_63">
+             <item row="6" column="2">
+              <widget class="QLineEdit" name="txt_casparpassword">
+               <property name="echoMode">
+                <enum>QLineEdit::PasswordEchoOnEdit</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="2">
+              <widget class="QComboBox" name="combo_menubar">
+               <item>
+                <property name="text">
+                 <string>Default</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Collapsed</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_218">
                <property name="text">
-                <string>CaSPAR</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
+                <string>CaSPAr password</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="2">
-              <widget class="QComboBox" name="combo_container">
+             <item row="2" column="2">
+              <widget class="QComboBox" name="combo_dockerimage">
                <item>
                 <property name="text">
-                 <string>Docker</string>
+                 <string>scriptbash/qraven:latest</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>Podman</string>
+                 <string>scriptbash/qraven_arm:latest</string>
                 </property>
                </item>
               </widget>
              </item>
-             <item row="10" column="0" colspan="3">
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_64">
+               <property name="text">
+                <string>Image</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="0" colspan="3">
               <widget class="QWidget" name="widget_11" native="true">
                <layout class="QHBoxLayout" name="horizontalLayout">
                 <item>
@@ -5093,34 +5108,6 @@ color:rgb(170, 170, 170)</string>
                </layout>
               </widget>
              </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_218">
-               <property name="text">
-                <string>CaSPAr password</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2">
-              <widget class="QComboBox" name="combo_dockerimage">
-               <item>
-                <property name="text">
-                 <string>scriptbash/qraven:latest</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>scriptbash/qraven_arm:latest</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="6" column="2">
-              <widget class="QLineEdit" name="txt_casparpassword">
-               <property name="echoMode">
-                <enum>QLineEdit::PasswordEchoOnEdit</enum>
-               </property>
-              </widget>
-             </item>
              <item row="5" column="0">
               <widget class="QLabel" name="label_217">
                <property name="text">
@@ -5128,7 +5115,7 @@ color:rgb(170, 170, 170)</string>
                </property>
               </widget>
              </item>
-             <item row="9" column="2">
+             <item row="12" column="2">
               <spacer name="verticalSpacer_7">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -5141,13 +5128,6 @@ color:rgb(170, 170, 170)</string>
                </property>
               </spacer>
              </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_64">
-               <property name="text">
-                <string>Image</string>
-               </property>
-              </widget>
-             </item>
              <item row="7" column="0" colspan="3">
               <widget class="QLabel" name="label_65">
                <property name="text">
@@ -5158,6 +5138,30 @@ color:rgb(170, 170, 170)</string>
                </property>
               </widget>
              </item>
+             <item row="10" column="0" colspan="3">
+              <widget class="QLabel" name="lbl_update">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QComboBox" name="combo_container">
+               <item>
+                <property name="text">
+                 <string>Docker</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Podman</string>
+                </property>
+               </item>
+              </widget>
+             </item>
              <item row="8" column="0">
               <widget class="QLabel" name="label_66">
                <property name="text">
@@ -5165,19 +5169,38 @@ color:rgb(170, 170, 170)</string>
                </property>
               </widget>
              </item>
-             <item row="8" column="2">
-              <widget class="QComboBox" name="combo_menubar">
-               <item>
-                <property name="text">
-                 <string>Default</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Collapsed</string>
-                </property>
-               </item>
+             <item row="0" column="0" colspan="3">
+              <widget class="QLabel" name="label_62">
+               <property name="text">
+                <string>Containers</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
               </widget>
+             </item>
+             <item row="3" column="0" colspan="3">
+              <widget class="QLabel" name="label_63">
+               <property name="text">
+                <string>CaSPAR</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="2">
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>

@@ -1924,14 +1924,14 @@ class QRaven:
             latestversion = int(relver)
             if installedversion == latestversion:
                 print('QRaven is up to date')
+                self.dlg.lbl_update.setText('QRaven is up to date.')
             elif installedversion > latestversion:
                 print('Running a pre-release version')
-                self.dlg.lbl_update.setText('Pre-release version. Please report any issues.')
+                self.dlg.lbl_update.setText('Pre-release version. Please report any issues on GitHub.')
             elif installedversion < latestversion:
-                print('An update is available')
+                self.iface.messageBar().pushInfo("Info", "A new version of QRaven is available.")
                 print("Found an update. Please install the latest version of the plugin here: https://github.com/Scriptbash/QRaven/releases")
                 self.dlg.lbl_update.setText('An update is available, please install the latest version <a href="https://github.com/Scriptbash/QRaven/releases">https://github.com/Scriptbash/QRaven/releases</a>')
-                #self.iface.messageBar().pushInfo("Info", "A QRaven update is available, please install the latest version https://github.com/Scriptbash/QRaven/releases")
         except Exception as e:
             print(e)
             print("Could not check for an update. Verify your internet connection.")
