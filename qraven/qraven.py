@@ -31,7 +31,7 @@ from qgis.PyQt.QtWidgets import *
 from .resources import *
 # Import the code for the dialog
 from .qraven_dialog import QRavenDialog
-from qgis.core import Qgis, QgsVectorLayer, QgsRasterLayer, QgsProject, QgsSettings
+from qgis.core import Qgis, QgsVectorLayer, QgsRasterLayer, QgsProject, QgsSettings,QgsFeature,QgsGeometry,QgsField
 from sys import platform
 import matplotlib.pyplot as plt
 import csv, datetime, webbrowser, ntpath, os.path, requests
@@ -215,6 +215,7 @@ class QRaven:
             self.setStreamflowComboboxes()
             
             self.dlg.list_evalmetrics.sortItems()
+            self.stations = []
 
             self.dlg.sidemenu.currentRowChanged.connect(self.display)
             self.dlg.combo_menubar.currentTextChanged.connect(self.setMenuStyle)
@@ -289,7 +290,9 @@ class QRaven:
 
             #---------------Stream flow---------------#
             self.dlg.btn_cehqsearch.clicked.connect(self.searchStreamflow)
+            self.dlg.btn_cehqdate.clicked.connect(self.downloadStreamflow)
             self.dlg.btn_cehqdownload.clicked.connect(self.downloadStreamflow)
+            self.dlg.btn_cehqlayer.clicked.connect(self.generatePointsLayer)
             self.dlg.btn_cehqprocess.clicked.connect(self.downloadStreamflow)
 
             self.dlg.buttonGroup_4.buttonToggled.connect(self.toggleWidget)
@@ -1543,17 +1546,43 @@ class QRaven:
 
     def downloadStreamflow(self):
         widget = self.dlg.sender().objectName()  #Get the widget name
-       
-        if widget == 'btn_cehqdownload':
+
+        if widget == 'btn_cehqdate':
+            id = self.dlg.txt_cehqid.text().strip()
+            if id:
+                try:
+                    streamflowdata = streamflow.cehq.downloadData(id)
+                    self.observation, self.stationinfo = streamflow.cehq.extractData(streamflowdata,id)
+                    startdate = QtCore.QDate.fromString(self.observation[0][1], "yyyy/MM/dd")
+                    enddate = QtCore.QDate.fromString(self.observation[-1][1], "yyyy/MM/dd")
+
+                    self.dlg.date_cehqstartdate.setMinimumDate(startdate)
+                    self.dlg.date_cehqstartdate.setMaximumDate(enddate)
+                    self.dlg.date_cehqstartdate.setDate(startdate)
+                    self.dlg.date_cehqenddate.setMinimumDate(startdate)
+                    self.dlg.date_cehqenddate.setMaximumDate(enddate)
+                    self.dlg.date_cehqenddate.setDate(enddate)
+
+                    self.dlg.btn_cehqdownload.setEnabled(True)
+                except Exception as e:
+                    self.iface.messageBar().pushMessage("Couldn't download the data. Please verify the station ID and dates",level=Qgis.Critical)
+                    print(e)
+            else:
+                self.iface.messageBar().pushMessage("A station ID is required.",level=Qgis.Critical)
+        elif widget == 'btn_cehqdownload':
             id = self.dlg.txt_cehqid.text().strip()
             startdate = self.dlg.date_cehqstartdate.date().toPyDate()
             enddate = self.dlg.date_cehqenddate.date().toPyDate()
             output = self.dlg.file_cehqoutput.filePath()
             if id and output:
                 try:
-                    streamflowdata = streamflow.cehq.downloadData(id)
-                    streamflow.cehq.exportRVT(streamflowdata,output,'web',startdate,enddate)
+                    streamflow.cehq.exportRVT(self.observation,output,'web',startdate,enddate)
                     self.iface.messageBar().pushSuccess("Success", "RVT file written successfully")
+                    self.dlg.txt_cehqidlist.appendPlainText(str(self.stationinfo))
+                    self.stations.append(self.stationinfo)
+                    self.dlg.txt_cehqid.clear()
+                    self.dlg.btn_cehqdownload.setEnabled(False)
+                    self.dlg.btn_cehqlayer.setEnabled(True)
                 except Exception as e:
                     self.iface.messageBar().pushMessage("Couldn't download the data. Please verify the station ID",level=Qgis.Critical)
                     print(e)
@@ -1606,6 +1635,40 @@ class QRaven:
             else:
                 self.iface.messageBar().pushMessage("An input and output file are required.",level=Qgis.Critical)
 
+    def generatePointsLayer(self):
+        stations = self.stations
+
+        #Creates layer
+        vl = QgsVectorLayer("Point", "qrvn_stations", "memory")
+        pr = vl.dataProvider()
+
+        #Adds fields
+        pr.addAttributes([
+            QgsField("id", QVariant.Int),
+            QgsField("name", QVariant.String),
+            QgsField("area", QVariant.Double),
+            QgsField("source", QVariant.String)])
+        vl.updateFields()  # tell the vector layer to fetch changes from the provider
+
+        for station in stations:
+            #Creates a feature
+            fet = QgsFeature()
+
+            #Sets the geometry
+            pt = QgsGeometry.fromWkt('Point('+str(station[2])+' '+str(station[1])+')')
+            fet.setGeometry(pt)
+            
+            #Sets the attributes
+            fet.setAttributes([int(station[0]), station[0], float(station[-1]), "CA"])
+            #Adds the feature
+            pr.addFeatures([fet])
+
+        # update layer's extent when new features have been added
+        # because change of extent in provider is not propagated to the layer
+        vl.updateExtents()
+        QgsProject.instance().addMapLayer(vl)
+        self.dlg.txt_cehqidlist.clear()
+        self.dlg.btn_cehqlayer.setEnabled(False)
 
     def downloadGISdata(self):
         outputdem = self.dlg.file_fetchdem.filePath()

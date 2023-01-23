@@ -52,30 +52,49 @@ class cehq:
         page = requests.get(link)
         content = page.text
         return content
-
-    def exportRVT(data,path,mode,startdate,enddate):
+    
+    def extractData(data,id):
         isContent = False
         observationtmp = []
         lat = ""
         lon = ""
+        area = ""
 
+        for i, line in enumerate(data.split('\n')):
+            if 'Bassin versant' in line:
+                line = line.split()
+                area = line[2]
+
+            if 'Coordonnées' in line:
+                line = line.split()
+                lat = line[2]+line[3]+line[4]   #Add the degrees minutes seconds coordinate of the station... could break at some point
+                lon = line[6]+line[7]+line[8]
+            
+            if 'Station' in line and 'Date' in line and 'Débit' in line:
+                isContent = True
+            elif isContent:
+                if line !='':
+                    content = line.split()
+                    try:
+                        content[2]
+                        observationtmp.append(content)
+                    except:
+                        text = content[0] + ' ' + content[1] + ' -1.2345' + ' MJ'
+                        observationtmp.append(text.split())
+        
+        lat = toLatLon(lat)
+        lon = toLatLon(lon)
+        
+        stationinfo = [id, lat, lon, area]
+        return observationtmp, stationinfo
+
+
+    def exportRVT(data,path,mode,startdate,enddate):
+        isContent = False
+        observationtmp = []
+      
         if mode == 'web':
-            for i, line in enumerate(data.split('\n')):
-                if 'Coordonnées' in line:
-                    line = line.split()
-                    lat = line[2]+line[3]+line[4]   #Add the degrees minutes seconds coordinate of the station... could break at some point
-                    lon = line[6]+line[7]+line[8]
-                if 'Station' in line and 'Date' in line and 'Débit' in line:
-                    isContent = True
-                elif isContent:
-                    if line !='':
-                        content = line.split()
-                        try:
-                            content[2]
-                            observationtmp.append(content)
-                        except:
-                            text = content[0] + ' ' + content[1] + ' -1.2345' + ' MJ'
-                            observationtmp.append(text.split())
+            observationtmp = data
         elif mode == 'local':
             isContent = False
             with open(data,'r',encoding = 'latin-1') as file:
@@ -108,16 +127,12 @@ class cehq:
                 rvt.write('\n\t'+line[2])
             rvt.write('\n:EndObservationData')
 
-        lat = toLatLon(lat)
-        lon = toLatLon(lon)
-        #print(lat, lon)
-
 
 class watersurvey:
 
     def sendRequest(type,value,regulation,status):
         
-        baseurl = 'https://wateroffice.ec.gc.ca/search/historical_results_e.html'#?search_type='+searchtype
+        baseurl = 'https://wateroffice.ec.gc.ca/search/historical_results_e.html'
         params = { 'search_type':type,type: value, 
                    'parameter_type': 'flows', 'start_year':'1850', 
                    'end_year':'2023', 'minimum_years':'', 
