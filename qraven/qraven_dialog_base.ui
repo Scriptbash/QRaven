@@ -119,10 +119,16 @@ color:rgb(170, 170, 170)</string>
           </property>
           <item>
            <widget class="QTabWidget" name="tabWidget">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="currentIndex">
              <number>0</number>
             </property>
             <widget class="QWidget" name="tab">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
              <attribute name="title">
               <string>Model info</string>
              </attribute>
@@ -2700,6 +2706,9 @@ color:rgb(170, 170, 170)</string>
           </property>
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_2">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="currentIndex">
              <number>0</number>
             </property>
@@ -3478,8 +3487,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>425</width>
-                   <height>361</height>
+                   <width>905</width>
+                   <height>639</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -3932,6 +3941,9 @@ color:rgb(170, 170, 170)</string>
          </layout>
         </widget>
         <widget class="QWidget" name="streamflow">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <layout class="QGridLayout" name="gridLayout_36">
           <property name="leftMargin">
            <number>0</number>
@@ -4310,7 +4322,7 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>905</width>
+                   <width>882</width>
                    <height>873</height>
                   </rect>
                  </property>
@@ -5146,10 +5158,17 @@ color:rgb(170, 170, 170)</string>
               </widget>
              </item>
              <item row="5" column="2">
-              <widget class="QLineEdit" name="txt_casparusername"/>
+              <widget class="QLineEdit" name="txt_casparusername">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
              </item>
              <item row="6" column="2">
               <widget class="QLineEdit" name="txt_casparpassword">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="echoMode">
                 <enum>QLineEdit::PasswordEchoOnEdit</enum>
                </property>
@@ -5172,7 +5191,7 @@ color:rgb(170, 170, 170)</string>
              <item row="6" column="0">
               <widget class="QLabel" name="label_218">
                <property name="text">
-                <string>CaSPAr password</string>
+                <string>password</string>
                </property>
               </widget>
              </item>
@@ -5225,7 +5244,7 @@ color:rgb(170, 170, 170)</string>
              <item row="5" column="0">
               <widget class="QLabel" name="label_217">
                <property name="text">
-                <string>CaSPAr username</string>
+                <string>username</string>
                </property>
               </widget>
              </item>
@@ -5296,7 +5315,7 @@ color:rgb(170, 170, 170)</string>
              <item row="3" column="0" colspan="3">
               <widget class="QLabel" name="label_63">
                <property name="text">
-                <string>CaSPAR</string>
+                <string>placeholder login</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
