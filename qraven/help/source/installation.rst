@@ -41,6 +41,7 @@ Open QGIS and go to the "Plugins" menu. Click on "Manage and Install Plugins".
 Click on the "Settings" tab and click on the "Add" button to add a new plugin repository.
 
 In the window that just opened, enter a name, such as "QRaven", enter the link below in the URL field and leave the remaining options to their defaults:
+
 `https://scriptbash.github.io/plugins.xml <https://scriptbash.github.io/plugins.xml>`_
 
 .. figure:: ./images/qgs_pluginmanager_repo.png

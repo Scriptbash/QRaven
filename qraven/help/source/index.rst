@@ -6,7 +6,7 @@
 Welcome to QRaven's documentation!
 ============================================
 
-You will find all the information about QRaven, from installing it to contributing to its development.
+You will find all the information about QRaven, from its installation to contributing to its development.
 If you find any errors or typos, please `report them <https://github.com/Scriptbash/QRaven/issues>`_.
 
 

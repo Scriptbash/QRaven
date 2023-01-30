@@ -11,8 +11,8 @@ If you find any possible bugs, errors, typos, please open an issue on `GitHub <h
 
 Feature requests
 ----------------
-I'm trying to add as many useful features to make Raven models and ease
-the use of Raven in general. If there is a feature you would like or think would be useful,
+I'm trying to add as many useful features to create Raven models and also ease
+the use of Raven in general. If there are features you would like or you think would be useful,
 please submit your request by either opening an `issue <https://github.com/Scriptbash/QRaven/issues>`_
 or a `discussion <https://github.com/Scriptbash/QRaven/discussions>`_.
 

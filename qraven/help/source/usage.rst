@@ -14,26 +14,31 @@ Click on the QRaven icon |qrvn_ico| in your toolbar or go in the "Plugins" menu,
 .. image:: https://user-images.githubusercontent.com/98601298/170999781-22514c96-7611-424a-b946-69fd465c5181.png
   :width: 600
 
-You will have five main tabs
+You will have seven main menus
 
  * :ref:`Raven RVI<createRVI>`
  * :ref:`BasinMaker RVH<createRVH>`
  * :ref:`GridWeights<gridweights>`
  * :ref:`Streamflow<datascrapers>`
+ * :ref:`GIS<gis>`
  * :ref:`Run Model<runrvn>`
+ * :ref:`Settings<settings>`
 
 .. _createRVI:
 
 Create a RVI file
 -----------------
 QRaven all started with this feature in mind. This tab can be used to create a rvi file from scratch or from a template.
-The templates available are UBCWM, HBV-EC, GR4J, Canadian Shield,
-MOHYSE, HMETS, HYPE and HYMOD. Those models structures were taken directly from the Raven official documentation.
+The templates available are UBCWM, HBV-EC, HBV-Light, GR4J, Canadian Shield,
+MOHYSE, HMETS, HYPR, HYMOD and AWBM. Those models structures were taken directly from the Raven official documentation.
 
-The parameters are separated in different sections; 
+This section of the plugin is pretty straight forward to use. Check/uncheck/ options, select entries in drop down lists, etc.
+When ready, click on the "Write" button to write the rvi file. Otherwise, you can click on "Reset" to revert the options back to their default values.
+
+The parameters are separated in different sections. You can find an overview of the options below; 
 
 - Model info
-   - Templates buttons. Simply click on the one needed and the interface will load its configuration. 
+   - You can find templates buttons. Simply click on the one needed and the interface will load its configuration. 
    - Basic information like the name of the model, the start/end date, time step, etc.
 - Sim. parameters
    - Simulation parameters such as the catchment route, the routing method, evaporation, etc.
@@ -49,8 +54,6 @@ The parameters are separated in different sections;
 - Custom output
    - This is similar to the hydrologic processes table, but for custom outputs.
 
-This section of the plugin is pretty straight forward to use. Check/uncheck/ options, select entries in drop down lists, etc.
-When ready, click on the "Write" button to write the rvi file. Otherwise, you can click on "Reset" to revert the options back to their default values.
 
 .. figure:: ./images/modelinfo_ui.png
   :width: 600
@@ -58,7 +61,7 @@ When ready, click on the "Write" button to write the rvi file. Otherwise, you ca
   The model info section.
 
 .. figure:: ./images/hydroproc_ui.png
-  :width: 600
+  :width: 800
 
   The hydrologic process table.
 
@@ -67,7 +70,7 @@ When ready, click on the "Write" button to write the rvi file. Otherwise, you ca
 Create a RVH file
 -----------------
 .. warning::
-  The Docker daemon must be running to use this feature.
+  The Docker daemon must be running to use this feature. Podman users don't need to worry, as Podman is daemonless.
 
 *To-do
 
@@ -76,7 +79,7 @@ Create a RVH file
 Associate a NetCDF grid to the HRUs
 -----------------------------------
 .. warning::
-  The Docker daemon must be running to use this feature.
+  The Docker daemon must be running to use this feature. Podman users don't need to worry, as Podman is daemonless.
 
 1. **NetCDF file** : The NetCDF file to process (inluding the file extension).
 2. **Shapefile attribute** (Optional) : Only needed if the Netcdf file is a shapefile. It is the attribute containing the numbering of the subbasins.
@@ -101,12 +104,12 @@ QRaven can fetch hydrometric data from two providers at this time, which are the
 direction principale des prévisions hydriques et de la cartographie (DPPHC) and the Water office. Not only can it fetch data automatically,
 it can also generate rvt files from the data. Only flow data is supported, level data is unsupported.
 
-Both data scrapers work the same, but their search criterias differ a little bit. This documentation will only cover the Water office scraper.
+Both data scrapers work the same way, but their search criterias differ a little bit. This documentation will only cover the Water office scraper.
 
 - Search a station
    1. Select either "Station name" or "Province".
    2. If "Station name" is selected, type in the full or patial name of the station. If "Province" is selected, select a province in the drop down list.
-   3. Use the "Regulation" and "Station status" drop down list to refine your search if needed.
+   3. Use the "Regulation" and "Station status" drop down lists to refine your search if needed.
    4. Click on "Search".
    5. Results will show up in the text area above the "Search" button.
    
@@ -130,6 +133,17 @@ If you have already downloaded data from one of the two providers, use the follo
   :width: 600
 
   Example of the Water office UI
+
+.. _gis:
+
+Download GIS data
+-----------------
+To write.
+
+.. figure:: ./images/gis_ui.png
+  :width: 600
+
+  Example of the GIS UI
 
 .. _runrvn:
 
@@ -178,3 +192,29 @@ In order to use this feature, a few steps are required.
 .. note::
   This feature needs more testing and could have many oversights. To help improve it, please submit any problems you encounter by opening a `new issue <https://github.com/Scriptbash/QRaven/issues>`_.
   If possible, also send your Raven model so the issue can be easily reproduced.
+
+.. _settings:
+
+Settings
+--------
+The Settings menu allows some slight customization of QRaven for the moment. More settings may come later on.
+
+As per now, you can select which containerization software and which image you want to use. You can also
+select a side menu style.
+
+**Containerization software**: By default, Docker is selected, but if you want to use
+Podman, simply select the Podman option in the drop down list.
+
+**Image**: This option lets you pick between the regular container image and the ARM based image. By default, MacOS
+will be running the ARM based image. If your MacBook is Intel based, switch to the regular image. Linux and Windows both
+default on the regular image.
+
+**Menu bar style**: Allows you to choose between the default menu (icons with text) or a collapsed menu (icons only).
+
+.. warning::
+  After making changes to the settings, do not forget to click on the "Save" button. Otherwise, your changes will be lost after closing QGIS.
+
+.. figure:: ./images/settings_ui.png
+  :width: 600
+
+  The settings menu as of version 2.3.0
