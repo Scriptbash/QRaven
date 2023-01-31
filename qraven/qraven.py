@@ -1685,13 +1685,13 @@ class QRaven:
         pr.addAttributes([
             QgsField("id", QVariant.Int),
             QgsField("name", QVariant.String),
-            QgsField("area", QVariant.Double),
+            QgsField("drain_area", QVariant.Double),
             QgsField("source", QVariant.String)])
         vl.updateFields()  # tell the vector layer to fetch changes from the provider
 
         for station in stations:
             stationid = re.sub("[^0-9]", "", station[0])
-            station[-1] = station[-1].replace(',','.') 
+            station[-1] = station[-1].replace(',','') 
             #Creates a feature
             fet = QgsFeature()
 
@@ -2130,6 +2130,7 @@ class QRaven:
         containerimage = self.dlg.combo_dockerimage.currentText()
         username = self.dlg.txt_casparusername.text()
         password = self.dlg.txt_casparpassword.text()
+        resetmode = self.dlg.combo_resetmode.currentText()
         menubar = self.dlg.combo_menubar.currentText()
         
 
@@ -2139,12 +2140,14 @@ class QRaven:
         s.setValue("qraven/image",containerimage)
         s.setValue("qraven/casparUsername", username)
         s.setValue("qraven/casparPassword", password)
+        s.setValue("qraven/resetmode",resetmode)
         s.setValue("qraven/menubar",menubar)
 
         self.iface.messageBar().pushSuccess("Success", "Your settings have been saved.")
 
     def loadsettings(self):
         s = QgsSettings()
+
         if computerOS == 'macos':
             defaultimage = 'scriptbash/qraven_arm:latest'
         else:
@@ -2154,12 +2157,14 @@ class QRaven:
         containerimage = s.value("qraven/image",defaultimage)
         username = s.value("qraven/casparUsername", "")
         password = s.value("qraven/casparPassword", "")
+        resetmode = s.value("qraven/resetmode","Full")
         menubar = s.value("qraven/menubar",'Default')
         
         self.dlg.combo_container.setCurrentText(containerization)
         self.dlg.combo_dockerimage.setCurrentText(containerimage)
         self.dlg.txt_casparusername.setText(username)
         self.dlg.txt_casparpassword.setText(password)
+        self.dlg.combo_resetmode.setCurrentText(resetmode)
         self.dlg.combo_menubar.setCurrentText(menubar)
 
 
