@@ -47,6 +47,11 @@ In the window that just opened, enter a name, such as "QRaven", enter the link b
 .. figure:: ./images/qgs_pluginmanager_repo.png
   :width: 600
 
+After connecting to QRaven's repository, click on the "All" menu and search for QRaven. Click on QRaven and click on "Install".
+
+.. figure:: ./images/qgs_pluginmanager_install.png
+  :width: 600
+
 To update QRaven, simply head back to the plugins manager, search for QRaven and click on "Upgrade Plugin".
 
 .. figure:: ./images/qgs_pluginmanager_upgrade.png
