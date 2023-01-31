@@ -34,7 +34,7 @@ from .qraven_dialog import QRavenDialog
 from qgis.core import Qgis, QgsVectorLayer, QgsRasterLayer, QgsProject, QgsSettings,QgsFeature,QgsGeometry,QgsField
 from sys import platform
 import matplotlib.pyplot as plt
-import csv, datetime, webbrowser, ntpath, os.path, requests
+import csv, datetime, webbrowser, ntpath, os.path, requests,re
 from .modules.docker import dockercmd as docker
 from .modules.resetgui import resetGUI
 from .modules.templates.hmets import loadHmets 
@@ -216,6 +216,7 @@ class QRaven:
             
             self.dlg.list_evalmetrics.sortItems()
             self.stations = []
+            self.waterofficestations = []
 
             self.dlg.sidemenu.currentRowChanged.connect(self.display)
             self.dlg.combo_menubar.currentTextChanged.connect(self.setMenuStyle)
@@ -297,7 +298,9 @@ class QRaven:
 
             self.dlg.buttonGroup_4.buttonToggled.connect(self.toggleWidget)
             self.dlg.btn_watersurveysearch.clicked.connect(self.searchStreamflow)
+            self.dlg.btn_waterofficedate.clicked.connect(self.downloadStreamflow)
             self.dlg.btn_watersurveydownload.clicked.connect(self.downloadStreamflow)
+            self.dlg.btn_waterofficelayer.clicked.connect(self.generatePointsLayer)
             self.dlg.btn_watersurveyprocess.clicked.connect(self.downloadStreamflow)
             #----------------------------------------#
 
@@ -1457,6 +1460,7 @@ class QRaven:
     def searchStreamflow(self):
         widget = self.dlg.sender().objectName()  #Get the widget name
 
+        #----CEHQ---#
         if widget == 'btn_cehqsearch':
             self.dlg.txt_cehqresults.clear()
             city = self.dlg.combo_cehqmunicipality.currentText()
@@ -1483,7 +1487,7 @@ class QRaven:
                             text+= info.strip()+' | '
                     text+='\n'
                     self.dlg.txt_cehqresults.appendPlainText(text)
-
+        #----Water office----#
         elif widget == 'btn_watersurveysearch':
             self.dlg.txt_watersurveyresults.clear()
             if self.dlg.rd_watersurveyname.isChecked() and self.dlg.txt_watersurveyname.text() !='':
@@ -1529,9 +1533,15 @@ class QRaven:
             html = streamflow.watersurvey.sendRequest(search_type,value,regulation,status)
             parser.feed(html)
             data= parser.data
-            stations = streamflow.watersurvey.parseTable(data)
+            self.waterofficestations = streamflow.watersurvey.parseTable(data)
             
-            for line in stations:
+            if not self.waterofficestations:
+                self.dlg.txt_watersurveyresults.appendPlainText('No stations found.')
+            else:
+                tmpstation = self.waterofficestations.copy()
+                for line in tmpstation:
+                    line = line.copy()
+                    del line[-3:]   #Removes unecessary info
                     isId = True
                     text = ''
                     for info in line:
@@ -1542,11 +1552,11 @@ class QRaven:
                             text+= info.strip()+' | '
                     text+='\n'
                     self.dlg.txt_watersurveyresults.appendPlainText(text)
-            
+        
 
     def downloadStreamflow(self):
         widget = self.dlg.sender().objectName()  #Get the widget name
-
+        #----CEHQ----#
         if widget == 'btn_cehqdate':
             id = self.dlg.txt_cehqid.text().strip()
             if id:
@@ -1584,7 +1594,7 @@ class QRaven:
                     self.dlg.btn_cehqdownload.setEnabled(False)
                     self.dlg.btn_cehqlayer.setEnabled(True)
                 except Exception as e:
-                    self.iface.messageBar().pushMessage("Couldn't download the data. Please verify the station ID",level=Qgis.Critical)
+                    self.iface.messageBar().pushMessage("Couldn't download the data. Please verify the station ID and dates",level=Qgis.Critical)
                     print(e)
             else:
                 self.iface.messageBar().pushMessage("A station ID and an output file are required.",level=Qgis.Critical)
@@ -1602,6 +1612,25 @@ class QRaven:
                     print(e)
             else:
                 self.iface.messageBar().pushMessage("An input and output file are required.",level=Qgis.Critical)
+        
+        #-----Water office----#
+        elif widget == 'btn_waterofficedate':
+            id = self.dlg.txt_watersurveyid.text().strip()
+            if id:
+                self.streamflowdata = streamflow.watersurvey.downloadData(id)
+                startdate, enddate = streamflow.watersurvey.fetchDates(self.streamflowdata)
+                startdate = QtCore.QDate.fromString(startdate, "yyyy/MM/dd")
+                enddate = QtCore.QDate.fromString(enddate, "yyyy/MM/dd")
+
+                self.dlg.date_watersurveystartdate.setMinimumDate(startdate)
+                self.dlg.date_watersurveystartdate.setMaximumDate(enddate)
+                self.dlg.date_watersurveystartdate.setDate(startdate)
+                self.dlg.date_watersurveyenddate.setMinimumDate(startdate)
+                self.dlg.date_watersurveyenddate.setMaximumDate(enddate)
+                self.dlg.date_watersurveyenddate.setDate(enddate)
+
+                self.dlg.btn_watersurveydownload.setEnabled(True)
+
         elif widget == 'btn_watersurveydownload':
             id = self.dlg.txt_watersurveyid.text().strip()
             startdate = self.dlg.date_watersurveystartdate.date().toPyDate()
@@ -1610,9 +1639,19 @@ class QRaven:
 
             if id and output:
                 try: 
-                    streamflowdata = streamflow.watersurvey.downloadData(id)
-                    streamflow.watersurvey.exportRVT(streamflowdata,output,startdate,enddate)
+                    streamflow.watersurvey.exportRVT(self.streamflowdata,output,startdate,enddate)
                     self.iface.messageBar().pushSuccess("Success", "RVT file written successfully")
+                    stationinfo = [station for station in self.waterofficestations if station[0] == id]
+                    if not stationinfo[0][-1]:
+                        stationinfo[0][-1] = '-9999'
+
+                    stationinfo = [stationinfo[0][0],stationinfo[0][-3],stationinfo[0][-2],stationinfo[0][-1]]
+                    self.stations.append(stationinfo)
+                    self.dlg.txt_waterofficeidlist.appendPlainText(str(stationinfo))
+                    self.dlg.txt_watersurveyid.clear()
+                    self.dlg.btn_watersurveydownload.setEnabled(False)
+                    self.dlg.btn_waterofficelayer.setEnabled(True)
+                    
                 except Exception as e:
                     self.iface.messageBar().pushMessage("Couldn't download the data. Please verify the station ID",level=Qgis.Critical)
                     print(e)
@@ -1651,6 +1690,8 @@ class QRaven:
         vl.updateFields()  # tell the vector layer to fetch changes from the provider
 
         for station in stations:
+            stationid = re.sub("[^0-9]", "", station[0])
+            station[-1] = station[-1].replace(',','.') 
             #Creates a feature
             fet = QgsFeature()
 
@@ -1659,7 +1700,7 @@ class QRaven:
             fet.setGeometry(pt)
             
             #Sets the attributes
-            fet.setAttributes([int(station[0]), station[0], float(station[-1]), "CA"])
+            fet.setAttributes([int(stationid), station[0], float(station[-1]), "CA"])
             #Adds the feature
             pr.addFeatures([fet])
 
@@ -1669,6 +1710,9 @@ class QRaven:
         QgsProject.instance().addMapLayer(vl)
         self.dlg.txt_cehqidlist.clear()
         self.dlg.btn_cehqlayer.setEnabled(False)
+        self.dlg.txt_waterofficeidlist.clear()
+        self.dlg.btn_waterofficelayer.setEnabled(False)
+        self.stations=[]
 
     def downloadGISdata(self):
         outputdem = self.dlg.file_fetchdem.filePath()

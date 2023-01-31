@@ -156,14 +156,14 @@ class watersurvey:
                 try:
                     float(line[0].replace(",",'.'))
                     tmplist.append(line[0])
-                    del tmplist[-3:]
+                    #del tmplist[-3:]
                     results.append(tmplist.copy())
                     tmplist.clear()
                     count = 0
                     newlist = False
                 except:
                     tmplist.append('')
-                    del tmplist[-3:]
+                    #del tmplist[-3:]
                     results.append(tmplist.copy())
                     tmplist.clear()
                     tmplist.append(line[0])
@@ -182,6 +182,8 @@ class watersurvey:
         for result in results:
             try:
                 result.insert(0, result.pop(3))
+                result[-3] = toLatLon(result[-3])
+                result[-2] = toLatLon(result[-2])
             except:
                 print("Couldn't move the id in front of the string.")
         return results
@@ -230,7 +232,6 @@ class watersurvey:
         del observationtmp[:2]
         observationtmp = [x for x in observationtmp if x != []]
         
-        #print(observationtmp)
         for row in observationtmp:
             obsdate = datetime.datetime.strptime(row[2], '%Y/%m/%d')
             if  obsdate.date() >= startdate and obsdate.date() < enddate:
@@ -271,5 +272,5 @@ class MyHTMLParser(HTMLParser):
 
 def toLatLon(coord):
     deg, minutes, seconds, direction =  re.split('[°\'"]', coord)
-    newcoord=(abs(float(deg)) + (float(minutes)/60) + (float(seconds)/(3600))) * (-1 if direction in ['W', 'S'] else 1)
+    newcoord=(abs(float(deg)) + (float(minutes)/60) + (float(seconds)/(3600))) * (-1 if direction.strip() in ['W', 'S'] else 1)
     return newcoord
