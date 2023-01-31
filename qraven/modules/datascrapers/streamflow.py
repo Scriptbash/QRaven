@@ -67,8 +67,8 @@ class cehq:
 
             if 'Coordonnées' in line:
                 line = line.split()
-                lat = line[2]+line[3]+line[4]   #Add the degrees minutes seconds coordinate of the station... could break at some point
-                lon = line[6]+line[7]+line[8]
+                lat = line[2]+line[3]+line[4]+'N'   #Add the degrees minutes seconds coordinate of the station... could break at some point
+                lon = line[6]+line[7]+line[8]+'W'
             
             if 'Station' in line and 'Date' in line and 'Débit' in line:
                 isContent = True
@@ -84,7 +84,6 @@ class cehq:
         
         lat = toLatLon(lat)
         lon = toLatLon(lon)
-        
         stationinfo = [id, lat, lon, area]
         return observationtmp, stationinfo
 
@@ -209,7 +208,18 @@ class watersurvey:
 
         return r.text
         
+    def fetchDates(data):
+        reader = csv.reader(data.split('\n'))
+        observationtmp =[]
+        for row in reader:
+            observationtmp.append(row)
+        del observationtmp[:2]
+        observationtmp = [x for x in observationtmp if x != []]
+        startdate = observationtmp[0][2]
+        enddate = observationtmp[-1][2]
+        return startdate, enddate
         
+
     def exportRVT(data,path, startdate, enddate):
         reader = csv.reader(data.split('\n'))
         observationtmp =[]
@@ -261,5 +271,5 @@ class MyHTMLParser(HTMLParser):
 
 def toLatLon(coord):
     deg, minutes, seconds, direction =  re.split('[°\'"]', coord)
-    newcoord=(float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
+    newcoord=(abs(float(deg)) + (float(minutes)/60) + (float(seconds)/(3600))) * (-1 if direction in ['W', 'S'] else 1)
     return newcoord
