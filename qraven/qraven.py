@@ -36,7 +36,7 @@ from sys import platform
 import matplotlib.pyplot as plt
 import csv, datetime, webbrowser, ntpath, os.path, requests,re
 from .modules.docker import dockercmd as docker
-from .modules.resetgui import resetGUI
+from .modules.resetgui import *
 from .modules.templates.hmets import loadHmets 
 from .modules.templates.hbvec import loadHbvec
 from .modules.templates.hbvlight import loadHbvlight
@@ -2049,36 +2049,40 @@ class QRaven:
         
         #Calls the function linked to the proper model to load
         if widget.objectName() == 'btn_reset': 
-            resetGUI(self)
+            resetmode = self.dlg.combo_resetmode.currentText()
+            if resetmode == 'Full':
+                fullReset(self)
+            elif resetmode == 'Partial':
+                partialReset(self)
         elif widget.objectName() == 'btn_load_hmets':
-            resetGUI(self)
+            partialReset(self)
             loadHmets(self)
         elif widget.objectName() == 'btn_load_hbvec':
-            resetGUI(self)
+            partialReset(self)
             loadHbvec(self)
         elif widget.objectName() == 'btn_load_hbvlight':
-            resetGUI(self)
+            partialReset(self)
             loadHbvlight(self)
         elif widget.objectName() == 'btn_load_ubcwm':
-            resetGUI(self)
+            partialReset(self)
             loadUbcwm(self)
         elif widget.objectName() == 'btn_load_gr4j':
-            resetGUI(self)
+            partialReset(self)
             loadGr4j(self)
         elif widget.objectName() == 'btn_load_canadianshield':
-            resetGUI(self)
+            partialReset(self)
             loadCanshield(self)
         elif widget.objectName() == 'btn_load_mohyse':
-            resetGUI(self)
+            partialReset(self)
             loadMohyse(self)
         elif widget.objectName() == 'btn_load_hypr':
-            resetGUI(self)
+            partialReset(self)
             loadHypr(self)
         elif widget.objectName() == 'btn_load_hymod':
-            resetGUI(self)
+            partialReset(self)
             loadHymod(self) 
         elif widget.objectName() == 'btn_load_awbm':
-            resetGUI(self)
+            partialReset(self)
             loadAwbm(self)
 
     def setStreamflowComboboxes(self):
