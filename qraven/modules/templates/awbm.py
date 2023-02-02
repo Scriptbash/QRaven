@@ -30,7 +30,7 @@ def loadAwbm(self):
         combo_alg.setCurrentText("PRECIP_RAVEN")
         combo_from = table.cellWidget(0,2)
         combo_from.setCurrentText("ATMOS_PRECIP")
-        combo_to = table.cellWidget(0,3)
+        combo_to = table.cellWidget(0,4)
         combo_to.setCurrentText("MULTIPLE")
 
         combo_proc = table.cellWidget(1,0)
@@ -39,7 +39,7 @@ def loadAwbm(self):
         combo_alg.setCurrentText("SNOBAL_SIMPLE_MELT")
         combo_from = table.cellWidget(1,2)
         combo_from.setCurrentText("SNOW")
-        combo_to = table.cellWidget(1,3)
+        combo_to = table.cellWidget(1,4)
         combo_to.setCurrentText("PONDED_WATER")
 
         combo_proc = table.cellWidget(2,0)
@@ -48,7 +48,7 @@ def loadAwbm(self):
         combo_alg.setCurrentText("INF_AWBM")
         combo_from = table.cellWidget(2,2)
         combo_from.setCurrentText("PONDED_WATER")
-        combo_to = table.cellWidget(2,3)
+        combo_to = table.cellWidget(2,4)
         combo_to.setCurrentText("MULTIPLE")
         
         combo_proc = table.cellWidget(3,0)
@@ -57,7 +57,7 @@ def loadAwbm(self):
         combo_alg.setCurrentText("SOILEVAP_AWBM")
         combo_from = table.cellWidget(3,2)
         combo_from.setCurrentText("MULTIPLE")
-        combo_to = table.cellWidget(3,3)
+        combo_to = table.cellWidget(3,4)
         combo_to.setCurrentText("ATMOSPHERE")
 
         combo_proc = table.cellWidget(4,0)
@@ -66,7 +66,7 @@ def loadAwbm(self):
         combo_alg.setCurrentText("BASE_LINEAR")
         combo_from = table.cellWidget(4,2)
         combo_from.setCurrentText("SOIL[3]")
-        combo_to = table.cellWidget(4,3)
+        combo_to = table.cellWidget(4,4)
         combo_to.setCurrentText("SURFACE_WATER")
 
 

@@ -1786,7 +1786,17 @@ color:rgb(170, 170, 170)</string>
                 </column>
                 <column>
                  <property name="text">
+                  <string/>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
                   <string>To</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string/>
                  </property>
                 </column>
                 <column>
@@ -2727,7 +2737,7 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>610</width>
+                   <width>905</width>
                    <height>1315</height>
                   </rect>
                  </property>
@@ -4343,7 +4353,7 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>905</width>
+                   <width>337</width>
                    <height>932</height>
                   </rect>
                  </property>
@@ -4732,8 +4742,8 @@ color:rgb(170, 170, 170)</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>311</width>
-               <height>707</height>
+               <width>951</width>
+               <height>760</height>
               </rect>
              </property>
              <layout class="QFormLayout" name="formLayout_2">
@@ -5411,9 +5421,9 @@ color:rgb(170, 170, 170)</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_4"/>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

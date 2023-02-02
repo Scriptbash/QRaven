@@ -31,7 +31,7 @@ def loadHbvlight(self):
         combo_alg.setCurrentText("FREEZE_DEGREE_DAY")
         combo_from = table.cellWidget(0,2)
         combo_from.setCurrentText("SNOW_LIQ")
-        combo_to = table.cellWidget(0,3)
+        combo_to = table.cellWidget(0,4)
         combo_to.setCurrentText("SNOW")
     
         combo_proc = table.cellWidget(1,0)
@@ -40,7 +40,7 @@ def loadHbvlight(self):
         combo_alg.setCurrentText("PRECIP_RAVEN")
         combo_from = table.cellWidget(1,2)
         combo_from.setCurrentText("ATMOS_PRECIP")
-        combo_to = table.cellWidget(1,3)
+        combo_to = table.cellWidget(1,4)
         combo_to.setCurrentText("MULTIPLE")
 
         combo_proc = table.cellWidget(2,0)
@@ -49,7 +49,7 @@ def loadHbvlight(self):
         combo_alg.setCurrentText("SNOBAL_SIMPLE_MELT")
         combo_from = table.cellWidget(2,2)
         combo_from.setCurrentText("SNOW")
-        combo_to = table.cellWidget(2,3)
+        combo_to = table.cellWidget(2,4)
         combo_to.setCurrentText("SNOW_LIQ")
 
         combo_proc = table.cellWidget(3,0)
@@ -58,7 +58,7 @@ def loadHbvlight(self):
         combo_alg.setCurrentText("RAVEN_DEFAULT")
         combo_from = table.cellWidget(3,2)
         combo_from.setCurrentText("SNOW_LIQ")
-        combo_to = table.cellWidget(3,3)
+        combo_to = table.cellWidget(3,4)
         combo_to.setCurrentText("PONDED_WATER")
 
         combo_proc = table.cellWidget(4,0)
@@ -67,7 +67,7 @@ def loadHbvlight(self):
         combo_alg.setCurrentText("INF_HBV")
         combo_from = table.cellWidget(4,2)
         combo_from.setCurrentText("PONDED_WATER")
-        combo_to = table.cellWidget(4,3)
+        combo_to = table.cellWidget(4,4)
         combo_to.setCurrentText("MULTIPLE")
 
         combo_proc = table.cellWidget(5,0)
@@ -76,7 +76,7 @@ def loadHbvlight(self):
         combo_alg.setCurrentText("RAVEN_DEFAULT")
         combo_from = table.cellWidget(5,2)
         combo_from.setCurrentText("SURFACE_WATER")
-        combo_to = table.cellWidget(5,3)
+        combo_to = table.cellWidget(5,4)
         combo_to.setCurrentText("SOIL[1]")
 
         combo_proc = table.cellWidget(6,0)
@@ -85,7 +85,7 @@ def loadHbvlight(self):
         combo_alg.setCurrentText("SOILEVAP_HBV")
         combo_from = table.cellWidget(6,2)
         combo_from.setCurrentText("SOIL[0]")
-        combo_to = table.cellWidget(6,3)
+        combo_to = table.cellWidget(6,4)
         combo_to.setCurrentText("ATMOSPHERE")
 
         combo_proc = table.cellWidget(7,0)
@@ -94,7 +94,7 @@ def loadHbvlight(self):
         combo_alg.setCurrentText("CRISE_HBV")
         combo_from = table.cellWidget(7,2)
         combo_from.setCurrentText("SOIL[1]")
-        combo_to = table.cellWidget(7,3)
+        combo_to = table.cellWidget(7,4)
         combo_to.setCurrentText("SOIL[0]")
 
         combo_proc = table.cellWidget(8,0)
@@ -103,7 +103,7 @@ def loadHbvlight(self):
         combo_alg.setCurrentText("PERC_CONSTANT")
         combo_from = table.cellWidget(8,2)
         combo_from.setCurrentText("SOIL[1]")
-        combo_to = table.cellWidget(8,3)
+        combo_to = table.cellWidget(8,4)
         combo_to.setCurrentText("SOIL[2]")
 
         combo_proc = table.cellWidget(9,0)
@@ -112,7 +112,7 @@ def loadHbvlight(self):
         combo_alg.setCurrentText("BASE_POWER_LAW")
         combo_from = table.cellWidget(9,2)
         combo_from.setCurrentText("SOIL[1]")
-        combo_to = table.cellWidget(9,3)
+        combo_to = table.cellWidget(9,4)
         combo_to.setCurrentText("SURFACE_WATER")
 
         combo_proc = table.cellWidget(10,0)
@@ -121,7 +121,7 @@ def loadHbvlight(self):
         combo_alg.setCurrentText("BASE_THRESH_POWER")
         combo_from = table.cellWidget(10,2)
         combo_from.setCurrentText("SOIL[1]")
-        combo_to = table.cellWidget(10,3)
+        combo_to = table.cellWidget(10,4)
         combo_to.setCurrentText("SURFACE_WATER")
 
         combo_proc = table.cellWidget(11,0)
@@ -130,7 +130,7 @@ def loadHbvlight(self):
         combo_alg.setCurrentText("BASE_LINEAR")
         combo_from = table.cellWidget(11,2)
         combo_from.setCurrentText("SOIL[2]")
-        combo_to = table.cellWidget(11,3)
+        combo_to = table.cellWidget(11,4)
         combo_to.setCurrentText("SURFACE_WATER")
 
         table.resizeColumnsToContents() #Resizes the width of the column automatically

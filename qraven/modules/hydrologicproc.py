@@ -8,9 +8,13 @@ def addprocess(self):
 
     combo_proc = QComboBox() 
     combo_alg = QComboBox()
-    combo_from = QComboBox()   
+    combo_from = QComboBox()
+    combo_from2 = QComboBox() 
+    combo_from2.setEnabled(False)  
     combo_to = QComboBox()
-
+    combo_to2 = QComboBox()
+    combo_to2.setEnabled(False)
+       
     chk_isconditional = QCheckBox()
 
     combo_basedtype = QComboBox()
@@ -34,14 +38,16 @@ def addprocess(self):
     table.setCellWidget(currentRow, 0, combo_proc)  #Sets the new combobox in the first column and in the new row
     table.setCellWidget(currentRow, 1, combo_alg)
     table.setCellWidget(currentRow, 2, combo_from)
-    table.setCellWidget(currentRow, 3, combo_to)
-    table.setCellWidget(currentRow, 4, chk_isconditional)
-    table.setCellWidget(currentRow, 5, combo_basedtype)
-    table.setCellWidget(currentRow, 6, combo_comparison)
-    table.setCellWidget(currentRow, 7, txt_hrutype)
-    table.setCellWidget(currentRow, 8, chk_mixingrate)
-    table.setCellWidget(currentRow, 9, spin_pct)
-    table.setCellWidget(currentRow, 10, chk_interbasin)
+    table.setCellWidget(currentRow, 3, combo_from2)
+    table.setCellWidget(currentRow, 4, combo_to)
+    table.setCellWidget(currentRow, 5, combo_to2)
+    table.setCellWidget(currentRow, 6, chk_isconditional)
+    table.setCellWidget(currentRow, 7, combo_basedtype)
+    table.setCellWidget(currentRow, 8, combo_comparison)
+    table.setCellWidget(currentRow, 9, txt_hrutype)
+    table.setCellWidget(currentRow, 10, chk_mixingrate)
+    table.setCellWidget(currentRow, 11, spin_pct)
+    table.setCellWidget(currentRow, 12, chk_interbasin)
 
     table.resizeColumnsToContents() #Resizes the width of the column automatically
     combo_proc.currentIndexChanged.connect(lambda:setProcAlg(self,currentRow))  #Updates the algorithm combobox if the process changes
@@ -57,14 +63,17 @@ def removeprocess(self):
 def setProcAlg(self,row):
     #print('Went into the algs')
     table = self.dlg.table_hydroprocess
+    
     combo_proc = table.cellWidget(row, 0)
     combo_alg = table.cellWidget(row, 1)  #Sets the new combobox in the first column and in the new row
-    combo_from = table.cellWidget(row, 2)
-    combo_to = table.cellWidget(row, 3)
-    chk_mixingrate = table.cellWidget(row, 8)
-    spin_pct = table.cellWidget(row, 9)
-    chk_interbasin = table.cellWidget(row, 10)
+    combo_from2 = table.cellWidget(row, 3)
+    combo_to2 = table.cellWidget(row, 5)
+    chk_mixingrate = table.cellWidget(row, 10)
+    spin_pct = table.cellWidget(row, 11)
+    chk_interbasin = table.cellWidget(row, 12)
 
+    combo_from2.setEnabled(False)
+    combo_to2.setEnabled(False)
     combo_alg.setEnabled(True)
     spin_pct.setEnabled(False)
     chk_interbasin.setChecked(False)
@@ -75,6 +84,8 @@ def setProcAlg(self,row):
     # index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())
     # widgetRow = index.row()
     combo_alg.clear()
+    combo_from2.clear()
+    combo_to2.clear()
     combo_alg.addItem('')
 
     # if isinstance(currentWidget, QComboBox):
@@ -142,11 +153,14 @@ def setProcAlg(self,row):
     elif selectedProc == 'Abstraction':
         combo_alg.addItems(abstractionAlg)
     elif selectedProc == 'Split':
+        combo_to2.setEnabled(True)
         combo_alg.addItems(splitAlg)
         chk_mixingrate.setEnabled(True)
     elif selectedProc == 'Convolve':
         combo_alg.addItems(convolutionAlg)
     elif selectedProc == 'LateralFlush':
+        combo_from2.setEnabled(True)
+        combo_to2.setEnabled(True)
         combo_alg.addItems(lateralflushAlg)
     elif selectedProc == 'LateralEquilibrate':
         combo_alg.addItems(lateralequilibrateAlg)
@@ -235,9 +249,13 @@ def setStorage(self,selectedProc, row):
     combo_proc = table.cellWidget(row, 0)
     combo_alg = table.cellWidget(row, 1)
     combo_from = table.cellWidget(row, 2)
-    combo_to = table.cellWidget(row, 3)
+    combo_from2 = table.cellWidget(row,3)
+    combo_to = table.cellWidget(row, 4)
+    combo_to2 = table.cellWidget(row,5)
     combo_from.clear()
     combo_to.clear()
+    combo_from2.clear()
+    combo_to2.clear()
     
     
     
@@ -393,9 +411,24 @@ def setStorage(self,selectedProc, row):
         #toredirectflow = self.dlg.table_hydroprocess.cellWidget(widgetRow-1,3).currentText()
         combo_from.addItems(tmpanyCompartment)
         combo_to.addItems(tmpanyCompartment) 
-    elif selectedProc == 'Flush' or selectedProc == "Overflow" or selectedProc == 'Split' or selectedProc == 'LateralFlush' or selectedProc == 'LateralEquilibrate':
+    elif selectedProc == 'LateralFlush':
+            hrugroups = [x.strip() for x in self.dlg.txt_defhru.toPlainText().split(',')]
+            combo_from2.addItem('')
+            combo_to2.addItem('')
+            combo_from2.addItems(statevariables)
+            combo_to2.addItems(statevariables)
+            if hrugroups[0] !='':
+                combo_from.addItems(hrugroups)
+                combo_to.addItems(hrugroups)
+            else:
+                combo_from.addItem('HRUs undefined')
+                combo_to.addItem('HRUs undefined')
+            
+    elif selectedProc == 'Flush' or selectedProc == "Overflow" or selectedProc == 'Split' or selectedProc == 'LateralEquilibrate':
         if selectedProc == 'LateralEquilibrate':
             tmpanyCompartment.append('AllHRUs')
+        elif selectedProc == 'Split':
+            combo_to2.addItems(tmpanyCompartment)
         combo_from.addItems(tmpanyCompartment)
         combo_to.addItems(tmpanyCompartment)
     # table.setCellWidget(row, 2, combo_from) #Set the combobox for the from compartment
@@ -410,10 +443,10 @@ def enableConditionalProc(self,row):
     
     table = self.dlg.table_hydroprocess
   
-    chk_isConditional = table.cellWidget(row, 4)
-    combo_basedtype = table.cellWidget(row, 5)
-    combo_comparison = table.cellWidget(row, 6)
-    txt_hrutype = table.cellWidget(row, 7)
+    chk_isConditional = table.cellWidget(row, 6)
+    combo_basedtype = table.cellWidget(row, 7)
+    combo_comparison = table.cellWidget(row, 8)
+    txt_hrutype = table.cellWidget(row, 9)
 
     combo_basedtype.clear()
     combo_comparison.clear()
@@ -435,8 +468,8 @@ def enableMixingRate(self, row):
     # currentWidget = self.dlg.sender()
     # index = self.dlg.table_hydroprocess.indexAt(currentWidget.pos())
     # widgetRow = index.row()
-    chk_mixingrate = table.cellWidget(row, 8)
-    spin_pct = table.cellWidget(row, 9)
+    chk_mixingrate = table.cellWidget(row, 10)
+    spin_pct = table.cellWidget(row, 11)
     
     spin_pct.setSingleStep(0.1)
     spin_pct.setMaximum(1.0)
@@ -460,14 +493,18 @@ def getHydroProcess(self):
         for col in range(cols):
             currentWidget = table.cellWidget(row,col)
             if isinstance(currentWidget, QComboBox):
-                processesList.append(currentWidget.currentText())
+                if col == 3:
+                    if currentWidget.currentText() != '':   #It is lateralflush and requires "To" keyword 
+                        processesList.append(currentWidget.currentText()+' To ')
+                else:             
+                    processesList.append(currentWidget.currentText())
             elif isinstance(currentWidget, QCheckBox):
                 if currentWidget.isChecked():
-                    if col == 4:
+                    if col == 6:
                         processesList.append('condTrue')    #The checkbox is Conditional
-                    elif col == 8:
-                        processesList.append('mixTrue') #The checkbox is Mixing rate
                     elif col == 10:
+                        processesList.append('mixTrue') #The checkbox is Mixing rate
+                    elif col == 12:
                         #processesList.append('interbasinTrue')  #The checkbox is Interbasin
                         processesList.insert(-5,'interbasinTrue')
                 else:
@@ -475,7 +512,7 @@ def getHydroProcess(self):
             elif isinstance(currentWidget, QLineEdit):
                 processesList.append(currentWidget.text().upper())
             elif isinstance(currentWidget, QDoubleSpinBox):
-                if table.cellWidget(row,8).isChecked() or table.cellWidget(row,0).currentText() == 'LateralEquilibrate':
+                if table.cellWidget(row,10).isChecked() or table.cellWidget(row,0).currentText() == 'LateralEquilibrate':
                     #processesList.append("{:.1f}".format(currentWidget.value()))
                     processesList.insert(-5,"{:.1f}".format(currentWidget.value()))
                 else:
@@ -649,6 +686,10 @@ toExchangeflow = []
 fromConvolution = []
 fromCropheatunit = ['CROP_HEAT_UNIT','']
 toCropheatunit = ['CROP_HEAT_UNIT','']
+statevariables = ['SURFACE_WATER','ATMOSPHERE','ATMOS_PRECIP','PONDED_WATER','SOIL','GROUNDWATER',
+                  'CANOPY','CANOPY_SNOW','TRUNK','ROOT','DEPRESSION','WETLAND','LAKE_STORAGE','SNOW',
+                  'SNOW_LIQ','GLACIER','GLACIER_ICE']
+statevariables.sort()
 
 anyCompartment = list(set().union(
                                   fromPrecip,toPrecip,fromCanevp,toCanevp,fromSoilevap,toSoilevap,

@@ -39,7 +39,7 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("SNOALB_UBCWM")
         combo_from = table.cellWidget(0,2)
         combo_from.setCurrentText('')
-        combo_to = table.cellWidget(0,3)
+        combo_to = table.cellWidget(0,4)
         combo_to.setCurrentText('')
 
         combo_proc = table.cellWidget(1,0)
@@ -48,7 +48,7 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("SNOBAL_UBCWM")
         combo_from = table.cellWidget(1,2)
         combo_from.setCurrentText("MULTIPLE")
-        combo_to = table.cellWidget(1,3)
+        combo_to = table.cellWidget(1,4)
         combo_to.setCurrentText("MULTIPLE")
 
         combo_proc = table.cellWidget(2,0)
@@ -57,15 +57,15 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("RAVEN_DEFAULT")
         combo_from = table.cellWidget(2,2)
         combo_from.setCurrentText("PONDED_WATER")
-        combo_to = table.cellWidget(2,3)
+        combo_to = table.cellWidget(2,4)
         combo_to.setCurrentText("SOIL[4]")
-        checkconditional = table.cellWidget(2,4)
+        checkconditional = table.cellWidget(2,6)
         checkconditional.setChecked(True)
-        combo_basedtype = table.cellWidget(2,5)
+        combo_basedtype = table.cellWidget(2,7)
         combo_basedtype.setCurrentText("HRU_TYPE")
-        combo_comparison = table.cellWidget(2,6)
+        combo_comparison = table.cellWidget(2,8)
         combo_comparison.setCurrentText("IS")
-        txt_hrutype = table.cellWidget(2,7)
+        txt_hrutype = table.cellWidget(2,9)
         txt_hrutype.setText("GLACIER")
 
         combo_proc = table.cellWidget(3,0)
@@ -74,7 +74,7 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("GMELT_UBC")
         combo_from = table.cellWidget(3,2)
         combo_from.setCurrentText("GLACIER_ICE")
-        combo_to = table.cellWidget(3,3)
+        combo_to = table.cellWidget(3,4)
         combo_to.setCurrentText("PONDED_WATER")
 
         combo_proc = table.cellWidget(4,0)
@@ -83,7 +83,7 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("PRECIP_RAVEN")
         combo_from = table.cellWidget(4,2)
         combo_from.setCurrentText("ATMOS_PRECIP")
-        combo_to = table.cellWidget(4,3)
+        combo_to = table.cellWidget(4,4)
         combo_to.setCurrentText("MULTIPLE")
 
         combo_proc = table.cellWidget(5,0)
@@ -92,7 +92,7 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("SOILEVAP_UBC")
         combo_from = table.cellWidget(5,2)
         combo_from.setCurrentText("MULTIPLE")
-        combo_to = table.cellWidget(5,3)
+        combo_to = table.cellWidget(5,4)
         combo_to.setCurrentText("ATMOSPHERE")
 
         combo_proc = table.cellWidget(6,0)
@@ -101,7 +101,7 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("INF_UBC")
         combo_from = table.cellWidget(6,2)
         combo_from.setCurrentText("PONDED_WATER")
-        combo_to = table.cellWidget(6,3)
+        combo_to = table.cellWidget(6,4)
         combo_to.setCurrentText("MULTIPLE")
 
         combo_proc = table.cellWidget(7,0)
@@ -110,15 +110,15 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("RAVEN_DEFAULT")
         combo_from = table.cellWidget(7,2)
         combo_from.setCurrentText("SURFACE_WATER")
-        combo_to = table.cellWidget(7,3)
+        combo_to = table.cellWidget(7,4)
         combo_to.setCurrentText("SOIL[4]")
-        checkconditional = table.cellWidget(7,4)
+        checkconditional = table.cellWidget(7,6)
         checkconditional.setChecked(True)
-        combo_basedtype = table.cellWidget(7,5)
+        combo_basedtype = table.cellWidget(7,7)
         combo_basedtype.setCurrentText("HRU_TYPE")
-        combo_comparison = table.cellWidget(7,6)
+        combo_comparison = table.cellWidget(7,8)
         combo_comparison.setCurrentText("IS_NOT")
-        txt_hrutype = table.cellWidget(7,7)
+        txt_hrutype = table.cellWidget(7,9)
         txt_hrutype.setText("LAKE")
 
         combo_proc = table.cellWidget(8,0)
@@ -127,7 +127,7 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("GINFIL_UBCWM")
         combo_from = table.cellWidget(8,2)
         combo_from.setCurrentText("PONDED_WATER")
-        combo_to = table.cellWidget(8,3)
+        combo_to = table.cellWidget(8,4)
         combo_to.setCurrentText("MULTIPLE")
 
         combo_proc = table.cellWidget(9,0)
@@ -136,7 +136,7 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("PERC_LINEAR_ANALYTIC")
         combo_from = table.cellWidget(9,2)
         combo_from.setCurrentText("SOIL[1]")
-        combo_to = table.cellWidget(9,3)
+        combo_to = table.cellWidget(9,4)
         combo_to.setCurrentText("SOIL[4]")
 
         combo_proc = table.cellWidget(10,0)
@@ -145,7 +145,7 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("PERC_LINEAR_ANALYTIC")
         combo_from = table.cellWidget(10,2)
         combo_from.setCurrentText("SOIL[4]")
-        combo_to = table.cellWidget(10,3)
+        combo_to = table.cellWidget(10,4)
         combo_to.setCurrentText("SOIL[5]")
 
         combo_proc = table.cellWidget(11,0)
@@ -154,7 +154,7 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("BASE_LINEAR")
         combo_from = table.cellWidget(11,2)
         combo_from.setCurrentText("SOIL[5]")
-        combo_to = table.cellWidget(11,3)
+        combo_to = table.cellWidget(11,4)
         combo_to.setCurrentText("SURFACE_WATER")
 
         combo_proc = table.cellWidget(12,0)
@@ -163,7 +163,7 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("BASE_LINEAR")
         combo_from = table.cellWidget(12,2)
         combo_from.setCurrentText("SOIL[2]")
-        combo_to = table.cellWidget(12,3)
+        combo_to = table.cellWidget(12,4)
         combo_to.setCurrentText("SURFACE_WATER")
 
         combo_proc = table.cellWidget(13,0)
@@ -172,7 +172,7 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("BASE_LINEAR")
         combo_from = table.cellWidget(13,2)
         combo_from.setCurrentText("SOIL[3]")
-        combo_to = table.cellWidget(13,3)
+        combo_to = table.cellWidget(13,4)
         combo_to.setCurrentText("SURFACE_WATER")
 
         combo_proc = table.cellWidget(14,0)
@@ -181,7 +181,7 @@ def loadUbcwm(self):
         combo_alg.setCurrentText("GRELEASE_LINEAR")
         combo_from = table.cellWidget(14,2)
         combo_from.setCurrentText("GLACIER")
-        combo_to = table.cellWidget(14,3)
+        combo_to = table.cellWidget(14,4)
         combo_to.setCurrentText("SURFACE_WATER")
 
         table.resizeColumnsToContents() #Resizes the width of the column automatically

@@ -30,7 +30,7 @@ def loadGr4j(self):
         combo_alg.setCurrentText("PRECIP_RAVEN")
         combo_from = table.cellWidget(0,2)
         combo_from.setCurrentText("ATMOS_PRECIP")
-        combo_to = table.cellWidget(0,3)
+        combo_to = table.cellWidget(0,4)
         combo_to.setCurrentText("MULTIPLE")
 
         combo_proc = table.cellWidget(1,0)
@@ -39,6 +39,8 @@ def loadGr4j(self):
         combo_alg.setCurrentText("SNOTEMP_NEWTONS")
         combo_from = table.cellWidget(1,2)
         combo_from.setCurrentText("SNOW_TEMP")
+        combo_from = table.cellWidget(1,4)
+        combo_from.setCurrentText("")
     
         combo_proc = table.cellWidget(2,0)
         combo_proc.setCurrentText("SnowBalance")
@@ -46,7 +48,7 @@ def loadGr4j(self):
         combo_alg.setCurrentText("SNOBAL_CEMA_NEIGE")
         combo_from = table.cellWidget(2,2)
         combo_from.setCurrentText("SNOW")
-        combo_to = table.cellWidget(2,3)
+        combo_to = table.cellWidget(2,4)
         combo_to.setCurrentText("PONDED_WATER")
         
         combo_proc = table.cellWidget(3,0)
@@ -55,7 +57,7 @@ def loadGr4j(self):
         combo_alg.setCurrentText("OPEN_WATER_EVAP")
         combo_from = table.cellWidget(3,2)
         combo_from.setCurrentText("PONDED_WATER")
-        combo_to = table.cellWidget(3,3)
+        combo_to = table.cellWidget(3,4)
         combo_to.setCurrentText("ATMOSPHERE")
 
         combo_proc = table.cellWidget(4,0)
@@ -64,7 +66,7 @@ def loadGr4j(self):
         combo_alg.setCurrentText("INF_GR4J")
         combo_from = table.cellWidget(4,2)
         combo_from.setCurrentText("PONDED_WATER")
-        combo_to = table.cellWidget(4,3)
+        combo_to = table.cellWidget(4,4)
         combo_to.setCurrentText("MULTIPLE")
 
         combo_proc = table.cellWidget(5,0)
@@ -73,7 +75,7 @@ def loadGr4j(self):
         combo_alg.setCurrentText("SOILEVAP_GR4J")
         combo_from = table.cellWidget(5,2)
         combo_from.setCurrentText("SOIL[0]")
-        combo_to = table.cellWidget(5,3)
+        combo_to = table.cellWidget(5,4)
         combo_to.setCurrentText("ATMOSPHERE")
 
         combo_proc = table.cellWidget(6,0)
@@ -82,7 +84,7 @@ def loadGr4j(self):
         combo_alg.setCurrentText("PERC_GR4J")
         combo_from = table.cellWidget(6,2)
         combo_from.setCurrentText("SOIL[0]")
-        combo_to = table.cellWidget(6,3)
+        combo_to = table.cellWidget(6,4)
         combo_to.setCurrentText("SOIL[2]")
 
         combo_proc = table.cellWidget(7,0)
@@ -91,18 +93,23 @@ def loadGr4j(self):
         combo_alg.setCurrentText("RAVEN_DEFAULT")
         combo_from = table.cellWidget(7,2)
         combo_from.setCurrentText("SURFACE_WATER")
-        combo_to = table.cellWidget(7,3)
+        combo_to = table.cellWidget(7,4)
         combo_to.setCurrentText("SOIL[2]")
         
-        #NEED MODIFICATION IN GUI TO SUPPORT SPLIT COMMAND
         combo_proc = table.cellWidget(8,0)
         combo_proc.setCurrentText("Split")
         combo_alg = table.cellWidget(8,1)
         combo_alg.setCurrentText("RAVEN_DEFAULT")
-        # combo_from = table.cellWidget(8,2)
-        # combo_from.setCurrentText("PONDED_WATER")
-        # combo_to = table.cellWidget(8,3)
-        # combo_to.setCurrentText("MULTIPLE")
+        combo_from = table.cellWidget(8,2)
+        combo_from.setCurrentText("SOIL[2]")
+        combo_to = table.cellWidget(8,4)
+        combo_to.setCurrentText("CONVOLUTION[0]")
+        combo_to2 = table.cellWidget(8,5)
+        combo_to2.setCurrentText("CONVOLUTION[1]")
+        chk_mixingrate = table.cellWidget(8,10)
+        chk_mixingrate.setChecked(True)
+        spin_pct = table.cellWidget(8,11)
+        spin_pct.setValue(0.9)
 
         combo_proc = table.cellWidget(9,0)
         combo_proc.setCurrentText("Convolve")
@@ -110,7 +117,7 @@ def loadGr4j(self):
         combo_alg.setCurrentText("CONVOL_GR4J_1")
         combo_from = table.cellWidget(9,2)
         combo_from.setCurrentText("CONVOLUTION[0]")
-        combo_to = table.cellWidget(9,3)
+        combo_to = table.cellWidget(9,4)
         combo_to.setCurrentText("SOIL[1]")
 
         combo_proc = table.cellWidget(10,0)
@@ -119,7 +126,7 @@ def loadGr4j(self):
         combo_alg.setCurrentText("CONVOL_GR4J_2")
         combo_from = table.cellWidget(10,2)
         combo_from.setCurrentText("CONVOLUTION[1]")
-        combo_to = table.cellWidget(10,3)
+        combo_to = table.cellWidget(10,4)
         combo_to.setCurrentText("SOIL[2]")
 
         combo_proc = table.cellWidget(11,0)
@@ -128,7 +135,7 @@ def loadGr4j(self):
         combo_alg.setCurrentText("PERC_GR4JEXCH")
         combo_from = table.cellWidget(11,2)
         combo_from.setCurrentText("SOIL[1]")
-        combo_to = table.cellWidget(11,3)
+        combo_to = table.cellWidget(11,4)
         combo_to.setCurrentText("SOIL[3]")
 
         combo_proc = table.cellWidget(12,0)
@@ -137,7 +144,7 @@ def loadGr4j(self):
         combo_alg.setCurrentText("PERC_GR4JEXCH2")
         combo_from = table.cellWidget(12,2)
         combo_from.setCurrentText("SOIL[2]")
-        combo_to = table.cellWidget(12,3)
+        combo_to = table.cellWidget(12,4)
         combo_to.setCurrentText("SOIL[3]")
 
         combo_proc = table.cellWidget(13,0)
@@ -146,7 +153,7 @@ def loadGr4j(self):
         combo_alg.setCurrentText("RAVEN_DEFAULT")
         combo_from = table.cellWidget(13,2)
         combo_from.setCurrentText("SOIL[2]")
-        combo_to = table.cellWidget(13,3)
+        combo_to = table.cellWidget(13,4)
         combo_to.setCurrentText("SURFACE_WATER")
 
         combo_proc = table.cellWidget(14,0)
@@ -155,7 +162,7 @@ def loadGr4j(self):
         combo_alg.setCurrentText("BASE_GR4J")
         combo_from = table.cellWidget(14,2)
         combo_from.setCurrentText("SOIL[1]")
-        combo_to = table.cellWidget(14,3)
+        combo_to = table.cellWidget(14,4)
         combo_to.setCurrentText("SURFACE_WATER")
 
         table.resizeColumnsToContents() #Resizes the width of the column automatically
