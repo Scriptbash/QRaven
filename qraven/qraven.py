@@ -1358,7 +1358,7 @@ class QRaven:
         self.iface.mainWindow().repaint()
         paramsDict = self.getRVHparams()    #Calls the function to get the RVH parameters
         containerization = self.dlg.combo_container.currentText() #Get the preferred containerization software
-        containerimage = self.dlg.combo_dockerimage.currentText() #Get the image 
+        containerimage = self.dlg.combo_dockerimage.currentText() #Get the image
 
         if containerization == 'Docker':
             contnrCMD = 'docker'
@@ -1368,6 +1368,7 @@ class QRaven:
                 os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"    #This is needed so that the docker commands work on Windows
         elif containerization == 'Podman':
             contnrCMD = 'podman'
+            containerimage = 'docker.io/' + containerimage
             if computerOS == 'macos':
                 os.environ["PATH"] = "/opt/podman/bin"
             elif computerOS == 'windows':
@@ -2155,7 +2156,7 @@ class QRaven:
         if computerOS == 'macos':
             defaultimage = 'scriptbash/qraven_arm:latest'
         else:
-            defaultimage = 'scriptnash/qraven:latest'
+            defaultimage = 'scriptbash/qraven:latest'
 
         containerization = s.value("qraven/container", "Docker")
         containerimage = s.value("qraven/image",defaultimage)

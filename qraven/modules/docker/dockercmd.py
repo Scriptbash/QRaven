@@ -31,14 +31,25 @@ def dockerCommand(cmd, computerOS):
 def dockerdelete(self):
     '''Stops the Docker container, removes it as well as the image'''
     try:
-        print("Making sure the container is stopped > docker stop qraven")
-        os.system("docker stop qraven")
-        print("Removing the docker container > docker rm qraven")
-        os.system("docker rm qraven")
-        print("Removing the image > docker rmi scriptbash/qraven")
-        os.system("docker rmi scriptbash/qraven")
-        os.system("docker rmi scriptbash/qraven_arm")
-        print("container stopped and removed")
+        containerization = self.dlg.combo_container.currentText()
+        if containerization == 'Docker':
+            print("Making sure the container is stopped > docker stop qraven")
+            os.system("docker stop qraven")
+            print("Removing the docker container > docker rm qraven")
+            os.system("docker rm qraven")
+            print("Removing the image > docker rmi scriptbash/qraven")
+            os.system("docker rmi scriptbash/qraven")
+            os.system("docker rmi scriptbash/qraven_arm")
+            print("container stopped and removed")
+        elif containerization == 'Podman':
+            print("Making sure the container is stopped > podman stop qraven")
+            os.system("podman stop qraven")
+            print("Removing the podman container > podman rm qraven")
+            os.system("podman rm qraven")
+            print("Removing the image > podman rmi scriptbash/qraven")
+            os.system("podman rmi scriptbash/qraven")
+            os.system("podman rmi scriptbash/qraven_arm")
+            print("container stopped and removed")
         self.iface.messageBar().pushSuccess("Success", "The docker container and the image were removed")
     except Exception as e:
         print("An error occured while attempting to remove the docker container and image")
