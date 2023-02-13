@@ -335,9 +335,9 @@ class QRaven:
     def setupMenubar(self):
         #Sets up the left menu
             menuitems = ['Raven RVI','BasinMaker','Gridweights',
-                         'Streamflow', 'GIS','Run Raven','Settings']
+                         'Streamflow', 'GIS','Run Raven','OSTRICH','Settings']
             icons = ['rvifile.svg','basinmaker.svg','gridweights.svg',
-                     'streamflow.svg','gis.svg','raven.svg','settings.svg']
+                     'streamflow.svg','gis.svg','raven.svg','ostrich.svg','settings.svg']
             script_dir = os.path.dirname(__file__)
             for i, menuitem in enumerate(menuitems):
                 icon = QIcon(os.path.join(script_dir+'/ext_data/icons/'+icons[i]))
