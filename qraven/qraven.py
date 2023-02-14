@@ -213,6 +213,7 @@ class QRaven:
             self.setupMenubar()
             self.checkUpdate()
             self.setStreamflowComboboxes()
+            self.setOstrichComboboxes()
             
             self.dlg.list_evalmetrics.sortItems()
             self.stations = []
@@ -2128,7 +2129,23 @@ class QRaven:
                       'Quebec','Saskatchewan','Yukon'
                     ]
         self.dlg.combo_watersurveyprovince.addItems(provinces)
-       
+
+    def setOstrichComboboxes(self):
+        programtype = ['GeneticAlgorithm','BinaryGeneticAlgorithm','ShuffledComplexEvolution',
+                       'BisectionAlgorithm','SamplingAlgorithm','ParticleSwarm','APPSO','PSO-GML',
+                       'SimulatedAnnealing','DiscreteSimulatedAnnealing','VanderbiltSimulatedAnnealing',
+                       'Levenberg-Marquardt','GML-MS','Powell','Steepest-Descent','Fletcher-Reeves ',
+                       'RegressionStatistics','Jacobian','Hessian','Gradient','ModelEvaluation',
+                       'GridAlgorithm','DDS','DDSAU','ParallelDDS','DiscreteDDS','GLUE','RejectionSampler',
+                       'MetropolisSampler','SMOOTH','PADDS','ParaPADDS','BEERS'
+                      ]
+        telescopingStrategy = ['none','convex_power','convex','linear','concave','delayed-concave']
+        programtype.sort()
+        telescopingStrategy.sort()
+        self.dlg.combo_programtype.addItems(programtype)
+        self.dlg.combo_programtype.setCurrentText('Levenberg-Marquardt')
+        self.dlg.combo_telescopingstrat.addItems(telescopingStrategy)
+        self.dlg.combo_telescopingstrat.setCurrentText('none')
  
     def storesettings(self):
         containerization = self.dlg.combo_container.currentText()
