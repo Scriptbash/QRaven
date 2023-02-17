@@ -72,15 +72,20 @@ Data needed to run BasinMaker can be fetch automatically by QRaven (Canada only 
 
 Setup the Raven files
 =====================
+to-do
 
 Generate a .rvi file
 --------------------
+to-do
 
 Run BasinMaker to create a .rvh file
 ------------------------------------
+to-do
 
 Run the raven model
--------------------
+===================
+to-do
 
 Calibration with OSTRICH
-------------------------
+========================
+to-do
