@@ -2183,10 +2183,7 @@ class QRaven:
     def loadsettings(self):
         s = QgsSettings()
 
-        if computerOS == 'macos':
-            defaultimage = 'scriptbash/qraven_arm:latest'
-        else:
-            defaultimage = 'scriptbash/qraven:latest'
+        defaultimage = 'scriptbash/qraven:latest'
 
         containerization = s.value("qraven/container", "Docker")
         containerimage = s.value("qraven/image",defaultimage)

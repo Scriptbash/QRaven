@@ -39,7 +39,6 @@ def dockerdelete(self):
             os.system("docker rm qraven")
             print("Removing the image > docker rmi scriptbash/qraven")
             os.system("docker rmi scriptbash/qraven")
-            os.system("docker rmi scriptbash/qraven_arm")
             print("container stopped and removed")
         elif containerization == 'Podman':
             print("Making sure the container is stopped > podman stop qraven")
@@ -48,7 +47,6 @@ def dockerdelete(self):
             os.system("podman rm qraven")
             print("Removing the image > podman rmi scriptbash/qraven")
             os.system("podman rmi scriptbash/qraven")
-            os.system("podman rmi scriptbash/qraven_arm")
             print("container stopped and removed")
         self.iface.messageBar().pushSuccess("Success", "The docker container and the image were removed")
     except Exception as e:
