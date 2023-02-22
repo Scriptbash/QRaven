@@ -54,15 +54,19 @@ def extractRVHhrus(inputdir, separator,rvhfile):
                 else:
                     pass
             #Removes the useless rows
-            for row in range(len(data)):
-                if ':HRUs' in data[row]:
-                    pass
-                elif ':Units' in data[row]:
-                    pass
-                # elif '#' in data[row]:
-                #     pass
-                else:
-                    hrudata.append(data[row])
+            for row in data:
+                datarow = []
+                for col in row:
+                    if ':HRUs' in col:
+                        break
+                    elif ':Units' in col:
+                        break
+                    elif '#' in col:
+                        break
+                    else:
+                        datarow.append(col)
+                if datarow:
+                    hrudata.append(datarow)
             #Extracts the column index of the useful info
             for col in range(len(hrudata[0])):
                 if 'LAND_USE_CLASS' in hrudata[0][col]:
@@ -75,6 +79,11 @@ def extractRVHhrus(inputdir, separator,rvhfile):
                     soilprofilecol = col-1
                 else:
                     pass
+            #The "-1" is to avoid counting the "":Attribute" tag
+            if len(hrudata[0])-1 < len(hrudata[1]) or len(hrudata[0])-1 > len(hrudata[1]):
+                print('Columns mismatch. The attributes name do not match the number of attributes. Please check your .rvh file.')
+                return None,None,None,None
+           
             del hrudata[0]
             #Get the classes information
             for row in range(len(hrudata)):
@@ -90,7 +99,6 @@ def extractRVHhrus(inputdir, separator,rvhfile):
     except Exception as e:
         print('An error occured when reading the rvh file.')
         print(e)
-            #self.iface.messageBar().pushMessage("Error", "An error occured when reading the rvh file. Check the python console for more details.",level=Qgis.Critical)
 
 #Reads the RavenParameters.dat file and returns a 2d list of the parameters and their values
 def readRavenParams(ravenparametersfile):
@@ -110,7 +118,6 @@ def readRavenParams(ravenparametersfile):
     except Exception as e:
         print('An error occured when reading the RavenParameters.dat file.')
         print(e)
-        #self.iface.messageBar().pushMessage("Error", "An error occured when reading the Raven parameters file. Check the python console for more details.",level=Qgis.Critical)
 
 #Reads the RVP template and return the important information as a 2d list
 def readRVPtemplate(inputdir,separator,rvptemplatefile):
