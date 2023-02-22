@@ -1,4 +1,5 @@
-FROM ubuntu:jammy
+ARG ARCH=
+FROM ${ARCH}ubuntu:jammy
 #FROM arm64v8/ubuntu:jammy
 ENV LANG=en_EN.UTF-8 \
     LANGUAGE=en_US:en \ 
