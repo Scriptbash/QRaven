@@ -7,26 +7,40 @@
 <p align="center">
 
 <a href="https://github.com/Scriptbash/QRaven/releases">
-    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Scriptbash/QRaven?display_name=tag">
+    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Scriptbash/QRaven?display_name=tag"/>
 </a>
 <a href='https://qraven.readthedocs.io/en/latest/?badge=latest'>
     <img src='https://readthedocs.org/projects/qraven/badge/?version=latest' alt='Documentation Status' />
 </a>
+<a href='https://hub.docker.com/r/scriptbash/qraven/tags'>
+    <img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/scriptbash/qraven">
+</a>
 <a href="https://github.com/Scriptbash/QRaven/commits/main">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Scriptbash/Qraven">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Scriptbash/Qraven"/>
 </a>
 </p>
 
 ---
 
-
-
-
 ## Description
 <p align="justify">
-QRaven aims to simplify the creation of the input files for the Raven hydrological modelling framework. It allows the user to choose all the options for the primary input file (.rvi) and it automates the setup, as well as the use of the BasinMaker python library for the HRU/Basin definition file (.rvh). It can run models, draw hydrographs and open RavenView using the default web browser. QRaven can also automatically fill the classed parameter input file (.rvp) using default values and it can generate grid weights blocks using the GridWeightGenerator script.
-
+QRaven aims to simplify the creation of the input files for the Raven hydrological modelling framework. It allows users to generate .rvi files and use multiple tools using a graphical user interface. It also includes several features to automate and ease the setup of Raven models.
 </p>
+
+## Features overview
+<ul>
+<li>Generate .rvi files from templates or from scratch</li>
+<li>Automate the setup and the use of BasinMaker using Podman or Docker</li>
+<li>Associate NetCDF files to HRUs using the GridWeightGenerator script</li>
+<li>Search hydrometric stations from the DPPHC and the Water Office</li>
+<li>Download and convert hydrometric data into .rvt files</li>
+<li>Create a shapefile with all the stations from which hydrometric data was downloaded</li>
+<li>Download GIS data for BasinMaker and preprocess it to be ready to be used with BasinMaker</li>
+<li>Run models</li>
+<li>Draw hydrographs</li>
+<li>Open RavenView in the user's default web browser</li>
+<li>Automatically fill .rvp template files</li>
+</ul>
 
 ## Get started
 <p align ="justify">
@@ -49,5 +63,5 @@ If you want to get involved with QRaven's development, please read the <a href="
 
 ## Help
 <p align ="justify">
-If you run into any issue, have a question or feedback while using QRaven, please open an issue here : https://github.com/Scriptbash/QRaven/issues
+If you run into any issue while using QRaven, have a question or want to share your feedback, please open an issue here : https://github.com/Scriptbash/QRaven/issues
 </p>
