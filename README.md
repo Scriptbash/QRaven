@@ -30,12 +30,12 @@ QRaven aims to simplify the creation of the input files for the Raven hydrologic
 ## Features overview
 <ul>
 <li>Generate .rvi files from templates or from scratch</li>
-<li>Automate the setup and the use of BasinMaker using Podman or Docker</li>
+<li>Automate the setup and the use of the BasinMaker Python library using Podman or Docker</li>
 <li>Associate NetCDF files to HRUs using the GridWeightGenerator script</li>
 <li>Search hydrometric stations from the DPPHC and the Water Office</li>
 <li>Download and convert hydrometric data into .rvt files</li>
 <li>Create a shapefile with all the stations from which hydrometric data was downloaded</li>
-<li>Download GIS data for BasinMaker and preprocess it to be ready to be used with BasinMaker</li>
+<li>Download GIS data and preprocess it to be ready to be used with BasinMaker</li>
 <li>Run models</li>
 <li>Draw hydrographs</li>
 <li>Open RavenView in the user's default web browser</li>
@@ -49,7 +49,7 @@ To get started, head over to the QRaven <a href='https://qraven.readthedocs.io'>
 
 ## Contribute
 <p align ="justify">
-If you want to get involved with QRaven's development, please read the <a href="https://qraven.readthedocs.io/en/latest/contribute.html">contribution guide.</a>
+If you want to get involved with QRaven's development, please read the <a href="https://qraven.readthedocs.io/en/latest/contribute.html">contribution guide</a>.
 </p>
 
 ## Credits
