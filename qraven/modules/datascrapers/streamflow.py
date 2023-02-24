@@ -208,6 +208,7 @@ class watersurvey:
         url2= 'https://wateroffice.ec.gc.ca/download/report_e.html'
         r = s.get(url2,params=headers2,)
 
+        s.close()
         return r.text
         
     def fetchDates(data):
