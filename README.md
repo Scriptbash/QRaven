@@ -12,12 +12,13 @@
 <a href='https://qraven.readthedocs.io/en/latest/?badge=latest'>
     <img src='https://readthedocs.org/projects/qraven/badge/?version=latest' alt='Documentation Status' />
 </a>
+<a href="https://github.com/Scriptbash/QRaven/actions/workflows/docker-image.yml">
+    <img alt="GitHub Workflow Status" src="https://github.com/Scriptbash/QRaven/actions/workflows/docker-image.yml/badge.svg">
+</a>
 <a href='https://hub.docker.com/r/scriptbash/qraven/tags'>
     <img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/scriptbash/qraven">
 </a>
-<a href="https://github.com/Scriptbash/QRaven/commits/main">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Scriptbash/Qraven"/>
-</a>
+
 </p>
 
 ---
