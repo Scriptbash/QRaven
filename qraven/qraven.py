@@ -289,7 +289,7 @@ class QRaven:
 
             #----------Generate GridWeights---------#
             self.dlg.file_netcdf.fileChanged.connect(self.toggleWidget)
-            self.dlg.btn_rungridweight.clicked.connect(lambda:self.generateGridWeights('GridWeights'))
+            self.dlg.btn_rungridweight.clicked.connect(lambda:self.dockerinit('GridWeights'))
             self.dlg.btn_rmigridweight.clicked.connect(self.docker.delete)
             #----------------------------------------#
 
@@ -1380,7 +1380,7 @@ class QRaven:
             paramsDict = self.getRVHparams()    #Calls the function to get the RVH parameters
             self.exportRVHparams(paramsDict)    #Calls the function to export the RVH parameters into a file
             self.docker.start('/root/BasinMaker', None, None)
-            self.docker.bmCopy(outputdir)
+            self.docker.bmCopy(paramsDict, outputdir)
             self.docker.runBasinMaker()
             self.docker.getBasinMakerResults(outputdir)
         elif mode == 'GridWeights':
@@ -1408,15 +1408,15 @@ class QRaven:
                 selectedid = ' -b '
             if ncextension == '.shp':
                 shpattributes = self.dlg.combo_ncattributes.currentText()
-                pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/Data/'+ncfilename + ' -f '+ '"'+shpattributes+'"' + ' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
+                pythoncmd = 'python3 -u derive_grid_weights.py -i ' + '/root/Gridweights/Data/'+ncfilename + ' -f '+ '"'+shpattributes+'"' + ' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
             else:
-                pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/Data/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
+                pythoncmd = 'python3 -u derive_grid_weights.py -i ' + '/root/Gridweights/Data/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
     
             self.docker.start('/root/Gridweights', volumenc, volumehrus)
             self.docker.runGridWeights(pythoncmd)
             self.docker.getGridWeightsResults(outputfile, outputfolder)
         
-        self.docker.stop()
+        #self.docker.stop()
 
     # #This method runs the gridweight generator inside the Docker container
     # def generateGridWeights(self):
@@ -2197,6 +2197,7 @@ class QRaven:
  
     def storesettings(self):
         containerization = self.dlg.combo_container.currentText()
+        registry = self.dlg.combo_registry.currentText()
         containerimage = self.dlg.combo_dockerimage.currentText()
         username = self.dlg.txt_casparusername.text()
         password = self.dlg.txt_casparpassword.text()
@@ -2207,6 +2208,7 @@ class QRaven:
         s = QgsSettings()
         
         s.setValue("qraven/container", containerization)
+        s.setValue("qraven/registry",registry)
         s.setValue("qraven/image",containerimage)
         s.setValue("qraven/casparUsername", username)
         s.setValue("qraven/casparPassword", password)
@@ -2218,14 +2220,13 @@ class QRaven:
     def loadsettings(self):
         s = QgsSettings()
 
-        defaultimage = 'scriptbash/qraven:latest'
-
         self.containerization = s.value("qraven/container", "Docker")
-        self.containerimage = s.value("qraven/image",defaultimage)
+        self.registry = s.value("qraven/registry", "ghcr.io")
+        self.containerimage = s.value("qraven/image", "scriptbash/qraven:latest")
         username = s.value("qraven/casparUsername", "")
         password = s.value("qraven/casparPassword", "")
-        resetmode = s.value("qraven/resetmode","Full")
-        menubar = s.value("qraven/menubar",'Default')
+        resetmode = s.value("qraven/resetmode", "Full")
+        menubar = s.value("qraven/menubar", "Default")
         
         self.dlg.combo_container.setCurrentText(self.containerization)
         self.dlg.combo_dockerimage.setCurrentText(self.containerimage)

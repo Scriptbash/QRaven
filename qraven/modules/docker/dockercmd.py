@@ -51,7 +51,7 @@ class Docker:
 
     def stop(self):
         '''Stops and removes the container'''
-        print("Stoping the container...")
+        print("Stopping the container...")
         os.system(self.containerization + " stop qraven")     #Stops the container after the process
         print("Removing the container...")
         os.system(self.containerization + " rm qraven")       #Deletes the container
@@ -226,8 +226,10 @@ class Docker:
         try:    
             hrulayer = QgsVectorLayer(outputdir+self.separator+"OIH_Output"+self.separator+"network_after_gen_hrus"+self.separator+"finalcat_hru_info.shp", 'finalcat_hru_info', "ogr")
             lakelayer = QgsVectorLayer(outputdir+self.separator+"OIH_Output"+self.separator+"network_after_gen_hrus"+self.separator+"finalcat_hru_lake_info.shp", 'finalcat_hru_lake_info', "ogr")
-            QgsProject.instance().addMapLayer(hrulayer)  #Adds the HRU layer to the QGIS map
-            QgsProject.instance().addMapLayer(lakelayer) #Add the HRU lakes layer to the QGIS map           
+            if len(hrulayer):
+                QgsProject.instance().addMapLayer(hrulayer)  #Adds the HRU layer to the QGIS map
+            if len(lakelayer):
+                QgsProject.instance().addMapLayer(lakelayer) #Add the HRU lakes layer to the QGIS map           
         except Exception as e:
             print("Failed to load the results shapefile...")
             print(e)
@@ -252,7 +254,7 @@ class Docker:
             print(e)
 
     def getGridWeightsResults(self, outputfile, outputfolder):
-        cmd = self.containerization, 'cp', 'qraven:/root/Gridweights/'+outputfile, outputfolder
+        cmd = self.containerization, 'cp', 'qraven:/root/Gridweights/'+outputfile, outputfolder+'/'
         try:
             self.runCommand(cmd)
             print("Results are now in "+ outputfolder)  
