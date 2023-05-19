@@ -2204,16 +2204,19 @@ class QRaven:
         resetmode = self.dlg.combo_resetmode.currentText()
         menubar = self.dlg.combo_menubar.currentText()
         
+        if containerization != self.containerization or registry != self.registry or containerimage != self.containerimage:
+            self.dlg.lbl_restartrequired.setText('QGIS restart required to apply the changes.')
+
 
         s = QgsSettings()
         
         s.setValue("qraven/container", containerization)
-        s.setValue("qraven/registry",registry)
-        s.setValue("qraven/image",containerimage)
+        s.setValue("qraven/registry", registry)
+        s.setValue("qraven/image", containerimage)
         s.setValue("qraven/casparUsername", username)
         s.setValue("qraven/casparPassword", password)
-        s.setValue("qraven/resetmode",resetmode)
-        s.setValue("qraven/menubar",menubar)
+        s.setValue("qraven/resetmode", resetmode)
+        s.setValue("qraven/menubar", menubar)
 
         self.iface.messageBar().pushSuccess("Success", "Your settings have been saved.")
 
@@ -2229,6 +2232,7 @@ class QRaven:
         menubar = s.value("qraven/menubar", "Default")
         
         self.dlg.combo_container.setCurrentText(self.containerization)
+        self.dlg.combo_registry.setCurrentText(self.registry)
         self.dlg.combo_dockerimage.setCurrentText(self.containerimage)
         self.dlg.txt_casparusername.setText(username)
         self.dlg.txt_casparpassword.setText(password)

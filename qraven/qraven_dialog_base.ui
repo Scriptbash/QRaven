@@ -107,7 +107,7 @@ color:rgb(170, 170, 170)</string>
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>7</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1961,8 +1961,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>717</width>
-                   <height>739</height>
+                   <width>653</width>
+                   <height>546</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -2737,8 +2737,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>676</width>
-                   <height>1599</height>
+                   <width>610</width>
+                   <height>1315</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -3497,8 +3497,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>535</width>
-                   <height>460</height>
+                   <width>425</width>
+                   <height>361</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -3967,7 +3967,7 @@ color:rgb(170, 170, 170)</string>
              <bool>true</bool>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="tab_17">
              <attribute name="title">
@@ -3984,8 +3984,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>321</width>
-                   <height>972</height>
+                   <width>318</width>
+                   <height>891</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -4353,8 +4353,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>352</width>
-                   <height>1023</height>
+                   <width>975</width>
+                   <height>932</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_17">
@@ -4742,8 +4742,8 @@ color:rgb(170, 170, 170)</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>336</width>
-               <height>849</height>
+               <width>311</width>
+               <height>707</height>
               </rect>
              </property>
              <layout class="QFormLayout" name="formLayout_2">
@@ -5204,8 +5204,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>486</width>
-                   <height>791</height>
+                   <width>963</width>
+                   <height>783</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_20">
@@ -5744,34 +5744,18 @@ color:rgb(170, 170, 170)</string>
           <item row="0" column="0">
            <widget class="QWidget" name="widget_10" native="true">
             <layout class="QGridLayout" name="gridLayout_44">
-             <item row="14" column="2">
-              <spacer name="verticalSpacer_7">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_217">
-               <property name="text">
-                <string>Username</string>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="0" colspan="3">
-              <widget class="QLabel" name="label_65">
-               <property name="text">
-                <string>Miscellaneous</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
+             <item row="1" column="2">
+              <widget class="QComboBox" name="combo_container">
+               <item>
+                <property name="text">
+                 <string>Docker</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Podman</string>
+                </property>
+               </item>
               </widget>
              </item>
              <item row="0" column="0" colspan="3">
@@ -5784,23 +5768,62 @@ color:rgb(170, 170, 170)</string>
                </property>
               </widget>
              </item>
-             <item row="7" column="2">
-              <widget class="QLineEdit" name="txt_casparpassword">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="echoMode">
-                <enum>QLineEdit::PasswordEchoOnEdit</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="12" column="0" colspan="3">
-              <widget class="QLabel" name="lbl_update">
+             <item row="4" column="0" colspan="3">
+              <widget class="QLabel" name="label_63">
                <property name="text">
-                <string/>
+                <string>Placeholder login</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_218">
+               <property name="text">
+                <string>Password</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_217">
+               <property name="text">
+                <string>Username</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QComboBox" name="combo_registry">
+               <item>
+                <property name="text">
+                 <string>ghcr.io</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>docker.io</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="9" column="2">
+              <widget class="QComboBox" name="combo_resetmode">
+               <item>
+                <property name="text">
+                 <string>Full</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Partial</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <widget class="QLabel" name="label_66">
+               <property name="text">
+                <string>Menu bar style</string>
                </property>
               </widget>
              </item>
@@ -5818,35 +5841,7 @@ color:rgb(170, 170, 170)</string>
                </item>
               </widget>
              </item>
-             <item row="3" column="2">
-              <widget class="QComboBox" name="combo_dockerimage">
-               <item>
-                <property name="text">
-                 <string>scriptbash/qraven:latest</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>scriptbash/qraven:unstable</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QComboBox" name="combo_container">
-               <item>
-                <property name="text">
-                 <string>Docker</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Podman</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="11" column="2">
+             <item row="13" column="2">
               <spacer name="verticalSpacer_2">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -5859,6 +5854,40 @@ color:rgb(170, 170, 170)</string>
                </property>
               </spacer>
              </item>
+             <item row="14" column="0" colspan="3">
+              <widget class="QLabel" name="lbl_update">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="2">
+              <widget class="QLineEdit" name="txt_casparpassword">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="echoMode">
+                <enum>QLineEdit::PasswordEchoOnEdit</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="2">
+              <widget class="QLineEdit" name="txt_casparusername">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_111">
+               <property name="text">
+                <string>Registry</string>
+               </property>
+              </widget>
+             </item>
              <item row="9" column="0">
               <widget class="QLabel" name="label_71">
                <property name="text">
@@ -5866,35 +5895,20 @@ color:rgb(170, 170, 170)</string>
                </property>
               </widget>
              </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="label_218">
-               <property name="text">
-                <string>Password</string>
+             <item row="16" column="2">
+              <spacer name="verticalSpacer_7">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
                </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_64">
-               <property name="text">
-                <string>Image</string>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
                </property>
-              </widget>
+              </spacer>
              </item>
-             <item row="9" column="2">
-              <widget class="QComboBox" name="combo_resetmode">
-               <item>
-                <property name="text">
-                 <string>Full</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Partial</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="15" column="0" colspan="3">
+             <item row="17" column="0" colspan="3">
               <widget class="QWidget" name="widget_11" native="true">
                <layout class="QHBoxLayout" name="horizontalLayout">
                 <item>
@@ -5919,23 +5933,6 @@ color:rgb(170, 170, 170)</string>
                </layout>
               </widget>
              </item>
-             <item row="6" column="2">
-              <widget class="QLineEdit" name="txt_casparusername">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0" colspan="3">
-              <widget class="QLabel" name="label_63">
-               <property name="text">
-                <string>Placeholder login</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_216">
                <property name="text">
@@ -5943,32 +5940,48 @@ color:rgb(170, 170, 170)</string>
                </property>
               </widget>
              </item>
-             <item row="10" column="0">
-              <widget class="QLabel" name="label_66">
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_64">
                <property name="text">
-                <string>Menu bar style</string>
+                <string>Image</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_111">
+             <item row="8" column="0" colspan="3">
+              <widget class="QLabel" name="label_65">
                <property name="text">
-                <string>Registry</string>
+                <string>Miscellaneous</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
-             <item row="2" column="2">
-              <widget class="QComboBox" name="combo_registry">
+             <item row="3" column="2">
+              <widget class="QComboBox" name="combo_dockerimage">
                <item>
                 <property name="text">
-                 <string>ghcr.io</string>
+                 <string>scriptbash/qraven:latest</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>docker.io</string>
+                 <string>scriptbash/qraven:unstable</string>
                 </property>
                </item>
+              </widget>
+             </item>
+             <item row="11" column="0" colspan="3">
+              <widget class="QLabel" name="lbl_restartrequired">
+               <property name="styleSheet">
+                <string notr="true">color : red;font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
               </widget>
              </item>
             </layout>
@@ -5993,9 +6006,9 @@ color:rgb(170, 170, 170)</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_4"/>
-  <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
