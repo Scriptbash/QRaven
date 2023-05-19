@@ -35,7 +35,7 @@ from qgis.core import Qgis, QgsVectorLayer, QgsRasterLayer, QgsProject, QgsSetti
 from sys import platform
 import matplotlib.pyplot as plt
 import csv, datetime, webbrowser, ntpath, os.path, requests,re
-from .modules.docker import dockercmd as docker
+from .modules.docker.dockercmd import Docker
 from .modules.resetgui import *
 from .modules.templates.hmets import loadHmets 
 from .modules.templates.hbvec import loadHbvec
@@ -207,13 +207,16 @@ class QRaven:
         if self.first_start == True:
             self.first_start = False
             self.dlg = QRavenDialog()
-
-            
+        
             self.loadsettings()
             self.setupMenubar()
             self.checkUpdate()
             self.setStreamflowComboboxes()
             self.setOstrichComboboxes()
+
+            #Initialize the Docker commands
+            
+            self.docker = Docker(computerOS, separator, self.containerization, self.registry, self.containerimage)
             
             self.dlg.list_evalmetrics.sortItems()
             self.stations = []
@@ -279,15 +282,15 @@ class QRaven:
             self.dlg.file_landuserast.fileChanged.connect(self.toggleWidget)  #Add lake and obs control points
 
             #Calls the function to run the docker container
-            self.dlg.btn_dockerrun.clicked.connect(self.dockerinit)
+            self.dlg.btn_dockerrun.clicked.connect(lambda:self.dockerinit('BasinMaker'))
             #Calls the function to remove the docker container
-            self.dlg.btn_dockerrm.clicked.connect(lambda:docker.dockerdelete(self))
+            self.dlg.btn_dockerrm.clicked.connect(self.docker.delete)
             #----------------------------------------#
 
             #----------Generate GridWeights---------#
             self.dlg.file_netcdf.fileChanged.connect(self.toggleWidget)
-            self.dlg.btn_rungridweight.clicked.connect(self.generateGridWeights)
-            self.dlg.btn_rmigridweight.clicked.connect(lambda:docker.dockerdelete(self))
+            self.dlg.btn_rungridweight.clicked.connect(lambda:self.generateGridWeights('GridWeights'))
+            self.dlg.btn_rmigridweight.clicked.connect(self.docker.delete)
             #----------------------------------------#
 
             #---------------Stream flow---------------#
@@ -1343,7 +1346,7 @@ class QRaven:
                 self.dlg.combo_ncattributes.addItems(field_names)             
             
     #This method sets up the scriptbash/basinmaker docker container. Pulls, starts and stops the docker container
-    def dockerinit(self):
+    def dockerinit(self, mode):
         '''Runs multiple methods related to Docker. Basically manages the Docker setup
         
             Depends on the following methods:
@@ -1352,112 +1355,144 @@ class QRaven:
 
             dockerCopy() runBasinMaker() getDockerResults()
          '''
+    
         pythonConsole = self.iface.mainWindow().findChild(QDockWidget, 'PythonConsole')
         if not pythonConsole or not pythonConsole.isVisible():  #If the python console is closed, open it
             self.iface.actionShowPythonDialog().trigger()       #It allows the user to see the BasinMaker progress
         self.iface.messageBar().pushInfo("Info", "The BasinMaker process is starting, this will take a while to complete.")
         self.iface.mainWindow().repaint()
-        paramsDict = self.getRVHparams()    #Calls the function to get the RVH parameters
-        containerization = self.dlg.combo_container.currentText() #Get the preferred containerization software
-        containerimage = self.dlg.combo_dockerimage.currentText() #Get the image
 
-        if containerization == 'Docker':
-            contnrCMD = 'docker'
+        if self.containerization == 'Docker':
             if computerOS == 'macos':
                 os.environ["PATH"] = "/Applications/Docker.app/Contents/Resources/bin" #This is needed for docker to work on MacOS
             elif computerOS == 'windows':
                 os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"    #This is needed so that the docker commands work on Windows
-        elif containerization == 'Podman':
-            contnrCMD = 'podman'
-            containerimage = 'docker.io/' + containerimage
+        elif self.containerization == 'Podman':
             if computerOS == 'macos':
                 os.environ["PATH"] = "/opt/podman/bin"
             elif computerOS == 'windows':
                 os.environ["PATH"] = "C:\\Program Files\\RedHat\\Podman"
 
-        self.exportRVHparams(paramsDict)    #Calls the function to export the RVH parameters into a file
-        docker.dockerPull(computerOS, contnrCMD, containerimage)       #Calls the function to pull the container
-        docker.dockerStart(computerOS, contnrCMD, containerimage)      #Calls the function that starts the container
-        docker.dockerCopy(self,paramsDict, computerOS, separator, contnrCMD)    #Calls the function that copies the parameters file to the docker container, as well as the data
-        docker.runBasinMaker(computerOS, contnrCMD)                #Calls the function that runs BasinMaker with the provided data and parameters
-        docker.getDockerResults(self, computerOS, separator, contnrCMD)    #Calls the function that retrieves the results from BasinMaker
-        docker.dockerStop(contnrCMD)
-
-    #This method runs the gridweight generator inside the Docker container
-    def generateGridWeights(self):
+        self.docker.pull()
         
-        ncfile = self.dlg.file_netcdf.filePath()
-        ncfilename = ntpath.basename(ncfile)  #Get the file name with extension
-        foldernc = os.path.dirname(ncfile)  #Get only the file path (without the file name)
-        ncextension = os.path.splitext(ncfilename)[1]
-        volumenc = foldernc+':/root/Gridweights/nc/'
-        hrusfile = self.dlg.file_hrus.filePath()
-        hrusfilename = ntpath.basename(hrusfile)
-        folderhrus = os.path.dirname(hrusfile)
-        volumehrus = folderhrus+':/root/Gridweights/hru/'
-        dimlon = self.dlg.txt_dimlon.text()
-        dimlat = self.dlg.txt_dimlat.text()
-        varlon = self.dlg.txt_varlon.text()
-        varlat = self.dlg.txt_varlat.text()
-        subgauge_id = self.dlg.txt_gridid.text()
-        output = self.dlg.file_outputgridweight.filePath()
-        outputfolder = folderhrus = os.path.dirname(output)
-        outputfile = ntpath.basename(output)
-        containerization = self.dlg.combo_container.currentText() #Get the preferred containerization software
-        containerimage = self.dlg.combo_dockerimage.currentText() #Get the image 
+        if mode == 'BasinMaker':
+            outputdir = self.dlg.file_outputfolder.filePath()
+            paramsDict = self.getRVHparams()    #Calls the function to get the RVH parameters
+            self.exportRVHparams(paramsDict)    #Calls the function to export the RVH parameters into a file
+            self.docker.start('/root/BasinMaker', None, None)
+            self.docker.bmCopy(outputdir)
+            self.docker.runBasinMaker()
+            self.docker.getBasinMakerResults(outputdir)
+        elif mode == 'GridWeights':
+            ncfile = self.dlg.file_netcdf.filePath()
+            ncfilename = ntpath.basename(ncfile)  #Get the file name with extension
+            foldernc = os.path.dirname(ncfile)  #Get only the file path (without the file name)
+            ncextension = os.path.splitext(ncfilename)[1]
+            volumenc = foldernc+':/root/Gridweights/Data/'
+            hrusfile = self.dlg.file_hrus.filePath()
+            hrusfilename = ntpath.basename(hrusfile)
+            folderhrus = os.path.dirname(hrusfile)
+            volumehrus = folderhrus+':/root/Gridweights/Data/'
+            dimlon = self.dlg.txt_dimlon.text()
+            dimlat = self.dlg.txt_dimlat.text()
+            varlon = self.dlg.txt_varlon.text()
+            varlat = self.dlg.txt_varlat.text()
+            subgauge_id = self.dlg.txt_gridid.text()
+            output = self.dlg.file_outputgridweight.filePath()
+            outputfolder = folderhrus = os.path.dirname(output)
+            outputfile = ntpath.basename(output)
 
-        if containerization == 'Docker':
-            contnrCMD = 'docker'
-            if computerOS == 'macos':
-                os.environ["PATH"] = "/Applications/Docker.app/Contents/Resources/bin" #This is needed for docker to work on MacOS
-            elif computerOS == 'windows':
-                os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"    #This is needed so that the docker commands work on Windows
-        elif containerization == 'Podman':
-            contnrCMD = 'podman'
-            if computerOS == 'macos':
-                os.environ["PATH"] = "/opt/podman/bin"
-            elif computerOS == 'windows':
-                os.environ["PATH"] = "C:\\Program Files\\RedHat\\Podman"
+            if self.dlg.rb_subbasinid.isChecked():
+                selectedid = ' -s '
+            elif self.dlg.rb_gaugeid.isChecked():
+                selectedid = ' -b '
+            if ncextension == '.shp':
+                shpattributes = self.dlg.combo_ncattributes.currentText()
+                pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/Data/'+ncfilename + ' -f '+ '"'+shpattributes+'"' + ' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
+            else:
+                pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/Data/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
+    
+            self.docker.start('/root/Gridweights', volumenc, volumehrus)
+            self.docker.runGridWeights(pythoncmd)
+            self.docker.getGridWeightsResults(outputfile, outputfolder)
+        
+        self.docker.stop()
 
-        if self.dlg.rb_subbasinid.isChecked():
-            selectedid = ' -s '
-        elif self.dlg.rb_gaugeid.isChecked():
-            selectedid = ' -b '                    
+    # #This method runs the gridweight generator inside the Docker container
+    # def generateGridWeights(self):
         
-        pythonConsole = self.iface.mainWindow().findChild(QDockWidget, 'PythonConsole')
-        if not pythonConsole or not pythonConsole.isVisible():  #If the python console is closed, open it
-            self.iface.actionShowPythonDialog().trigger()
-        self.iface.messageBar().pushInfo("Info", "The GridWeights generator process has started. This could take a while.")
-        self.iface.mainWindow().repaint()
-        docker.dockerPull(computerOS)                   #Calls the function to pull the container
-        try:
-            print("Attempting to start the container...")
-            cmd=contnrCMD, 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', containerimage
-            docker.dockerCommand(cmd, computerOS)
+    #     ncfile = self.dlg.file_netcdf.filePath()
+    #     ncfilename = ntpath.basename(ncfile)  #Get the file name with extension
+    #     foldernc = os.path.dirname(ncfile)  #Get only the file path (without the file name)
+    #     ncextension = os.path.splitext(ncfilename)[1]
+    #     volumenc = foldernc+':/root/Gridweights/nc/'
+    #     hrusfile = self.dlg.file_hrus.filePath()
+    #     hrusfilename = ntpath.basename(hrusfile)
+    #     folderhrus = os.path.dirname(hrusfile)
+    #     volumehrus = folderhrus+':/root/Gridweights/hru/'
+    #     dimlon = self.dlg.txt_dimlon.text()
+    #     dimlat = self.dlg.txt_dimlat.text()
+    #     varlon = self.dlg.txt_varlon.text()
+    #     varlat = self.dlg.txt_varlat.text()
+    #     subgauge_id = self.dlg.txt_gridid.text()
+    #     output = self.dlg.file_outputgridweight.filePath()
+    #     outputfolder = folderhrus = os.path.dirname(output)
+    #     outputfile = ntpath.basename(output)
+    #     containerization = self.dlg.combo_container.currentText() #Get the preferred containerization software
+    #     containerimage = self.dlg.combo_dockerimage.currentText() #Get the image 
+
+    #     if containerization == 'Docker':
+    #         contnrCMD = 'docker'
+    #         if computerOS == 'macos':
+    #             os.environ["PATH"] = "/Applications/Docker.app/Contents/Resources/bin" #This is needed for docker to work on MacOS
+    #         elif computerOS == 'windows':
+    #             os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"    #This is needed so that the docker commands work on Windows
+    #     elif containerization == 'Podman':
+    #         contnrCMD = 'podman'
+    #         if computerOS == 'macos':
+    #             os.environ["PATH"] = "/opt/podman/bin"
+    #         elif computerOS == 'windows':
+    #             os.environ["PATH"] = "C:\\Program Files\\RedHat\\Podman"
+
+    #     if self.dlg.rb_subbasinid.isChecked():
+    #         selectedid = ' -s '
+    #     elif self.dlg.rb_gaugeid.isChecked():
+    #         selectedid = ' -b '                    
         
-            print("The container was started successfully")
-        except Exception as e:
-            print(e)
-        print("Starting the GridWeights generator process, this will take a while to complete")
-        if ncextension == '.shp':
-            shpattributes = self.dlg.combo_ncattributes.currentText()
-            pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/nc/'+ncfilename + ' -f '+ '"'+shpattributes+'"' + ' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
+    #     pythonConsole = self.iface.mainWindow().findChild(QDockWidget, 'PythonConsole')
+    #     if not pythonConsole or not pythonConsole.isVisible():  #If the python console is closed, open it
+    #         self.iface.actionShowPythonDialog().trigger()
+    #     self.iface.messageBar().pushInfo("Info", "The GridWeights generator process has started. This could take a while.")
+    #     self.iface.mainWindow().repaint()
+    #     docker.dockerPull(computerOS)                   #Calls the function to pull the container
+    #     try:
+    #         print("Attempting to start the container...")
+    #         cmd=contnrCMD, 'run', '-t', '-d','-w','/root/BasinMaker','-v', volumenc , '-v', volumehrus, '--name', 'qraven', containerimage
+    #         docker.dockerCommand(cmd, computerOS)
+        
+    #         print("The container was started successfully")
+    #     except Exception as e:
+    #         print(e)
+    #     print("Starting the GridWeights generator process, this will take a while to complete")
+    #     if ncextension == '.shp':
+    #         shpattributes = self.dlg.combo_ncattributes.currentText()
+    #         pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/nc/'+ncfilename + ' -f '+ '"'+shpattributes+'"' + ' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
             
-        else:
-            pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/nc/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
-        print(pythoncmd)
-        cmd =containerization, 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
-        try:
-            os.system(contnrCMD+" start qraven")    #Make sure the container is started. Only needed when the plugin is run a second time
-            docker.dockerCommand(cmd, computerOS)
-            cmd = contnrCMD, 'cp', 'qraven:/root/Gridweights/'+outputfile, outputfolder
-            docker.dockerCommand(cmd, computerOS)
-            print("GridWeights generator has finished processing the files")  
-        except Exception as e:
-            print("The GridWeights generator process failed...")
-            print(e)
-        self.iface.messageBar().pushInfo("Info", "The GridWeights generator process has finished. Check the python logs for more details.")
-        docker.dockerStop()
+    #     else:
+    #         pythoncmd = 'python3 -u ~/Gridweights/derive_grid_weights.py -i ' + '/root/Gridweights/nc/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
+    #     print(pythoncmd)
+    #     cmd =containerization, 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
+    #     try:
+    #         os.system(contnrCMD+" start qraven")    #Make sure the container is started. Only needed when the plugin is run a second time
+    #         docker.dockerCommand(cmd, computerOS)
+    #         cmd = contnrCMD, 'cp', 'qraven:/root/Gridweights/'+outputfile, outputfolder
+    #         docker.dockerCommand(cmd, computerOS)
+    #         print("GridWeights generator has finished processing the files")  
+    #     except Exception as e:
+    #         print("The GridWeights generator process failed...")
+    #         print(e)
+    #     self.iface.messageBar().pushInfo("Info", "The GridWeights generator process has finished. Check the python logs for more details.")
+    #     docker.dockerStop()
    
     def searchStreamflow(self):
         widget = self.dlg.sender().objectName()  #Get the widget name
@@ -2185,15 +2220,15 @@ class QRaven:
 
         defaultimage = 'scriptbash/qraven:latest'
 
-        containerization = s.value("qraven/container", "Docker")
-        containerimage = s.value("qraven/image",defaultimage)
+        self.containerization = s.value("qraven/container", "Docker")
+        self.containerimage = s.value("qraven/image",defaultimage)
         username = s.value("qraven/casparUsername", "")
         password = s.value("qraven/casparPassword", "")
         resetmode = s.value("qraven/resetmode","Full")
         menubar = s.value("qraven/menubar",'Default')
         
-        self.dlg.combo_container.setCurrentText(containerization)
-        self.dlg.combo_dockerimage.setCurrentText(containerimage)
+        self.dlg.combo_container.setCurrentText(self.containerization)
+        self.dlg.combo_dockerimage.setCurrentText(self.containerimage)
         self.dlg.txt_casparusername.setText(username)
         self.dlg.txt_casparpassword.setText(password)
         self.dlg.combo_resetmode.setCurrentText(resetmode)
