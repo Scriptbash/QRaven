@@ -26,6 +26,8 @@ from pathlib import Path
 from qgis.PyQt.QtCore import *
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import *
+from PyQt5.QtWebKitWidgets import *
+from PyQt5.QtWebKit import QWebSettings
 #from PyQt5 import QFileDialog
 # Initialize Qt resources from file resources.py
 from .resources import *
@@ -318,7 +320,7 @@ class QRaven:
             self.dlg.file_runinputdir.fileChanged.connect(self.setModelname)
             self.dlg.btn_runraven.clicked.connect(self.runRaven)
             self.dlg.btn_gatheroutput.clicked.connect(self.drawHydrographs)
-            self.dlg.btn_ravenview.clicked.connect(self.openRavenView)
+            self.dlg.btn_ravenview.clicked.connect(self.show_RavenView)
             self.dlg.btn_fillrvptemplate.clicked.connect(self.fillRVPTemplate)
             #----------------------------------------#
 
@@ -1359,7 +1361,6 @@ class QRaven:
         pythonConsole = self.iface.mainWindow().findChild(QDockWidget, 'PythonConsole')
         if not pythonConsole or not pythonConsole.isVisible():  #If the python console is closed, open it
             self.iface.actionShowPythonDialog().trigger()       #It allows the user to see the BasinMaker progress
-        self.iface.messageBar().pushInfo("Info", "The BasinMaker process is starting, this will take a while to complete.")
         self.iface.mainWindow().repaint()
 
         if self.containerization == 'Docker':
@@ -1376,6 +1377,7 @@ class QRaven:
         self.docker.pull()
         
         if mode == 'BasinMaker':
+            self.iface.messageBar().pushInfo("Info", "The BasinMaker process is starting, this will take a while to complete.")
             outputdir = self.dlg.file_outputfolder.filePath()
             paramsDict = self.getRVHparams()    #Calls the function to get the RVH parameters
             self.exportRVHparams(paramsDict)    #Calls the function to export the RVH parameters into a file
@@ -2238,6 +2240,34 @@ class QRaven:
         self.dlg.txt_casparpassword.setText(password)
         self.dlg.combo_resetmode.setCurrentText(resetmode)
         self.dlg.combo_menubar.setCurrentText(menubar)
+    
+    def show_RavenView(self):
+        self.w = RavenviewWindow()
+        self.w.show()
+
+class RavenviewWindow(QWebView):
+    """
+    This "window" is a QWidget. If it has no parent, it
+    will appear as a free-floating window as we want.
+    """
+    def __init__(self):
+        #super().__init__()
+        QWebView.__init__(self)
+        self.settings().setAttribute(QWebSettings.LocalContentCanAccessRemoteUrls, True)
+        self.settings().setAttribute(QWebSettings.JavascriptEnabled, True)
+        self.settings().setAttribute(QWebSettings.DeveloperExtrasEnabled, True)
+        self.current_url = ''
+        self.load(QUrl("http://raven.uwaterloo.ca/RavenView/RavenView.html"))
+        self.loadFinished.connect(self._on_load_finished)
+        self.urlChanged.connect(self._on_url_change)
+
+    def _on_load_finished(self):
+        self.current_url = self.url().toString()
+    
+    def _on_url_change(self):
+        self.page().mainFrame().evaluateJavaScript("alert('This is a test')")
+
+    
 
 
 #This function returns the user's operating system. Mainly used to put slashes and backslashes accordingly in paths            
