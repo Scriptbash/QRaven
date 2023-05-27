@@ -4,7 +4,6 @@ from pathlib import Path
 from qgis.core import QgsVectorLayer, QgsProject
 from PyQt5.QtWidgets import *
 
-
 class Docker:
     def __init__(self,computerOS,separator,containerization,registry,image):
         self.computerOS = computerOS
@@ -34,6 +33,8 @@ class Docker:
                 print(output.strip().decode("utf-8","ignore").replace('',''))  #Surely there's a better way to remove the %08 character (shows as BS in str format)
         rc = process.poll()
 
+        return rc
+
     def pull(self):
         '''Pulls the scriptbash/qraven docker container
         
@@ -44,17 +45,22 @@ class Docker:
         try:
             print("Attempting to pull the "+self.image+" image...")
             cmd=self.containerization, 'pull', self.registry+'/'+self.image  
-            self.runCommand(cmd)
-            print("Done.")
+            rc =self.runCommand(cmd)
+            if rc == 0:
+                print('Image pull - Success.')
+            else:
+                print('Image pull - Failed.')
         except Exception as e:
             print(e)
 
     def stop(self):
         '''Stops and removes the container'''
         print("Stopping the container...")
-        os.system(self.containerization + " stop qraven")     #Stops the container after the process
+        cmd = self.containerization, 'stop', 'qraven'   #Stops the container
+        rc=self.runCommand(cmd)
         print("Removing the container...")
-        os.system(self.containerization + " rm qraven")       #Deletes the container
+        cmd = self.containerization, 'rm', 'qraven' #Deletes the container
+        rc=self.runCommand(cmd)
         print("Done.")
     
     def delete(self):
@@ -62,7 +68,8 @@ class Docker:
         try:
             self.stop()
             print("Removing the image...")
-            os.system(self.containerization + ' rmi ' + self.registry+'/'+self.image)
+            cmd = self.containerization, 'rmi', self.registry+'/'+self.image
+            rc=self.runCommand(cmd)
             print("Done.")   
         except Exception as e:
             print("An error occured while attempting to remove the docker container and image")
@@ -77,11 +84,16 @@ class Docker:
         '''
         try:
             if volume1 == None and volume2 == None:
-                cmd=self.containerization, 'run', '-t', '-d','-w', workingdir, '--name', 'qraven', self.registry+'/'+self.image
+                print('Skipping volume mounting...')
+                cmd=self.containerization, 'run', '-t', '-d', '-w', workingdir, '--name', 'qraven', self.registry+'/'+self.image
             else:
-                cmd=self.containerization, 'run', '-t', '-d','-w', workingdir,'-v', volume1 , '-v', volume2, '--name', 'qraven', self.registry+'/'+self.image
-            self.runCommand(cmd)
-            print("The container was started successfully")
+                print('Running container with volumes...')
+                cmd=self.containerization, 'run', '-t', '-d', '-w', workingdir, '-v', volume1 , '-v', volume2, '--name', 'qraven', self.registry+'/'+self.image
+            rc=self.runCommand(cmd)
+            if rc == 0:
+                print('Container start - Success.')
+            else:
+                print("Container start - Failed.")
         except Exception as e:
             print(e)
 
@@ -96,13 +108,15 @@ class Docker:
         '''
         print("Starting BasinMaker process, this will take a while to complete")
         pythoncmd = "python3 -u create_RVH.py"  #Bash command to start the BasinMaker script
-        cmd =self.containerization, 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
+        cmd =self.containerization, 'exec', '-t', 'qraven', '/bin/bash', '-i', '-c', pythoncmd    #Docker command to run the script
         try:
-        # os.system("docker start qraven")    #Make sure the container is started. Only needed when the plugin is run a second time
-            self.runCommand(cmd)
-            print("BasinMaker has finished processing the files")  
+            rc = self.runCommand(cmd)
+            if rc == 0:
+                print('BasinMaker process - Success.')
+            else:
+                print("BasinMaker process - Failed.")  
         except Exception as e:
-            print("The BasinMaker process failed...")
+            print("The BasinMaker process failed for the following reason:")
             print(e)
     
     def bmCopy(self, params, outputdir):
@@ -137,9 +151,13 @@ class Docker:
 
         }
         shpExt = ['cfg', 'dbf', 'prj','qmd','shp', 'shx']   #List with the shapefile extensions
-        rvhScript = outputdir+self.separator+ "parameters.txt"   #Get the path to the exported parameters file
-        cmd=self.containerization, 'cp', rvhScript, 'qraven:'+ dockerBMpath
-        self.runCommand(cmd)
+        rvhScript = outputdir + self.separator + "parameters.txt"   #Get the path to the exported parameters file
+        cmd=self.containerization, 'cp', rvhScript, 'qraven:'+ dockerBMpath+'/parameters.txt'
+        rc = self.runCommand(cmd)
+        if rc == 0:
+            print('Send parameters file to container - Success.')
+        else:
+            print("Send parameters file to container - Failed.") 
         
         #Loop through the dictionary of paths
         for key, path in datapaths.items():
@@ -204,8 +222,7 @@ class Docker:
                 elif key == 'veginfo':
                     cmdData=self.containerization, 'cp', params['pathveginfo'], 'qraven:'+ dockerLandusePath
                     self.runCommand(cmdData) #Sends vegetation csv file to the container
-
-        print("Done copying the files to the container")
+            
 
     def getBasinMakerResults(self, outputdir):
         '''Grabs the OIH_Output folder from the Docker container and places it into the user's specified directory
@@ -218,10 +235,14 @@ class Docker:
         print("Grabbing the results, this could take a while...")
         cmd =self.containerization, 'cp','qraven:'+dockerBMResultsPath, outputdir
         try:
-            self.runCommand(cmd)
-            print("The results are now in " + outputdir) 
+            rc = self.runCommand(cmd)
+            if rc == 0:
+                print('Grab BasinMaker results - Success.')
+                print("The results are now in " + outputdir)
+            else:
+                print("Grab BasinMaker results - Failed.")  
         except Exception as e:
-            print("Failed to retrieve the results...")
+            print("Couldn't retrieve the results because of the following reason:")
             print(e)
         try:    
             hrulayer = QgsVectorLayer(outputdir+self.separator+"OIH_Output"+self.separator+"network_after_gen_hrus"+self.separator+"finalcat_hru_info.shp", 'finalcat_hru_info', "ogr")
@@ -229,10 +250,11 @@ class Docker:
             if len(hrulayer):
                 QgsProject.instance().addMapLayer(hrulayer)  #Adds the HRU layer to the QGIS map
             if len(lakelayer):
-                QgsProject.instance().addMapLayer(lakelayer) #Add the HRU lakes layer to the QGIS map           
+                QgsProject.instance().addMapLayer(lakelayer) #Add the HRU lakes layer to the QGIS map 
+            print("Load results shapefile - Success.")
         except Exception as e:
-            print("Failed to load the results shapefile...")
-            print(e)
+            print("Load results shapefile - Failed.")
+            #print(e)
     
     def runGridWeights(self, pythoncmd):
         '''Launches the GridWeights.py script inside the Docker container.
@@ -247,19 +269,26 @@ class Docker:
         cmd =self.containerization, 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
         
         try:
-            self.runCommand(cmd)
-            print("Gridweights has finished processing the files")  
+            rc = self.runCommand(cmd)
+            if rc == 0:
+                print('Start GridWeights process - Success')
+            else:
+                print("Start Gridweights process - Failed.")    
         except Exception as e:
-            print("The GridWeights process failed...")
+            print("The GridWeights process failed because of the following reason: ")
             print(e)
 
     def getGridWeightsResults(self, outputfile, outputfolder):
         cmd = self.containerization, 'cp', 'qraven:/root/Gridweights/'+outputfile, outputfolder+'/'
         try:
-            self.runCommand(cmd)
-            print("Results are now in "+ outputfolder)  
+            rc = self.runCommand(cmd)
+            if rc == 0:
+                print('Grab GridWeights results - Success.')
+                print("Results are now in "+ outputfolder) 
+            else:
+                print("Start Gridweights process - Failed.") 
         except Exception as e:
-            print("Couldn't grab results...")
+            print("Couldn't grab results because of the following reason:")
             print(e)
 # #This method runs the command that it receives with subprocess
 # def dockerCommand(cmd, computerOS): 

@@ -1266,9 +1266,9 @@ class QRaven:
                 for key, value in paramDict.items():
                     if value != '':
                         file.write(f"{key:<30}  {value}\n")
-            print("Successfully exported the RVH parameters")
+            print("Export .rvh parameters - Success.")
         except Exception as e:
-            print("Could not export the BasinMaker parameters")
+            print("Export .rvh parameters - Failed.")
             print(e)
 
 
@@ -1418,7 +1418,7 @@ class QRaven:
             self.docker.runGridWeights(pythoncmd)
             self.docker.getGridWeightsResults(outputfile, outputfolder)
         
-        #self.docker.stop()
+        self.docker.stop()
 
     # #This method runs the gridweight generator inside the Docker container
     # def generateGridWeights(self):
