@@ -323,7 +323,7 @@ class QRaven:
             self.dlg.file_runinputdir.fileChanged.connect(self.setModelname)
             self.dlg.btn_runraven.clicked.connect(self.runRaven)
             self.dlg.btn_gatheroutput.clicked.connect(self.drawHydrographs)
-            self.dlg.btn_ravenview.clicked.connect(self.show_RavenView)
+            self.dlg.btn_ravenview.clicked.connect(self.openRavenView)
             self.dlg.btn_fillrvptemplate.clicked.connect(self.fillRVPTemplate)
             #----------------------------------------#
 

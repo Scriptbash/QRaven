@@ -107,7 +107,7 @@ color:rgb(170, 170, 170)</string>
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>6</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1961,8 +1961,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>717</width>
-                   <height>739</height>
+                   <width>1065</width>
+                   <height>744</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -3967,7 +3967,7 @@ color:rgb(170, 170, 170)</string>
              <bool>true</bool>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab_17">
              <attribute name="title">
@@ -3984,7 +3984,7 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>321</width>
+                   <width>1051</width>
                    <height>972</height>
                   </rect>
                  </property>
@@ -4353,7 +4353,7 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>352</width>
+                   <width>1051</width>
                    <height>1023</height>
                   </rect>
                  </property>
@@ -5187,7 +5187,7 @@ color:rgb(170, 170, 170)</string>
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_3">
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab_9">
              <attribute name="title">
@@ -5999,6 +5999,9 @@ color:rgb(170, 170, 170)</string>
              </item>
              <item row="10" column="2">
               <widget class="QComboBox" name="combo_rvnviewintegration">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <item>
                 <property name="text">
                  <string>Integrated</string>
