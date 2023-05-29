@@ -38,6 +38,7 @@ from sys import platform
 import matplotlib.pyplot as plt
 import csv, datetime, webbrowser, ntpath, os.path, requests,re
 from .modules.docker.dockercmd import Docker
+from .modules.calibration.ostrich import  Ostrich
 from .modules.resetgui import *
 from .modules.templates.hmets import loadHmets 
 from .modules.templates.hbvec import loadHbvec
@@ -217,8 +218,10 @@ class QRaven:
             self.setOstrichComboboxes()
 
             #Initialize the Docker commands
-            
             self.docker = Docker(computerOS, separator, self.containerization, self.registry, self.containerimage)
+
+            #Initialize the OSTRICH module
+            self.ostrich = Ostrich()
             
             self.dlg.list_evalmetrics.sortItems()
             self.stations = []
@@ -323,6 +326,11 @@ class QRaven:
             self.dlg.btn_ravenview.clicked.connect(self.show_RavenView)
             self.dlg.btn_fillrvptemplate.clicked.connect(self.fillRVPTemplate)
             #----------------------------------------#
+
+            # ----------OSTRICH Calibration----------#
+            self.dlg.btn_add_filepair.clicked.connect(lambda:self.ostrich.add_file_pair(self.dlg))
+            self.dlg.btn_rm_filepair.clicked.connect(lambda: self.ostrich.remove_file_pair(self.dlg))
+            # ----------------------------------------#
 
             #----------------Settings----------------#
             self.dlg.btn_savesettings.clicked.connect(self.storesettings)

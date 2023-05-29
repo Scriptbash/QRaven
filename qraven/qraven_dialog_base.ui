@@ -107,7 +107,7 @@ color:rgb(170, 170, 170)</string>
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>7</number>
+         <number>6</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1961,8 +1961,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>653</width>
-                   <height>546</height>
+                   <width>717</width>
+                   <height>739</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -2737,8 +2737,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>610</width>
-                   <height>1315</height>
+                   <width>676</width>
+                   <height>1599</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -3497,8 +3497,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>425</width>
-                   <height>361</height>
+                   <width>535</width>
+                   <height>460</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -3984,8 +3984,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>318</width>
-                   <height>891</height>
+                   <width>321</width>
+                   <height>972</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -4353,8 +4353,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>337</width>
-                   <height>932</height>
+                   <width>352</width>
+                   <height>1023</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_17">
@@ -4742,8 +4742,8 @@ color:rgb(170, 170, 170)</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>311</width>
-               <height>707</height>
+               <width>336</width>
+               <height>849</height>
               </rect>
              </property>
              <layout class="QFormLayout" name="formLayout_2">
@@ -5187,7 +5187,7 @@ color:rgb(170, 170, 170)</string>
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_3">
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="tab_9">
              <attribute name="title">
@@ -5204,8 +5204,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>359</width>
-                   <height>653</height>
+                   <width>1059</width>
+                   <height>792</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_20">
@@ -5233,6 +5233,12 @@ color:rgb(170, 170, 170)</string>
                   <item row="12" column="1">
                    <widget class="QWidget" name="widget_6" native="true">
                     <layout class="QGridLayout" name="gridLayout_21">
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
                      <item row="0" column="0">
                       <widget class="QComboBox" name="comboBox">
                        <item>
@@ -5533,7 +5539,7 @@ color:rgb(170, 170, 170)</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_22">
               <item row="0" column="2">
-               <widget class="QPushButton" name="pushButton">
+               <widget class="QPushButton" name="btn_add_filepair">
                 <property name="minimumSize">
                  <size>
                   <width>180</width>
@@ -5546,7 +5552,7 @@ color:rgb(170, 170, 170)</string>
                </widget>
               </item>
               <item row="0" column="4">
-               <widget class="QPushButton" name="pushButton_2">
+               <widget class="QPushButton" name="btn_rm_filepair">
                 <property name="minimumSize">
                  <size>
                   <width>180</width>
@@ -5559,7 +5565,7 @@ color:rgb(170, 170, 170)</string>
                </widget>
               </item>
               <item row="1" column="2" colspan="3">
-               <widget class="QTableWidget" name="tableWidget">
+               <widget class="QTableWidget" name="table_filepairs">
                 <column>
                  <property name="text">
                   <string>Template file</string>
@@ -6027,9 +6033,9 @@ color:rgb(170, 170, 170)</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
