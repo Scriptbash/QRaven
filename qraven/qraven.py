@@ -330,6 +330,8 @@ class QRaven:
             # ----------OSTRICH Calibration----------#
             self.dlg.btn_add_filepair.clicked.connect(lambda:self.ostrich.add_file_pair(self.dlg))
             self.dlg.btn_rm_filepair.clicked.connect(lambda: self.ostrich.remove_file_pair(self.dlg))
+            self.dlg.btn_ost_load_params.clicked.connect(lambda: self.ostrich.load_parameters(self.dlg))
+            self.dlg.btn_ost_refresh_vals.clicked.connect(lambda: self.ostrich.load_calibration_values(self.dlg))
             # ----------------------------------------#
 
             #----------------Settings----------------#
@@ -1928,7 +1930,7 @@ class QRaven:
         rvifile = prefix+'.rvi'
         rvhfile = prefix+'.rvh'
         rvpfile = prefix+'.rvp'
-        rvptemplatefile = prefix+'.rvp_temp.rvp'
+        rvptemplatefile = inputdir + prefix +'.rvp_temp.rvp'
         script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
         ravenparametersfile ="ext_data/RavenParameters.dat"
         ravenparametersfile = os.path.join(script_dir, ravenparametersfile)
@@ -1943,7 +1945,7 @@ class QRaven:
                  )
         else:
             try:
-                rvptemplate = readRVPtemplate(inputdir,separator,rvptemplatefile)
+                rvptemplate = readRVPtemplate(rvptemplatefile)
                 #Read the RavenParameters.dat file and create a 2d list of its values
                 rvn_paramsList = readRavenParams(ravenparametersfile)
             except Exception as e:

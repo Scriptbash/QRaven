@@ -107,7 +107,7 @@ color:rgb(170, 170, 170)</string>
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>6</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -5187,7 +5187,7 @@ color:rgb(170, 170, 170)</string>
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_3">
             <property name="currentIndex">
-             <number>0</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="tab_9">
              <attribute name="title">
@@ -5639,39 +5639,19 @@ color:rgb(170, 170, 170)</string>
               <item row="0" column="0">
                <widget class="QLabel" name="label_109">
                 <property name="text">
-                 <string>Select all parameters to optimize</string>
+                 <string>Select all parameters to calibrate</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_110">
-                <property name="text">
-                 <string>Customize optimization values</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QPushButton" name="pushButton_3">
+              <item row="5" column="0">
+               <widget class="QPushButton" name="btn_ost_refresh_vals">
                 <property name="text">
                  <string>Refresh</string>
                 </property>
                </widget>
               </item>
-              <item row="4" column="1">
-               <spacer name="horizontalSpacer_21">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="1" column="0" colspan="2">
-               <widget class="QTableWidget" name="tableWidget_2">
+              <item row="2" column="0" colspan="2">
+               <widget class="QTableWidget" name="table_ost_params">
                 <column>
                  <property name="text">
                   <string>Selected</string>
@@ -5684,8 +5664,8 @@ color:rgb(170, 170, 170)</string>
                 </column>
                </widget>
               </item>
-              <item row="5" column="0" colspan="2">
-               <widget class="QTableWidget" name="tableWidget_3">
+              <item row="6" column="0" colspan="2">
+               <widget class="QTableWidget" name="table_ost_values">
                 <column>
                  <property name="text">
                   <string>Parameter</string>
@@ -5726,6 +5706,33 @@ color:rgb(170, 170, 170)</string>
                   <string>Format</string>
                  </property>
                 </column>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <spacer name="horizontalSpacer_21">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_110">
+                <property name="text">
+                 <string>Customize calibration values</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="btn_ost_load_params">
+                <property name="text">
+                 <string>Load parameters</string>
+                </property>
                </widget>
               </item>
              </layout>

@@ -120,10 +120,10 @@ def readRavenParams(ravenparametersfile):
         print(e)
 
 #Reads the RVP template and return the important information as a 2d list
-def readRVPtemplate(inputdir,separator,rvptemplatefile):
+def readRVPtemplate(rvptemplatefile):
     try:
         rvp=[]
-        with open(inputdir+separator+rvptemplatefile, "r") as rvptmp:
+        with open(rvptemplatefile, "r") as rvptmp:
             rvptmplines = rvptmp.readlines()
             for line in rvptmplines:
                 if '#' in line: #Don't add comments
