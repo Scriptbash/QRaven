@@ -86,8 +86,11 @@ class Ostrich:
             table.insertRow(current_row)  # Inserts a new row below the last row
             lbl_param = QLabel()
             lbl_param.setText(param)
+            combo_param_type = QComboBox()
+            combo_param_type.addItems(['Integer', 'Real'])
 
             table.setCellWidget(current_row, 0, lbl_param)
+            table.setCellWidget(current_row, 1, combo_param_type)
         table.resizeColumnsToContents()
 
     def get_params(self, dlg):
@@ -110,3 +113,17 @@ class Ostrich:
     def clear_table(self, table):
         while table.rowCount() > 0:
             table.removeRow(0)
+
+    def select_all(self, dlg):
+        table = dlg.table_ost_params
+        rows = table.rowCount()
+        for row in range(rows):
+            checkbox = table.cellWidget(row, 0)
+            checkbox.setChecked(True)
+
+    def unselect_all(self, dlg):
+        table = dlg.table_ost_params
+        rows = table.rowCount()
+        for row in range(rows):
+            checkbox = table.cellWidget(row, 0)
+            checkbox.setChecked(False)

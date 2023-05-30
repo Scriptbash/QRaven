@@ -332,6 +332,8 @@ class QRaven:
             self.dlg.btn_rm_filepair.clicked.connect(lambda: self.ostrich.remove_file_pair(self.dlg))
             self.dlg.btn_ost_load_params.clicked.connect(lambda: self.ostrich.load_parameters(self.dlg))
             self.dlg.btn_ost_refresh_vals.clicked.connect(lambda: self.ostrich.load_calibration_values(self.dlg))
+            self.dlg.btn_ost_select_all.clicked.connect(lambda: self.ostrich.select_all(self.dlg))
+            self.dlg.btn_ost_unselect_all.clicked.connect(lambda: self.ostrich.unselect_all(self.dlg))
             # ----------------------------------------#
 
             #----------------Settings----------------#
