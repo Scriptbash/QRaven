@@ -1946,18 +1946,16 @@ class QRaven:
                                                         "An error occured while running Raven. Check the python console for more details.",
                                                         level=Qgis.Critical)
         elif self.dlg.combo_ravenexe_mode.currentText() == 'Flatpak':
-            try:
+
                 cmd = 'flatpak', 'run', 'ca.uwaterloo.Raven', pathtomodel, "-o", outputdir, "-r", runname  # Command that launches the Raven model
-                self.docker.runCommand(cmd)
-            except Exception as e:
-                print(e)
-                self.iface.messageBar().pushMessage("Error",
-                                                    "An error occured while running Raven. Check the python console for more details.",
-                                                    level=Qgis.Critical)
+                rc = self.docker.runCommand(cmd)
+                if rc != 0:
+                    print("Couldn't run Raven as a Flatpak. Please check you have Flatpak and Raven installed.")
+                    self.iface.messageBar().pushMessage("Error",
+                                                        "An error occured while trying to run Raven. Verify Flatpak and Raven are installed.",
+                                                        level=Qgis.Critical)
         else:
             print('Docker has not been implemented yet. Coming soon.')
-
-
 
 
     #This method is a port of the RavenR rvn_rvp_fill_template function
@@ -2305,12 +2303,10 @@ class QRaven:
             self.dlg.file_ravenexe.setEnabled(False)
         else:
             self.dlg.file_ravenexe.setEnabled(True)
-        if ostrich_mode != ' Executable':
+        if ostrich_mode != 'Executable':
             self.dlg.file_ostrichexe.setEnabled(False)
-            print('false')
         else:
             self.dlg.file_ostrichexe.setEnabled(True)
-            print('true')
 
         self.dlg.combo_container.setCurrentText(self.containerization)
         self.dlg.combo_registry.setCurrentText(self.registry)
