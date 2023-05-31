@@ -337,6 +337,8 @@ class QRaven:
             # ----------------------------------------#
 
             #----------------Settings----------------#
+            self.dlg.combo_ravenexe_mode.currentIndexChanged.connect(self.toggleWidget)
+            self.dlg.combo_ostrichexe_mode.currentIndexChanged.connect(self.toggleWidget)
             self.dlg.btn_savesettings.clicked.connect(self.storesettings)
             #----------------------------------------#
         # show the dialog
@@ -558,6 +560,17 @@ class QRaven:
             else:
                 self.dlg.txt_watersurveyname.setEnabled(False)
                 self.dlg.combo_watersurveyprovince.setEnabled(True)
+        elif widget.objectName() == 'combo_ravenexe_mode':
+            if self.dlg.combo_ravenexe_mode.currentText() != 'Executable':
+                self.dlg.file_ravenexe.setEnabled(False)
+            else:
+                self.dlg.file_ravenexe.setEnabled(True)
+        elif widget.objectName() == 'combo_ostrichexe_mode':
+            if self.dlg.combo_ostrichexe_mode.currentText() != 'Executable':
+                self.dlg.file_ostrichexe.setEnabled(False)
+            else:
+                self.dlg.file_ostrichexe.setEnabled(True)
+
              
 
     #This method enables and disables the spinbox next to the SoilModel combobox depending on the selected value of the combobox
@@ -1903,26 +1916,50 @@ class QRaven:
     #This method runs a Raven model provided by the user.
     def runRaven(self):
         '''Runs a Raven model just like RavenViewLite3'''
-        inputdir = self.dlg.file_runinputdir.filePath() #Get the path where the model files are stored
-        outputdir = self.dlg.file_runoutputdir.filePath()   #Get the path where to save the results of the simulation
-        ravenExe = self.dlg.file_ravenexe.filePath()    #Get the path to the Raven.exe
-        prefix = self.dlg.txt_runnameprefix.text()  #Get the chosen prefix
-        runname = self.dlg.txt_runrunname.text()    #Get the runname (this can be empty)
-        pathtomodel =inputdir+separator+prefix      #Get the complete path to the model
-       
-        pythonConsole = self.iface.mainWindow().findChild(QDockWidget, 'PythonConsole')
-        if not pythonConsole or not pythonConsole.isVisible():  #If the python console is closed, open it
-            self.iface.actionShowPythonDialog().trigger()       #It allows the user to see the Raven progress
-        self.iface.messageBar().pushInfo("Info", "The Raven process has started, this could take a while to complete.")
-        self.iface.mainWindow().repaint()
 
-        try:
-            cmd = ravenExe, pathtomodel,"-o",outputdir, "-r",runname    #Command that launches the Raven model
-            docker.dockerCommand(cmd, computerOS)
-        except Exception as e:
-            print(e)
-            self.iface.messageBar().pushMessage("Error", "An error occured while running Raven. Check the python console for more details.",level=Qgis.Critical)
-    
+        inputdir = self.dlg.file_runinputdir.filePath()  # Get the path where the model files are stored
+        outputdir = self.dlg.file_runoutputdir.filePath()  # Get the path where to save the results of the simulation
+        ravenExe = self.dlg.file_ravenexe.filePath()  # Get the path to the Raven.exe
+        prefix = self.dlg.txt_runnameprefix.text()  # Get the chosen prefix
+        runname = self.dlg.txt_runrunname.text()  # Get the runname (this can be empty)
+        pathtomodel = inputdir + separator + prefix  # Get the complete path to the model
+
+        pythonConsole = self.iface.mainWindow().findChild(QDockWidget, 'PythonConsole')
+        if not pythonConsole or not pythonConsole.isVisible():  # If the python console is closed, open it
+            self.iface.actionShowPythonDialog().trigger()  # It allows the user to see the Raven progress
+
+
+        if self.dlg.combo_ravenexe_mode.currentText() == 'Executable':
+            if self.dlg.file_ravenexe.filePath() == '':
+                self.dlg.lbl_ravenexe_error.setText('Raven executable path not set! Go inside the settings menu, set the Raven executable path and try again.')
+            else:
+                self.dlg.lbl_ravenexe_error.setText('')
+                self.iface.messageBar().pushInfo("Info",
+                                                 "The Raven process has started, this could take a while to complete.")
+                self.iface.mainWindow().repaint()
+                try:
+                    cmd = ravenExe, pathtomodel, "-o", outputdir, "-r", runname  # Command that launches the Raven model
+                    self.docker.runCommand(cmd)
+                except Exception as e:
+                    print(e)
+                    self.iface.messageBar().pushMessage("Error",
+                                                        "An error occured while running Raven. Check the python console for more details.",
+                                                        level=Qgis.Critical)
+        elif self.dlg.combo_ravenexe_mode.currentText() == 'Flatpak':
+            try:
+                cmd = 'flatpak', 'run', 'ca.uwaterloo.Raven', pathtomodel, "-o", outputdir, "-r", runname  # Command that launches the Raven model
+                self.docker.runCommand(cmd)
+            except Exception as e:
+                print(e)
+                self.iface.messageBar().pushMessage("Error",
+                                                    "An error occured while running Raven. Check the python console for more details.",
+                                                    level=Qgis.Critical)
+        else:
+            print('Docker has not been implemented yet. Coming soon.')
+
+
+
+
     #This method is a port of the RavenR rvn_rvp_fill_template function
     #All credits go to Robert Chlumsky
     #https://github.com/rchlumsk/RavenR/blob/master/R/rvn_rvp_fill_template.R
@@ -2213,6 +2250,10 @@ class QRaven:
         containerization = self.dlg.combo_container.currentText()
         registry = self.dlg.combo_registry.currentText()
         containerimage = self.dlg.combo_dockerimage.currentText()
+        raven_mode = self.dlg.combo_ravenexe_mode.currentText()
+        ostrich_mode = self.dlg.combo_ostrichexe_mode.currentText()
+        raven_exe_path = self.dlg.file_ravenexe.filePath()
+        ostrich_exe_path = self.dlg.file_ostrichexe.filePath()
         username = self.dlg.txt_casparusername.text()
         password = self.dlg.txt_casparpassword.text()
         resetmode = self.dlg.combo_resetmode.currentText()
@@ -2227,6 +2268,10 @@ class QRaven:
         s.setValue("qraven/container", containerization)
         s.setValue("qraven/registry", registry)
         s.setValue("qraven/image", containerimage)
+        s.setValue("qraven/raven_mode", raven_mode)
+        s.setValue("qraven/ostrich_mode", ostrich_mode)
+        s.setValue("qraven/raven_exe", raven_exe_path)
+        s.setValue("qraven/ostrich_exe", ostrich_exe_path)
         s.setValue("qraven/casparUsername", username)
         s.setValue("qraven/casparPassword", password)
         s.setValue("qraven/resetmode", resetmode)
@@ -2240,14 +2285,40 @@ class QRaven:
         self.containerization = s.value("qraven/container", "Docker")
         self.registry = s.value("qraven/registry", "ghcr.io")
         self.containerimage = s.value("qraven/image", "scriptbash/qraven:latest")
+
+        raven_mode = s.value("qraven/raven_mode", "Executable")
+        ostrich_mode = s.value("qraven/ostrich_mode", "Executable")
+        raven_exe_path = s.value("qraven/raven_exe", "")
+        ostrich_exe_path = s.value("qraven/ostrich_exe", "")
+
         username = s.value("qraven/casparUsername", "")
         password = s.value("qraven/casparPassword", "")
         resetmode = s.value("qraven/resetmode", "Full")
         menubar = s.value("qraven/menubar", "Default")
-        
+
+        if computerOS != 'linux':
+            self.dlg.combo_ravenexe_mode.model().item(1).setEnabled(False)
+        else:
+            self.dlg.combo_ravenexe_mode.model().item(1).setEnabled(True)
+
+        if raven_mode != 'Executable':
+            self.dlg.file_ravenexe.setEnabled(False)
+        else:
+            self.dlg.file_ravenexe.setEnabled(True)
+        if ostrich_mode != ' Executable':
+            self.dlg.file_ostrichexe.setEnabled(False)
+            print('false')
+        else:
+            self.dlg.file_ostrichexe.setEnabled(True)
+            print('true')
+
         self.dlg.combo_container.setCurrentText(self.containerization)
         self.dlg.combo_registry.setCurrentText(self.registry)
         self.dlg.combo_dockerimage.setCurrentText(self.containerimage)
+        self.dlg.combo_ravenexe_mode.setCurrentText(raven_mode)
+        self.dlg.combo_ostrichexe_mode.setCurrentText(ostrich_mode)
+        self.dlg.file_ravenexe.setFilePath(raven_exe_path)
+        self.dlg.file_ostrichexe.setFilePath(ostrich_exe_path)
         self.dlg.txt_casparusername.setText(username)
         self.dlg.txt_casparpassword.setText(password)
         self.dlg.combo_resetmode.setCurrentText(resetmode)
