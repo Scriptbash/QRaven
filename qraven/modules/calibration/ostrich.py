@@ -55,9 +55,11 @@ class Ostrich:
 
         # Loop that matches the parameters from the template file with the RavenParameters.dat file
         self.param_matches = []
+        tmp_param_matches = []  # List to keep track of parameters. Used only to avoid duplicates
         for line in rvp_template_clean:
             for param in rvn_rvp_params[1:][0:]:
-                if param[0] in line and param[0].strip() != '':
+                if param[0] in line and param[0].strip() != '' and param[0] not in tmp_param_matches:
+                    tmp_param_matches.append(param[0])
                     self.param_matches.append(param)
                     chk_params = QCheckBox()
                     chk_params.setChecked(True)
@@ -202,7 +204,6 @@ class Ostrich:
                 calibration_real_values.append(tmp_calib_values)
 
         return calibration_int_values, calibration_real_values
-
 
     def clear_table(self, table):
         while table.rowCount() > 0:
