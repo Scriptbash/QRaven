@@ -175,8 +175,34 @@ class Ostrich:
 
         return params
 
-    def export_params(self, dlg):
-        pass
+    def export_calibration_values(self, dlg):
+        table = dlg.table_ost_values
+        rows = table.rowCount()
+        cols = table.columnCount()
+        calibration_real_values = []
+        calibration_int_values = []
+        for row in range(rows):
+            tmp_calib_values = []
+            value_type = ''
+            for col in range(cols):
+                current_widget = table.cellWidget(row, col)
+                if isinstance(current_widget, QComboBox):
+                    value_type = current_widget.currentText()
+                    tmp_calib_values.append(value_type)
+                elif isinstance(current_widget, QLineEdit):
+                    if current_widget.text() != '':
+                        tmp_calib_values.append(current_widget.text())
+                    else:
+                        tmp_calib_values.append('none')
+                elif isinstance(current_widget, QSpinBox) or isinstance(current_widget, QDoubleSpinBox):
+                    tmp_calib_values.append(current_widget.value())
+            if value_type == 'Integer':
+                calibration_int_values.append(tmp_calib_values)
+            else:
+                calibration_real_values.append(tmp_calib_values)
+
+        return calibration_int_values, calibration_real_values
+
 
     def clear_table(self, table):
         while table.rowCount() > 0:
