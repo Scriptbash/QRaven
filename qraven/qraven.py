@@ -1442,6 +1442,16 @@ class QRaven:
             self.docker.start('/root/Gridweights', volumenc, volumehrus)
             self.docker.runGridWeights(pythoncmd)
             self.docker.getGridWeightsResults(outputfile, outputfolder)
+        elif mode == 'Raven':
+            input_directory = self.dlg.file_runinputdir.filePath()
+            #output_directory = self.dlg.file_runoutputdir.filePath()
+            file_name_prefix = self.dlg.txt_runnameprefix.text()
+            run_name = self.dlg.txt_runrunname.text()
+
+            self.docker.start('/root/Raven', input_directory, None)
+            self.docker.run_raven(file_name_prefix, run_name)
+
+
         
         self.docker.stop()
 
@@ -1955,7 +1965,7 @@ class QRaven:
                                                         "An error occured while trying to run Raven. Verify Flatpak and Raven are installed.",
                                                         level=Qgis.Critical)
         else:
-            print('Docker has not been implemented yet. Coming soon.')
+            self.dockerinit('Raven')
 
 
     #This method is a port of the RavenR rvn_rvp_fill_template function

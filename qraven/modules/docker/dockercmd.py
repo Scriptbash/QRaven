@@ -86,9 +86,12 @@ class Docker:
             if volume1 == None and volume2 == None:
                 print('Skipping volume mounting...')
                 cmd=self.containerization, 'run', '-t', '-d', '-w', workingdir, '--name', 'qraven', self.registry+'/'+self.image
+            elif volume1 != None and volume2 == None:
+                print('Running container with a volume...')
+                cmd=self.containerization, 'run', '-t', '-d', '-w', workingdir, '-v', volume1, '--name', 'qraven', self.registry+'/'+self.image
             else:
                 print('Running container with volumes...')
-                cmd=self.containerization, 'run', '-t', '-d', '-w', workingdir, '-v', volume1 , '-v', volume2, '--name', 'qraven', self.registry+'/'+self.image
+                cmd=self.containerization, 'run', '-t', '-d', '-w', workingdir, '-v', volume1, '-v', volume2, '--name', 'qraven', self.registry+'/'+self.image
             rc=self.runCommand(cmd)
             if rc == 0:
                 print('Container start - Success.')
@@ -290,6 +293,21 @@ class Docker:
         except Exception as e:
             print("Couldn't grab results because of the following reason:")
             print(e)
+
+    def run_raven(self, prefix, run_name):
+        raven_cmd = './Raven.exe ' + prefix + '-o output -r '+ run_name
+        cmd = self.containerization, 'exec', '-t', 'qraven', '/bin/bash', '-i', '-c', raven_cmd
+
+        try:
+            rc = self.runCommand(cmd)
+            if rc == 0:
+                print('Run Raven - Success.')
+            else:
+                print("Run Raven - Failed.")
+        except Exception as e:
+            print("Couldn't run Raven because of the following reason:")
+            print(e)
+
 # #This method runs the command that it receives with subprocess
 # def dockerCommand(cmd, computerOS): 
 #     '''Executes the command it receives with subprocess.Popen
