@@ -50,8 +50,5 @@ jobs:
           context: .
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ghcr.io/scriptbash/qraven:unstable  #${{ steps.meta.outputs.tags }}
-          #labels: ${{ steps.meta.outputs.labels }}
+          tags: ghcr.io/scriptbash/qraven:unstable , docker.io/scriptbash/qraven:unstable
           
-      - name: Push to Docker Hub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/qraven:unstable
