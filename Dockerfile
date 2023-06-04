@@ -20,6 +20,8 @@ RUN apt-get update \
         saga \
         pip \
         xvfb \
+        mpich \
+        netcdf-bin \
     && localedef -i en_US -f UTF-8 en_US.UTF-8 \
     && python3 -m pip install https://github.com/dustming/basinmaker/archive/master.zip \
         simpledbf \
@@ -40,10 +42,18 @@ RUN apt-get update \
     && source /root/.bashrc \
     && mkdir -p ~/BasinMaker/Data/{bkf_width,DEM,extent_poly,flow_direction,hybasin,lakes,landuse,soil,stations} \
     && mkdir -p ~/Gridweights/Data \
+    && mkdir -p ~/Raven \
+    && mkdir -p ~/Ostrich \
     && cd ~/BasinMaker \
     && wget https://raw.githubusercontent.com/Scriptbash/QRaven/main/create_RVH.py \
     && cd ~/Gridweights \
     && wget https://raw.githubusercontent.com/julemai/GridWeightsGenerator/main/derive_grid_weights.py \
+    && cd ~/Raven \
+    && wget https://github.com/Scriptbash/QRaven/raw/main/Executables/Linux/Raven.exe \
+    && chmod +x Raven.exe \
+    && cd ~/Ostrich \
+    && wget https://github.com/Scriptbash/QRaven/raw/main/Executables/Linux/OstrichMPI \
+    && chmod +x OstrichMPI \
     && grass -c EPSG:4326 ~/grass_tmp --text --exec g.extension r.clip\
     && grass -c EPSG:4326 ~/grass_tmp2 --text --exec g.extension r.accumulate \
     && grass -c EPSG:4326 ~/grass_tmp3 --text --exec g.extension r.stream.basins \
