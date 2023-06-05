@@ -22,6 +22,7 @@ RUN apt-get update \
         xvfb \
         mpich \
         netcdf-bin \
+        unzip \
     && localedef -i en_US -f UTF-8 en_US.UTF-8 \
     && python3 -m pip install https://github.com/dustming/basinmaker/archive/master.zip \
         simpledbf \
@@ -42,19 +43,28 @@ RUN apt-get update \
     && source /root/.bashrc \
     && mkdir -p ~/BasinMaker/Data/{bkf_width,DEM,extent_poly,flow_direction,hybasin,lakes,landuse,soil,stations} \
     && mkdir -p ~/Gridweights/Data \
-    && mkdir -p ~/Raven \
-    && mkdir -p ~/Ostrich \
+    && mkdir -p ~/Raven/build \
+    && mkdir -p ~/Ostrich/build \
     && cd ~/BasinMaker \
     && wget https://raw.githubusercontent.com/Scriptbash/QRaven/main/create_RVH.py \
     && cd ~/Gridweights \
     && wget https://raw.githubusercontent.com/julemai/GridWeightsGenerator/main/derive_grid_weights.py \
-    && cd ~/Raven \
-    && wget https://github.com/Scriptbash/QRaven/raw/main/Executables/Linux/Raven.exe \
-    && chmod +x Raven.exe \
-    && cd ~/Ostrich \
-    && wget https://github.com/Scriptbash/QRaven/raw/main/Executables/Linux/OstrichMPI \
-    && chmod +x OstrichMPI \
-    && grass -c EPSG:4326 ~/grass_tmp --text --exec g.extension r.clip\
+    && cd ~/Raven/build \
+    && wget http://raven.uwaterloo.ca/files/v3.7/RavenSource_v3.7.zip \
+    && unzip RavenSource_v3.7.zip \
+    && sed -i 's/^CXXFLAGS += -std=c++11/#&/' Makefile \
+    && make \
+    && cp Raven.exe ~/Raven \
+    && rm -R ~/Raven/build \
+    && cd ~/Ostrich/build \
+    && wget https://github.com/usbr/ostrich/archive/refs/tags/v21.03.16.zip \
+    && unzip v21.03.16.zip \
+    && cd ostrich-21.03.16/make \
+    && make GCC_MPI \
+    && cp OstrichMPI ~/Ostrich \
+    && rm -R ~/Ostrich/build \
+    && cd ~ \
+    && grass -c EPSG:4326 ~/grass_tmp --text --exec g.extension r.clip \
     && grass -c EPSG:4326 ~/grass_tmp2 --text --exec g.extension r.accumulate \
     && grass -c EPSG:4326 ~/grass_tmp3 --text --exec g.extension r.stream.basins \
     && grass -c EPSG:4326 ~/grass_tmp4 --text --exec g.extension r.stream.snap \
