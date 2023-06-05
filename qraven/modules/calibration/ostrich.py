@@ -222,3 +222,37 @@ class Ostrich:
         for row in range(rows):
             checkbox = table.cellWidget(row, 0)
             checkbox.setChecked(False)
+
+    def add_extra_file(self, dlg):
+        table = dlg.table_extra_file  # Get the extra file table
+        current_row = table.rowCount()  # Get the number of rows the table has
+        table.insertRow(current_row)  # Inserts a new row below the last row
+        extra_file = QgsFileWidget()
+        extra_file.setStorageMode(QgsFileWidget.GetFile)
+
+        table.setCellWidget(current_row, 0, extra_file)
+
+        table.resizeColumnsToContents()
+
+    def remove_extra_file(self, dlg):
+        # Removes the selected row from the file pairs table
+
+        table = dlg.table_extra_file
+        selected_row = table.currentRow()
+        table.removeRow(selected_row)
+
+    def add_extra_dir(self, dlg):
+        table = dlg.table_extra_dir  # Get the extra dir table
+        current_row = table.rowCount()  # Get the number of rows the table has
+        table.insertRow(current_row)  # Inserts a new row below the last row
+        extra_dir = QgsFileWidget()
+        extra_dir.setStorageMode(QgsFileWidget.GetDirectory)
+
+        table.setCellWidget(current_row, 0, extra_dir)
+
+        table.resizeColumnsToContents()
+
+    def remove_extra_dir(self, dlg):
+        table = dlg.table_extra_dir
+        selected_row = table.currentRow()
+        table.removeRow(selected_row)

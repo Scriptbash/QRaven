@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1257</width>
-    <height>864</height>
+    <width>1137</width>
+    <height>774</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -107,15 +107,21 @@ color:rgb(170, 170, 170)</string>
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>7</number>
+         <number>6</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <property name="leftMargin">
-           <number>0</number>
+           <number>3</number>
           </property>
           <property name="topMargin">
            <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>8</number>
           </property>
           <item>
            <widget class="QTabWidget" name="tabWidget">
@@ -374,16 +380,6 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
-              <item row="9" column="1">
-               <widget class="QSpinBox" name="spin_duration">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximum">
-                 <number>999999999</number>
-                </property>
-               </widget>
-              </item>
               <item row="3" column="2">
                <widget class="QPushButton" name="btn_load_awbm">
                 <property name="text">
@@ -437,6 +433,16 @@ color:rgb(170, 170, 170)</string>
                <widget class="QPushButton" name="btn_load_hbvlight">
                 <property name="text">
                  <string>HBV-Light</string>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="1" colspan="3">
+               <widget class="QSpinBox" name="spin_duration">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximum">
+                 <number>999999999</number>
                 </property>
                </widget>
               </item>
@@ -1961,8 +1967,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>717</width>
-                   <height>739</height>
+                   <width>905</width>
+                   <height>643</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -2709,10 +2715,16 @@ color:rgb(170, 170, 170)</string>
         <widget class="QWidget" name="rvh">
          <layout class="QGridLayout" name="gridLayout_10">
           <property name="leftMargin">
-           <number>0</number>
+           <number>3</number>
           </property>
           <property name="topMargin">
            <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>8</number>
           </property>
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_2">
@@ -2737,8 +2749,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>676</width>
-                   <height>1599</height>
+                   <width>905</width>
+                   <height>1315</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -3497,8 +3509,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>535</width>
-                   <height>460</height>
+                   <width>425</width>
+                   <height>361</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -3956,10 +3968,16 @@ color:rgb(170, 170, 170)</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_36">
           <property name="leftMargin">
-           <number>0</number>
+           <number>3</number>
           </property>
           <property name="topMargin">
            <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>8</number>
           </property>
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_5">
@@ -3984,8 +4002,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>321</width>
-                   <height>972</height>
+                   <width>905</width>
+                   <height>891</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -4353,8 +4371,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>352</width>
-                   <height>1023</height>
+                   <width>905</width>
+                   <height>932</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_17">
@@ -4742,8 +4760,8 @@ color:rgb(170, 170, 170)</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>336</width>
-               <height>849</height>
+               <width>951</width>
+               <height>760</height>
               </rect>
              </property>
              <layout class="QFormLayout" name="formLayout_2">
@@ -5183,10 +5201,22 @@ color:rgb(170, 170, 170)</string>
         </widget>
         <widget class="QWidget" name="ostrich">
          <layout class="QGridLayout" name="gridLayout_18">
+          <property name="leftMargin">
+           <number>3</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>8</number>
+          </property>
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_3">
             <property name="currentIndex">
-             <number>0</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="tab_9">
              <attribute name="title">
@@ -5203,8 +5233,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1059</width>
-                   <height>792</height>
+                   <width>905</width>
+                   <height>703</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_20">
@@ -5592,44 +5622,6 @@ color:rgb(170, 170, 170)</string>
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tab_11">
-             <attribute name="title">
-              <string>Extra files/dir.</string>
-             </attribute>
-             <layout class="QGridLayout" name="gridLayout_23">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_106">
-                <property name="text">
-                 <string>Extra files</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QgsFileWidget" name="mQgsFileWidget_4"/>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_107">
-                <property name="text">
-                 <string>Extra directories</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QgsFileWidget" name="mQgsFileWidget_3">
-                <property name="storageMode">
-                 <enum>QgsFileWidget::GetMultipleFiles</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLabel" name="label_108">
-                <property name="text">
-                 <string>*need to verify if extra folders are just where extra files are. Maybe make a table?</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
             <widget class="QWidget" name="tab_12">
              <attribute name="title">
               <string>Parameters</string>
@@ -5794,6 +5786,101 @@ color:rgb(170, 170, 170)</string>
                </spacer>
               </item>
              </layout>
+            </widget>
+            <widget class="QWidget" name="tab_11">
+             <attribute name="title">
+              <string>Extra files/dir.</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_23">
+              <item row="2" column="0">
+               <widget class="QPushButton" name="btn_add_extra_dir">
+                <property name="text">
+                 <string>Add extra directory</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QPushButton" name="btn_add_extra_file">
+                <property name="minimumSize">
+                 <size>
+                  <width>180</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>180</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Add extra file</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0" colspan="3">
+               <widget class="QTableWidget" name="table_extra_dir">
+                <column>
+                 <property name="text">
+                  <string>Directory</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QPushButton" name="btn_rm_extra_file">
+                <property name="minimumSize">
+                 <size>
+                  <width>180</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>180</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Remove extra file</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QPushButton" name="btn_rm_extra_dir">
+                <property name="text">
+                 <string>Remove extra directory</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="3">
+               <widget class="QTableWidget" name="table_extra_file">
+                <column>
+                 <property name="text">
+                  <string>File</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <spacer name="horizontalSpacer_23">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="tab_13">
+             <attribute name="title">
+              <string>Response var.</string>
+             </attribute>
             </widget>
            </widget>
           </item>
@@ -6063,13 +6150,6 @@ color:rgb(170, 170, 170)</string>
                   </item>
                  </widget>
                 </item>
-                <item row="0" column="2">
-                 <widget class="QPushButton" name="btn_download_ostrich">
-                  <property name="text">
-                   <string>Download</string>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </widget>
              </item>
@@ -6249,21 +6329,14 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item>
                    <property name="text">
-                    <string>Flatpak</string>
+                    <string>Executable</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>Executable</string>
+                    <string>Flatpak</string>
                    </property>
                   </item>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QPushButton" name="btn_download_raven">
-                  <property name="text">
-                   <string>Download</string>
-                  </property>
                  </widget>
                 </item>
                </layout>
@@ -6315,9 +6388,9 @@ color:rgb(170, 170, 170)</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_4"/>
-  <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup_3"/>
  </buttongroups>
 </ui>

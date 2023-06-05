@@ -334,6 +334,10 @@ class QRaven:
             self.dlg.btn_ost_refresh_vals.clicked.connect(lambda: self.ostrich.load_calibration_values(self.dlg))
             self.dlg.btn_ost_select_all.clicked.connect(lambda: self.ostrich.select_all(self.dlg))
             self.dlg.btn_ost_unselect_all.clicked.connect(lambda: self.ostrich.unselect_all(self.dlg))
+            self.dlg.btn_add_extra_file.clicked.connect(lambda: self.ostrich.add_extra_file(self.dlg))
+            self.dlg.btn_rm_extra_file.clicked.connect(lambda: self.ostrich.remove_extra_file(self.dlg))
+            self.dlg.btn_add_extra_dir.clicked.connect(lambda: self.ostrich.add_extra_dir(self.dlg))
+            self.dlg.btn_rm_extra_dir.clicked.connect(lambda: self.ostrich.remove_extra_dir(self.dlg))
             # ----------------------------------------#
 
             #----------------Settings----------------#
@@ -2229,9 +2233,9 @@ class QRaven:
         menubar = s.value("qraven/menubar", "Default")
 
         if computerOS != 'linux':
-            self.dlg.combo_ravenexe_mode.model().item(1).setEnabled(False)
+            self.dlg.combo_ravenexe_mode.model().item(2).setEnabled(False)
         else:
-            self.dlg.combo_ravenexe_mode.model().item(1).setEnabled(True)
+            self.dlg.combo_ravenexe_mode.model().item(2).setEnabled(True)
 
         if raven_mode != 'Executable':
             self.dlg.file_ravenexe.setEnabled(False)
