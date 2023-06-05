@@ -1,6 +1,5 @@
 ARG ARCH=
 FROM ${ARCH}ubuntu:jammy
-#FROM arm64v8/ubuntu:jammy
 ENV LANG=en_EN.UTF-8 \
     LANGUAGE=en_US:en \ 
     LC_ALL=en_US.UTF-8 \
@@ -56,7 +55,7 @@ RUN apt-get update \
     && sed -i '/Options.pause =true;/c\Options.pause =false;' RavenMain.cpp \
     && make \
     && cp Raven.exe ~/Raven \
-    #&& rm -R ~/Raven/build \
+    && rm -R ~/Raven/build \
     && cd ~/Ostrich/build \
     && wget https://github.com/usbr/ostrich/archive/refs/tags/v21.03.16.zip \
     && unzip v21.03.16.zip \
@@ -70,4 +69,3 @@ RUN apt-get update \
     && grass -c EPSG:4326 ~/grass_tmp3 --text --exec g.extension r.stream.basins \
     && grass -c EPSG:4326 ~/grass_tmp4 --text --exec g.extension r.stream.snap \
     && exit
-
