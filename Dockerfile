@@ -53,9 +53,10 @@ RUN apt-get update \
     && wget http://raven.uwaterloo.ca/files/v3.7/RavenSource_v3.7.zip \
     && unzip RavenSource_v3.7.zip \
     && sed -i 's/^CXXFLAGS += -std=c++11/#&/' Makefile \
+    && sed -i '/Options.pause =true;/c\Options.pause =false;' RavenMain.cpp \
     && make \
     && cp Raven.exe ~/Raven \
-    && rm -R ~/Raven/build \
+    #&& rm -R ~/Raven/build \
     && cd ~/Ostrich/build \
     && wget https://github.com/usbr/ostrich/archive/refs/tags/v21.03.16.zip \
     && unzip v21.03.16.zip \
