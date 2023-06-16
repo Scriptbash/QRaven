@@ -50,9 +50,10 @@ from .modules.templates.mohyse import loadMohyse
 from .modules.templates.hypr import loadHypr
 from .modules.templates.hymod import loadHymod
 from .modules.templates.awbm import loadAwbm
+from .modules.templates.blended import load_blended
 from .modules.templates.routingonly import load_routing_only
 from .modules.PyRavenR import *
-from .modules import customoutputs, hydrologicproc
+from .modules import customoutputs, hydrologicproc, geochemicalproc
 from .modules.datascrapers import streamflow
 from .modules.datascrapers.gisdata import gisScraper
 
@@ -241,8 +242,9 @@ class QRaven:
             self.dlg.btn_load_hypr.clicked.connect(self.loadModels)
             self.dlg.btn_load_hymod.clicked.connect(self.loadModels)
             self.dlg.btn_load_awbm.clicked.connect(self.loadModels)
-            self.dlg.btn_reset.clicked.connect(self.loadModels)
+            self.dlg.btn_load_blended.clicked.connect(self.loadModels)
             self.dlg.btn_load_routingonly.clicked.connect(self.loadModels)
+            self.dlg.btn_reset.clicked.connect(self.loadModels)
 
             #If the checkbox is checked/unchecked, enables/disables the associated widget
             self.dlg.chk_duration.stateChanged.connect(self.toggleWidget)
@@ -260,6 +262,8 @@ class QRaven:
             self.dlg.chk_readlivefile.stateChanged.connect(self.toggleWidget)
             self.dlg.chk_disablehru.stateChanged.connect(self.toggleWidget)
 
+            self.dlg.btn_add_geochem.clicked.connect(lambda:geochemicalproc.add_chemical(self))
+            self.dlg.btn_rm_geochem.clicked.connect(lambda:geochemicalproc.remove_chemical(self))
             self.dlg.btn_addoutput.clicked.connect(lambda:customoutputs.addoutput(self))
             self.dlg.btn_rmoutput.clicked.connect(lambda:customoutputs.removeoutput(self))
            
@@ -698,6 +702,7 @@ class QRaven:
         paramDict = self.getParams()    #Calls the function to retrieve the widgets values
         hydroProcessesList = hydrologicproc.getHydroProcess(self)
         transportProcessesList = self.getTransportProcess()
+        geochemical_Processes = geochemicalproc.get_geochem(self)
         customOutputList = customoutputs.getOutputs(self) #Calls the function to get the custom output values
         outputdir = self.dlg.file_rvioutputdir.filePath()   #Get the output directory chosen by the use
         modelName = self.dlg.txt_modname.text()     #Get the name of the model
@@ -773,7 +778,21 @@ class QRaven:
                     else:
                         transportCount = 1
                         rvi.write("\n:"+transport)
-                
+
+                if geochemical_Processes:
+                    rvi.write('\n:GeochemicalProcesses')
+                    for row in geochemical_Processes:
+                        is_process_name = True
+                        for proc in row:
+                            if is_process_name:
+                                rvi.write('\n\t'+'{:<20}'.format(':'+proc))
+                                is_process_name = False
+                            else:
+                                if proc != '':
+                                    rvi.write(' {:<20}'.format(proc))
+                        is_process_name = True
+                    rvi.write('\n:EndGeochemicalProcesses')
+
                 #Write custom outputs
                 if customOutputList:
                     for row in customOutputList:
@@ -2123,6 +2142,9 @@ class QRaven:
         elif widget.objectName() == 'btn_load_awbm':
             partialReset(self)
             loadAwbm(self)
+        elif widget.objectName() == 'btn_load_blended':
+            partialReset(self)
+            load_blended(self)
         elif widget.objectName() == 'btn_load_routingonly':
             partialReset(self)
             load_routing_only(self)

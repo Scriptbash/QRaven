@@ -103,5 +103,6 @@ def fullReset(self):
     customoutputs = self.dlg.table_customoutputs
     while(customoutputs.rowCount()>0):
         customoutputs.removeRow(0)
-
-
+    geochemicals = self.dlg.table_geochem
+    while (geochemicals.rowCount() > 0):
+        geochemicals.removeRow(0)
