@@ -107,7 +107,7 @@ color:rgb(170, 170, 170)</string>
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>6</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -380,20 +380,6 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="2">
-               <widget class="QPushButton" name="btn_load_awbm">
-                <property name="text">
-                 <string>AWBM</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QPushButton" name="btn_load_hymod">
-                <property name="text">
-                 <string>HYMOD</string>
-                </property>
-               </widget>
-              </item>
               <item row="2" column="3">
                <widget class="QPushButton" name="btn_load_hypr">
                 <property name="text">
@@ -443,6 +429,34 @@ color:rgb(170, 170, 170)</string>
                 </property>
                 <property name="maximum">
                  <number>999999999</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="3">
+               <widget class="QPushButton" name="btn_load_routingonly">
+                <property name="text">
+                 <string>Routing-only</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QPushButton" name="btn_load_hymod">
+                <property name="text">
+                 <string>HYMOD</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QPushButton" name="btn_load_awbm">
+                <property name="text">
+                 <string>AWBM</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QPushButton" name="btn_load_blended">
+                <property name="text">
+                 <string>Blended</string>
                 </property>
                </widget>
               </item>
@@ -641,6 +655,11 @@ color:rgb(170, 170, 170)</string>
                 <item>
                  <property name="text">
                   <string>PET_HARGREAVES_1985</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>PET_NONE</string>
                  </property>
                 </item>
                 <item>
@@ -928,6 +947,11 @@ color:rgb(170, 170, 170)</string>
                 <item>
                  <property name="text">
                   <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>PET_NONE</string>
                  </property>
                 </item>
                 <item>
@@ -3509,8 +3533,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>425</width>
-                   <height>361</height>
+                   <width>905</width>
+                   <height>643</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -4358,7 +4382,7 @@ color:rgb(170, 170, 170)</string>
             </widget>
             <widget class="QWidget" name="tab_18">
              <attribute name="title">
-              <string>Water office</string>
+              <string>Water survey</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_38">
               <item row="0" column="0">
@@ -4760,19 +4784,19 @@ color:rgb(170, 170, 170)</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>951</width>
+               <width>942</width>
                <height>760</height>
               </rect>
              </property>
-             <layout class="QFormLayout" name="formLayout_2">
-              <item row="2" column="0">
+             <layout class="QGridLayout" name="gridLayout_27">
+              <item row="1" column="0">
                <widget class="QLabel" name="label_197">
                 <property name="text">
                  <string>DEM</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="1">
+              <item row="1" column="2">
                <widget class="QgsFileWidget" name="file_fetchdem">
                 <property name="filter">
                  <string>*.zip</string>
@@ -4782,14 +4806,14 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="0">
+              <item row="2" column="0">
                <widget class="QLabel" name="label_198">
                 <property name="text">
                  <string>Flow direction</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="1">
+              <item row="2" column="2">
                <widget class="QgsFileWidget" name="file_fetchflowdir">
                 <property name="filter">
                  <string>*.zip</string>
@@ -4799,14 +4823,14 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
-              <item row="4" column="0">
+              <item row="3" column="0">
                <widget class="QLabel" name="label_199">
                 <property name="text">
                  <string>Lakes</string>
                 </property>
                </widget>
               </item>
-              <item row="4" column="1">
+              <item row="3" column="2">
                <widget class="QgsFileWidget" name="file_fetchlakes">
                 <property name="filter">
                  <string>*.zip</string>
@@ -4816,14 +4840,14 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="0">
+              <item row="4" column="0">
                <widget class="QLabel" name="label_200">
                 <property name="text">
                  <string>Bankfull width</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="1">
+              <item row="4" column="2">
                <widget class="QgsFileWidget" name="file_fetchbankfull">
                 <property name="filter">
                  <string>*.tgz</string>
@@ -4833,14 +4857,14 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="0">
+              <item row="5" column="0">
                <widget class="QLabel" name="label_201">
                 <property name="text">
                  <string>Landuse</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="1">
+              <item row="5" column="2">
                <widget class="QgsFileWidget" name="file_fetchlanduse">
                 <property name="filter">
                  <string>*.tif</string>
@@ -4850,14 +4874,14 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
-              <item row="7" column="0">
+              <item row="6" column="0">
                <widget class="QLabel" name="label_202">
                 <property name="text">
                  <string>Soil</string>
                 </property>
                </widget>
               </item>
-              <item row="7" column="1">
+              <item row="6" column="2">
                <widget class="QgsFileWidget" name="file_fetchsoil">
                 <property name="filter">
                  <string>*.zip</string>
@@ -4867,28 +4891,28 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
-              <item row="8" column="1">
+              <item row="7" column="2">
                <widget class="QLabel" name="lbl_progressbar">
                 <property name="text">
                  <string/>
                 </property>
                </widget>
               </item>
-              <item row="9" column="1">
+              <item row="8" column="2">
                <widget class="QProgressBar" name="progress_gisdownload">
                 <property name="value">
                  <number>0</number>
                 </property>
                </widget>
               </item>
-              <item row="10" column="1">
+              <item row="9" column="1" colspan="2">
                <widget class="QPushButton" name="btn_downloadgisdata">
                 <property name="text">
                  <string>Download</string>
                 </property>
                </widget>
               </item>
-              <item row="11" column="1">
+              <item row="10" column="2">
                <spacer name="verticalSpacer_5">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
@@ -4901,146 +4925,146 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </spacer>
               </item>
-              <item row="14" column="1">
-               <widget class="QCheckBox" name="chk_samefilegis">
+              <item row="11" column="0" colspan="3">
+               <widget class="QLabel" name="label_203">
                 <property name="text">
-                 <string>Use the same paths as above</string>
-                </property>
-               </widget>
-              </item>
-              <item row="15" column="0">
-               <widget class="QLabel" name="label_204">
-                <property name="text">
-                 <string>Clip layer</string>
-                </property>
-               </widget>
-              </item>
-              <item row="15" column="1">
-               <widget class="QgsFileWidget" name="file_giscliplayer">
-                <property name="filter">
-                 <string>*.shp</string>
-                </property>
-               </widget>
-              </item>
-              <item row="16" column="0">
-               <widget class="QLabel" name="label_205">
-                <property name="text">
-                 <string>DEM</string>
-                </property>
-               </widget>
-              </item>
-              <item row="16" column="1">
-               <widget class="QgsFileWidget" name="file_processdem">
-                <property name="filter">
-                 <string>*.tif</string>
-                </property>
-               </widget>
-              </item>
-              <item row="17" column="0">
-               <widget class="QLabel" name="label_206">
-                <property name="text">
-                 <string>Flow direction</string>
-                </property>
-               </widget>
-              </item>
-              <item row="17" column="1">
-               <widget class="QgsFileWidget" name="file_processflowdir">
-                <property name="filter">
-                 <string>*.tif</string>
-                </property>
-               </widget>
-              </item>
-              <item row="18" column="0">
-               <widget class="QLabel" name="label_207">
-                <property name="text">
-                 <string>Lakes</string>
-                </property>
-               </widget>
-              </item>
-              <item row="18" column="1">
-               <widget class="QgsFileWidget" name="file_processlakes">
-                <property name="filter">
-                 <string>*.shp</string>
-                </property>
-               </widget>
-              </item>
-              <item row="19" column="0">
-               <widget class="QLabel" name="label_208">
-                <property name="text">
-                 <string>Bankfull width</string>
-                </property>
-               </widget>
-              </item>
-              <item row="19" column="1">
-               <widget class="QgsFileWidget" name="file_processbankfull">
-                <property name="filter">
-                 <string>*.shp</string>
-                </property>
-               </widget>
-              </item>
-              <item row="20" column="0">
-               <widget class="QLabel" name="label_209">
-                <property name="text">
-                 <string>Landuse</string>
-                </property>
-               </widget>
-              </item>
-              <item row="20" column="1">
-               <widget class="QgsFileWidget" name="file_processlanduse">
-                <property name="filter">
-                 <string>*.tif;; *.shp</string>
-                </property>
-               </widget>
-              </item>
-              <item row="21" column="0">
-               <widget class="QLabel" name="label_210">
-                <property name="text">
-                 <string>Soil</string>
-                </property>
-               </widget>
-              </item>
-              <item row="21" column="1">
-               <widget class="QgsFileWidget" name="file_processsoil">
-                <property name="filter">
-                 <string>*.shp</string>
-                </property>
-               </widget>
-              </item>
-              <item row="22" column="1">
-               <widget class="QLabel" name="lbl_progressbar2">
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item row="23" column="1">
-               <widget class="QProgressBar" name="progress_gisprocess">
-                <property name="value">
-                 <number>0</number>
-                </property>
-               </widget>
-              </item>
-              <item row="24" column="1">
-               <widget class="QPushButton" name="btn_gisprocess">
-                <property name="text">
-                 <string>Process</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0" colspan="2">
-               <widget class="QLabel" name="label_196">
-                <property name="text">
-                 <string>Download data</string>
+                 <string>Data processing</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
-              <item row="12" column="0" colspan="2">
-               <widget class="QLabel" name="label_203">
+              <item row="12" column="2">
+               <widget class="QCheckBox" name="chk_samefilegis">
                 <property name="text">
-                 <string>Data processing</string>
+                 <string>Use the same paths as above</string>
+                </property>
+               </widget>
+              </item>
+              <item row="13" column="0">
+               <widget class="QLabel" name="label_204">
+                <property name="text">
+                 <string>Clip layer</string>
+                </property>
+               </widget>
+              </item>
+              <item row="13" column="2">
+               <widget class="QgsFileWidget" name="file_giscliplayer">
+                <property name="filter">
+                 <string>*.shp</string>
+                </property>
+               </widget>
+              </item>
+              <item row="14" column="0">
+               <widget class="QLabel" name="label_205">
+                <property name="text">
+                 <string>DEM</string>
+                </property>
+               </widget>
+              </item>
+              <item row="14" column="2">
+               <widget class="QgsFileWidget" name="file_processdem">
+                <property name="filter">
+                 <string>*.tif</string>
+                </property>
+               </widget>
+              </item>
+              <item row="15" column="0">
+               <widget class="QLabel" name="label_206">
+                <property name="text">
+                 <string>Flow direction</string>
+                </property>
+               </widget>
+              </item>
+              <item row="15" column="2">
+               <widget class="QgsFileWidget" name="file_processflowdir">
+                <property name="filter">
+                 <string>*.tif</string>
+                </property>
+               </widget>
+              </item>
+              <item row="16" column="0">
+               <widget class="QLabel" name="label_207">
+                <property name="text">
+                 <string>Lakes</string>
+                </property>
+               </widget>
+              </item>
+              <item row="16" column="2">
+               <widget class="QgsFileWidget" name="file_processlakes">
+                <property name="filter">
+                 <string>*.shp</string>
+                </property>
+               </widget>
+              </item>
+              <item row="17" column="0">
+               <widget class="QLabel" name="label_208">
+                <property name="text">
+                 <string>Bankfull width</string>
+                </property>
+               </widget>
+              </item>
+              <item row="17" column="2">
+               <widget class="QgsFileWidget" name="file_processbankfull">
+                <property name="filter">
+                 <string>*.shp</string>
+                </property>
+               </widget>
+              </item>
+              <item row="18" column="0">
+               <widget class="QLabel" name="label_209">
+                <property name="text">
+                 <string>Landuse</string>
+                </property>
+               </widget>
+              </item>
+              <item row="18" column="2">
+               <widget class="QgsFileWidget" name="file_processlanduse">
+                <property name="filter">
+                 <string>*.tif;; *.shp</string>
+                </property>
+               </widget>
+              </item>
+              <item row="19" column="0">
+               <widget class="QLabel" name="label_210">
+                <property name="text">
+                 <string>Soil</string>
+                </property>
+               </widget>
+              </item>
+              <item row="19" column="2">
+               <widget class="QgsFileWidget" name="file_processsoil">
+                <property name="filter">
+                 <string>*.shp</string>
+                </property>
+               </widget>
+              </item>
+              <item row="20" column="2">
+               <widget class="QLabel" name="lbl_progressbar2">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="21" column="2">
+               <widget class="QProgressBar" name="progress_gisprocess">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="22" column="1" colspan="2">
+               <widget class="QPushButton" name="btn_gisprocess">
+                <property name="text">
+                 <string>Process</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" colspan="3">
+               <widget class="QLabel" name="label_196">
+                <property name="text">
+                 <string>Download data</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
@@ -5216,7 +5240,7 @@ color:rgb(170, 170, 170)</string>
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_3">
             <property name="currentIndex">
-             <number>3</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab_9">
              <attribute name="title">
@@ -5642,7 +5666,7 @@ color:rgb(170, 170, 170)</string>
                  </size>
                 </property>
                 <property name="text">
-                 <string>Unselect all</string>
+                 <string>Deselect all</string>
                 </property>
                </widget>
               </item>
@@ -6027,6 +6051,11 @@ color:rgb(170, 170, 170)</string>
                <item>
                 <property name="text">
                  <string>scriptbash/qraven:unstable</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>qraven_test:latest</string>
                 </property>
                </item>
               </widget>

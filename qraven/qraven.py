@@ -50,6 +50,7 @@ from .modules.templates.mohyse import loadMohyse
 from .modules.templates.hypr import loadHypr
 from .modules.templates.hymod import loadHymod
 from .modules.templates.awbm import loadAwbm
+from .modules.templates.routingonly import load_routing_only
 from .modules.PyRavenR import *
 from .modules import customoutputs, hydrologicproc
 from .modules.datascrapers import streamflow
@@ -241,6 +242,7 @@ class QRaven:
             self.dlg.btn_load_hymod.clicked.connect(self.loadModels)
             self.dlg.btn_load_awbm.clicked.connect(self.loadModels)
             self.dlg.btn_reset.clicked.connect(self.loadModels)
+            self.dlg.btn_load_routingonly.clicked.connect(self.loadModels)
 
             #If the checkbox is checked/unchecked, enables/disables the associated widget
             self.dlg.chk_duration.stateChanged.connect(self.toggleWidget)
@@ -2121,6 +2123,9 @@ class QRaven:
         elif widget.objectName() == 'btn_load_awbm':
             partialReset(self)
             loadAwbm(self)
+        elif widget.objectName() == 'btn_load_routingonly':
+            partialReset(self)
+            load_routing_only(self)
 
     def setStreamflowComboboxes(self):
         script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
