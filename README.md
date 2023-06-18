@@ -37,7 +37,7 @@ QRaven aims to simplify the creation of the input files for the Raven hydrologic
 <li>Download and convert hydrometric data into .rvt files</li>
 <li>Create a shapefile with all the stations from which hydrometric data was downloaded</li>
 <li>Download GIS data and preprocess it to be ready to be used with BasinMaker</li>
-<li>Run models</li>
+<li>Run models in a container, using a Flatpak or an executable</li>
 <li>Draw hydrographs</li>
 <li>Open RavenView in the user's default web browser</li>
 <li>Automatically fill .rvp template files</li>
@@ -57,7 +57,7 @@ If you want to get involved with QRaven's development, please read the <a href="
 <p align ="justify">
 <ul>
 <li>The BasinMaker tools used in the plugins are developped by Ming and its official website can be found at : http://hydrology.uwaterloo.ca/basinmaker </li>
-<li> The GridWeights Generator is made by Julie and the script can be found at : https://github.com/julemai/GridWeightsGenerator </li>
+<li> The GridWeights Generator is made by Juliane and the script can be found at : https://github.com/julemai/GridWeightsGenerator </li>
 <li>The Auto fill rvp template feature is heavily based on RavenR's rvn_rvp_fill_template function by Robert Chlumsky : https://github.com/rchlumsk/RavenR/blob/master/R/rvn_rvp_fill_template.R </li>
 </ul>
 </p>
