@@ -78,6 +78,7 @@
         </property>
         <property name="font">
          <font>
+          <pointsize>13</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -112,7 +113,7 @@ color:rgb(170, 170, 170)</string>
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>7</number>
+         <number>6</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -2123,8 +2124,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>905</width>
-                   <height>643</height>
+                   <width>653</width>
+                   <height>550</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -2905,8 +2906,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>905</width>
-                   <height>1321</height>
+                   <width>647</width>
+                   <height>1369</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -3707,8 +3708,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>905</width>
-                   <height>643</height>
+                   <width>425</width>
+                   <height>377</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -4228,7 +4229,7 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>905</width>
+                   <width>346</width>
                    <height>907</height>
                   </rect>
                  </property>
@@ -4625,8 +4626,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>905</width>
-                   <height>936</height>
+                   <width>365</width>
+                   <height>948</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_17">
@@ -5042,8 +5043,8 @@ color:rgb(170, 170, 170)</string>
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>942</width>
-               <height>760</height>
+               <width>329</width>
+               <height>741</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_27">
@@ -5512,7 +5513,7 @@ color:rgb(170, 170, 170)</string>
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_3">
             <property name="currentIndex">
-             <number>4</number>
+             <number>5</number>
             </property>
             <widget class="QWidget" name="tab_9">
              <attribute name="title">
@@ -5565,7 +5566,7 @@ color:rgb(170, 170, 170)</string>
                       <number>0</number>
                      </property>
                      <item row="0" column="0">
-                      <widget class="QComboBox" name="comboBox">
+                      <widget class="QComboBox" name="combo_ost_onobserror">
                        <item>
                         <property name="text">
                          <string>quit</string>
@@ -5579,7 +5580,7 @@ color:rgb(170, 170, 170)</string>
                       </widget>
                      </item>
                      <item row="0" column="1">
-                      <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+                      <widget class="QDoubleSpinBox" name="spin_ost_onobserror">
                        <property name="enabled">
                         <bool>false</bool>
                        </property>
@@ -5603,7 +5604,7 @@ color:rgb(170, 170, 170)</string>
                    </widget>
                   </item>
                   <item row="15" column="1">
-                   <widget class="QComboBox" name="comboBox_8">
+                   <widget class="QComboBox" name="combo_ost_supermuse">
                     <item>
                      <property name="text">
                       <string>no</string>
@@ -5617,7 +5618,7 @@ color:rgb(170, 170, 170)</string>
                    </widget>
                   </item>
                   <item row="9" column="1">
-                   <widget class="QSpinBox" name="spinBox">
+                   <widget class="QSpinBox" name="spin_ost_numdigits">
                     <property name="minimum">
                      <number>1</number>
                     </property>
@@ -5668,14 +5669,14 @@ color:rgb(170, 170, 170)</string>
                    </widget>
                   </item>
                   <item row="18" column="1">
-                   <widget class="QLineEdit" name="lineEdit_4">
+                   <widget class="QLineEdit" name="txt_ost_modoutputredirection">
                     <property name="text">
                      <string>OstExeOut.txt</string>
                     </property>
                    </widget>
                   </item>
                   <item row="14" column="1">
-                   <widget class="QComboBox" name="comboBox_7">
+                   <widget class="QComboBox" name="combo_ost_checksensitivities">
                     <item>
                      <property name="text">
                       <string>no</string>
@@ -5689,7 +5690,7 @@ color:rgb(170, 170, 170)</string>
                    </widget>
                   </item>
                   <item row="17" column="1">
-                   <widget class="QDoubleSpinBox" name="doubleSpinBox">
+                   <widget class="QDoubleSpinBox" name="spin_ost_boxcoxtrans">
                     <property name="value">
                      <double>1.000000000000000</double>
                     </property>
@@ -5703,7 +5704,7 @@ color:rgb(170, 170, 170)</string>
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QComboBox" name="comboBox_2">
+                   <widget class="QComboBox" name="combo_ost_objfunc">
                     <item>
                      <property name="text">
                       <string>wsse</string>
@@ -5724,10 +5725,10 @@ color:rgb(170, 170, 170)</string>
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QgsFileWidget" name="mQgsFileWidget"/>
+                   <widget class="QgsFileWidget" name="file_ost_exe"/>
                   </item>
                   <item row="16" column="1">
-                   <widget class="QComboBox" name="comboBox_9">
+                   <widget class="QComboBox" name="combo_ost_caching">
                     <item>
                      <property name="text">
                       <string>no</string>
@@ -5786,7 +5787,7 @@ color:rgb(170, 170, 170)</string>
                    </widget>
                   </item>
                   <item row="5" column="1">
-                   <widget class="QgsFileWidget" name="mQgsFileWidget_2"/>
+                   <widget class="QgsFileWidget" name="file_ost_preservebestmod"/>
                   </item>
                   <item row="1" column="0">
                    <widget class="QLabel" name="label_72">
@@ -5796,7 +5797,7 @@ color:rgb(170, 170, 170)</string>
                    </widget>
                   </item>
                   <item row="3" column="1">
-                   <widget class="QLineEdit" name="lineEdit_2">
+                   <widget class="QLineEdit" name="txt_ost_modelsubdir">
                     <property name="text">
                      <string/>
                     </property>
@@ -5813,7 +5814,7 @@ color:rgb(170, 170, 170)</string>
                    </widget>
                   </item>
                   <item row="7" column="1">
-                   <widget class="QComboBox" name="comboBox_4">
+                   <widget class="QComboBox" name="combo_ost_preservebestmodoutput">
                     <item>
                      <property name="text">
                       <string>no</string>
@@ -5830,7 +5831,7 @@ color:rgb(170, 170, 170)</string>
                    <widget class="QComboBox" name="combo_telescopingstrat"/>
                   </item>
                   <item row="8" column="1">
-                   <widget class="QComboBox" name="comboBox_3">
+                   <widget class="QComboBox" name="combo_ost_warmstart">
                     <item>
                      <property name="text">
                       <string>no</string>
@@ -5847,7 +5848,7 @@ color:rgb(170, 170, 170)</string>
                    <widget class="QComboBox" name="combo_programtype"/>
                   </item>
                   <item row="11" column="1">
-                   <widget class="QLineEdit" name="lineEdit_5">
+                   <widget class="QLineEdit" name="txt_ost_randomseed">
                     <property name="text">
                      <string/>
                     </property>
@@ -6204,8 +6205,8 @@ color:rgb(170, 170, 170)</string>
               <string>Write/Run</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_29">
-              <item row="2" column="2">
-               <widget class="QPushButton" name="pushButton_2">
+              <item row="8" column="2">
+               <widget class="QPushButton" name="btn_ost_run">
                 <property name="minimumSize">
                  <size>
                   <width>180</width>
@@ -6223,15 +6224,60 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_106">
-                <property name="text">
-                 <string>Output file</string>
+              <item row="3" column="1" colspan="2">
+               <widget class="QgsFileWidget" name="file_ost_output">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>100</height>
+                 </size>
+                </property>
+                <property name="filter">
+                 <string>*.txt</string>
+                </property>
+                <property name="storageMode">
+                 <enum>QgsFileWidget::SaveFile</enum>
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
-               <widget class="QPushButton" name="pushButton">
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_107">
+                <property name="text">
+                 <string>OSTRICH input file</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <spacer name="verticalSpacer_10">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>39</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="6" column="1" colspan="2">
+               <widget class="QgsFileWidget" name="file_ost_input">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>200</height>
+                 </size>
+                </property>
+                <property name="filter">
+                 <string>*.txt</string>
+                </property>
+                <property name="storageMode">
+                 <enum>QgsFileWidget::GetFile</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="0">
+               <widget class="QPushButton" name="btn_ost_write">
                 <property name="minimumSize">
                  <size>
                   <width>180</width>
@@ -6249,24 +6295,82 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="1" colspan="2">
-               <widget class="QgsFileWidget" name="mQgsFileWidget_4">
-                <property name="storageMode">
-                 <enum>QgsFileWidget::GetFile</enum>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_106">
+                <property name="text">
+                 <string>Output file</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1" colspan="2">
-               <widget class="QgsFileWidget" name="mQgsFileWidget_3">
-                <property name="storageMode">
-                 <enum>QgsFileWidget::SaveFile</enum>
+              <item row="4" column="0">
+               <spacer name="verticalSpacer_11">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
                 </property>
-               </widget>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
               <item row="1" column="0">
-               <widget class="QLabel" name="label_107">
+               <spacer name="verticalSpacer_12">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLabel" name="label_118">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>14</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
                 <property name="text">
-                 <string>OSTRICH input file</string>
+                 <string>Write OSTRICH input file</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLabel" name="label_119">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>14</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Run OSTRICH</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -6829,9 +6933,9 @@ color:rgb(170, 170, 170)</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_4"/>
   <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

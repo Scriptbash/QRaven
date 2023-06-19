@@ -344,6 +344,10 @@ class QRaven:
             self.dlg.btn_rm_extra_file.clicked.connect(lambda: self.ostrich.remove_extra_file(self.dlg))
             self.dlg.btn_add_extra_dir.clicked.connect(lambda: self.ostrich.add_extra_dir(self.dlg))
             self.dlg.btn_rm_extra_dir.clicked.connect(lambda: self.ostrich.remove_extra_dir(self.dlg))
+            self.dlg.file_ost_output.fileChanged.connect(lambda: self.ostrich.set_input_file(self.dlg))
+            self.dlg.btn_ost_write.clicked.connect(lambda: self.ostrich.write_input_file(self.dlg))
+
+            self.dlg.combo_ost_onobserror.currentIndexChanged.connect(self.toggleWidget)
             # ----------------------------------------#
 
             #----------------Settings----------------#
@@ -580,6 +584,11 @@ class QRaven:
                 self.dlg.file_ostrichexe.setEnabled(False)
             else:
                 self.dlg.file_ostrichexe.setEnabled(True)
+        elif widget.objectName() == 'combo_ost_onobserror':
+            if self.dlg.combo_ost_onobserror.currentText() == 'quit':
+                self.dlg.spin_ost_onobserror.setEnabled(False)
+            else:
+                self.dlg.spin_ost_onobserror.setEnabled(True)
 
              
 
