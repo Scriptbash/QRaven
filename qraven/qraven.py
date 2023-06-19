@@ -24,7 +24,7 @@
 
 from pathlib import Path
 from qgis.PyQt.QtCore import *
-from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtGui import QIcon, QFont
 from qgis.PyQt.QtWidgets import *
 from PyQt5.QtWebKitWidgets import *
 from PyQt5.QtWebKit import QWebSettings
@@ -1440,11 +1440,11 @@ class QRaven:
             ncfilename = ntpath.basename(ncfile)  #Get the file name with extension
             foldernc = os.path.dirname(ncfile)  #Get only the file path (without the file name)
             ncextension = os.path.splitext(ncfilename)[1]
-            volumenc = foldernc+':/root/Gridweights/Data/'
+            volumenc = foldernc+':/root/Gridweights/Data:z'
             hrusfile = self.dlg.file_hrus.filePath()
             hrusfilename = ntpath.basename(hrusfile)
             folderhrus = os.path.dirname(hrusfile)
-            volumehrus = folderhrus+':/root/Gridweights/Data/'
+            volumehrus = folderhrus+':/root/Gridweights/Data:z'
             dimlon = self.dlg.txt_dimlon.text()
             dimlat = self.dlg.txt_dimlat.text()
             varlon = self.dlg.txt_varlon.text()
@@ -2068,7 +2068,7 @@ class QRaven:
                             installedversion +=letters+' '
                         installedversion=[int(s) for s in installedversion.split() if s.isdigit()]
             print("Looking for updates")
-            link = "https://raw.githubusercontent.com/Scriptbash/QRaven/main/qraven/metadata.txt"
+            link = "https://raw.githubusercontent.com/Scriptbash/scriptbash.github.io/main/plugins.xml"
             page = requests.get(link)
             content = page.text     
             keywords = content.splitlines()
@@ -2076,7 +2076,7 @@ class QRaven:
                 if 'version=' in word:
                     latestrelease = word.split()
                     latestversion =""
-                    for letters in latestrelease[0]:
+                    for letters in latestrelease[2]:
                         latestversion +=letters+' '
                     latestversion=[int(s) for s in latestversion.split() if s.isdigit()]
             instver = ''
@@ -2089,10 +2089,10 @@ class QRaven:
             latestversion = int(relver)
             if installedversion == latestversion:
                 print('QRaven is up to date')
-                self.dlg.lbl_update.setText('QRaven is up to date.')
+                self.dlg.lbl_update.setText('QRaven is up to date (' + pluginversion[0].replace('version=', 'v') + ').')
             elif installedversion > latestversion:
                 print('Running a pre-release version')
-                self.dlg.lbl_update.setText('Pre-release version. Please report any issues on GitHub.')
+                self.dlg.lbl_update.setText('Pre-release version (' + pluginversion[0].replace('version=', 'v') +').  Please report any issues on GitHub.')
             elif installedversion < latestversion:
                 self.iface.messageBar().pushInfo("Info", "A new version of QRaven is available.")
                 print("Found an update. Please install the latest version of the plugin here: https://github.com/Scriptbash/QRaven/releases")
@@ -2210,6 +2210,7 @@ class QRaven:
         self.dlg.combo_telescopingstrat.setCurrentText('none')
  
     def storesettings(self):
+
         containerization = self.dlg.combo_container.currentText()
         registry = self.dlg.combo_registry.currentText()
         containerimage = self.dlg.combo_dockerimage.currentText()
