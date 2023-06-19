@@ -38,6 +38,11 @@
    </property>
    <item>
     <widget class="QWidget" name="widget" native="true">
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true"/>
      </property>
@@ -107,7 +112,7 @@ color:rgb(170, 170, 170)</string>
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>7</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -129,7 +134,7 @@ color:rgb(170, 170, 170)</string>
              <string notr="true"/>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>6</number>
             </property>
             <widget class="QWidget" name="tab">
              <property name="styleSheet">
@@ -139,6 +144,224 @@ color:rgb(170, 170, 170)</string>
               <string>Model info</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout">
+              <item row="3" column="3">
+               <widget class="QPushButton" name="btn_load_routingonly">
+                <property name="text">
+                 <string>Routing-only</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>StartDate</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="btn_load_hbvlight">
+                <property name="text">
+                 <string>HBV-Light</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="3">
+               <widget class="QPushButton" name="btn_load_hypr">
+                <property name="text">
+                 <string>HYPR</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1" colspan="3">
+               <widget class="QDateTimeEdit" name="date_enddate">
+                <property name="displayFormat">
+                 <string>yyyy-MM-dd h:mm</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>EndDate</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="1" colspan="2">
+               <widget class="QComboBox" name="combo_soilmod">
+                <item>
+                 <property name="text">
+                  <string>SOIL_ONE_LAYER</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>SOIL_TWO_LAYER</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>SOIL_MULTILAYER</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QPushButton" name="btn_load_awbm">
+                <property name="text">
+                 <string>AWBM</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="btn_load_hbvec">
+                <property name="text">
+                 <string>HBV-EC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="13" column="0">
+               <widget class="QCheckBox" name="chk_disablehru">
+                <property name="text">
+                 <string>DisableHRUGroup</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Model name</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="0">
+               <widget class="QLabel" name="label_7">
+                <property name="text">
+                 <string>SoilModel</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QPushButton" name="btn_load_hmets">
+                <property name="text">
+                 <string>HMETS</string>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="0">
+               <widget class="QLabel" name="label_8">
+                <property name="text">
+                 <string>DefineHRUGroups</string>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="1" colspan="3">
+               <widget class="QTextEdit" name="txt_defhru">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="placeholderText">
+                 <string>FOREST, GRASSLAND, WATER</string>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="3">
+               <widget class="QSpinBox" name="spin_soilmod">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QPushButton" name="btn_load_mohyse">
+                <property name="text">
+                 <string>MOHYSE</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" colspan="4">
+               <widget class="QLabel" name="label">
+                <property name="font">
+                 <font>
+                  <pointsize>14</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::NoFrame</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Plain</enum>
+                </property>
+                <property name="lineWidth">
+                 <number>2</number>
+                </property>
+                <property name="midLineWidth">
+                 <number>0</number>
+                </property>
+                <property name="text">
+                 <string>Templates</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1" colspan="3">
+               <widget class="QDateTimeEdit" name="date_startdate">
+                <property name="displayFormat">
+                 <string>yyyy-MM-dd h:mm</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QPushButton" name="btn_load_blended">
+                <property name="text">
+                 <string>Blended</string>
+                </property>
+               </widget>
+              </item>
+              <item row="13" column="1" colspan="3">
+               <widget class="QTextEdit" name="txt_disablehru">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="placeholderText">
+                 <string>FOREST, GRASSLAND, WATER</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1" colspan="3">
+               <widget class="QLineEdit" name="txt_modname"/>
+              </item>
+              <item row="3" column="0">
+               <widget class="QPushButton" name="btn_load_hymod">
+                <property name="text">
+                 <string>HYMOD</string>
+                </property>
+               </widget>
+              </item>
               <item row="10" column="1" colspan="3">
                <widget class="QWidget" name="widget_3" native="true">
                 <layout class="QGridLayout" name="gridLayout_3">
@@ -199,61 +422,39 @@ color:rgb(170, 170, 170)</string>
                 </layout>
                </widget>
               </item>
-              <item row="12" column="0">
-               <widget class="QLabel" name="label_8">
+              <item row="9" column="0">
+               <widget class="QCheckBox" name="chk_duration">
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
+                </property>
                 <property name="text">
-                 <string>DefineHRUGroups</string>
+                 <string>Use Duration instead</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="0" colspan="4">
-               <widget class="QLabel" name="label">
-                <property name="text">
-                 <string>Templates</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
+              <item row="5" column="1" colspan="3">
+               <widget class="QgsFileWidget" name="file_rvioutputdir">
+                <property name="storageMode">
+                 <enum>QgsFileWidget::GetDirectory</enum>
                 </property>
                </widget>
               </item>
-              <item row="7" column="0">
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string>StartDate</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="11" column="1" colspan="2">
-               <widget class="QComboBox" name="combo_soilmod">
-                <item>
-                 <property name="text">
-                  <string>SOIL_ONE_LAYER</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SOIL_TWO_LAYER</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SOIL_MULTILAYER</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="11" column="3">
-               <widget class="QSpinBox" name="spin_soilmod">
+              <item row="9" column="1" colspan="3">
+               <widget class="QSpinBox" name="spin_duration">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
+                <property name="maximum">
+                 <number>999999999</number>
+                </property>
                </widget>
               </item>
-              <item row="6" column="1" colspan="3">
-               <widget class="QLineEdit" name="txt_modname"/>
+              <item row="10" column="0">
+               <widget class="QLabel" name="label_6">
+                <property name="text">
+                 <string>TimeStep</string>
+                </property>
+               </widget>
               </item>
               <item row="5" column="0">
                <widget class="QLabel" name="label_2">
@@ -265,139 +466,10 @@ color:rgb(170, 170, 170)</string>
                 </property>
                </widget>
               </item>
-              <item row="8" column="1" colspan="3">
-               <widget class="QDateTimeEdit" name="date_enddate">
-                <property name="displayFormat">
-                 <string>yyyy-MM-dd h:mm</string>
-                </property>
-               </widget>
-              </item>
-              <item row="12" column="1" colspan="3">
-               <widget class="QTextEdit" name="txt_defhru">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>60</height>
-                 </size>
-                </property>
-                <property name="placeholderText">
-                 <string>FOREST, GRASSLAND, WATER</string>
-                </property>
-               </widget>
-              </item>
-              <item row="13" column="0">
-               <widget class="QCheckBox" name="chk_disablehru">
-                <property name="text">
-                 <string>DisableHRUGroup</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>Model name</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="0">
-               <widget class="QLabel" name="label_6">
-                <property name="text">
-                 <string>TimeStep</string>
-                </property>
-               </widget>
-              </item>
-              <item row="13" column="1" colspan="3">
-               <widget class="QTextEdit" name="txt_disablehru">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>60</height>
-                 </size>
-                </property>
-                <property name="placeholderText">
-                 <string>FOREST, GRASSLAND, WATER</string>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="0">
-               <widget class="QCheckBox" name="chk_duration">
-                <property name="layoutDirection">
-                 <enum>Qt::LeftToRight</enum>
-                </property>
-                <property name="text">
-                 <string>Use Duration instead</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="0">
-               <widget class="QLabel" name="label_5">
-                <property name="text">
-                 <string>EndDate</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
               <item row="1" column="0">
                <widget class="QPushButton" name="btn_load_ubcwm">
                 <property name="text">
                  <string>UBCWM</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="btn_load_hbvec">
-                <property name="text">
-                 <string>HBV-EC</string>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="1" colspan="3">
-               <widget class="QDateTimeEdit" name="date_startdate">
-                <property name="displayFormat">
-                 <string>yyyy-MM-dd h:mm</string>
-                </property>
-               </widget>
-              </item>
-              <item row="11" column="0">
-               <widget class="QLabel" name="label_7">
-                <property name="text">
-                 <string>SoilModel</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="1" colspan="3">
-               <widget class="QgsFileWidget" name="file_rvioutputdir">
-                <property name="storageMode">
-                 <enum>QgsFileWidget::GetDirectory</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="3">
-               <widget class="QPushButton" name="btn_load_hypr">
-                <property name="text">
-                 <string>HYPR</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="2">
-               <widget class="QPushButton" name="btn_load_hmets">
-                <property name="text">
-                 <string>HMETS</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QPushButton" name="btn_load_mohyse">
-                <property name="text">
-                 <string>MOHYSE</string>
                 </property>
                </widget>
               </item>
@@ -412,51 +484,6 @@ color:rgb(170, 170, 170)</string>
                <widget class="QPushButton" name="btn_load_gr4j">
                 <property name="text">
                  <string>GR4J</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QPushButton" name="btn_load_hbvlight">
-                <property name="text">
-                 <string>HBV-Light</string>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="1" colspan="3">
-               <widget class="QSpinBox" name="spin_duration">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximum">
-                 <number>999999999</number>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="3">
-               <widget class="QPushButton" name="btn_load_routingonly">
-                <property name="text">
-                 <string>Routing-only</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QPushButton" name="btn_load_hymod">
-                <property name="text">
-                 <string>HYMOD</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QPushButton" name="btn_load_awbm">
-                <property name="text">
-                 <string>AWBM</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="2">
-               <widget class="QPushButton" name="btn_load_blended">
-                <property name="text">
-                 <string>Blended</string>
                 </property>
                </widget>
               </item>
@@ -1251,6 +1278,13 @@ color:rgb(170, 170, 170)</string>
                   <width>16777215</width>
                   <height>28</height>
                  </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>14</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
                 </property>
                 <property name="text">
                  <string> Optional parameters</string>
@@ -2872,7 +2906,7 @@ color:rgb(170, 170, 170)</string>
                    <x>0</x>
                    <y>0</y>
                    <width>905</width>
-                   <height>1315</height>
+                   <height>1321</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -3546,6 +3580,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="1" column="2">
                    <widget class="QLabel" name="label_43">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="lineWidth">
                      <number>0</number>
                     </property>
@@ -3562,6 +3603,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="9" column="2">
                    <widget class="QLabel" name="label_61">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Optional files</string>
                     </property>
@@ -3572,6 +3620,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="19" column="2">
                    <widget class="QLabel" name="label_44">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Define project spatial extent</string>
                     </property>
@@ -3582,6 +3637,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="26" column="2">
                    <widget class="QLabel" name="label_81">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Delineate routing structure without lakes</string>
                     </property>
@@ -3592,6 +3654,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="31" column="2">
                    <widget class="QLabel" name="label_50">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Add lake and obs control points</string>
                     </property>
@@ -3602,6 +3671,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="46" column="2">
                    <widget class="QLabel" name="label_55">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Add hydrology related attributes</string>
                     </property>
@@ -3669,6 +3745,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="0" column="0" colspan="3">
                    <widget class="QLabel" name="label_82">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Filter lakes</string>
                     </property>
@@ -3755,6 +3838,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="4" column="0" colspan="3">
                    <widget class="QLabel" name="label_39">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Increase catchment area</string>
                     </property>
@@ -3765,6 +3855,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="7" column="0" colspan="3">
                    <widget class="QLabel" name="label_83">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Generate HRUs</string>
                     </property>
@@ -3775,6 +3872,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="12" column="0" colspan="3">
                    <widget class="QLabel" name="label_78">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Generate Raven input files</string>
                     </property>
@@ -4125,7 +4229,7 @@ color:rgb(170, 170, 170)</string>
                    <x>0</x>
                    <y>0</y>
                    <width>905</width>
-                   <height>891</height>
+                   <height>907</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -4253,6 +4357,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="12" column="1" colspan="2">
                    <widget class="QLabel" name="label_181">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Download station data</string>
                     </property>
@@ -4270,6 +4381,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="20" column="2">
                    <widget class="QLabel" name="label_69">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Generate points of interest layer</string>
                     </property>
@@ -4380,6 +4498,13 @@ color:rgb(170, 170, 170)</string>
                       <height>33</height>
                      </size>
                     </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Station search</string>
                     </property>
@@ -4400,6 +4525,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="25" column="1" colspan="2">
                    <widget class="QLabel" name="label_182">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Process local file</string>
                     </property>
@@ -4494,7 +4626,7 @@ color:rgb(170, 170, 170)</string>
                    <x>0</x>
                    <y>0</y>
                    <width>905</width>
-                   <height>932</height>
+                   <height>936</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_17">
@@ -4510,6 +4642,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="20" column="1">
                    <widget class="QLabel" name="label_67">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Generate points of interest layer</string>
                     </property>
@@ -4563,6 +4702,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="9" column="1">
                    <widget class="QLabel" name="label_188">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Download station data</string>
                     </property>
@@ -4784,6 +4930,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="0" column="1">
                    <widget class="QLabel" name="label_185">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Station search</string>
                     </property>
@@ -4794,6 +4947,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="25" column="1">
                    <widget class="QLabel" name="label_191">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Process local file</string>
                     </property>
@@ -5025,6 +5185,13 @@ color:rgb(170, 170, 170)</string>
               </item>
               <item row="11" column="0" colspan="3">
                <widget class="QLabel" name="label_203">
+                <property name="font">
+                 <font>
+                  <pointsize>14</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
                 <property name="text">
                  <string>Data processing</string>
                 </property>
@@ -5161,6 +5328,13 @@ color:rgb(170, 170, 170)</string>
               </item>
               <item row="0" column="0" colspan="3">
                <widget class="QLabel" name="label_196">
+                <property name="font">
+                 <font>
+                  <pointsize>14</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
                 <property name="text">
                  <string>Download data</string>
                 </property>
@@ -5338,7 +5512,7 @@ color:rgb(170, 170, 170)</string>
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_3">
             <property name="currentIndex">
-             <number>0</number>
+             <number>4</number>
             </property>
             <widget class="QWidget" name="tab_9">
              <attribute name="title">
@@ -5471,6 +5645,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="6" column="0" colspan="2">
                    <widget class="QLabel" name="label_104">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Optional variables</string>
                     </property>
@@ -5575,6 +5756,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="0" column="0" colspan="2">
                    <widget class="QLabel" name="label_103">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Required variables</string>
                     </property>
@@ -5670,6 +5858,13 @@ color:rgb(170, 170, 170)</string>
                   </item>
                   <item row="13" column="0" colspan="2">
                    <widget class="QLabel" name="label_105">
+                    <property name="font">
+                     <font>
+                      <pointsize>14</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Experimental variables</string>
                     </property>
@@ -6004,6 +6199,79 @@ color:rgb(170, 170, 170)</string>
               <string>Response var.</string>
              </attribute>
             </widget>
+            <widget class="QWidget" name="tab_15">
+             <attribute name="title">
+              <string>Write/Run</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_29">
+              <item row="2" column="2">
+               <widget class="QPushButton" name="pushButton_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>180</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>180</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Run</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_106">
+                <property name="text">
+                 <string>Output file</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QPushButton" name="pushButton">
+                <property name="minimumSize">
+                 <size>
+                  <width>180</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>180</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Write</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1" colspan="2">
+               <widget class="QgsFileWidget" name="mQgsFileWidget_4">
+                <property name="storageMode">
+                 <enum>QgsFileWidget::GetFile</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" colspan="2">
+               <widget class="QgsFileWidget" name="mQgsFileWidget_3">
+                <property name="storageMode">
+                 <enum>QgsFileWidget::SaveFile</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_107">
+                <property name="text">
+                 <string>OSTRICH input file</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </widget>
           </item>
          </layout>
@@ -6016,16 +6284,71 @@ color:rgb(170, 170, 170)</string>
           <property name="topMargin">
            <number>0</number>
           </property>
-          <item row="0" column="0">
-           <widget class="QWidget" name="widget_10" native="true">
-            <layout class="QGridLayout" name="gridLayout_44">
-             <item row="24" column="0" colspan="3">
-              <widget class="QLabel" name="lbl_update">
+          <item row="2" column="0">
+           <widget class="QWidget" name="widget_13" native="true">
+            <layout class="QGridLayout" name="gridLayout_30">
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_108">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <property name="text">
-                <string/>
+                <string>&lt;a href=&quot;https://github.com/Scriptbash/QRaven/issues/new/choose&quot; style=&quot;color: rgb(170,170,170)&quot;&gt;Report an issue&lt;/a&gt;</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="openExternalLinks">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_116">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>&lt;a href=&quot;https://ko-fi.com/scriptbash&quot; style=&quot;color: rgb(170,170,170)&quot;&gt;Buy me a coffee&lt;/a&gt;</string>
+               </property>
+               <property name="openExternalLinks">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="label_117">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>&lt;a href=&quot;https://qraven.readthedocs.io/en/latest/&quot; style=&quot;color: rgb(170,170,170)&quot;&gt;Documentation&lt;/a&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
+               </property>
+               <property name="openExternalLinks">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QWidget" name="widget_10" native="true">
+            <layout class="QGridLayout" name="gridLayout_44">
+             <item row="19" column="0">
+              <widget class="QLabel" name="label_66">
+               <property name="text">
+                <string>Menu bar style</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="0">
+              <widget class="QLabel" name="label_217">
+               <property name="text">
+                <string>Username</string>
                </property>
               </widget>
              </item>
@@ -6042,128 +6365,7 @@ color:rgb(170, 170, 170)</string>
                </property>
               </spacer>
              </item>
-             <item row="0" column="0" colspan="3">
-              <widget class="QLabel" name="label_62">
-               <property name="font">
-                <font>
-                 <pointsize>14</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                 <underline>false</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>Containers</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="26" column="2">
-              <spacer name="verticalSpacer_7">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_113">
-               <property name="text">
-                <string>Raven</string>
-               </property>
-              </widget>
-             </item>
-             <item row="16" column="0" colspan="3">
-              <widget class="QLabel" name="label_65">
-               <property name="font">
-                <font>
-                 <pointsize>14</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Miscellaneous</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QComboBox" name="combo_container">
-               <item>
-                <property name="text">
-                 <string>Docker</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Podman</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_64">
-               <property name="text">
-                <string>Image</string>
-               </property>
-              </widget>
-             </item>
-             <item row="17" column="2">
-              <widget class="QComboBox" name="combo_resetmode">
-               <item>
-                <property name="text">
-                 <string>Full</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Partial</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="18" column="0">
-              <widget class="QLabel" name="label_112">
-               <property name="text">
-                <string>RavenView</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="2">
-              <widget class="QComboBox" name="combo_dockerimage">
-               <item>
-                <property name="text">
-                 <string>scriptbash/qraven:latest</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>scriptbash/qraven:unstable</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="14" column="2">
-              <widget class="QLineEdit" name="txt_casparpassword">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="echoMode">
-                <enum>QLineEdit::PasswordEchoOnEdit</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="23" column="2">
+             <item row="22" column="2">
               <spacer name="verticalSpacer_2">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -6175,235 +6377,6 @@ color:rgb(170, 170, 170)</string>
                 </size>
                </property>
               </spacer>
-             </item>
-             <item row="19" column="2">
-              <widget class="QComboBox" name="combo_menubar">
-               <item>
-                <property name="text">
-                 <string>Default</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Collapsed</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="13" column="0">
-              <widget class="QLabel" name="label_217">
-               <property name="text">
-                <string>Username</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_216">
-               <property name="text">
-                <string>Containerization software</string>
-               </property>
-              </widget>
-             </item>
-             <item row="18" column="2">
-              <widget class="QComboBox" name="combo_rvnviewintegration">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <item>
-                <property name="text">
-                 <string>Integrated</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Web browser</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="7" column="2">
-              <widget class="QWidget" name="widget_12" native="true">
-               <layout class="QGridLayout" name="gridLayout_26">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item row="0" column="1">
-                 <widget class="QgsFileWidget" name="file_ostrichexe">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QComboBox" name="combo_ostrichexe_mode">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>145</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>145</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>Container</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Executable</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item row="13" column="2">
-              <widget class="QLineEdit" name="txt_casparusername">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="21" column="0" colspan="3">
-              <widget class="QLabel" name="lbl_restartrequired">
-               <property name="styleSheet">
-                <string notr="true">color : red;font-weight: bold;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0" colspan="3">
-              <widget class="QLabel" name="label_115">
-               <property name="font">
-                <font>
-                 <pointsize>14</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Executables</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="19" column="0">
-              <widget class="QLabel" name="label_66">
-               <property name="text">
-                <string>Menu bar style</string>
-               </property>
-              </widget>
-             </item>
-             <item row="15" column="0">
-              <spacer name="verticalSpacer_9">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="label_114">
-               <property name="text">
-                <string>OSTRICH</string>
-               </property>
-              </widget>
-             </item>
-             <item row="14" column="0">
-              <widget class="QLabel" name="label_218">
-               <property name="text">
-                <string>Password</string>
-               </property>
-              </widget>
-             </item>
-             <item row="17" column="0">
-              <widget class="QLabel" name="label_71">
-               <property name="text">
-                <string>Reset behavior</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2">
-              <widget class="QComboBox" name="combo_registry">
-               <item>
-                <property name="text">
-                 <string>ghcr.io</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>docker.io</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="10" column="0">
-              <spacer name="verticalSpacer_8">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="27" column="0" colspan="3">
-              <widget class="QWidget" name="widget_11" native="true">
-               <layout class="QHBoxLayout" name="horizontalLayout">
-                <item>
-                 <widget class="QPushButton" name="btn_savesettings">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>160</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Save</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
              </item>
              <item row="6" column="2">
               <widget class="QWidget" name="widget_7" native="true">
@@ -6464,10 +6437,99 @@ color:rgb(170, 170, 170)</string>
                </layout>
               </widget>
              </item>
+             <item row="1" column="2">
+              <widget class="QComboBox" name="combo_container">
+               <item>
+                <property name="text">
+                 <string>Docker</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Podman</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="25" column="2">
+              <spacer name="verticalSpacer_7">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="17" column="2">
+              <widget class="QComboBox" name="combo_resetmode">
+               <item>
+                <property name="text">
+                 <string>Full</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Partial</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="20" column="0" colspan="3">
+              <widget class="QLabel" name="lbl_restartrequired">
+               <property name="styleSheet">
+                <string notr="true">color : red;font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_64">
+               <property name="text">
+                <string>Image</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_113">
+               <property name="text">
+                <string>Raven</string>
+               </property>
+              </widget>
+             </item>
+             <item row="18" column="0">
+              <widget class="QLabel" name="label_112">
+               <property name="text">
+                <string>RavenView</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_114">
+               <property name="text">
+                <string>OSTRICH</string>
+               </property>
+              </widget>
+             </item>
              <item row="2" column="0">
               <widget class="QLabel" name="label_111">
                <property name="text">
                 <string>Registry</string>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="0">
+              <widget class="QLabel" name="label_218">
+               <property name="text">
+                <string>Password</string>
                </property>
               </widget>
              </item>
@@ -6487,6 +6549,263 @@ color:rgb(170, 170, 170)</string>
                 <set>Qt::AlignCenter</set>
                </property>
               </widget>
+             </item>
+             <item row="15" column="0">
+              <spacer name="verticalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_216">
+               <property name="text">
+                <string>Containerization software</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="3">
+              <widget class="QLabel" name="label_62">
+               <property name="font">
+                <font>
+                 <pointsize>14</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                 <underline>false</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>Containers</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="19" column="2">
+              <widget class="QComboBox" name="combo_menubar">
+               <item>
+                <property name="text">
+                 <string>Default</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Collapsed</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="23" column="0" colspan="3">
+              <widget class="QLabel" name="lbl_update">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="2">
+              <widget class="QLineEdit" name="txt_casparpassword">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="echoMode">
+                <enum>QLineEdit::PasswordEchoOnEdit</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="16" column="0" colspan="3">
+              <widget class="QLabel" name="label_65">
+               <property name="font">
+                <font>
+                 <pointsize>14</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Miscellaneous</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="18" column="2">
+              <widget class="QComboBox" name="combo_rvnviewintegration">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Web browser</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Integrated</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QComboBox" name="combo_dockerimage">
+               <item>
+                <property name="text">
+                 <string>scriptbash/qraven:latest</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>scriptbash/qraven:unstable</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="13" column="2">
+              <widget class="QLineEdit" name="txt_casparusername">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="17" column="0">
+              <widget class="QLabel" name="label_71">
+               <property name="text">
+                <string>Reset behavior</string>
+               </property>
+              </widget>
+             </item>
+             <item row="26" column="0" colspan="3">
+              <widget class="QWidget" name="widget_11" native="true">
+               <layout class="QHBoxLayout" name="horizontalLayout">
+                <item>
+                 <widget class="QPushButton" name="btn_savesettings">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>160</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Save</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="7" column="2">
+              <widget class="QWidget" name="widget_12" native="true">
+               <layout class="QGridLayout" name="gridLayout_26">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item row="0" column="1">
+                 <widget class="QgsFileWidget" name="file_ostrichexe">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QComboBox" name="combo_ostrichexe_mode">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>145</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>145</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>Container</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Executable</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QComboBox" name="combo_registry">
+               <item>
+                <property name="text">
+                 <string>ghcr.io</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>docker.io</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="5" column="0" colspan="3">
+              <widget class="QLabel" name="label_115">
+               <property name="font">
+                <font>
+                 <pointsize>14</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Executables</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <spacer name="verticalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>

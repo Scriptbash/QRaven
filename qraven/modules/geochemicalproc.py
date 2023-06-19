@@ -69,7 +69,6 @@ def get_geochem(self):
                 tmp_processes.append(current_Widget.text())
         processes.append(tmp_processes)
 
-    print(processes)
     return processes
 
 
