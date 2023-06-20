@@ -352,9 +352,3 @@ class Ostrich:
         }
 
         return params
-
-
-    def run_ostrich(self,dlg):
-        pass
-
-

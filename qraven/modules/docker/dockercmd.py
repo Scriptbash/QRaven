@@ -320,4 +320,17 @@ class Docker:
         except Exception as e:
             print("Couldn't grab results because of the following reason:")
             print(e)
-            
+
+    def run_ostrich(self):
+        cmd = self.containerization, 'exec', '-t', 'qraven', '/bin/bash', '-i', '-c', 'cp ../OstrichMPI model'
+        self.runCommand(cmd)
+        cmd = self.containerization, 'exec', '-t', 'qraven', '/bin/bash', '-i', '-c', './model/OstrichMPI'
+        try:
+            rc = self.runCommand(cmd)
+            if rc == 0:
+                print('Run OSTRICH - Success.')
+            else:
+                print("Run OSTRICH - Failed.")
+        except Exception as e:
+            print("Couldn't run OSTRICH because of the following reason:")
+            print(e)

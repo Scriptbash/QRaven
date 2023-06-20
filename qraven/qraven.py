@@ -346,6 +346,7 @@ class QRaven:
             self.dlg.btn_rm_extra_dir.clicked.connect(lambda: self.ostrich.remove_extra_dir(self.dlg))
             self.dlg.file_ost_output.fileChanged.connect(lambda: self.ostrich.set_input_file(self.dlg))
             self.dlg.btn_ost_write.clicked.connect(lambda: self.ostrich.write_input_file(self.dlg))
+            self.dlg.btn_ost_run.clicked.connect(self.run_ostrich)
 
             self.dlg.combo_ost_onobserror.currentIndexChanged.connect(self.toggleWidget)
             # ----------------------------------------#
@@ -1486,6 +1487,13 @@ class QRaven:
             self.docker.start('/root/Raven', volume, None)
             self.docker.run_raven(file_name_prefix, run_name)
             self.docker.get_raven_results(output_directory)
+        elif mode == 'Ostrich':
+            ostrich_input_file = self.dlg.file_ost_input.filePath()
+            ostrich_input_folder = os.path.dirname(ostrich_input_file)
+            volume = ostrich_input_folder + ':/root/Ostrich/model:z'
+
+            self.docker.start('/root/Ostrich/model', volume, None)
+            self.docker.run_ostrich()
 
         self.docker.stop()
    
@@ -2062,7 +2070,43 @@ class QRaven:
         except Exception as e:
             print(e)
             self.iface.messageBar().pushMessage("Error", "An error occured while attempting to draw the hydrograph. Check the python console for more details.",level=Qgis.Critical)
-    
+
+    def run_ostrich(self):
+        ostrich_exe_mode = self.dlg.combo_ostrichexe_mode.currentText()
+        ostrich_input_file = self.dlg.file_ost_input.filePath()
+        ostrich_input_folder = os.path.dirname(ostrich_input_file)
+
+        if ostrich_exe_mode == 'Container':
+            self.dockerinit('Ostrich')
+        elif ostrich_exe_mode == 'Executable':
+            ostrich_executable = self.dlg.file_ostrichexe.filePath()
+            ostrich_exe_name = os.path.basename(ostrich_executable)
+            try:
+                print('Creating a symlink...')
+                if computerOS != 'windows':
+                    cmd = 'ln', '-s', ostrich_executable, ostrich_input_folder    #Create a symlink so model can be run
+                else:
+                    cmd = 'mklink', '/D', ostrich_executable, ostrich_input_folder  #Need testing on Windows!!
+                rc = self.docker.runCommand(cmd)
+                if rc != 0:
+                    print('A symlink may be already created.')
+                else:
+                    print('Symlink created.')
+                print('Launching OSTRICH using the executable...')
+                os.chdir(ostrich_input_folder)
+                cmd = './'+ostrich_exe_name # Command that launches the Raven model
+                rc = self.docker.runCommand(cmd)
+                if rc != 0:
+                    print('The OSTRICH calibration process failed.')
+                else:
+                    print('The OSTRICH calibration process exited successfully')
+            except Exception as e:
+                print(e)
+                self.iface.messageBar().pushMessage("Error",
+                                                    "An error occured while running OSTRICH. Check the python console for more details.",
+                                                    level=Qgis.Critical)
+
+
     def checkUpdate(self):
         try:
             metadatafile = Path(__file__).parent / "metadata.txt"

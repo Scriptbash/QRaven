@@ -6233,7 +6233,7 @@ color:rgb(170, 170, 170)</string>
                  </size>
                 </property>
                 <property name="filter">
-                 <string>*.txt</string>
+                 <string>ostIn.txt</string>
                 </property>
                 <property name="storageMode">
                  <enum>QgsFileWidget::SaveFile</enum>
@@ -6269,7 +6269,7 @@ color:rgb(170, 170, 170)</string>
                  </size>
                 </property>
                 <property name="filter">
-                 <string>*.txt</string>
+                 <string>ostIn.txt</string>
                 </property>
                 <property name="storageMode">
                  <enum>QgsFileWidget::GetFile</enum>
