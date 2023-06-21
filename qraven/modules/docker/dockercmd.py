@@ -75,7 +75,7 @@ class Docker:
             print("An error occured while attempting to remove the docker container and image")
             print(e)
     
-    def start(self,workingdir, volume1, volume2):
+    def start(self, workingdir, volume1, volume2):
         '''Starts the docker container detached, with a pseudo-tty. The working directory is /root/BasinMaker
         
             Depends on the following method:
@@ -268,7 +268,7 @@ class Docker:
 
             runCommand()
         '''
-        print("Starting GridWeights script, this will take a while to complete")
+        print("Starting GridWeights script, this will take a while to complete...")
         cmd =self.containerization, 'exec','-t', 'qraven','/bin/bash','-i','-c',pythoncmd    #Docker command to run the script
         
         try:
@@ -309,12 +309,12 @@ class Docker:
             print(e)
     
     def get_raven_results(self, output_dir):
-        cmd = self.containerization, 'cp', 'qraven:/root/Raven/output/', output_dir
+        cmd = self.containerization, 'cp', 'qraven:/root/Raven/output/.', output_dir
         try:
             rc = self.runCommand(cmd)
             if rc == 0:
                 print('Grab Raven results - Success.')
-                print("Results are now in "+ output_dir) 
+                print("Results are now in " + output_dir)
             else:
                 print("Grab Raven results - Failed.") 
         except Exception as e:

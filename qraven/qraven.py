@@ -1450,18 +1450,18 @@ class QRaven:
             ncfilename = ntpath.basename(ncfile)  #Get the file name with extension
             foldernc = os.path.dirname(ncfile)  #Get only the file path (without the file name)
             ncextension = os.path.splitext(ncfilename)[1]
-            volumenc = foldernc+':/root/Gridweights/Data:z'
+            volumenc = foldernc + ':/root/Gridweights/Data:z'
             hrusfile = self.dlg.file_hrus.filePath()
             hrusfilename = ntpath.basename(hrusfile)
             folderhrus = os.path.dirname(hrusfile)
-            volumehrus = folderhrus+':/root/Gridweights/Data:z'
+            volumehrus = folderhrus + ':/root/Gridweights/Data:z'
             dimlon = self.dlg.txt_dimlon.text()
             dimlat = self.dlg.txt_dimlat.text()
             varlon = self.dlg.txt_varlon.text()
             varlat = self.dlg.txt_varlat.text()
             subgauge_id = self.dlg.txt_gridid.text()
             output = self.dlg.file_outputgridweight.filePath()
-            outputfolder = folderhrus = os.path.dirname(output)
+            outputfolder = os.path.dirname(output)
             outputfile = ntpath.basename(output)
 
             if self.dlg.rb_subbasinid.isChecked():

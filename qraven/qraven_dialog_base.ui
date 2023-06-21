@@ -113,7 +113,7 @@ color:rgb(170, 170, 170)</string>
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>6</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -135,7 +135,7 @@ color:rgb(170, 170, 170)</string>
              <string notr="true"/>
             </property>
             <property name="currentIndex">
-             <number>6</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab">
              <property name="styleSheet">
@@ -332,6 +332,9 @@ color:rgb(170, 170, 170)</string>
               </item>
               <item row="3" column="2">
                <widget class="QPushButton" name="btn_load_blended">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Blended</string>
                 </property>
@@ -2124,8 +2127,8 @@ color:rgb(170, 170, 170)</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>653</width>
-                   <height>550</height>
+                   <width>905</width>
+                   <height>643</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -6391,7 +6394,23 @@ color:rgb(170, 170, 170)</string>
           <item row="2" column="0">
            <widget class="QWidget" name="widget_13" native="true">
             <layout class="QGridLayout" name="gridLayout_30">
-             <item row="0" column="2">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_117">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>&lt;a href=&quot;https://qraven.readthedocs.io/en/latest/&quot; style=&quot;color: rgb(170,170,170)&quot;&gt;Documentation&lt;/a&gt;</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+               <property name="openExternalLinks">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
               <widget class="QLabel" name="label_108">
                <property name="styleSheet">
                 <string notr="true"/>
@@ -6401,35 +6420,6 @@ color:rgb(170, 170, 170)</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="openExternalLinks">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_116">
-               <property name="styleSheet">
-                <string notr="true"/>
-               </property>
-               <property name="text">
-                <string>&lt;a href=&quot;https://ko-fi.com/scriptbash&quot; style=&quot;color: rgb(170,170,170)&quot;&gt;Buy me a coffee&lt;/a&gt;</string>
-               </property>
-               <property name="openExternalLinks">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLabel" name="label_117">
-               <property name="styleSheet">
-                <string notr="true"/>
-               </property>
-               <property name="text">
-                <string>&lt;a href=&quot;https://qraven.readthedocs.io/en/latest/&quot; style=&quot;color: rgb(170,170,170)&quot;&gt;Documentation&lt;/a&gt;</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
                </property>
                <property name="openExternalLinks">
                 <bool>true</bool>
