@@ -330,6 +330,7 @@ class QRaven:
             self.dlg.btn_gatheroutput.clicked.connect(self.drawHydrographs)
             self.dlg.btn_ravenview.clicked.connect(self.openRavenView)
             self.dlg.btn_fillrvptemplate.clicked.connect(self.fillRVPTemplate)
+            self.dlg.btn_overwrite_rvp.clicked.connect(self.overwrite_rvp_template)
             #----------------------------------------#
 
             # ----------OSTRICH Calibration----------#
@@ -1892,7 +1893,6 @@ class QRaven:
         if not pythonConsole or not pythonConsole.isVisible():  # If the python console is closed, open it
             self.iface.actionShowPythonDialog().trigger()  # It allows the user to see the Raven progress
 
-
         if self.dlg.combo_ravenexe_mode.currentText() == 'Executable':
             if self.dlg.file_ravenexe.filePath() == '':
                 self.dlg.lbl_ravenexe_error.setText('Raven executable path not set! Go inside the settings menu, set the Raven executable path and try again.')
@@ -1988,6 +1988,28 @@ class QRaven:
                     self.iface.messageBar().pushMessage("Error", "Could not write the .rvp file. Please check the python console.",level=Qgis.Critical)
                     print('An error occured when attempting to write the RVP file.')
                     print(e)
+
+    def overwrite_rvp_template(self):
+        inputdir = self.dlg.file_runinputdir.filePath()
+        prefix = self.dlg.txt_runnameprefix.text()  # Get the chosen prefix
+        rvifile = inputdir + separator + prefix + '.rvi'
+        command_found = False
+
+        try:
+            with open(rvifile, "r") as f:
+                lines = f.readlines()
+            with open(rvifile, "w") as f:
+                for line in lines:
+                    if line.strip("\n") != ":CreateRVPTemplate":
+                        f.write(line)
+                    else:
+                        command_found = True
+                        self.iface.messageBar().pushSuccess("Success", ":CreateRVPTemplate command overwritten.")
+            if not command_found:
+                self.iface.messageBar().pushInfo("Info", ":CreateRVPTemplate command not found.")
+        except Exception as e:
+            print(e)
+
 
     #This method opens a new tab in the default web browser and points to the RavenView tool
     def openRavenView(self):
@@ -2263,7 +2285,7 @@ class QRaven:
         password = self.dlg.txt_casparpassword.text()
         resetmode = self.dlg.combo_resetmode.currentText()
         menubar = self.dlg.combo_menubar.currentText()
-        
+
         if containerization != self.containerization or registry != self.registry or containerimage != self.containerimage:
             self.dlg.lbl_restartrequired.setText('QGIS restart required to apply the changes.')
 

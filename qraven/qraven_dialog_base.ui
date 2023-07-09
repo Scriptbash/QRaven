@@ -113,7 +113,7 @@ color:rgb(170, 170, 170)</string>
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>6</number>
+         <number>5</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -5394,20 +5394,6 @@ color:rgb(170, 170, 170)</string>
              <item row="5" column="0" colspan="2">
               <widget class="QWidget" name="widget_9" native="true">
                <layout class="QGridLayout" name="gridLayout_42">
-                <item row="1" column="0">
-                 <widget class="QPushButton" name="btn_fillrvptemplate">
-                  <property name="text">
-                   <string>Auto fill rvp template</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QPushButton" name="btn_ravenview">
-                  <property name="text">
-                   <string>Ravenview</string>
-                  </property>
-                 </widget>
-                </item>
                 <item row="0" column="0">
                  <widget class="QPushButton" name="btn_runraven">
                   <property name="text">
@@ -5416,9 +5402,30 @@ color:rgb(170, 170, 170)</string>
                  </widget>
                 </item>
                 <item row="0" column="1">
+                 <widget class="QPushButton" name="btn_overwrite_rvp">
+                  <property name="text">
+                   <string>Overwrite :CreateRVPTemplate</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QPushButton" name="btn_fillrvptemplate">
+                  <property name="text">
+                   <string>Auto fill rvp template</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
                  <widget class="QPushButton" name="btn_gatheroutput">
                   <property name="text">
                    <string>Draw hydrograph</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QPushButton" name="btn_ravenview">
+                  <property name="text">
+                   <string>Ravenview</string>
                   </property>
                  </widget>
                 </item>
