@@ -301,7 +301,6 @@ class QRaven:
             #----------Generate GridWeights---------#
             self.dlg.file_netcdf.fileChanged.connect(self.toggleWidget)
             self.dlg.btn_rungridweight.clicked.connect(lambda:self.dockerinit('GridWeights'))
-            self.dlg.btn_rmigridweight.clicked.connect(self.docker.delete)
             #----------------------------------------#
 
             #---------------Stream flow---------------#
@@ -1422,17 +1421,6 @@ class QRaven:
         if not pythonConsole or not pythonConsole.isVisible():  #If the python console is closed, open it
             self.iface.actionShowPythonDialog().trigger()       #It allows the user to see the BasinMaker progress
         self.iface.mainWindow().repaint()
-
-        if self.containerization == 'Docker':
-            if computerOS == 'macos':
-                os.environ["PATH"] = "/Applications/Docker.app/Contents/Resources/bin" #This is needed for docker to work on MacOS
-            elif computerOS == 'windows':
-                os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"    #This is needed so that the docker commands work on Windows
-        elif self.containerization == 'Podman':
-            if computerOS == 'macos':
-                os.environ["PATH"] = "/opt/podman/bin"
-            elif computerOS == 'windows':
-                os.environ["PATH"] = "C:\\Program Files\\RedHat\\Podman"
 
         self.docker.pull()
         
