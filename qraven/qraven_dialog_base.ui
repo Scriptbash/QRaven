@@ -84,8 +84,7 @@
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">background:rgb(78, 78, 78);
-color:rgb(170, 170, 170)</string>
+         <string notr="true">QWidget {color:rgb(170, 170, 170);background: rgb(78, 78, 78);}QListWidget::item:selected {background: rgb(15,110,0);} QListWidget QWidget[widgetItem=true] {background: transparent;}</string>
         </property>
         <property name="verticalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -5394,10 +5393,10 @@ color:rgb(170, 170, 170)</string>
              <item row="5" column="0" colspan="2">
               <widget class="QWidget" name="widget_9" native="true">
                <layout class="QGridLayout" name="gridLayout_42">
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="btn_runraven">
+                <item row="0" column="2">
+                 <widget class="QPushButton" name="btn_fillrvptemplate">
                   <property name="text">
-                   <string>Run Raven model</string>
+                   <string>Auto fill rvp template</string>
                   </property>
                  </widget>
                 </item>
@@ -5408,10 +5407,10 @@ color:rgb(170, 170, 170)</string>
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="2">
-                 <widget class="QPushButton" name="btn_fillrvptemplate">
+                <item row="0" column="0">
+                 <widget class="QPushButton" name="btn_runraven">
                   <property name="text">
-                   <string>Auto fill rvp template</string>
+                   <string>Run Raven model</string>
                   </property>
                  </widget>
                 </item>
