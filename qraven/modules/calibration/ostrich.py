@@ -313,7 +313,8 @@ class Ostrich:
 
             # Write basic config parameters
             for key, value in basic_config_param.items():
-                ostin.write(f"{key:<30}  {value}\n")
+                if value != '':
+                    ostin.write(f"{key:<30}  {value}\n")
 
             # Write file pairs
             if file_pairs:
