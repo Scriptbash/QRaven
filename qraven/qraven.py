@@ -229,6 +229,7 @@ class QRaven:
             self.stations = []
             self.waterofficestations = []
 
+            #-------------Side menu-------------#
             self.dlg.sidemenu.currentRowChanged.connect(self.display)
             self.dlg.combo_menubar.currentTextChanged.connect(self.setMenuStyle)
             #-------------Raven RVI-------------#

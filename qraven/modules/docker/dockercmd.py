@@ -12,15 +12,15 @@ class Docker:
         self.registry = registry
         self.image = image
 
-        if self.containerization == 'Docker':
-            if computerOS == 'macos':
+        if self.containerization == 'docker':
+            if self.computerOS == 'macos':
                 os.environ["PATH"] = "/Applications/Docker.app/Contents/Resources/bin" #This is needed for docker to work on MacOS
-            elif computerOS == 'windows':
+            elif self.computerOS == 'windows':
                 os.environ["PATH"] = "C:\\Program Files\\Docker\\Docker\\resources\\bin"    #This is needed so that the docker commands work on Windows
-        elif self.containerization == 'Podman':
-            if computerOS == 'macos':
+        elif self.containerization == 'podman':
+            if self.computerOS == 'macos':
                 os.environ["PATH"] = "/opt/podman/bin"
-            elif computerOS == 'windows':
+            elif self.computerOS == 'windows':
                 os.environ["PATH"] = "C:\\Program Files\\RedHat\\Podman"
 
     def runCommand(self, cmd):
