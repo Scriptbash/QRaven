@@ -81,7 +81,8 @@ class Ostrich:
             for col in range(cols):
                 current_widget = table.cellWidget(row, col)
                 if current_widget.filePath():
-                    tmp_pairs.append(current_widget.filePath())
+                    file_name = path.basename(current_widget.filePath())
+                    tmp_pairs.append(file_name)
                 else:
                     pass
             file_pairs.append(tmp_pairs)
@@ -244,6 +245,20 @@ class Ostrich:
         selected_row = table.currentRow()
         table.removeRow(selected_row)
 
+    def get_extra_file(self, dlg):
+        table = dlg.table_extra_file
+        rows = table.rowCount()
+        extra_files = []
+        for row in range(rows):
+            current_widget = table.cellWidget(row, 0)
+            if current_widget.filePath():
+                file_name = path.basename(current_widget.filePath())
+                extra_files.append(file_name)
+            else:
+                pass
+
+        return extra_files
+
     def add_extra_dir(self, dlg):
         table = dlg.table_extra_dir  # Get the extra dir table
         current_row = table.rowCount()  # Get the number of rows the table has
@@ -260,6 +275,20 @@ class Ostrich:
         selected_row = table.currentRow()
         table.removeRow(selected_row)
 
+    def get_extra_dir(self, dlg):
+        table = dlg.table_extra_dir
+        rows = table.rowCount()
+        extra_dir = []
+        for row in range(rows):
+            current_widget = table.cellWidget(row, 0)
+            if current_widget.filePath():
+                dir_name = current_widget.filePath().split('/') # Needs testing on Windows!!
+                extra_dir.append(dir_name[-1])
+            else:
+                pass
+
+        return extra_dir
+
     def set_input_file(self, dlg):
         output_file = dlg.file_ost_output.filePath()
         input_file = dlg.file_ost_input
@@ -270,6 +299,8 @@ class Ostrich:
         output_file = dlg.file_ost_output.filePath()
         basic_config_param = self.get_basic_config_params(dlg)
         file_pairs = self.get_file_pairs(dlg)
+        extra_files = self.get_extra_file(dlg)
+        extra_dir = self.get_extra_dir(dlg)
         int_params, real_params = self.export_calibration_values(dlg)
 
         with open(output_file,'w') as ostin:
@@ -291,6 +322,18 @@ class Ostrich:
                     ostin.write('\n ' + pair[0] + ' ; ' + pair[1])
                 ostin.write('\nEndFilePairs\n')
 
+            if extra_files:
+                ostin.write('\nBeginExtraFiles')
+                for file in extra_files:
+                    ostin.write('\n ' + file)
+                ostin.write('\nEndExtraFiles\n')
+
+            if extra_dir:
+                ostin.write('\nBeginExtraDirs')
+                for directory in extra_dir:
+                    ostin.write('\n ' + directory)
+                ostin.write('\nEndExtraDirs\n')
+
             # Write float calibration parameters
             if real_params:
                 ostin.write('\nBeginParams')
@@ -308,8 +351,6 @@ class Ostrich:
                     for value in line:
                         ostin.write(value.ljust(20))
                 ostin.write('\nEndIntegerParams\n')
-
-
 
     def get_basic_config_params(self,dlg):
 
