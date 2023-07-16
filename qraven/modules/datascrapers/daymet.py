@@ -36,10 +36,10 @@ class Daymet:
                         "&west=" + west + "&east=" + east + "&south=" + south + \
                         "&disableProjSubset=on&horizStride=1&time_start=" + \
                         str(start) + "T12:00:00Z&time_end=" + str(end) + "T12:00:00Z&timeStride=1&accept=netcdf"
-
+                output_file = output + "/" + str(year) + variable + '.nc'
                 with requests.get(url, stream=True) as r:
                     r.raise_for_status()
-                    with open(output, 'wb') as f:
+                    with open(output_file, 'wb') as f:
                         for chunk in r.iter_content(chunk_size=8192):
                             f.write(chunk)
 
