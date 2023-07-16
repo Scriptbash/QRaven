@@ -56,6 +56,7 @@ from .modules.PyRavenR import *
 from .modules import customoutputs, hydrologicproc, geochemicalproc
 from .modules.datascrapers import streamflow
 from .modules.datascrapers.gisdata import gisScraper
+from .modules.datascrapers.daymet import Daymet
 
 
 class QRaven:
@@ -219,6 +220,9 @@ class QRaven:
             self.setStreamflowComboboxes()
             self.setOstrichComboboxes()
 
+            #Initialize the Daymet downloader
+            self.daymet = Daymet()
+
             #Initialize the Docker commands
             self.docker = Docker(computerOS, separator, self.containerization, self.registry, self.containerimage)
 
@@ -304,6 +308,10 @@ class QRaven:
             self.dlg.btn_rungridweight.clicked.connect(lambda:self.dockerinit('GridWeights'))
             #----------------------------------------#
 
+
+            #-----------------Daymet------------------#
+            self.dlg.btn_download_daymet.clicked.connect(lambda:self.daymet.get_search_criteria(self.dlg))
+
             #---------------Stream flow---------------#
             self.dlg.btn_cehqsearch.clicked.connect(self.searchStreamflow)
             self.dlg.btn_cehqdate.clicked.connect(self.downloadStreamflow)
@@ -370,10 +378,10 @@ class QRaven:
 
     def setupMenubar(self):
         #Sets up the left menu
-            menuitems = ['Raven RVI','BasinMaker','Gridweights',
-                         'Streamflow', 'GIS','Run Raven','OSTRICH','Settings']
-            icons = ['rvifile.svg','basinmaker.svg','gridweights.svg',
-                     'streamflow.svg','gis.svg','raven.svg','ostrich.svg','settings.svg']
+            menuitems = ['Raven RVI','Daymet', 'Streamflow', 'GIS', 'BasinMaker','Gridweights',
+                         'Run Raven','OSTRICH','Settings']
+            icons = ['rvifile.svg','precipitation.svg', 'streamflow.svg', 'gis.svg', 'basinmaker.svg',
+                     'gridweights.svg', 'raven.svg','ostrich.svg','settings.svg']
             script_dir = os.path.dirname(__file__)
             for i, menuitem in enumerate(menuitems):
                 icon = QIcon(os.path.join(script_dir+'/ext_data/icons/'+icons[i]))
@@ -388,8 +396,8 @@ class QRaven:
             self.dlg.sidemenu.setMaximumWidth(50)
             self.dlg.sidemenu.setMinimumWidth(50)
         else:
-            self.dlg.sidemenu.setMaximumWidth(150)
-            self.dlg.sidemenu.setMinimumWidth(150)
+            self.dlg.sidemenu.setMaximumWidth(160)
+            self.dlg.sidemenu.setMinimumWidth(160)
 
     #Changes the view depending on the side menu click
     def display(self, i):
@@ -2282,8 +2290,6 @@ class QRaven:
         ostrich_mode = self.dlg.combo_ostrichexe_mode.currentText()
         raven_exe_path = self.dlg.file_ravenexe.filePath()
         ostrich_exe_path = self.dlg.file_ostrichexe.filePath()
-        username = self.dlg.txt_casparusername.text()
-        password = self.dlg.txt_casparpassword.text()
         resetmode = self.dlg.combo_resetmode.currentText()
         menubar = self.dlg.combo_menubar.currentText()
 
@@ -2300,8 +2306,6 @@ class QRaven:
         s.setValue("qraven/ostrich_mode", ostrich_mode)
         s.setValue("qraven/raven_exe", raven_exe_path)
         s.setValue("qraven/ostrich_exe", ostrich_exe_path)
-        s.setValue("qraven/casparUsername", username)
-        s.setValue("qraven/casparPassword", password)
         s.setValue("qraven/resetmode", resetmode)
         s.setValue("qraven/menubar", menubar)
 
@@ -2319,8 +2323,6 @@ class QRaven:
         raven_exe_path = s.value("qraven/raven_exe", "")
         ostrich_exe_path = s.value("qraven/ostrich_exe", "")
 
-        username = s.value("qraven/casparUsername", "")
-        password = s.value("qraven/casparPassword", "")
         resetmode = s.value("qraven/resetmode", "Full")
         menubar = s.value("qraven/menubar", "Default")
 
@@ -2345,8 +2347,6 @@ class QRaven:
         self.dlg.combo_ostrichexe_mode.setCurrentText(ostrich_mode)
         self.dlg.file_ravenexe.setFilePath(raven_exe_path)
         self.dlg.file_ostrichexe.setFilePath(ostrich_exe_path)
-        self.dlg.txt_casparusername.setText(username)
-        self.dlg.txt_casparpassword.setText(password)
         self.dlg.combo_resetmode.setCurrentText(resetmode)
         self.dlg.combo_menubar.setCurrentText(menubar)
     
