@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QApplication
 from qgis.core import QgsVectorLayer
 import processing
 import urllib.request
+from ..utilities import merge_netcf
 
 
 class Daymet:
@@ -85,7 +86,12 @@ class Daymet:
                         try:  # Try required if file size too small
                             self.handle_progress(dlg, currentsize, int(totalsize))
                         except:
-                            self.dlg.progress_daymet.setValue(100)
+                            dlg.progress_daymet.setValue(100)
+            if dlg.chk_daymet_merge.isChecked():
+                dlg.lbl_daymet_download.setText('Merging files...')
+                QApplication.processEvents()
+                merge_netcf(output, variable)
+                dlg.lbl_daymet_download.setText('Merge complete.')
         dlg.lbl_daymet_download.setText("Download complete!")
         dlg.progress_daymet.setValue(0)
 
