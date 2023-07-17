@@ -1,11 +1,10 @@
-import requests
+from PyQt5.QtWidgets import QApplication
+from qgis.core import QgsVectorLayer
+import processing
+import urllib.request
+
+
 class Daymet:
-
-    def __int__(self):
-        pass
-
-    def define_area(self):
-        pass
 
     def get_search_criteria(self, dlg):
         output_folder = dlg.file_daymet_output.filePath()
@@ -18,16 +17,46 @@ class Daymet:
                 variables += item.text() + ' '
         if start_date and end_date and variables:
             dlg.lbl_daymet_error.clear()
-            self.get_data(start_date, end_date, variables, output_folder)
+            bbox = self.define_area(dlg)
+            self.get_data(bbox, start_date, end_date, variables, output_folder, dlg)
         else:
             dlg.lbl_daymet_error.setText("At least one variable must be selected.")
 
-    def get_data(self, start, end, var, output):
+    def define_area(self, dlg):
+        input_polygon = dlg.file_daymet_polygon.filePath()
+        layer = QgsVectorLayer(input_polygon, "extent", "ogr")
+        crs = layer.crs().authid()
+        if crs != 'EPSG:4326':
+            print('CRS mismatch... input layer CRS is ' + crs)
+            print('Reprojecting layer to EPSG:4326...')
+            params = {
+                        'INPUT': layer,
+                        'TARGET_CRS': 'EPSG:4326',
+                        'OUTPUT': 'memory:Reprojected'
+                     }
+            reprojected = processing.run('native:reprojectlayer', params)
+            layer = reprojected['OUTPUT']
+            print('Reprojection done.')
+
+        print("Extracting bounding box...")
+        feats = [feat for feat in layer.getFeatures()]
+
+        for i, feat in enumerate(feats):
+            bbox = feat.geometry().boundingBox()
+            xmin, ymin, xmax, ymax = bbox.toRectF().getCoords()
+            bbox = [str(round(xmin, 2)), str(round(ymin, 2)), str(round(xmax, 2)), str(round(ymax, 2))]
+        print('Bounding box extraction done.')
+        return bbox
+
+    def get_data(self, bbox, start, end, var, output, dlg):
         region = "na"
-        north = "36.61"
-        west = "-85.37"
-        east = "-81.29"
-        south = "33.57"
+        north = bbox[3]
+        west = bbox[0]
+        east = bbox[2]
+        south = bbox[1]
+
+        dlg.lbl_daymet_download.setText("Initializing...")
+        QApplication.processEvents()
 
         for variable in var.split():
             for year in range(int(start.year), int(end.year)+1):
@@ -36,10 +65,32 @@ class Daymet:
                         "&west=" + west + "&east=" + east + "&south=" + south + \
                         "&disableProjSubset=on&horizStride=1&time_start=" + \
                         str(start) + "T12:00:00Z&time_end=" + str(end) + "T12:00:00Z&timeStride=1&accept=netcdf"
-                output_file = output + "/" + str(year) + variable + '.nc'
-                with requests.get(url, stream=True) as r:
-                    r.raise_for_status()
-                    with open(output_file, 'wb') as f:
-                        for chunk in r.iter_content(chunk_size=8192):
-                            f.write(chunk)
+                req = urllib.request.Request(url)
+                response = urllib.request.urlopen(req, timeout=60)
+                totalsize = response.info()['Content-Length']
+                currentsize = 0
+                chunk = 4096
 
+                filename = str(year) + variable + '.nc'
+                output_file = output + "/" + filename
+                dlg.lbl_daymet_download.setText("Variable " + str(var.split().index(variable) + 1) + "/" + str(len(var.split())) +
+                                                " - Downloading " + filename)
+                with open(output_file, 'wb') as file:
+                    while 1:
+                        data = response.read(chunk)
+                        if not data:
+                            break
+                        file.write(data)
+                        currentsize += chunk
+                        try:  # Try required if file size too small
+                            self.handle_progress(dlg, currentsize, int(totalsize))
+                        except:
+                            self.dlg.progress_daymet.setValue(100)
+        dlg.lbl_daymet_download.setText("Download complete!")
+        dlg.progress_daymet.setValue(0)
+
+    def handle_progress(self, dlg, blocksize, totalsize):
+        if totalsize > 0:
+            download_percentage = (blocksize / totalsize) * 100
+            dlg.progress_daymet.setValue(download_percentage)
+            QApplication.processEvents()

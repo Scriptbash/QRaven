@@ -2883,7 +2883,7 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="5" column="1">
            <widget class="QListWidget" name="list_daymet_variables">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
@@ -2931,7 +2931,7 @@
             </item>
            </widget>
           </item>
-          <item row="8" column="1">
+          <item row="9" column="1">
            <spacer name="verticalSpacer_13">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -2944,21 +2944,21 @@
             </property>
            </spacer>
           </item>
-          <item row="4" column="0">
+          <item row="5" column="0">
            <widget class="QLabel" name="label_121">
             <property name="text">
              <string>Variables</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="4" column="0">
            <widget class="QLabel" name="label_120">
             <property name="text">
              <string>End date</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="3" column="1">
            <widget class="QDateEdit" name="date_daymet_start_date">
             <property name="dateTime">
              <datetime>
@@ -2982,7 +2982,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="4" column="1">
            <widget class="QDateEdit" name="date_daymet_end_date">
             <property name="dateTime">
              <datetime>
@@ -3003,24 +3003,24 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
+          <item row="6" column="1">
            <widget class="QLabel" name="lbl_daymet_download">
             <property name="text">
-             <string>Downloading filename</string>
+             <string/>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="label_116">
             <property name="text">
              <string>Start date</string>
             </property>
            </widget>
           </item>
-          <item row="9" column="0" colspan="2">
+          <item row="10" column="0" colspan="2">
            <widget class="QWidget" name="widget_15" native="true">
             <layout class="QGridLayout" name="gridLayout_46">
              <item row="0" column="0">
@@ -3058,7 +3058,7 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
+          <item row="7" column="1">
            <widget class="QProgressBar" name="progress_daymet">
             <property name="value">
              <number>0</number>
@@ -3082,6 +3082,20 @@
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QgsFileWidget" name="file_daymet_polygon">
+            <property name="filter">
+             <string>*shp</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_63">
+            <property name="text">
+             <string>Input polygon</string>
             </property>
            </widget>
           </item>
