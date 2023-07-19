@@ -172,6 +172,7 @@ class gisScraper:
 
 
 def sendRequest(self, url, output):
+    timeout = self.dlg.spin_connection_timeout.value()
     req = urllib.request.Request(
                                 url, 
                                 data=None, 
@@ -179,7 +180,7 @@ def sendRequest(self, url, output):
                                     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
                                 }
                                 )
-    response = urllib.request.urlopen(req, timeout=10)
+    response = urllib.request.urlopen(req, timeout=timeout)
 
     totalsize = response.info()['Content-Length']
     currentsize = 0

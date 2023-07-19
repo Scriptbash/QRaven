@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1137</width>
-    <height>774</height>
+    <width>1384</width>
+    <height>906</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -112,7 +112,7 @@
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>8</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -2126,8 +2126,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>653</width>
-                   <height>550</height>
+                   <width>796</width>
+                   <height>753</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -3151,8 +3151,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>905</width>
-                   <height>907</height>
+                   <width>398</width>
+                   <height>1000</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -3548,8 +3548,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>905</width>
-                   <height>948</height>
+                   <width>429</width>
+                   <height>1054</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_17">
@@ -3965,8 +3965,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>942</width>
-               <height>760</height>
+               <width>379</width>
+               <height>859</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_27">
@@ -4309,8 +4309,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>647</width>
-                   <height>1369</height>
+                   <width>804</width>
+                   <height>1647</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -5111,8 +5111,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>425</width>
-                   <height>377</height>
+                   <width>589</width>
+                   <height>480</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -5779,8 +5779,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>338</width>
-                   <height>664</height>
+                   <width>512</width>
+                   <height>822</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_20">
@@ -6640,22 +6640,6 @@
           <item row="2" column="0">
            <widget class="QWidget" name="widget_13" native="true">
             <layout class="QGridLayout" name="gridLayout_30">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_117">
-               <property name="styleSheet">
-                <string notr="true"/>
-               </property>
-               <property name="text">
-                <string>&lt;a href=&quot;https://qraven.readthedocs.io/en/latest/&quot; style=&quot;color: rgb(170,170,170)&quot;&gt;Documentation&lt;/a&gt;</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-               </property>
-               <property name="openExternalLinks">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="1">
               <widget class="QLabel" name="label_108">
                <property name="styleSheet">
@@ -6672,12 +6656,216 @@
                </property>
               </widget>
              </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_117">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>&lt;a href=&quot;https://qraven.readthedocs.io/en/latest/&quot; style=&quot;color: rgb(170,170,170)&quot;&gt;Documentation&lt;/a&gt;</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+               <property name="openExternalLinks">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
           <item row="0" column="0">
            <widget class="QWidget" name="widget_10" native="true">
             <layout class="QGridLayout" name="gridLayout_44">
+             <item row="22" column="2">
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="13" column="0">
+              <spacer name="verticalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="18" column="2">
+              <widget class="QComboBox" name="combo_menubar">
+               <item>
+                <property name="text">
+                 <string>Default</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Collapsed</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QComboBox" name="combo_container">
+               <item>
+                <property name="text">
+                 <string>Docker</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Podman</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <widget class="QLabel" name="label_114">
+               <property name="text">
+                <string>OSTRICH</string>
+               </property>
+              </widget>
+             </item>
+             <item row="23" column="0" colspan="3">
+              <widget class="QLabel" name="lbl_update">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QWidget" name="widget_14" native="true">
+               <layout class="QGridLayout" name="gridLayout_31">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QPushButton" name="btn_dockerrm">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton::hover{background-color : rgb(186, 4, 4);}</string>
+                  </property>
+                  <property name="text">
+                   <string>Delete image</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <spacer name="horizontalSpacer_25">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="17" column="0">
+              <widget class="QLabel" name="label_112">
+               <property name="text">
+                <string>RavenView</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="3">
+              <widget class="QLabel" name="label_62">
+               <property name="font">
+                <font>
+                 <pointsize>14</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                 <underline>false</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>Containers</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_111">
+               <property name="text">
+                <string>Registry</string>
+               </property>
+              </widget>
+             </item>
+             <item row="20" column="0" colspan="3">
+              <widget class="QLabel" name="lbl_restartrequired">
+               <property name="styleSheet">
+                <string notr="true">color : red;font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="25" column="2">
+              <spacer name="verticalSpacer_7">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="9" column="0">
+              <widget class="QLabel" name="label_113">
+               <property name="text">
+                <string>Raven</string>
+               </property>
+              </widget>
+             </item>
+             <item row="16" column="2">
+              <widget class="QComboBox" name="combo_resetmode">
+               <item>
+                <property name="text">
+                 <string>Full</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Partial</string>
+                </property>
+               </item>
+              </widget>
+             </item>
              <item row="9" column="2">
               <widget class="QWidget" name="widget_7" native="true">
                <layout class="QGridLayout" name="gridLayout_25">
@@ -6737,6 +6925,72 @@
                </layout>
               </widget>
              </item>
+             <item row="18" column="0">
+              <widget class="QLabel" name="label_66">
+               <property name="text">
+                <string>Menu bar style</string>
+               </property>
+              </widget>
+             </item>
+             <item row="17" column="2">
+              <widget class="QComboBox" name="combo_rvnviewintegration">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Web browser</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Integrated</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_216">
+               <property name="text">
+                <string>Containerization software</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QComboBox" name="combo_dockerimage">
+               <item>
+                <property name="text">
+                 <string>scriptbash/qraven:latest</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>scriptbash/qraven:unstable</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QComboBox" name="combo_registry">
+               <item>
+                <property name="text">
+                 <string>ghcr.io</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>docker.io</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="16" column="0">
+              <widget class="QLabel" name="label_71">
+               <property name="text">
+                <string>Reset behavior</string>
+               </property>
+              </widget>
+             </item>
              <item row="7" column="1">
               <spacer name="verticalSpacer_6">
                <property name="orientation">
@@ -6750,11 +7004,53 @@
                </property>
               </spacer>
              </item>
-             <item row="18" column="0">
-              <widget class="QLabel" name="label_66">
-               <property name="text">
-                <string>Menu bar style</string>
+             <item row="8" column="0" colspan="3">
+              <widget class="QLabel" name="label_115">
+               <property name="font">
+                <font>
+                 <pointsize>14</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
                </property>
+               <property name="text">
+                <string>Executables</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_64">
+               <property name="text">
+                <string>Image</string>
+               </property>
+              </widget>
+             </item>
+             <item row="26" column="0" colspan="3">
+              <widget class="QWidget" name="widget_11" native="true">
+               <layout class="QHBoxLayout" name="horizontalLayout">
+                <item>
+                 <widget class="QPushButton" name="btn_savesettings">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>160</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Save</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
              <item row="15" column="0" colspan="3">
@@ -6828,77 +7124,16 @@
                </layout>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_216">
+             <item row="19" column="0">
+              <widget class="QLabel" name="label_123">
                <property name="text">
-                <string>Containerization software</string>
+                <string>Connection timeout</string>
                </property>
               </widget>
              </item>
-             <item row="16" column="0">
-              <widget class="QLabel" name="label_71">
-               <property name="text">
-                <string>Reset behavior</string>
-               </property>
-              </widget>
-             </item>
-             <item row="17" column="2">
-              <widget class="QComboBox" name="combo_rvnviewintegration">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <item>
-                <property name="text">
-                 <string>Web browser</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Integrated</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="10" column="0">
-              <widget class="QLabel" name="label_114">
-               <property name="text">
-                <string>OSTRICH</string>
-               </property>
-              </widget>
-             </item>
-             <item row="24" column="2">
-              <spacer name="verticalSpacer_7">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="8" column="0" colspan="3">
-              <widget class="QLabel" name="label_115">
-               <property name="font">
-                <font>
-                 <pointsize>14</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Executables</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="2">
-              <widget class="QWidget" name="widget_14" native="true">
-               <layout class="QGridLayout" name="gridLayout_31">
+             <item row="19" column="2">
+              <widget class="QWidget" name="widget_16" native="true">
+               <layout class="QGridLayout" name="gridLayout_47">
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
@@ -6908,18 +7143,31 @@
                 <property name="rightMargin">
                  <number>0</number>
                 </property>
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="btn_dockerrm">
-                  <property name="styleSheet">
-                   <string notr="true">QPushButton::hover{background-color : rgb(186, 4, 4);}</string>
-                  </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="label_124">
                   <property name="text">
-                   <string>Delete image</string>
+                   <string>seconds</string>
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="1">
-                 <spacer name="horizontalSpacer_25">
+                <item row="0" column="0">
+                 <widget class="QSpinBox" name="spin_connection_timeout">
+                  <property name="minimum">
+                   <number>10</number>
+                  </property>
+                  <property name="maximum">
+                   <number>600</number>
+                  </property>
+                  <property name="value">
+                   <number>60</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <spacer name="horizontalSpacer_30">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -6930,196 +7178,6 @@
                    </size>
                   </property>
                  </spacer>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item row="3" column="2">
-              <widget class="QComboBox" name="combo_dockerimage">
-               <item>
-                <property name="text">
-                 <string>scriptbash/qraven:latest</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>scriptbash/qraven:unstable</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="22" column="0" colspan="3">
-              <widget class="QLabel" name="lbl_update">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="18" column="2">
-              <widget class="QComboBox" name="combo_menubar">
-               <item>
-                <property name="text">
-                 <string>Default</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Collapsed</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QComboBox" name="combo_container">
-               <item>
-                <property name="text">
-                 <string>Docker</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Podman</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="3">
-              <widget class="QLabel" name="label_62">
-               <property name="font">
-                <font>
-                 <pointsize>14</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                 <underline>false</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>Containers</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="16" column="2">
-              <widget class="QComboBox" name="combo_resetmode">
-               <item>
-                <property name="text">
-                 <string>Full</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Partial</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="21" column="2">
-              <spacer name="verticalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_111">
-               <property name="text">
-                <string>Registry</string>
-               </property>
-              </widget>
-             </item>
-             <item row="17" column="0">
-              <widget class="QLabel" name="label_112">
-               <property name="text">
-                <string>RavenView</string>
-               </property>
-              </widget>
-             </item>
-             <item row="19" column="0" colspan="3">
-              <widget class="QLabel" name="lbl_restartrequired">
-               <property name="styleSheet">
-                <string notr="true">color : red;font-weight: bold;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="13" column="0">
-              <spacer name="verticalSpacer_8">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="9" column="0">
-              <widget class="QLabel" name="label_113">
-               <property name="text">
-                <string>Raven</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_64">
-               <property name="text">
-                <string>Image</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2">
-              <widget class="QComboBox" name="combo_registry">
-               <item>
-                <property name="text">
-                 <string>ghcr.io</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>docker.io</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="25" column="0" colspan="3">
-              <widget class="QWidget" name="widget_11" native="true">
-               <layout class="QHBoxLayout" name="horizontalLayout">
-                <item>
-                 <widget class="QPushButton" name="btn_savesettings">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>160</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Save</string>
-                  </property>
-                 </widget>
                 </item>
                </layout>
               </widget>
@@ -7147,8 +7205,8 @@
  <connections/>
  <buttongroups>
   <buttongroup name="buttonGroup_4"/>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

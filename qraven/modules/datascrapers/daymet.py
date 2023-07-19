@@ -50,6 +50,7 @@ class Daymet:
         return bbox
 
     def get_data(self, bbox, start, end, var, output, dlg):
+        timeout = dlg.spin_connection_timeout.value()
         region = "na"
         north = bbox[3]
         west = bbox[0]
@@ -67,7 +68,7 @@ class Daymet:
                         "&disableProjSubset=on&horizStride=1&time_start=" + \
                         str(start) + "T12:00:00Z&time_end=" + str(end) + "T12:00:00Z&timeStride=1&accept=netcdf"
                 req = urllib.request.Request(url)
-                response = urllib.request.urlopen(req, timeout=60)
+                response = urllib.request.urlopen(req, timeout=timeout)
                 totalsize = response.info()['Content-Length']
                 currentsize = 0
                 chunk = 4096

@@ -213,7 +213,7 @@ class QRaven:
         if self.first_start == True:
             self.first_start = False
             self.dlg = QRavenDialog()
-        
+
             self.loadsettings()
             self.setupMenubar()
             self.checkUpdate()
@@ -2292,6 +2292,7 @@ class QRaven:
         ostrich_exe_path = self.dlg.file_ostrichexe.filePath()
         resetmode = self.dlg.combo_resetmode.currentText()
         menubar = self.dlg.combo_menubar.currentText()
+        timeout = self.dlg.spin_connection_timeout.value()
 
         if containerization != self.containerization or registry != self.registry or containerimage != self.containerimage:
             self.dlg.lbl_restartrequired.setText('QGIS restart required to apply the changes.')
@@ -2308,6 +2309,7 @@ class QRaven:
         s.setValue("qraven/ostrich_exe", ostrich_exe_path)
         s.setValue("qraven/resetmode", resetmode)
         s.setValue("qraven/menubar", menubar)
+        s.setValue("qraven/timeout", timeout)
 
         self.iface.messageBar().pushSuccess("Success", "Your settings have been saved.")
 
@@ -2325,6 +2327,7 @@ class QRaven:
 
         resetmode = s.value("qraven/resetmode", "Full")
         menubar = s.value("qraven/menubar", "Default")
+        timeout = s.value("qraven/timeout", 60)
 
         if computerOS != 'linux':
             self.dlg.combo_ravenexe_mode.model().item(2).setEnabled(False)
@@ -2349,6 +2352,7 @@ class QRaven:
         self.dlg.file_ostrichexe.setFilePath(ostrich_exe_path)
         self.dlg.combo_resetmode.setCurrentText(resetmode)
         self.dlg.combo_menubar.setCurrentText(menubar)
+        self.dlg.spin_connection_timeout.setValue(timeout)
     
     def show_RavenView(self):
         self.w = RavenviewWindow()
