@@ -14,5 +14,7 @@ except ImportError:
 
 
 def merge_netcf(file_path, filename):
+    print('Merging files...')
     ds = xarray.merge([xarray.open_dataset(f) for f in glob.glob(file_path +'/*'+filename+'.nc')])
     ds.to_netcdf(file_path+'/'+filename+'_merged.nc')
+    print('Files merged.')

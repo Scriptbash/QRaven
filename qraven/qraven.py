@@ -2352,7 +2352,7 @@ class QRaven:
         self.dlg.file_ostrichexe.setFilePath(ostrich_exe_path)
         self.dlg.combo_resetmode.setCurrentText(resetmode)
         self.dlg.combo_menubar.setCurrentText(menubar)
-        self.dlg.spin_connection_timeout.setValue(timeout)
+        self.dlg.spin_connection_timeout.setValue(int(timeout))
     
     def show_RavenView(self):
         self.w = RavenviewWindow()
