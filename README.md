@@ -1,5 +1,5 @@
 <p align="center">
-<img alt="QRaven" src= "https://user-images.githubusercontent.com/98601298/206937821-d1d04252-11ac-4094-974f-fda63e1f4cca.png" width="300">
+<img alt="QRaven" src= "https://github.com/Scriptbash/QRaven/blob/main/logo_w_outline.png?raw=true" width="300">
 </p>
 
 <h3 align="center">A QGIS Plugin to help generate input files for Raven</h3>
