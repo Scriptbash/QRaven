@@ -112,7 +112,7 @@
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>8</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -2873,15 +2873,18 @@
         </widget>
         <widget class="QWidget" name="temperature">
          <layout class="QGridLayout" name="gridLayout_45">
-          <item row="1" column="1">
-           <widget class="QgsFileWidget" name="file_daymet_output">
-            <property name="filter">
-             <string>*.nc</string>
+          <item row="10" column="1">
+           <spacer name="verticalSpacer_13">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
             </property>
-            <property name="storageMode">
-             <enum>QgsFileWidget::GetDirectory</enum>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
             </property>
-           </widget>
+           </spacer>
           </item>
           <item row="5" column="1">
            <widget class="QListWidget" name="list_daymet_variables">
@@ -2931,18 +2934,31 @@
             </item>
            </widget>
           </item>
-          <item row="10" column="1">
-           <spacer name="verticalSpacer_13">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
+          <item row="8" column="1">
+           <widget class="QWidget" name="widget_17" native="true">
+            <layout class="QGridLayout" name="gridLayout_48">
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="chk_daymet_insert_nan">
+               <property name="text">
+                <string>Insert missing dates</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="chk_daymet_merge">
+               <property name="text">
+                <string>Automatically merge downloaded files</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
           <item row="5" column="0">
            <widget class="QLabel" name="label_121">
@@ -2951,17 +2967,27 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QgsFileWidget" name="file_daymet_polygon">
-            <property name="filter">
-             <string>*shp</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_63">
             <property name="text">
              <string>Input polygon</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QProgressBar" name="progress_daymet">
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLabel" name="lbl_daymet_download">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -3017,13 +3043,20 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
-           <widget class="QLabel" name="lbl_daymet_download">
-            <property name="text">
-             <string/>
+          <item row="1" column="1">
+           <widget class="QgsFileWidget" name="file_daymet_output">
+            <property name="filter">
+             <string>*.nc</string>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+            <property name="storageMode">
+             <enum>QgsFileWidget::GetDirectory</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QgsFileWidget" name="file_daymet_polygon">
+            <property name="filter">
+             <string>*shp</string>
             </property>
            </widget>
           </item>
@@ -3031,6 +3064,13 @@
            <widget class="QLabel" name="label_116">
             <property name="text">
              <string>Start date</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_122">
+            <property name="text">
+             <string>Output folder</string>
             </property>
            </widget>
           </item>
@@ -3065,20 +3105,6 @@
             </layout>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_122">
-            <property name="text">
-             <string>Output folder</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QProgressBar" name="progress_daymet">
-            <property name="value">
-             <number>0</number>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0" colspan="2">
            <widget class="QLabel" name="lbl_daymet_error">
             <property name="font">
@@ -3096,16 +3122,6 @@
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1">
-           <widget class="QCheckBox" name="chk_daymet_merge">
-            <property name="text">
-             <string>Automatically merge downloaded files</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -7204,9 +7220,9 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_4"/>
  </buttongroups>
 </ui>

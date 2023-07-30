@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QApplication
 from qgis.core import QgsVectorLayer
 import processing
 import urllib.request
-from ..utilities import merge_netcf
+from ..utilities import merge_netcdf, check_missing_dates, fill_missing_dates
 
 
 class Daymet:
@@ -88,10 +88,17 @@ class Daymet:
                             self.handle_progress(dlg, currentsize, int(totalsize))
                         except:
                             dlg.progress_daymet.setValue(100)
+                if dlg.chk_daymet_insert_nan.isChecked():
+                    missing_dates = check_missing_dates(output_file)
+                    print(missing_dates)
+                    #fill_missing_dates(output_file, missing_dates)
+                else:
+                    pass
+
             if dlg.chk_daymet_merge.isChecked():
                 dlg.lbl_daymet_download.setText('Merging files...')
                 QApplication.processEvents()
-                merge_netcf(output, variable)
+                merge_netcdf(output, variable)
                 dlg.lbl_daymet_download.setText('Merge complete.')
         dlg.lbl_daymet_download.setText("Download complete!")
         dlg.progress_daymet.setValue(0)
