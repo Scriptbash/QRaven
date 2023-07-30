@@ -2,6 +2,8 @@ import os
 import glob
 import pandas as pd
 from datetime import datetime, timedelta
+import pandas as pd
+from datetime import datetime, timedelta
 from pathlib import Path
 
 try:
@@ -18,7 +20,7 @@ except ImportError:
 def merge_netcdf(file_path, filename):
     print('Merging files...')
     ds = xarray.merge([xarray.open_dataset(f) for f in glob.glob(file_path + '/*' + filename+'.nc')])
-    ds.to_netcdf(file_path+'/'+filename+'_merged.nc')
+    ds.to_netcdf(file_path + '/' + filename + '_merged.nc')
     print('Files merged.')
 
 
@@ -29,8 +31,8 @@ def check_missing_dates(ncfile):
     end_year = int(pd.Timestamp(time_data.max()).strftime('%Y'))
     datetime_list = [datetime.utcfromtimestamp(ts.astype('O') / 1e9) for ts in time_data]
 
-    start_date = datetime(start_year, 1, 1)
-    end_date = datetime(end_year, 12, 31)
+    start_date = datetime(start_year, 1, 1, 12, 0)
+    end_date = datetime(end_year, 12, 31, 12, 0)
 
     all_dates = [start_date + timedelta(days=x) for x in range((end_date - start_date).days + 1)]
 
@@ -43,13 +45,11 @@ def fill_missing_dates(ncfile, missing_dates):
     if missing_dates:
         # Create an empty DataArray with NaN values for the missing dates
         missing_data = xarray.full_like(ds.isel(time=0), fill_value=float('nan'))
-
         # Update the time coordinate with the missing dates
         missing_data['time'] = missing_dates
-
         # Concatenate the missing data with the ds along the 'time' dimension
         updated_data = xarray.concat([ds, missing_data], dim='time')
-
-        print(f"Missing dates were filled with NaN values and saved to 'filled_data.nc'.")
+        updated_data.to_netcdf(ncfile)
+        print("Missing dates were filled with NaN values and saved to '" + ncfile)
     else:
-        print("No missing date found.")
+        print("No missing dates found.")
