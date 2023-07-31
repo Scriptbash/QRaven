@@ -90,7 +90,6 @@ class Daymet:
                             dlg.progress_daymet.setValue(100)
                 if dlg.chk_daymet_insert_nan.isChecked():
                     missing_dates = check_missing_dates(output_file)
-                    #print(missing_dates)
                     fill_missing_dates(output_file, missing_dates)
                 else:
                     pass
