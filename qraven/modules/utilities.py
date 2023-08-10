@@ -15,7 +15,6 @@ except ImportError:
         ('toolz', 'toolz-0.12.0-py3-none-any.whl'),
         ('dask', 'dask-2022.11.0-py3-none-any'),
         ('xarray', 'xarray-2022.11.0-py3-none-any.whl'),
-        # Add more modules and .whl file names as needed
     ]
 
     # Add the plugin directory to the Python path

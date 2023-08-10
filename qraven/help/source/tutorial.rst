@@ -50,7 +50,7 @@ Precipitations and Temperature
 For this tutorial we will only use data coming from the Daymet services. To do so, we will use the Daymet component of QRaven.
 
 1. Download and extract the shapefile of the Dumoine river here: `https://github.com/Scriptbash/QRaven/raw/main/bv_dumoine.zip <https://github.com/Scriptbash/QRaven/raw/main/bv_dumoine.zip>`_
-2. Click on the Daymet menu.
+2. Click on the "Daymet" menu.
 3. Select an output folder where the files will be saved.
 4. In the "Input polygon" field, select the extracted shapefile from step 1.
 5. Set the start date to 2010-01-01 and the end date to 2020-12-31.
@@ -74,12 +74,12 @@ Data needed to run BasinMaker can be fetch automatically by QRaven (Canada only 
 
 4. Once the download is finished, check the "Use the same paths as above" checkbox. This tells QRaven where the files to process are.
 5. In the "Clip layer" field, select the watershed's polygon shapefile.
-7. Click on "Process"
-    
+6. Click on "Process"
+
     .. image:: ./images/tutorial/gis_data_process.png
             :width: 600
 
-8. The results will be saved inside each data folder and inside a folder named "Results".
+7. The results will be saved inside each data folder and inside a folder named "Results".
 
 Setup the Raven files
 =====================
@@ -96,28 +96,97 @@ Generate a .rvi file
 7. Set the "TimeStep" to 1 hour.
 
     .. image:: ./images/tutorial/rvi_model_info.png
-            :width: 600
+        :width: 600
 
-8. Next, click on the "Optional I/O" tab
+8. Next, click on the "Optional I/O" tab.
 9. Check the "CreateRVPTemplate" checkbox. This will allow us to generate an .rvp file with the required parameters for HBV-EC when we will first run the model.
-10. While we are in the "Optional I/O", we will select a few evaluation metrics. Let's select Nash-Sutcliffe.
+10. While we are in the "Optional I/O", we will select an evaluation metric. Let's select Nash-Sutcliffe.
 
     .. image:: ./images/tutorial/rvi_optional_io.png
-            :width: 600
+        :width: 600
 
 11. Click on the "Custom output" tab.
-12. Click on the "Add output" button to add a new row
-13. Select the proper options to get a custom output that will be "DAILY AVERAGE SNOW BY_HRU"
-14. Generate to .rvi file by clicking on the "Write" button.
+12. Click on the "Add output" button to add a new row.
+13. Select the proper options to get a custom output that will be "DAILY AVERAGE SNOW BY_HRU".
+14. Generate the .rvi file by clicking on the "Write" button.
 
 
 Run BasinMaker to create a .rvh file
 ------------------------------------
-to-do
+Before using BasinMaker, we will verify the QRaven settings. Since this component uses a containerization software, we will need to make sure the proper options are selected.
+
+1. Click on the "Settings" menu.
+2. Select the software you have installed on your computer (either Docker or Podman).
+
+    .. warning::
+      If you are using Docker, make sure it's running in the background. If you are on Linux, You will need to take an extra step to run Docker without sudo. Please refer to the :ref:`Installation` section.
+
+3. You can leave the "Registry" option to the default "ghcr.io". The choice of the registry should not have any impacts unless one of the website is down.
+4. Make sure the "Image" is set on "scriptbash/qraven:latest", as the unstable version is used for development and may have breaking changes.
+5. Click on the "Save" button when you are ready.
+
+    .. note::
+      If you have made changes to the containers settings, you will need to close QRaven and restart QGIS for the changes to apply.
+
+.. image:: ./images/tutorial/container_settings.png
+    :width: 600
+
+Now that the settings are properly set up, let's head back to the "BasinMaker" menu.
+
+1. Select an output folder where the BasinMaker results will be saved.
+2. In the "DEM", "Landuse (polygons)", "Soil", "Lakes" and "Bankfull width" widgets, select the corresponding file previously downloaded in the "GIS" menu.
+
+    .. note::
+      The files should be in a folder named "Results" and the files should have "qrvn" as a prefix.
+
+3. For the "Points of interest", we will select the file created after streamflow data was acquired.
+4. You can leave the "Max memory (MB)" to the default value.
+5. Under "Define project spatial extent", verify that the "using_dem" button is checked.
+
+.. image:: ./images/tutorial/basinmaker_1.png
+    :width: 600
+
+6. Leave the "fac_threshold" to the default value (9000).
+7. Select "using_fdr" as the mode for "Delineate routing structure without lakes". The field under the option will unlock. Select the flow direction file.
+8. For the lake_attributes, select the corresponding shapefile attributes.
+9. Just like for the lakes, select the corresponding shapefile attributes for the "point_of_interest_attributes".
+10. Select the corresponding "bkfwd_attributes" for the bankfull width shapefile.
+
+.. image:: ./images/tutorial/basinmaker_2.png
+    :width: 600
+
+11. Click on the "Postprocessing tools" tab.
+12. In the "path_landuse_info, select the "landuse_info.csv" file which should be inside the folder with the qrvn_landuse shapefile.
+13. In the "path_soil_info, select the "soil_info.csv" file which should be inside the folder with the qrvn_soil shapefile.
+14. In the "path_veg_info, select the "veg_info.csv" file which should be inside the folder with the qrvn_landuse shapefile.
+15. Enter "Dumoine" in  the "model_name" text field.
+16. Finally, click on the "Run" button
+
+.. image:: ./images/tutorial/basinmaker_3.png
+    :width: 600
+
+.. note::
+    It will take a significant amount of time to complete. At times, it may look like QGIS is completely frozen, but it's not actually the case. Please do not force close QGIS, wait for the process to finish by itself.
+    If you must absolutely stop BasinMaker, you can stop the container instead. The process should end shortly after and QGIS will unfreeze.
 
 Run the raven model
 ===================
-to-do
+We now have almost all the required files to make the Raven model. The file structure of the model should look like this for now :
+
+::
+
+    Dumoine_model
+    ├── Dumoine.rvi
+    ├── Dumoine.rvh
+    ├── Lakes.rvh
+    ├── channel_properties.rvp
+    ├── 041902.rvt
+    ├── tmin_merged.nc
+    ├── tmax_merged.nc
+    ├── prcp_merged.nc
+    ├── gridweights_tmin.txt
+    ├── gridweights_tmax.txt
+    └── gridweights_prcp.txt
 
 Calibration with OSTRICH
 ========================

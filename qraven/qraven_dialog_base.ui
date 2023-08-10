@@ -112,7 +112,7 @@
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>5</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -2126,8 +2126,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>653</width>
-                   <height>550</height>
+                   <width>796</width>
+                   <height>753</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -3208,8 +3208,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1111</width>
-                   <height>907</height>
+                   <width>398</width>
+                   <height>1000</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -3605,8 +3605,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>365</width>
-                   <height>948</height>
+                   <width>429</width>
+                   <height>1054</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_17">
@@ -4022,8 +4022,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>1148</width>
-               <height>892</height>
+               <width>379</width>
+               <height>859</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_27">
@@ -4366,8 +4366,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1111</width>
-                   <height>1369</height>
+                   <width>1181</width>
+                   <height>1647</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -5168,8 +5168,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>425</width>
-                   <height>377</height>
+                   <width>589</width>
+                   <height>480</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -5431,39 +5431,12 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
-           <widget class="QgsFileWidget" name="file_hrus">
-            <property name="filter">
-             <string>*.shp</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_172">
-            <property name="text">
-             <string>NetCDF file</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1">
-           <widget class="QLineEdit" name="txt_gridid">
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="txt_varlat">
             <property name="placeholderText">
-             <string>id</string>
+             <string>lat</string>
             </property>
            </widget>
-          </item>
-          <item row="9" column="1">
-           <spacer name="horizontalSpacer_27">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>731</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
           </item>
           <item row="4" column="1">
            <widget class="QLineEdit" name="txt_varlon">
@@ -5472,70 +5445,16 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QLineEdit" name="txt_varlat">
-            <property name="placeholderText">
-             <string>lat</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="txt_dimlon">
-            <property name="placeholderText">
-             <string>rlon</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="combo_ncattributes">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QgsFileWidget" name="file_netcdf">
-            <property name="filter">
-             <string>*.nc *.nc4 *.shp</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_166">
-            <property name="text">
-             <string>Dim name longitude (x)</string>
-            </property>
-           </widget>
-          </item>
           <item row="7" column="1">
-           <widget class="QFrame" name="frame_5">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <widget class="QRadioButton" name="rb_gaugeid">
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
-               </property>
-               <property name="text">
-                <string>Use gauge ID</string>
-               </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_3</string>
-               </attribute>
-              </widget>
-             </item>
-             <item>
+           <widget class="QWidget" name="widget_18" native="true">
+            <layout class="QGridLayout" name="gridLayout_49">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <item row="0" column="0">
               <widget class="QRadioButton" name="rb_subbasinid">
                <property name="layoutDirection">
                 <enum>Qt::LeftToRight</enum>
@@ -5551,27 +5470,47 @@
                </attribute>
               </widget>
              </item>
+             <item row="0" column="1">
+              <widget class="QRadioButton" name="rb_gaugeid">
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="text">
+                <string>Use gauge ID</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup_3</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="2">
+              <widget class="QLineEdit" name="txt_gridid">
+               <property name="placeholderText">
+                <string>id</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="txt_dimlat">
-            <property name="placeholderText">
-             <string>rlat</string>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_172">
+            <property name="text">
+             <string>NetCDF file</string>
             </property>
            </widget>
           </item>
-          <item row="10" column="0">
-           <widget class="QLabel" name="label_170">
-            <property name="text">
-             <string>Output path</string>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="combo_ncattributes">
+            <property name="enabled">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_171">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_166">
             <property name="text">
-             <string>Var name latitude (y)</string>
+             <string>Dim name longitude (x)</string>
             </property>
            </widget>
           </item>
@@ -5626,12 +5565,25 @@
             </layout>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_168">
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_171">
             <property name="text">
-             <string>Shapefile attribute</string>
+             <string>Var name latitude (y)</string>
             </property>
            </widget>
+          </item>
+          <item row="9" column="1">
+           <spacer name="horizontalSpacer_27">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>731</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item row="4" column="0">
            <widget class="QLabel" name="label_165">
@@ -5640,10 +5592,52 @@
             </property>
            </widget>
           </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_170">
+            <property name="text">
+             <string>Output path</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QgsFileWidget" name="file_hrus">
+            <property name="filter">
+             <string>*.shp</string>
+            </property>
+           </widget>
+          </item>
           <item row="3" column="0">
            <widget class="QLabel" name="label_167">
             <property name="text">
              <string>Dim name latitude (y)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_168">
+            <property name="text">
+             <string>Shapefile attribute</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QgsFileWidget" name="file_netcdf">
+            <property name="filter">
+             <string>*.nc *.nc4 *.shp</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="txt_dimlon">
+            <property name="placeholderText">
+             <string>rlon</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="txt_dimlat">
+            <property name="placeholderText">
+             <string>rlat</string>
             </property>
            </widget>
           </item>
@@ -5836,8 +5830,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1111</width>
-                   <height>835</height>
+                   <width>512</width>
+                   <height>822</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_20">
@@ -7262,8 +7256,8 @@
  <connections/>
  <buttongroups>
   <buttongroup name="buttonGroup_4"/>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
