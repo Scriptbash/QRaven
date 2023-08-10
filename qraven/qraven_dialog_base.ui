@@ -112,7 +112,7 @@
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -2126,8 +2126,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>796</width>
-                   <height>753</height>
+                   <width>653</width>
+                   <height>550</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -3208,8 +3208,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>398</width>
-                   <height>1000</height>
+                   <width>1111</width>
+                   <height>907</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -3605,8 +3605,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>429</width>
-                   <height>1054</height>
+                   <width>365</width>
+                   <height>948</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_17">
@@ -4022,8 +4022,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>379</width>
-               <height>859</height>
+               <width>1148</width>
+               <height>892</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_27">
@@ -4366,8 +4366,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>804</width>
-                   <height>1647</height>
+                   <width>1111</width>
+                   <height>1369</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -5168,8 +5168,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>589</width>
-                   <height>480</height>
+                   <width>425</width>
+                   <height>377</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -5819,7 +5819,7 @@
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_3">
             <property name="currentIndex">
-             <number>5</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab_9">
              <attribute name="title">
@@ -5836,8 +5836,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>512</width>
-                   <height>822</height>
+                   <width>1111</width>
+                   <height>835</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_20">
@@ -7261,9 +7261,9 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_3"/>
-  <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_3"/>
  </buttongroups>
 </ui>

@@ -47,22 +47,33 @@ Downloading streamflow data for Canada is quite easy in QRaven.
 
 Precipitations and Temperature
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-* To-do
+For this tutorial we will only use data coming from the Daymet services. To do so, we will use the Daymet component of QRaven.
+
+1. Download and extract the shapefile of the Dumoine river here: `https://github.com/Scriptbash/QRaven/raw/main/bv_dumoine.zip <https://github.com/Scriptbash/QRaven/raw/main/bv_dumoine.zip>`_
+2. Click on the Daymet menu.
+3. Select an output folder where the files will be saved.
+4. In the "Input polygon" field, select the extracted shapefile from step 1.
+5. Set the start date to 2010-01-01 and the end date to 2020-12-31.
+6. In the variable list, select "tmin", "tmax" and "prcp".
+7. Leave both the "Insert missing dates" and "Merge downloaded files" checkboxes checked. Since Daymet strips december 31st from the NetCDF files during leap years to include february 29, this will automatically fix the problem for us.
+8. Click on the "Download" button and wait for the process to finish. It could take quite a while to finish.
+
+    .. image:: ./images/tutorial/get_daymet_data.png
+            :width: 600
 
 Data for BasinMaker
 -------------------
 Data needed to run BasinMaker can be fetch automatically by QRaven (Canada only for now).
 
-1. Download and extract the shapefile of the Dumoine river here: `https://github.com/Scriptbash/QRaven/raw/main/bv_dumoine.zip <https://github.com/Scriptbash/QRaven/raw/main/bv_dumoine.zip>`_
-2. Click on the GIS menu
-3. Select a path where to save the files. Do this for all of the Data.
-4. Click on "Download". This could take a while depending on the files being downloaded.
+1. Click on the GIS menu
+2. Select a path where to save the files. Do this for all of the Data.
+3. Click on "Download". This could take a while depending on the files being downloaded.
     
     .. image:: ./images/tutorial/download_gis_data.png
             :width: 600
 
-5. Once the download is finished, check the "Use the same paths as above" checkbox. This tells QRaven where the files to process are.
-6. In the "Clip layer" field, select the watershed's polygon shapefile.
+4. Once the download is finished, check the "Use the same paths as above" checkbox. This tells QRaven where the files to process are.
+5. In the "Clip layer" field, select the watershed's polygon shapefile.
 7. Click on "Process"
     
     .. image:: ./images/tutorial/gis_data_process.png
@@ -72,11 +83,33 @@ Data needed to run BasinMaker can be fetch automatically by QRaven (Canada only 
 
 Setup the Raven files
 =====================
-to-do
+Now that we have all the required data and some model files, we can start setting up the Raven model files.
 
 Generate a .rvi file
 --------------------
-to-do
+1. Click on the "Raven RVI" menu.
+2. Make sure the selected tab is "Model info".
+3. Click on the "HBV-EC" template button. This will load a basic template with the HBV-EC structure.
+4. Select an output directory where the generated .rvi file will be saved.
+5. In the model name, type "Dumoine".
+6. Set the simulation start date to 2010-01-01 and the end date to 2020-12-31. Leave the hours to 0:00:00.
+7. Set the "TimeStep" to 1 hour.
+
+    .. image:: ./images/tutorial/rvi_model_info.png
+            :width: 600
+
+8. Next, click on the "Optional I/O" tab
+9. Check the "CreateRVPTemplate" checkbox. This will allow us to generate an .rvp file with the required parameters for HBV-EC when we will first run the model.
+10. While we are in the "Optional I/O", we will select a few evaluation metrics. Let's select Nash-Sutcliffe.
+
+    .. image:: ./images/tutorial/rvi_optional_io.png
+            :width: 600
+
+11. Click on the "Custom output" tab.
+12. Click on the "Add output" button to add a new row
+13. Select the proper options to get a custom output that will be "DAILY AVERAGE SNOW BY_HRU"
+14. Generate to .rvi file by clicking on the "Write" button.
+
 
 Run BasinMaker to create a .rvh file
 ------------------------------------
