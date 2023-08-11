@@ -305,6 +305,7 @@ class QRaven:
 
             #----------Generate GridWeights---------#
             self.dlg.file_netcdf.fileChanged.connect(self.toggleWidget)
+            self.dlg.file_hrus.fileChanged.connect(self.get_downstream_sub_id)
             self.dlg.btn_rungridweight.clicked.connect(lambda:self.dockerinit('GridWeights'))
             #----------------------------------------#
 
@@ -1448,11 +1449,11 @@ class QRaven:
             ncfilename = ntpath.basename(ncfile)  #Get the file name with extension
             foldernc = os.path.dirname(ncfile)  #Get only the file path (without the file name)
             ncextension = os.path.splitext(ncfilename)[1]
-            volumenc = foldernc + ':/root/Gridweights/Data:z'
+            volumenc = foldernc + ':/root/Gridweights/Data/nc:z'
             hrusfile = self.dlg.file_hrus.filePath()
             hrusfilename = ntpath.basename(hrusfile)
             folderhrus = os.path.dirname(hrusfile)
-            volumehrus = folderhrus + ':/root/Gridweights/Data:z'
+            volumehrus = folderhrus + ':/root/Gridweights/Data/hru:z'
             dimlon = self.dlg.txt_dimlon.text()
             dimlat = self.dlg.txt_dimlat.text()
             varlon = self.dlg.txt_varlon.text()
@@ -1468,9 +1469,9 @@ class QRaven:
                 selectedid = ' -b '
             if ncextension == '.shp':
                 shpattributes = self.dlg.combo_ncattributes.currentText()
-                pythoncmd = 'python3 -u derive_grid_weights.py -i ' + '/root/Gridweights/Data/'+ncfilename + ' -f '+ '"'+shpattributes+'"' + ' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
+                pythoncmd = 'python3 -u derive_grid_weights.py -i ' + '/root/Gridweights/Data/nc/'+ncfilename + ' -f '+ '"'+shpattributes+'"' + ' -r ' + '/root/Gridweights/Data/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
             else:
-                pythoncmd = 'python3 -u derive_grid_weights.py -i ' + '/root/Gridweights/Data/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
+                pythoncmd = 'python3 -u derive_grid_weights.py -i ' + '/root/Gridweights/Data/nc/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/Data/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
     
             self.docker.start('/root/Gridweights', volumenc, volumehrus)
             self.docker.runGridWeights(pythoncmd)
@@ -1494,7 +1495,29 @@ class QRaven:
             self.docker.run_ostrich()
 
         self.docker.stop()
-   
+
+    def get_downstream_sub_id(self):
+        input_file = self.dlg.file_hrus.filePath()
+
+        # vlayer = QgsVectorLayer(input_file, "hrus", "ogr")
+        # if not vlayer.isValid():
+        #     print("Layer failed to load!")
+        # else:
+        #     field_names = vlayer.fields().names()
+        #
+        # lat = None
+        # new_lat = None
+        # for feature in layer.getFeatures():
+        #     has_poi = feature["Has_POI"]
+        #     if has_poi != 1:
+        #         pass
+        #     else:
+        #         if lat and new_lat:
+        #         if lat <
+        #         lat = feature["centroid_y"]
+
+
+
     def searchStreamflow(self):
         widget = self.dlg.sender().objectName()  #Get the widget name
 
