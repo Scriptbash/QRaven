@@ -31,9 +31,22 @@ except ImportError:
 
 def merge_netcdf(file_path, filename):
     print('Merging files...')
-    ds = xarray.open_mfdataset(file_path + '/*' + filename+'.nc', chunks='auto')
-    ds.to_netcdf(file_path + '/' + filename + '_merged.nc')
-    print('Files merged.')
+    try:
+        ds = xarray.open_mfdataset(file_path + '/*' + filename+'.nc', chunks='auto')
+        ds.to_netcdf(file_path + '/' + filename + '_merged.nc')
+    except:
+        pass
+    try:
+        print('ValueError: Coordinate variable time is neither monotonically '
+              'increasing nor monotonically decreasing on all datasets')
+        print('Attempting a nested merge, time dimension will be concatenated.')
+        ds = xarray.open_mfdataset(file_path + '/*' + filename+'.nc',
+                                   chunks='auto', combine="nested", concat_dim='time')
+        ds.to_netcdf(file_path + '/' + filename + '_merged.nc')
+    except:
+        print('All attempts to merge the netCDF files failed. Manual processing will be required.')
+        return
+
 
 
 def check_missing_dates(ncfile):
