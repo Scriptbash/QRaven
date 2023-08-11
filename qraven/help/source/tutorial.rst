@@ -81,6 +81,7 @@ Data needed to run BasinMaker can be fetch automatically by QRaven (Canada only 
 
 7. The results will be saved inside each data folder and inside a folder named "Results".
 
+
 Setup the Raven files
 =====================
 Now that we have all the required data and some model files, we can start setting up the Raven model files.
@@ -169,8 +170,26 @@ Now that the settings are properly set up, let's head back to the "BasinMaker" m
     It will take a significant amount of time to complete. At times, it may look like QGIS is completely frozen, but it's not actually the case. Please do not force close QGIS, wait for the process to finish by itself.
     If you must absolutely stop BasinMaker, you can stop the container instead. The process should end shortly after and QGIS will unfreeze.
 
-Run the raven model
-===================
+Generate grid weights
+---------------------
+Since the format of the data taken from Daymet is netCDF, we need to use the GridWeightsGenerator.
+
+1. Click on the "Gridweights" menu.
+2. Select one of the netCDF files.
+3. Enter the dimensions and variables names. It should be x and y.
+4. In the "HRUs file" widget, select the BasinMaker final output. The file name should be "finalcat_hru_info.shp".
+5. Check the "Use subbasin ID" button.
+6. Below the button we just checked, we need to enter the ID of the most downstream subbasin. This information can be found in the attributes table of the "finalcat_hru_info.shp" shapefile. The column should be called "SubId".
+7. Select an output file.
+8. Click on the "Run" button.
+9. repeat the previous steps for the other netCDF files.
+
+    .. image:: ./images/tutorial/gridweights.png
+        :width: 600
+
+Finishing up the files setup
+----------------------------
+
 We now have almost all the required files to make the Raven model. The file structure of the model should look like this for now :
 
 ::
@@ -179,6 +198,7 @@ We now have almost all the required files to make the Raven model. The file stru
     ├── Dumoine.rvi
     ├── Dumoine.rvh
     ├── Lakes.rvh
+    ├── Dumoine.rvp
     ├── channel_properties.rvp
     ├── 041902.rvt
     ├── tmin_merged.nc
@@ -187,6 +207,13 @@ We now have almost all the required files to make the Raven model. The file stru
     ├── gridweights_tmin.txt
     ├── gridweights_tmax.txt
     └── gridweights_prcp.txt
+
+Before being able to run the model, we will need to make some manual changes here and there.
+
+
+Run the raven model
+===================
+to-do
 
 Calibration with OSTRICH
 ========================

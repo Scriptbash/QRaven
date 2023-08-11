@@ -112,7 +112,7 @@
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>5</number>
+         <number>8</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -6697,7 +6697,7 @@
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>&lt;a href=&quot;https://github.com/Scriptbash/QRaven/issues/new/choose&quot; style=&quot;color: rgb(170,170,170)&quot;&gt;Report an issue&lt;/a&gt;</string>
+                <string>&lt;a href=&quot;https://github.com/Scriptbash/QRaven/issues&quot; style=&quot;color: rgb(170,170,170)&quot;&gt;Report an issue&lt;/a&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -7206,6 +7206,12 @@
                 </item>
                 <item row="0" column="0">
                  <widget class="QSpinBox" name="spin_connection_timeout">
+                  <property name="minimumSize">
+                   <size>
+                    <width>65</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="minimum">
                    <number>10</number>
                   </property>
