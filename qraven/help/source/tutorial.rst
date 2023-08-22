@@ -1,13 +1,11 @@
 =================================
 Create a Raven model step by step
 =================================
-
 This tutorial will explain how to build a Raven model from scratch using QRaven.
 The HBV-EC template will be used to model the watershed of Dumoine river.
 
 Get the required data
 =====================
-
 The data needed can be separated for two uses;
 
 1. for Raven (Temperature, precipitations, streamflow, etc.)
@@ -189,7 +187,6 @@ Since the format of the data taken from Daymet is netCDF, we need to use the Gri
 
 Finishing up the files setup
 ----------------------------
-
 We now have almost all the required files to make the Raven model. The file structure of the model should look like this for now :
 
 ::
@@ -210,10 +207,72 @@ We now have almost all the required files to make the Raven model. The file stru
 
 Before being able to run the model, we will need to make some manual changes here and there.
 
+First, we need to update the HRU Id in the 041902.rvt file.
+
+1. Open the file 041902.rvt
+2. Replace the text <Basin_ID or HRU_ID> in the first line for the HRU Id in which the station is located. In my case it is 602.
+3. The first line of the file should now be like this :ObservationData HYDROGRAPH 602 m3/s
+
+Next, we must create an .rvt that will tell Raven where to look for the observations and the gridded data.
+
+1. Create a file called Dumoine.rvt
+2. Enter the following text:
+
+::
+
+    :GriddedForcing           precipitations
+        :ForcingType          PRECIP
+        :FileNameNC           prcp_merged
+        :VarNameNC            prcp
+        :DimNamesNC           x y time
+        :RedirectToFile       gridweights_prcp.txt
+    :EndGriddedForcing
+
+    :GriddedForcing             Min_temp
+        :ForcingType            TEMP_MIN
+        :FileNameNC             tmin_merged.nc
+        :VarNameNC              tmin
+        :DimNamesNC             x y time
+        :RedirectToFile         gridweights_tmin.txt
+    :EndGriddedForcing
+
+    :GriddedForcing             Max_temp
+        :ForcingType            TEMP_MAX
+        :FileNameNC             tmax_merged.nc
+        :VarNameNC              tmax
+        :DimNamesNC             x y time
+        :RedirectToFile         gridweights_tmax.txt
+    :EndGriddedForcing
+
+    :RedirectToFile	            041902.rvt
+
+
 
 Run the raven model
 ===================
-to-do
+Before being able to run the model, we will need to create a .rvp file. Since we checked the option ":CreateRVPTemplate" in the .rvi file,
+Raven will generate a template file the first time we run the model.
+
+.. warning::
+    The Raven executable path must be set the in the "Settings" menu. If you want to use a container or Flatpak, you must select those options before running the model.
+
+1. Click on the "Run Raven" menu.
+2. In the "Input directory", select the folder that contains all the model files.
+3. Select an output directory.
+4. The "File name prefix" and "RunName" fields will be filled automatically.
+5. Click on the "Run Raven model" button.
+
+
+We should now have a template file called "Dumoine.rvp_temp.rvp". Since this file only contains the required parameters without their values, we can automatically fill it using QRaven. To do so, click on "Auto fill rvp template".
+Now that we have a .rvp template, click on "Overwrite :CreateRVPTemplate". This will remove the command from the .rvi file and will allow us to run the actual model.
+
+Since BasinMaker already generated an .rvp file, we will need to add its content to the new .rvp file. Open the new file file and add the following line:
+
+::
+
+ :RedirectToFile channel_properties.rvp
+
+The model is now ready, click on the "Run Raven model" button once again.
 
 Calibration with OSTRICH
 ========================
