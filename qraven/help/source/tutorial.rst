@@ -233,6 +233,35 @@ Next, we must create an .rvt file that will tell Raven where to look for the obs
 1. Create a file called Dumoine.rvt
 2. Enter the following text:
 
+::
+
+    :GriddedForcing           precipitations
+        :ForcingType          PRECIP
+        :FileNameNC           prcp_merged
+        :VarNameNC            prcp
+        :DimNamesNC           x y time
+        :RedirectToFile       gridweights_prcp.txt
+    :EndGriddedForcing
+
+    :GriddedForcing             Min_temp
+        :ForcingType            TEMP_MIN
+        :FileNameNC             tmin_merged.nc
+        :VarNameNC              tmin
+        :DimNamesNC             x y time
+        :RedirectToFile         gridweights_tmin.txt
+    :EndGriddedForcing
+
+    :GriddedForcing             Max_temp
+        :ForcingType            TEMP_MAX
+        :FileNameNC             tmax_merged.nc
+        :VarNameNC              tmax
+        :DimNamesNC             x y time
+        :RedirectToFile         gridweights_tmax.txt
+    :EndGriddedForcing
+
+    :RedirectToFile	            041902.rvt
+
+
 
 Run the raven model
 ===================
@@ -255,6 +284,9 @@ Now that we have a .rvp template, click on "Overwrite :CreateRVPTemplate". This 
 
 Since BasinMaker already generated an .rvp file, we will need to add its content to the new .rvp file. Open the new file file and add the following line:
 
+::
+
+    :RedirectToFile channel_properties.rvp
 
 
 The model is now ready, click on the "Run Raven model" button once again.
