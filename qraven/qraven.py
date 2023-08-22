@@ -2128,7 +2128,7 @@ class QRaven:
                 if computerOS != 'windows':
                     cmd = 'ln', '-s', ostrich_executable, ostrich_input_folder    #Create a symlink so model can be run
                 else:
-                    cmd = 'mklink', '/D', ostrich_executable, ostrich_input_folder  #Need testing on Windows!!
+                    cmd = 'copy', ostrich_executable, ostrich_input_folder  #Need testing on Windows!!
                 rc = self.docker.runCommand(cmd)
                 if rc != 0:
                     print('A symlink may be already created.')
