@@ -1,21 +1,25 @@
 =================================
 Create a Raven model step by step
 =================================
+
 This tutorial will explain how to build a Raven model from scratch using QRaven.
 The HBV-EC template will be used to model the watershed of Dumoine river.
 
 Get the required data
 =====================
+
 The data needed can be separated for two uses;
 
 1. for Raven (Temperature, precipitations, streamflow, etc.)
 2. for BasinMaker (Landuse polygons, rivers network, DEM, etc.)
+
 
 Data for Raven
 --------------
 
 Streamflow
 ^^^^^^^^^^
+
 Downloading streamflow data for Canada is quite easy in QRaven. 
 
 1. Click on the Streamflow menu.
@@ -45,6 +49,7 @@ Downloading streamflow data for Canada is quite easy in QRaven.
 
 Precipitations and Temperature
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 For this tutorial we will only use data coming from the Daymet services. To do so, we will use the Daymet component of QRaven.
 
 1. Download and extract the shapefile of the Dumoine river here: `https://github.com/Scriptbash/QRaven/raw/main/bv_dumoine.zip <https://github.com/Scriptbash/QRaven/raw/main/bv_dumoine.zip>`_
@@ -59,8 +64,10 @@ For this tutorial we will only use data coming from the Daymet services. To do s
     .. image:: ./images/tutorial/get_daymet_data.png
             :width: 600
 
+
 Data for BasinMaker
 -------------------
+
 Data needed to run BasinMaker can be fetch automatically by QRaven (Canada only for now).
 
 1. Click on the GIS menu
@@ -82,10 +89,13 @@ Data needed to run BasinMaker can be fetch automatically by QRaven (Canada only 
 
 Setup the Raven files
 =====================
+
 Now that we have all the required data and some model files, we can start setting up the Raven model files.
+
 
 Generate a .rvi file
 --------------------
+
 1. Click on the "Raven RVI" menu.
 2. Make sure the selected tab is "Model info".
 3. Click on the "HBV-EC" template button. This will load a basic template with the HBV-EC structure.
@@ -112,6 +122,7 @@ Generate a .rvi file
 
 Run BasinMaker to create a .rvh file
 ------------------------------------
+
 Before using BasinMaker, we will verify the QRaven settings. Since this component uses a containerization software, we will need to make sure the proper options are selected.
 
 1. Click on the "Settings" menu.
@@ -168,8 +179,10 @@ Now that the settings are properly set up, let's head back to the "BasinMaker" m
     It will take a significant amount of time to complete. At times, it may look like QGIS is completely frozen, but it's not actually the case. Please do not force close QGIS, wait for the process to finish by itself.
     If you must absolutely stop BasinMaker, you can stop the container instead. The process should end shortly after and QGIS will unfreeze.
 
+
 Generate grid weights
 ---------------------
+
 Since the format of the data taken from Daymet is netCDF, we need to use the GridWeightsGenerator.
 
 1. Click on the "Gridweights" menu.
@@ -185,8 +198,10 @@ Since the format of the data taken from Daymet is netCDF, we need to use the Gri
     .. image:: ./images/tutorial/gridweights.png
         :width: 600
 
+
 Finishing up the files setup
 ----------------------------
+
 We now have almost all the required files to make the Raven model. The file structure of the model should look like this for now :
 
 ::
@@ -250,6 +265,7 @@ Next, we must create an .rvt that will tell Raven where to look for the observat
 
 Run the raven model
 ===================
+
 Before being able to run the model, we will need to create a .rvp file. Since we checked the option ":CreateRVPTemplate" in the .rvi file,
 Raven will generate a template file the first time we run the model.
 
@@ -270,10 +286,12 @@ Since BasinMaker already generated an .rvp file, we will need to add its content
 
 ::
 
- :RedirectToFile channel_properties.rvp
+    :RedirectToFile channel_properties.rvp
+
 
 The model is now ready, click on the "Run Raven model" button once again.
 
 Calibration with OSTRICH
 ========================
+
 to-do
