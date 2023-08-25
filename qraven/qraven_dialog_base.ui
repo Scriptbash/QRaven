@@ -112,7 +112,7 @@
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>8</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -2126,8 +2126,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>796</width>
-                   <height>753</height>
+                   <width>1111</width>
+                   <height>775</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -3208,8 +3208,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>398</width>
-                   <height>1000</height>
+                   <width>1111</width>
+                   <height>907</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -3605,8 +3605,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>429</width>
-                   <height>1054</height>
+                   <width>365</width>
+                   <height>948</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_17">
@@ -4022,8 +4022,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>379</width>
-               <height>859</height>
+               <width>1148</width>
+               <height>892</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_27">
@@ -4366,8 +4366,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1181</width>
-                   <height>1647</height>
+                   <width>1111</width>
+                   <height>1369</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -5168,8 +5168,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>589</width>
-                   <height>480</height>
+                   <width>1111</width>
+                   <height>775</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -5830,8 +5830,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>512</width>
-                   <height>822</height>
+                   <width>1111</width>
+                   <height>835</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_20">
@@ -6499,6 +6499,243 @@
              <attribute name="title">
               <string>Response var.</string>
              </attribute>
+             <layout class="QGridLayout" name="gridLayout_50">
+              <item row="2" column="0">
+               <widget class="QWidget" name="widget_20" native="true">
+                <layout class="QGridLayout" name="gridLayout_52">
+                 <item row="1" column="0">
+                  <widget class="QPushButton" name="pushButton_3">
+                   <property name="minimumSize">
+                    <size>
+                     <width>180</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>180</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Add variable</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QPushButton" name="pushButton_4">
+                   <property name="minimumSize">
+                    <size>
+                     <width>180</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>180</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Remove variable</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <spacer name="horizontalSpacer_34">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="0" column="0" colspan="3">
+                  <widget class="QLabel" name="label_126">
+                   <property name="font">
+                    <font>
+                     <pointsize>14</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Tied response variables</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QPushButton" name="pushButton_5">
+                   <property name="text">
+                    <string>Add parameter</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="2">
+                  <widget class="QPushButton" name="pushButton_6">
+                   <property name="text">
+                    <string>Remove parameter</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QWidget" name="widget_19" native="true">
+                <layout class="QGridLayout" name="gridLayout_51">
+                 <item row="1" column="1">
+                  <spacer name="horizontalSpacer_33">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QPushButton" name="pushButton">
+                   <property name="minimumSize">
+                    <size>
+                     <width>180</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>180</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Add variable</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QPushButton" name="pushButton_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>180</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>180</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Remove variable</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0" colspan="3">
+                  <widget class="QLabel" name="label_125">
+                   <property name="font">
+                    <font>
+                     <pointsize>14</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Response variables</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QTableWidget" name="tableWidget">
+                <column>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>File</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Sep</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Key</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Line</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Col</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Token</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Augmented</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QTableWidget" name="tableWidget_2">
+                <column>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Np</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Pname1</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Type</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Type data</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+             </layout>
             </widget>
             <widget class="QWidget" name="tab_15">
              <attribute name="title">
@@ -7261,9 +7498,9 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_4"/>
-  <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_4"/>
  </buttongroups>
 </ui>

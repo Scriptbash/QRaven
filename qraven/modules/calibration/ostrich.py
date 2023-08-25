@@ -81,8 +81,7 @@ class Ostrich:
             for col in range(cols):
                 current_widget = table.cellWidget(row, col)
                 if current_widget.filePath():
-                    file_name = path.basename(current_widget.filePath())
-                    tmp_pairs.append(file_name)
+                    tmp_pairs.append(current_widget.filePath())
                 else:
                     pass
             file_pairs.append(tmp_pairs)
@@ -320,7 +319,7 @@ class Ostrich:
             if file_pairs:
                 ostin.write('\nBeginFilePairs')
                 for pair in file_pairs:
-                    ostin.write('\n ' + pair[0] + ' ; ' + pair[1])
+                    ostin.write('\n ' + path.basename(pair[0]) + ' ; ' + path.basename(pair[1]))
                 ostin.write('\nEndFilePairs\n')
 
             if extra_files:
