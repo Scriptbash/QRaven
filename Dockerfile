@@ -45,11 +45,11 @@ RUN apt-get update \
     && mkdir -p ~/Raven/build \
     && mkdir -p ~/Ostrich/build \
     && cd ~/BasinMaker \
-    && wget https://raw.githubusercontent.com/Scriptbash/QRaven/main/create_RVH.py \
+    && wget --secure-protocol=TLSv1_2 https://raw.githubusercontent.com/Scriptbash/QRaven/main/create_RVH.py \
     && cd ~/Gridweights \
-    && wget https://raw.githubusercontent.com/julemai/GridWeightsGenerator/main/derive_grid_weights.py \
+    && wget --secure-protocol=TLSv1_2 https://raw.githubusercontent.com/julemai/GridWeightsGenerator/main/derive_grid_weights.py \
     && cd ~/Raven/build \
-    && wget https://github.com/CSHS-CWRA/RavenHydroFramework/archive/refs/tags/v3.7.1.zip \
+    && wget --secure-protocol=TLSv1_2 https://github.com/CSHS-CWRA/RavenHydroFramework/archive/refs/tags/v3.7.1.zip \
     && unzip RavenSource_v3.7.zip \
     && sed -i 's/^CXXFLAGS += -std=c++11/#&/' Makefile \
     && sed -i '/Options.pause =true;/c\Options.pause =false;' RavenMain.cpp \
@@ -57,7 +57,7 @@ RUN apt-get update \
     && cp Raven.exe ~/Raven \
     && rm -R ~/Raven/build \
     && cd ~/Ostrich/build \
-    && wget https://github.com/usbr/ostrich/archive/refs/tags/v21.03.16.zip \
+    && wget --secure-protocol=TLSv1_2 https://github.com/usbr/ostrich/archive/refs/tags/v21.03.16.zip \
     && unzip v21.03.16.zip \
     && cd ostrich-21.03.16/make \
     && make GCC_MPI \
