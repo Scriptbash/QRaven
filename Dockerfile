@@ -56,13 +56,13 @@ RUN apt-get update \
     && make \
     && cp Raven.exe ~/Raven \
     && rm -R ~/Raven/build \
-    && cd ~/Ostrich/build \
-    && wget https://github.com/lsmatott/ostrich/archive/refs/heads/master.zip \
-    && unzip v21.03.16.zip \
-    && cd ostrich-21.03.16/make \
-    && make GCC_MPI \
-    && cp OstrichMPI ~/Ostrich \
-    && rm -R ~/Ostrich/build \
+    #&& cd ~/Ostrich/build \
+    #&& wget https://github.com/usbr/ostrich/archive/refs/tags/v21.03.16.zip \
+    #&& unzip v21.03.16.zip \
+    #&& cd ostrich-21.03.16/make \
+    #&& make GCC_MPI \
+    #&& cp OstrichMPI ~/Ostrich \
+    #&& rm -R ~/Ostrich/build \
     && cd ~ \
     && grass -c EPSG:4326 ~/grass_tmp --text --exec g.extension r.clip \
     && grass -c EPSG:4326 ~/grass_tmp2 --text --exec g.extension r.accumulate \
