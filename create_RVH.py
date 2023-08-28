@@ -306,6 +306,14 @@ def generateHRUs():
     try:
         print('\Generate_HRUs running...\n')
         if params['pathlakes'] != '#':
+            if os.path.isfile(os.path.join(input_routing_product_folder, "sl_connected_lake.shp")):
+                connected_lakes = os.path.join(input_routing_product_folder, "sl_connected_lake.shp")
+            else:
+                connected_lakes = '#'
+            if os.path.isfile(os.path.join(input_routing_product_folder, "sl_non_connected_lake.shp")):
+                non_connected_lakes = os.path.join(input_routing_product_folder, "sl_non_connected_lake.shp")
+            else:
+                non_connected_lakes = '#'
             bm_post.Generate_HRUs(
                 path_output_folder=folder_product_after_gen_hrus,
                 path_subbasin_polygon        =os.path.join(input_routing_product_folder, "finalcat_info.shp"),
