@@ -57,7 +57,7 @@ RUN apt-get update \
     && cp Raven.exe ~/Raven \
     && rm -R ~/Raven/build \
     && cd ~/Ostrich/build \
-    && wget https://github.com/usbr/ostrich/archive/refs/tags/v21.03.16.zip \
+    && wget https://github.com/lsmatott/ostrich/archive/refs/heads/master.zip \
     && unzip v21.03.16.zip \
     && cd ostrich-21.03.16/make \
     && make GCC_MPI \
