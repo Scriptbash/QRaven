@@ -51,7 +51,7 @@ RUN apt-get update \
     && cd ~/Raven/build \
     && wget --secure-protocol=TLSv1_2 https://github.com/CSHS-CWRA/RavenHydroFramework/archive/refs/tags/v3.7.1.zip \
     && unzip v3.7.1.zip \
-    && cd src \
+    && cd RavenHydroFramework-3.7.1/src \
     && sed -i 's/^CXXFLAGS += -std=c++11/#&/' Makefile \
     && sed -i '/Options.pause =true;/c\Options.pause =false;' RavenMain.cpp \
     && make \
