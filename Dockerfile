@@ -49,9 +49,8 @@ RUN apt-get update \
     && cd ~/Gridweights \
     && wget --secure-protocol=TLSv1_2 https://raw.githubusercontent.com/julemai/GridWeightsGenerator/main/derive_grid_weights.py \
     && cd ~/Raven/build \
-    && wget --secure-protocol=TLSv1_2 https://github.com/CSHS-CWRA/RavenHydroFramework/archive/refs/tags/v3.7.1.zip \
-    && unzip v3.7.1.zip \
-    && cd RavenHydroFramework-3.7.1/src \
+    && wget --secure-protocol=TLSv1_2 http://raven.uwaterloo.ca/files/v3.7/RavenSource_v3.7.zip \
+    && unzip RavenSource_v3.7.zip \
     && sed -i 's/^CXXFLAGS += -std=c++11/#&/' Makefile \
     && sed -i '/Options.pause =true;/c\Options.pause =false;' RavenMain.cpp \
     && make \
