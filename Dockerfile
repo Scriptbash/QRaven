@@ -23,7 +23,7 @@ RUN apt-get update \
         netcdf-bin \
         unzip \
     && localedef -i en_US -f UTF-8 en_US.UTF-8 \
-    && python3 -m pip install https://github.com/dustming/basinmaker/archive/refs/tags/v3.0.3.zip \
+    && python3 -m pip install https://github.com/dustming/basinmaker/archive/refs/tags/v3.0.1.zip \
     #&& python3 -m pip install https://github.com/dustming/basinmaker/archive/master.zip \
         simpledbf \
         grass_session \
