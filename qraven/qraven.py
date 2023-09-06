@@ -2025,7 +2025,6 @@ class QRaven:
         inputdir = self.dlg.file_runinputdir.filePath()
         prefix = self.dlg.txt_runnameprefix.text()  # Get the chosen prefix
         rvifile = inputdir + prefix + '.rvi'
-        print(rvifile)
         command_found = False
 
         try:
@@ -2034,7 +2033,6 @@ class QRaven:
             with open(rvifile, "w") as f:
                 for line in lines:
                     if line.strip("\n").strip() != ":CreateRVPTemplate":
-                        print(line)
                         f.write(line)
                     else:
                         command_found = True

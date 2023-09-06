@@ -82,8 +82,12 @@ def extractRVHhrus(inputdir, separator,rvhfile):
             #The "-1" is to avoid counting the "":Attribute" tag
             if len(hrudata[0])-1 < len(hrudata[1]) or len(hrudata[0])-1 > len(hrudata[1]):
                 print('Columns mismatch. The attributes name do not match the number of attributes. Please check your .rvh file.')
-                return None,None,None,None
-           
+                landuseclasscol += 1
+                terrainclasscol += 1
+                vegclasscol += 1
+                soilprofilecol += 1
+                print('Shifted columns, please double check the resulting .rvp file.')
+
             del hrudata[0]
             #Get the classes information
             for row in range(len(hrudata)):
@@ -197,7 +201,8 @@ def writeGlobalParameters(rvp,rvptemplate,rvn_paramsList):
             if firstloop == True:
                 print('Warning: some global parameters values were not found. Please check the rvp file.')
                 firstloop = False
-        rvp.write(':GlobalParameter '+ str(key)+ ' '+ str(value)+'\n\n')
+        rvp.write(':GlobalParameter '+ str(key)+ ' '+ str(value)+'\n')
+    rvp.write('\n')
 
 #Writes the soil, landuse, vegetation parameters
 def writeParametersList(tag,rvp,rvptemplate,rvn_paramsList,rvhprofile):
