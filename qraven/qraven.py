@@ -2024,7 +2024,7 @@ class QRaven:
     def overwrite_rvp_template(self):
         inputdir = self.dlg.file_runinputdir.filePath()
         prefix = self.dlg.txt_runnameprefix.text()  # Get the chosen prefix
-        rvifile = inputdir + separator + prefix + '.rvi'
+        rvifile = inputdir + prefix + '.rvi'
         print(rvifile)
         command_found = False
 
@@ -2033,7 +2033,8 @@ class QRaven:
                 lines = f.readlines()
             with open(rvifile, "w") as f:
                 for line in lines:
-                    if line.strip("\n") != ":CreateRVPTemplate":
+                    if line.strip("\n").strip() != ":CreateRVPTemplate":
+                        print(line)
                         f.write(line)
                     else:
                         command_found = True
