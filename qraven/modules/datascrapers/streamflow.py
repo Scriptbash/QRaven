@@ -120,7 +120,7 @@ class cehq:
                 
         totalLines = len(observation)
         with open(path,'w') as rvt:
-            rvt.write(':ObservationData HYDROGRAPH <Basin_ID or HRU_ID> m3/s \n')
+            rvt.write(':ObservationData HYDROGRAPH <Basin_ID or HRU_ID> 1.0 m3/s \n')
             rvt.write('\t'+observation[0][1].replace('/','-') + ' 00:00:00 ' + str(totalLines))
             for line in observation:
                 rvt.write('\n\t'+line[2])
@@ -241,7 +241,7 @@ class watersurvey:
                 pass
 
         with open(path,'w') as rvt:
-            rvt.write(':ObservationData HYDROGRAPH <Basin_ID or HRU_ID> m3/s \n')
+            rvt.write(':ObservationData HYDROGRAPH <Basin_ID or HRU_ID> 1.0 m3/s \n')
             rvt.write('\t'+observation[0][2].replace('/','-') + ' 00:00:00 ' + str(len(observation)))
             for line in observation:
                 if line[3] != '':
