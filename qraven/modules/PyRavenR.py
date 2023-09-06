@@ -235,12 +235,9 @@ def writeParametersList(tag,rvp,rvptemplate,rvn_paramsList,rvhprofile):
             rvp.write('\n  SOIL_'+str(layer+1))
             for value in defaultvalues:
                 rvp.write(', '+value)
-        rvp.write('\n\n')
     else:
         for profile in rvhprofile:
             rvp.write('\n  '+profile)
             for value in defaultvalues:
                 rvp.write(', '+value)
-        rvp.write('\n\n')
-    
-        
+    rvp.write('\n:End'+tag.replace(':', '') + "\n\n")

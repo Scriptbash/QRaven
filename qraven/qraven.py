@@ -1963,7 +1963,7 @@ class QRaven:
         rvifile = prefix+'.rvi'
         rvhfile = prefix+'.rvh'
         rvpfile = prefix+'.rvp'
-        rvptemplatefile = inputdir + prefix +'.rvp_temp.rvp'
+        rvptemplatefile = inputdir + separator + prefix +'.rvp_temp.rvp'
         script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
         ravenparametersfile ="ext_data/RavenParameters.dat"
         ravenparametersfile = os.path.join(script_dir, ravenparametersfile)
@@ -2000,7 +2000,7 @@ class QRaven:
                         for soil in range(soil_layers):
                             #rvp.write("SOIL_"+str((soil+1)).zfill(2))
                             rvp.write(" ".ljust(5)+"SOIL_"+str(soil+1)+",\n")
-                        rvp.write(":EndSoilSoilClasses\n\n")
+                        rvp.write(":EndSoilClasses\n\n")
                         #Write land use classes
                         writeAttributes(':LandUseClasses',rvp,rvptemplate,rvn_paramsList,landuseclasses,soil_layers)
                         #Write vegetation classes
@@ -2025,6 +2025,7 @@ class QRaven:
         inputdir = self.dlg.file_runinputdir.filePath()
         prefix = self.dlg.txt_runnameprefix.text()  # Get the chosen prefix
         rvifile = inputdir + separator + prefix + '.rvi'
+        print(rvifile)
         command_found = False
 
         try:
