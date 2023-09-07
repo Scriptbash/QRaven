@@ -23,7 +23,6 @@ RUN apt-get update \
         netcdf-bin \
         unzip \
     && localedef -i en_US -f UTF-8 en_US.UTF-8 \
-    #&& python3 -m pip install https://github.com/dustming/basinmaker/archive/refs/tags/v3.0.1.zip \
     && python3 -m pip install https://github.com/dustming/basinmaker/archive/master.zip \
         simpledbf \
         grass_session \
@@ -48,7 +47,8 @@ RUN apt-get update \
     && cd ~/BasinMaker \
     && wget --secure-protocol=TLSv1_2 https://raw.githubusercontent.com/Scriptbash/QRaven/main/create_RVH.py \
     && cd ~/Gridweights \
-    && wget --secure-protocol=TLSv1_2 https://raw.githubusercontent.com/julemai/GridWeightsGenerator/main/derive_grid_weights.py \
+    && wget --secure-protocol=TLSv1_2 https://raw.githubusercontent.com/dustming/GridWeightsGenerator/main/derive_grid_weights.py \
+    #&& wget --secure-protocol=TLSv1_2 https://raw.githubusercontent.com/julemai/GridWeightsGenerator/main/derive_grid_weights.py \
     && cd ~/Raven/build \
     && wget --secure-protocol=TLSv1_2 http://raven.uwaterloo.ca/files/v3.7/RavenSource_v3.7.zip \
     && unzip RavenSource_v3.7.zip \
