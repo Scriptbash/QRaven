@@ -112,7 +112,7 @@
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -3208,7 +3208,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1111</width>
+                   <width>346</width>
                    <height>907</height>
                   </rect>
                  </property>
@@ -4027,130 +4027,26 @@
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_27">
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_197">
+              <item row="6" column="0">
+               <widget class="QCheckBox" name="chk_download_soil">
                 <property name="text">
-                 <string>DEM</string>
+                 <string>Soil type</string>
                 </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QgsFileWidget" name="file_fetchdem">
-                <property name="filter">
-                 <string>*.zip</string>
-                </property>
-                <property name="storageMode">
-                 <enum>QgsFileWidget::GetDirectory</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_198">
-                <property name="text">
-                 <string>Flow direction</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="2">
-               <widget class="QgsFileWidget" name="file_fetchflowdir">
-                <property name="filter">
-                 <string>*.zip</string>
-                </property>
-                <property name="storageMode">
-                 <enum>QgsFileWidget::GetDirectory</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_199">
-                <property name="text">
-                 <string>Lakes</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="2">
-               <widget class="QgsFileWidget" name="file_fetchlakes">
-                <property name="filter">
-                 <string>*.zip</string>
-                </property>
-                <property name="storageMode">
-                 <enum>QgsFileWidget::GetDirectory</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="label_200">
-                <property name="text">
-                 <string>Bankfull width</string>
+                <property name="checked">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
               <item row="4" column="2">
-               <widget class="QgsFileWidget" name="file_fetchbankfull">
-                <property name="filter">
-                 <string>*.tgz</string>
-                </property>
-                <property name="storageMode">
-                 <enum>QgsFileWidget::GetDirectory</enum>
-                </property>
+               <widget class="QComboBox" name="combo_bankfull_source">
+                <item>
+                 <property name="text">
+                  <string>HydroSheds</string>
+                 </property>
+                </item>
                </widget>
               </item>
-              <item row="5" column="0">
-               <widget class="QLabel" name="label_201">
-                <property name="text">
-                 <string>Landuse</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="2">
-               <widget class="QgsFileWidget" name="file_fetchlanduse">
-                <property name="filter">
-                 <string>*.tif</string>
-                </property>
-                <property name="storageMode">
-                 <enum>QgsFileWidget::GetDirectory</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="label_202">
-                <property name="text">
-                 <string>Soil</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="2">
-               <widget class="QgsFileWidget" name="file_fetchsoil">
-                <property name="filter">
-                 <string>*.zip</string>
-                </property>
-                <property name="storageMode">
-                 <enum>QgsFileWidget::GetDirectory</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="2">
-               <widget class="QLabel" name="lbl_progressbar">
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="2">
-               <widget class="QProgressBar" name="progress_gisdownload">
-                <property name="value">
-                 <number>0</number>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="1" colspan="2">
-               <widget class="QPushButton" name="btn_downloadgisdata">
-                <property name="text">
-                 <string>Download</string>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="2">
+              <item row="13" column="2">
                <spacer name="verticalSpacer_5">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
@@ -4163,8 +4059,123 @@
                 </property>
                </spacer>
               </item>
-              <item row="11" column="0" colspan="3">
-               <widget class="QLabel" name="label_203">
+              <item row="8" column="0" colspan="3">
+               <widget class="QWidget" name="widget_21" native="true">
+                <layout class="QGridLayout" name="gridLayout_53">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>26</number>
+                 </property>
+                 <item row="1" column="0" colspan="2">
+                  <widget class="QWidget" name="widget_22" native="true">
+                   <layout class="QGridLayout" name="gridLayout_54">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <item row="0" column="1">
+                     <widget class="QgsFileWidget" name="file_gis_clip_layer"/>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_128">
+                      <property name="text">
+                       <string>Clip layer</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item row="0" column="0" colspan="2">
+                  <widget class="QCheckBox" name="chk_process_gis_data">
+                   <property name="text">
+                    <string>Pre-process the files</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="12" column="0" colspan="3">
+               <widget class="QPushButton" name="btn_downloadgisdata">
+                <property name="text">
+                 <string>Download</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QComboBox" name="combo_flowdir_source">
+                <item>
+                 <property name="text">
+                  <string>HydroSheds</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="chk_download_dem">
+                <property name="text">
+                 <string>DEM</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="2">
+               <widget class="QProgressBar" name="progress_gisdownload">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QComboBox" name="combo_lakes_source">
+                <item>
+                 <property name="text">
+                  <string>HydroSheds</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QCheckBox" name="chk_download_landuse">
+                <property name="text">
+                 <string>Landuse</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="2">
+               <widget class="QComboBox" name="combo_landuse_source">
+                <item>
+                 <property name="text">
+                  <string>Natural Resources Canada</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QCheckBox" name="chk_download_flowdir">
+                <property name="text">
+                 <string>Flow direction</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_127">
                 <property name="font">
                  <font>
                   <pointsize>14</pointsize>
@@ -4173,140 +4184,52 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Data processing</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
+                 <string>Data</string>
                 </property>
                </widget>
               </item>
-              <item row="12" column="2">
-               <widget class="QCheckBox" name="chk_samefilegis">
-                <property name="text">
-                 <string>Use the same paths as above</string>
+              <item row="10" column="2">
+               <widget class="QLabel" name="lbl_progressbar">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
                 </property>
-               </widget>
-              </item>
-              <item row="13" column="0">
-               <widget class="QLabel" name="label_204">
-                <property name="text">
-                 <string>Clip layer</string>
-                </property>
-               </widget>
-              </item>
-              <item row="13" column="2">
-               <widget class="QgsFileWidget" name="file_giscliplayer">
-                <property name="filter">
-                 <string>*.shp</string>
-                </property>
-               </widget>
-              </item>
-              <item row="14" column="0">
-               <widget class="QLabel" name="label_205">
-                <property name="text">
-                 <string>DEM</string>
-                </property>
-               </widget>
-              </item>
-              <item row="14" column="2">
-               <widget class="QgsFileWidget" name="file_processdem">
-                <property name="filter">
-                 <string>*.tif</string>
-                </property>
-               </widget>
-              </item>
-              <item row="15" column="0">
-               <widget class="QLabel" name="label_206">
-                <property name="text">
-                 <string>Flow direction</string>
-                </property>
-               </widget>
-              </item>
-              <item row="15" column="2">
-               <widget class="QgsFileWidget" name="file_processflowdir">
-                <property name="filter">
-                 <string>*.tif</string>
-                </property>
-               </widget>
-              </item>
-              <item row="16" column="0">
-               <widget class="QLabel" name="label_207">
-                <property name="text">
-                 <string>Lakes</string>
-                </property>
-               </widget>
-              </item>
-              <item row="16" column="2">
-               <widget class="QgsFileWidget" name="file_processlakes">
-                <property name="filter">
-                 <string>*.shp</string>
-                </property>
-               </widget>
-              </item>
-              <item row="17" column="0">
-               <widget class="QLabel" name="label_208">
-                <property name="text">
-                 <string>Bankfull width</string>
-                </property>
-               </widget>
-              </item>
-              <item row="17" column="2">
-               <widget class="QgsFileWidget" name="file_processbankfull">
-                <property name="filter">
-                 <string>*.shp</string>
-                </property>
-               </widget>
-              </item>
-              <item row="18" column="0">
-               <widget class="QLabel" name="label_209">
-                <property name="text">
-                 <string>Landuse</string>
-                </property>
-               </widget>
-              </item>
-              <item row="18" column="2">
-               <widget class="QgsFileWidget" name="file_processlanduse">
-                <property name="filter">
-                 <string>*.tif;; *.shp</string>
-                </property>
-               </widget>
-              </item>
-              <item row="19" column="0">
-               <widget class="QLabel" name="label_210">
-                <property name="text">
-                 <string>Soil</string>
-                </property>
-               </widget>
-              </item>
-              <item row="19" column="2">
-               <widget class="QgsFileWidget" name="file_processsoil">
-                <property name="filter">
-                 <string>*.shp</string>
-                </property>
-               </widget>
-              </item>
-              <item row="20" column="2">
-               <widget class="QLabel" name="lbl_progressbar2">
                 <property name="text">
                  <string/>
                 </property>
                </widget>
               </item>
-              <item row="21" column="2">
-               <widget class="QProgressBar" name="progress_gisprocess">
-                <property name="value">
-                 <number>0</number>
-                </property>
+              <item row="1" column="2">
+               <widget class="QComboBox" name="combo_dem_source">
+                <item>
+                 <property name="text">
+                  <string>HydroSheds</string>
+                 </property>
+                </item>
                </widget>
               </item>
-              <item row="22" column="1" colspan="2">
-               <widget class="QPushButton" name="btn_gisprocess">
+              <item row="6" column="2">
+               <widget class="QComboBox" name="combo_soil_source">
+                <item>
+                 <property name="text">
+                  <string>CanSIS</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QCheckBox" name="chk_download_bankfull">
                 <property name="text">
-                 <string>Process</string>
+                 <string>Bankfull width</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
-              <item row="0" column="0" colspan="3">
+              <item row="0" column="2">
                <widget class="QLabel" name="label_196">
                 <property name="font">
                  <font>
@@ -4316,10 +4239,34 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Download data</string>
+                 <string>Source</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignCenter</set>
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QCheckBox" name="chk_download_lakes">
+                <property name="text">
+                 <string>Lakes</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="2">
+               <widget class="QgsFileWidget" name="file_gis_download_output">
+                <property name="storageMode">
+                 <enum>QgsFileWidget::GetDirectory</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="label_129">
+                <property name="text">
+                 <string>Output folder</string>
                 </property>
                </widget>
               </item>
@@ -4366,7 +4313,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1111</width>
+                   <width>647</width>
                    <height>1369</height>
                   </rect>
                  </property>
@@ -5168,8 +5115,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1111</width>
-                   <height>775</height>
+                   <width>425</width>
+                   <height>377</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -5830,8 +5777,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1111</width>
-                   <height>835</height>
+                   <width>338</width>
+                   <height>664</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_20">
@@ -7498,9 +7445,9 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_3"/>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

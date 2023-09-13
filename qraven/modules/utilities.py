@@ -1,8 +1,13 @@
 import os
 import pandas as pd
+import zipfile
+import tarfile
+import shutil
+import urllib.request
 from datetime import datetime, timedelta
 from pathlib import Path
 import sys
+from PyQt5.QtWidgets import QApplication
 
 try:
     import xarray
@@ -29,23 +34,33 @@ except ImportError:
         print(f'{module_name} loaded locally.')
 
 
-def merge_netcdf(file_path, filename):
+def merge_netcdf(file_path, variable):
     print('Merging files...')
     try:
-        ds = xarray.open_mfdataset(file_path + '/*' + filename+'.nc', chunks='auto')
-        ds.to_netcdf(file_path + '/' + filename + '_merged.nc')
+        ds = xarray.open_mfdataset(file_path + '/*' + variable + '.nc', parallel=True)
+        # Remove the time dimension from the lat and lon variables
+        lat_without_time = ds['lat'].isel(time=0)
+        lon_without_time = ds['lon'].isel(time=0)
+        ds_modified = xarray.Dataset({
+            'lat': lat_without_time,
+            'lon': lon_without_time,
+            variable: ds[variable]
+        })
+
+        ds_modified.to_netcdf(file_path + '/' + variable + '_merged.nc')
     except:
-        pass
-    try:
-        print('ValueError: Coordinate variable time is neither monotonically '
-              'increasing nor monotonically decreasing on all datasets')
-        print('Attempting a nested merge, time dimension will be concatenated.')
-        ds = xarray.open_mfdataset(file_path + '/*' + filename+'.nc',
-                                   chunks='auto', combine="nested", concat_dim='time')
-        ds.to_netcdf(file_path + '/' + filename + '_merged.nc')
-    except:
-        print('All attempts to merge the netCDF files failed. Manual processing will be required.')
+        print('The merging attempt failed. Manual processing will be required.')
         return
+    # try:
+    #     print('ValueError: Coordinate variable time is neither monotonically '
+    #           'increasing nor monotonically decreasing on all datasets')
+    #     print('Attempting a nested merge, time dimension will be concatenated.')
+    #     ds = xarray.open_mfdataset(file_path + '/*' + filename+'.nc',
+    #                                chunks='auto', combine="nested", concat_dim='time')
+    #     ds.to_netcdf(file_path + '/' + filename + '_merged.nc')
+    # except:
+    #     print('All attempts to merge the netCDF files failed. Manual processing will be required.')
+    #     return
 
 
 
@@ -78,3 +93,73 @@ def fill_missing_dates(ncfile, missing_dates):
         print("Missing dates were filled with NaN values and saved to '" + ncfile)
     else:
         print("No missing dates found.")
+
+
+# Creates a new folder if it does not exist
+def make_folder(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+
+# Extracts an archive
+def extract_archive(file):
+    folder = os.path.dirname(file)
+    filename, extension = os.path.splitext(file)
+
+    if extension == '.zip':
+        with zipfile.ZipFile(file, 'r') as zip_ref:
+            for elem in zip_ref.namelist():
+                filename = os.path.basename(elem)
+                # skip directories
+                if not filename:
+                    continue
+                source = zip_ref.open(elem)
+                target = open(os.path.join(folder, filename), "wb")
+                with source, target:
+                    shutil.copyfileobj(source, target)
+                #QApplication.processEvents()
+
+    elif extension == '.tgz' or extension == '.tar':
+        tar = tarfile.open(file)
+        for member in tar.getmembers():
+            if member.isreg():  # skip if the TarInfo is not files
+                if 'nariv' in member.name:
+                    member.name = os.path.basename(member.name)
+                    tar.extract(member,folder) # extract
+                    #QApplication.processEvents()
+    os.remove(file)
+
+
+def download_request(dlg, url, output):
+    timeout = dlg.spin_connection_timeout.value()
+    req = urllib.request.Request(
+                                url,
+                                data=None,
+                                headers={
+                                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+                                }
+                                )
+    response = urllib.request.urlopen(req, timeout=timeout)
+
+    totalsize = response.info()['Content-Length']
+    currentsize = 0
+    chunk = 4096
+    with open(output,'wb') as file:
+        while 1:
+            data = response.read(chunk)
+            if not data:
+                #print ("Download complete.")
+                break
+            file.write(data)
+            currentsize += chunk
+            try:    #Try required for the soil dbf file... maybe file size too small
+                handle_progress(dlg, currentsize, int(totalsize))
+            except:
+                dlg.progress_gisdownload.setValue(100)
+
+
+def handle_progress(dlg, blocksize, totalsize):
+    if totalsize > 0:
+        download_percentage = (blocksize / totalsize) * 100
+        dlg.progress_gisdownload.setValue(download_percentage)
+    QApplication.processEvents()
