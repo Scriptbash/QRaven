@@ -1,4 +1,4 @@
-from qgis.core import Qgis, QgsVectorLayer, QgsRasterLayer,QgsCoordinateReferenceSystem,QgsProject,QgsProcessingFeedback
+from qgis.core import Qgis, QgsVectorLayer, QgsRasterLayer,QgsCoordinateReferenceSystem,QgsProject,QgsProcessingFeedback,QgsProcessingUtils
 import processing
 import os
 
@@ -16,7 +16,7 @@ def clip_raster(dlg, overlay, input_raster, output):
                                  {'INPUT': input_raster,
                                   'MASK': overlay,
                                   'SOURCE_CRS': None,
-                                  'TARGET_CRS': QgsCoordinateReferenceSystem('EPSG:4326'),
+                                  'TARGET_CRS': None, #QgsCoordinateReferenceSystem('EPSG:4326'),
                                   'TARGET_EXTENT': None, 'NODATA': None, 'ALPHA_BAND': False,
                                   'CROP_TO_CUTLINE': True,
                                   'KEEP_RESOLUTION': False, 'SET_RESOLUTION': False, 'X_RESOLUTION': None,
@@ -85,16 +85,15 @@ def field_calculator(dlg, layer, formula, field_name, field_type):
     return layer
 
 
-def remove_small_areas(dlg, layer, threshold):
+def remove_small_areas(dlg, layer, threshold, output):
+    # GRASS temporary outputs are broken, so must save in a tmp folder
     cleaned = processing.run("grass7:v.clean", {'input': layer,
                                       'type': [0, 1, 2, 3, 4, 5, 6], 'tool': [10], 'threshold': '', '-b': False,
-                                      '-c': True, 'output': 'TEMPORARY_OUTPUT', 'error': 'TEMPORARY_OUTPUT',
+                                      '-c': True, 'output': output, 'error': 'TEMPORARY_OUTPUT',
                                       'GRASS_REGION_PARAMETER': None, 'GRASS_SNAP_TOLERANCE_PARAMETER': threshold,
                                       'GRASS_MIN_AREA_PARAMETER': 0.0001, 'GRASS_OUTPUT_TYPE_PARAMETER': 0,
                                       'GRASS_VECTOR_DSCO': '', 'GRASS_VECTOR_LCO': '',
                                       'GRASS_VECTOR_EXPORT_NOCAT': False})
-    layer = cleaned['OUTPUT']
-    return layer
 
 
 def fix_geometries(dlg, layer):
@@ -105,7 +104,16 @@ def fix_geometries(dlg, layer):
     return layer
 
 
-def merge_same_polygons(dlg, layer, output):
-    processing.runAndLoadResults("native:dissolve", {
-        'INPUT': layer,
-        'FIELD': ['Landuse_ID'], 'SEPARATE_DISJOINT': True, 'OUTPUT': output})
+def merge_same_polygons(dlg, layer):
+    merged = processing.run("native:dissolve", {
+            'INPUT': layer,
+            'FIELD': ['Landuse_ID'], 'SEPARATE_DISJOINT': True, 'OUTPUT': 'TEMPORARY_OUTPUT'})
+    layer = merged['OUTPUT']
+    return layer
+
+
+def reproject_layer(dlg, layer, output):
+    reprojected = processing.runAndLoadResults("native:reprojectlayer",
+                   {'INPUT': layer,
+                    'TARGET_CRS': 'EPSG:4326', 'OUTPUT': output})
+    return reprojected

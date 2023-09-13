@@ -1,6 +1,7 @@
 from ..utilities import download_request, make_folder
 from ..gis_processing import *
 import csv
+import shutil
 
 
 class LandUseDownload:
@@ -33,9 +34,12 @@ class LandUseDownload:
                       ',10,if("LAND_USE_C"=\'SNOW\',11,if("LAND_USE_C"=\'AGRICULTURE\',12,if("LAND_USE_C"=\'LAKE' \
                       '\',-1,0))))))))))))'
             calculated = field_calculator(dlg, tmp_calculated, formula, 'Landuse_ID', 1)
-            cleaned_layer = remove_small_areas(dlg, calculated, 100)
-            fixed_geometries = fix_geometries(dlg, cleaned_layer)
-            merge_same_polygons(dlg, fixed_geometries, output + '/landuse/qrvn_landuse.shp')
+            make_folder(output + '/landuse/tmp')
+            remove_small_areas(dlg, calculated, 100, output + '/landuse/tmp/landuse_grass.shp')
+            fixed_geometries = fix_geometries(dlg, output + '/landuse/tmp/landuse_grass.shp')
+            merged = merge_same_polygons(dlg, fixed_geometries)
+            reproject_layer(dlg, merged, output + '/landuse/qrvn_landuse.shp')
+            shutil.rmtree(output + '/landuse/tmp')
 
             row_list = [["Landuse_ID", "LANDUSE_C"],
                        [1, "WATER"],

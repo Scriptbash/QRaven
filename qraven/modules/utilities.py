@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-import zipfile
+from zipfile import ZipFile, BadZipfile
 import tarfile
 import shutil
 import urllib.request
@@ -48,6 +48,8 @@ def merge_netcdf(file_path, variable):
         })
 
         ds_modified.to_netcdf(file_path + '/' + variable + '_merged.nc')
+        ds.close()
+        ds_modified.close()
     except:
         print('The merging attempt failed. Manual processing will be required.')
         return
@@ -77,6 +79,7 @@ def check_missing_dates(ncfile):
     all_dates = [start_date + timedelta(days=x) for x in range((end_date - start_date).days + 1)]
 
     missing_dates = [date for date in all_dates if date not in datetime_list]
+    ds.close()
     return missing_dates
 
 
@@ -93,6 +96,7 @@ def fill_missing_dates(ncfile, missing_dates):
         print("Missing dates were filled with NaN values and saved to '" + ncfile)
     else:
         print("No missing dates found.")
+    ds.close()
 
 
 # Creates a new folder if it does not exist
@@ -107,7 +111,7 @@ def extract_archive(file):
     filename, extension = os.path.splitext(file)
 
     if extension == '.zip':
-        with zipfile.ZipFile(file, 'r') as zip_ref:
+        with ZipFile(file, 'r') as zip_ref:
             for elem in zip_ref.namelist():
                 filename = os.path.basename(elem)
                 # skip directories
@@ -118,7 +122,6 @@ def extract_archive(file):
                 with source, target:
                     shutil.copyfileobj(source, target)
                 #QApplication.processEvents()
-
     elif extension == '.tgz' or extension == '.tar':
         tar = tarfile.open(file)
         for member in tar.getmembers():

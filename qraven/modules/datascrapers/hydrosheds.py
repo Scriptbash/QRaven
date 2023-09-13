@@ -12,7 +12,7 @@ class HydroSheds:
         url = 'https://data.hydrosheds.org/file/hydrosheds-v1-con/na_con_3s.zip'
         dlg.lbl_progressbar.setText('Downloading DEM')
         make_folder(output + '/unprocessed/DEM')
-        extract_output = output + 'unprocessed/DEM/dem.zip'
+        extract_output = output + '/unprocessed/DEM/dem.zip'
         download_request(dlg, url, extract_output)
         dlg.lbl_progressbar.setText('Extracting...')
         extract_archive(extract_output)
@@ -60,7 +60,7 @@ class HydroSheds:
         url = 'https://zenodo.org/record/61758/files/hydrosheds_wqd.tgz?download=1'
         dlg.lbl_progressbar.setText('Downloading bankfull width')
         make_folder(output + '/unprocessed/bkf_width')
-        extract_output = output + '/unprocessed/bkf_width/bankfull.zip'
+        extract_output = output + '/unprocessed/bkf_width/bankfull.tgz'
         download_request(dlg, url, extract_output)
         dlg.lbl_progressbar.setText('Extracting...')
         extract_archive(extract_output)
