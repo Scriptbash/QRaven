@@ -26,26 +26,40 @@ def clip_raster(dlg, overlay, input_raster, output):
                                   })#, feedback=f)
 
 
-def clip_vector(dlg, overlay, input_vector, output):
-    processing.runAndLoadResults("native:clip",
+def clip_vector(dlg, overlay, input_vector, output, temporary):
+    if not temporary:
+        processing.runAndLoadResults("native:clip",
+                                     {'INPUT': input_vector,
+                                      'OVERLAY': overlay,
+                                      'OUTPUT': output
+                                      })#, feedback=f)
+    else:
+        clipped = processing.run("native:clip",
                                  {'INPUT': input_vector,
                                   'OVERLAY': overlay,
-                                  'OUTPUT': output
-                                  })#, feedback=f)
+                                  'OUTPUT': 'TEMPORARY_OUTPUT'
+                                  })  # , feedback=f)
+        return clipped['OUTPUT']
 
 
-def join_attributes(dlg, source1, source2, field1, field2, fieldscopy):
-    output = dlg.file_processsoil.filePath()
-    make_folder(os.path.dirname(output) + "/results")
-    output = os.path.dirname(output) + '/results/qrvn_soil.shp'
-    processing.runAndLoadResults("native:joinattributestable",
-                                 {'INPUT': source1,
-                                  'FIELD': field1,
-                                  'INPUT_2': source2,
-                                  'FIELD_2': field2,
-                                  'FIELDS_TO_COPY': [fieldscopy],
-                                  'METHOD': 1, 'DISCARD_NONMATCHING': False, 'PREFIX': '',
-                                  'OUTPUT': output})
+def join_attributes(dlg, source1, source2, field1, field2, fields_copy):
+    joined = processing.run("native:joinattributestable",
+                   {'INPUT': source1,
+                    'FIELD': field1,
+                    'INPUT_2': source2,
+                    'FIELD_2': field2,
+                    'FIELDS_TO_COPY': [fields_copy],
+                    'METHOD': 1, 'DISCARD_NONMATCHING': False, 'PREFIX': '',
+                    'OUTPUT': 'TEMPORARY_OUTPUT'
+                    })
+    return joined['OUTPUT']
+
+
+def extract_by_attribute(dlg, layer, attribute, value):
+    extracted = processing.run("native:extractbyattribute", {
+                                'INPUT': layer,
+                                'FIELD': attribute, 'OPERATOR': 0, 'VALUE': value, 'OUTPUT': 'TEMPORARY_OUTPUT'})
+    return extracted['OUTPUT']
 
 
 def reclassify_by_table(dlg, inputlayer):
@@ -74,15 +88,24 @@ def polygonize(dlg, inputlayer):
     return layer
 
 
-def field_calculator(dlg, layer, formula, field_name, field_type):
-    calculated = processing.run("native:fieldcalculator",
-                            {'INPUT':layer,
-                            'FIELD_NAME':field_name,
-                            'FIELD_TYPE':field_type,'FIELD_LENGTH':120,'FIELD_PRECISION':0,
-                            'FORMULA': formula,
-                            'OUTPUT':'TEMPORARY_OUTPUT'})
-    layer = calculated['OUTPUT']
-    return layer
+def field_calculator(dlg, layer, formula, field_name, field_type, output, temporary):
+    if temporary:
+        calculated = processing.run("native:fieldcalculator",
+                                {'INPUT':layer,
+                                'FIELD_NAME':field_name,
+                                'FIELD_TYPE':field_type,'FIELD_LENGTH':120,'FIELD_PRECISION':0,
+                                'FORMULA': formula,
+                                'OUTPUT':'TEMPORARY_OUTPUT'})
+        layer = calculated['OUTPUT']
+        return layer
+    else:
+        processing.runAndLoadResults("native:fieldcalculator",
+                                    {'INPUT': layer,
+                                     'FIELD_NAME': field_name,
+                                     'FIELD_TYPE': field_type, 'FIELD_LENGTH': 120, 'FIELD_PRECISION': 0,
+                                     'FORMULA': formula,
+                                     'OUTPUT': output})
+
 
 
 def remove_small_areas(dlg, layer, threshold, output):

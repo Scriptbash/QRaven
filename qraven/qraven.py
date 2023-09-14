@@ -57,7 +57,7 @@ from .modules import customoutputs, hydrologicproc, geochemicalproc
 from .modules.datascrapers import streamflow
 from .modules.datascrapers.hydrosheds import HydroSheds
 from .modules.datascrapers import landuse
-from .modules.datascrapers.soiltype import SoilTypeDownload
+from .modules.datascrapers import soiltype
 from .modules.datascrapers.daymet import Daymet
 
 
@@ -227,6 +227,7 @@ class QRaven:
 
             self.hydrosheds = HydroSheds()
             self.landuse = landuse.LandUseDownload()
+            self.soil = soiltype.SoilTypeDownload()
 
             #Initialize the Docker commands
             self.docker = Docker(computerOS, separator, self.containerization, self.registry, self.containerimage)
@@ -1792,9 +1793,11 @@ class QRaven:
             if self.dlg.combo_bankfull_source.currentText() == 'HydroSheds':
                 self.hydrosheds.download_bankfull(self.dlg)
         if self.dlg.chk_download_landuse.isChecked():
-
             if self.dlg.combo_landuse_source.currentText() == 'Natural Resources Canada':
                 self.landuse.natural_resources_canada(self.dlg)
+        if self.dlg.chk_download_soil.isChecked():
+            if self.dlg.combo_soil_source.currentText() == 'CanSIS':
+                self.soil.cansis(self.dlg)
 
         self.dlg.lbl_progressbar.setText('Download complete!')
         self.dlg.progress_gisdownload.setValue(0)

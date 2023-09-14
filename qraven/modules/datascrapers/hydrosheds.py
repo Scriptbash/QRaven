@@ -53,7 +53,7 @@ class HydroSheds:
             make_folder(output + '/lakes')
             overlay = dlg.file_gis_clip_layer.filePath()
             vector = output + '/unprocessed/lakes/HydroLAKES_polys_v10.shp'
-            clip_vector(dlg,overlay, vector, output + '/lakes/qrvn_lakes.shp')
+            clip_vector(dlg,overlay, vector, output + '/lakes/qrvn_lakes.shp', False)
 
     def download_bankfull(self, dlg):
         output = dlg.file_gis_download_output.filePath()
@@ -69,4 +69,4 @@ class HydroSheds:
             make_folder(output + '/bkf_width')
             overlay = dlg.file_gis_clip_layer.filePath()
             vector = output + '/unprocessed/bkf_width/nariv.shp'
-            clip_vector(dlg, overlay, vector, output + '/bkf_width/qrvn_bankfull.shp')
+            clip_vector(dlg, overlay, vector, output + '/bkf_width/qrvn_bankfull.shp', False)
