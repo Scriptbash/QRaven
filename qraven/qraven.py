@@ -59,6 +59,7 @@ from .modules.datascrapers.hydrosheds import HydroSheds
 from .modules.datascrapers import landuse
 from .modules.datascrapers import soiltype
 from .modules.datascrapers.daymet import Daymet
+from .modules.thunder_raven import ThunderRaven
 
 
 class QRaven:
@@ -234,6 +235,9 @@ class QRaven:
 
             #Initialize the OSTRICH module
             self.ostrich = Ostrich()
+
+            # Initialize the easy mode
+            self.thunder_raven = ThunderRaven(self)
             
             self.dlg.list_evalmetrics.sortItems()
             self.stations = []
@@ -370,6 +374,12 @@ class QRaven:
             self.dlg.combo_ostrichexe_mode.currentIndexChanged.connect(self.toggleWidget)
             self.dlg.btn_savesettings.clicked.connect(self.storesettings)
             #----------------------------------------#
+
+            #----------------Easy mode----------------#
+            self.dlg.btn_thunder_generate.clicked.connect(self.thunder_raven.generate_model)
+
+            # ----------------------------------------#
+
         # show the dialog
         self.dlg.show()
         # Run the dialog event loop
@@ -383,9 +393,9 @@ class QRaven:
 
     def setupMenubar(self):
         #Sets up the left menu
-            menuitems = ['Raven RVI','Daymet', 'Streamflow', 'GIS', 'BasinMaker','Gridweights',
+            menuitems = ['Easy mode', 'Raven RVI','Daymet', 'Streamflow', 'GIS', 'BasinMaker','Gridweights',
                          'Run Raven','OSTRICH','Settings']
-            icons = ['rvifile.svg','precipitation.svg', 'streamflow.svg', 'gis.svg', 'basinmaker.svg',
+            icons = ['thunderraven.svg','rvifile.svg','precipitation.svg', 'streamflow.svg', 'gis.svg', 'basinmaker.svg',
                      'gridweights.svg', 'raven.svg','ostrich.svg','settings.svg']
             script_dir = os.path.dirname(__file__)
             for i, menuitem in enumerate(menuitems):

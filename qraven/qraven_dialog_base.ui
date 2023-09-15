@@ -112,8 +112,417 @@
       <item row="0" column="1">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>3</number>
+         <number>0</number>
         </property>
+        <widget class="QWidget" name="thunderraven">
+         <layout class="QGridLayout" name="gridLayout_55">
+          <item row="4" column="0">
+           <widget class="QWidget" name="widget_28" native="true">
+            <layout class="QGridLayout" name="gridLayout_61">
+             <property name="topMargin">
+              <number>50</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_135">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>14</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>4. Select an output location</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QgsFileWidget" name="file_thunder_output">
+               <property name="storageMode">
+                <enum>QgsFileWidget::GetDirectory</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QWidget" name="widget_26" native="true">
+            <layout class="QGridLayout" name="gridLayout_59">
+             <property name="topMargin">
+              <number>50</number>
+             </property>
+             <item row="0" column="0" colspan="3">
+              <widget class="QLabel" name="label_134">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>14</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>3. Watershed information</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="2">
+              <widget class="QRadioButton" name="radioButton_6">
+               <property name="text">
+                <string>Use a polygon shapefile</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QgsFileWidget" name="file_thunder_polygon">
+               <property name="filter">
+                <string>*.shp</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QRadioButton" name="radioButton_7">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Use lat/lon coordinates</string>
+               </property>
+               <property name="checkable">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="2">
+              <widget class="QWidget" name="widget_27" native="true">
+               <layout class="QGridLayout" name="gridLayout_60">
+                <item row="0" column="0">
+                 <widget class="QLineEdit" name="lineEdit">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="lineEdit_2">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QWidget" name="widget_29" native="true">
+            <layout class="QGridLayout" name="gridLayout_62">
+             <item row="0" column="0">
+              <spacer name="horizontalSpacer_35">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="btn_thunder_generate">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Generate!</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <spacer name="horizontalSpacer_36">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QWidget" name="widget_24" native="true">
+            <layout class="QGridLayout" name="gridLayout_56">
+             <property name="topMargin">
+              <number>50</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_132">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>14</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>2. Would you like your model to be calibrated?</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QWidget" name="widget_31" native="true">
+               <layout class="QGridLayout" name="gridLayout_64">
+                <item row="0" column="1">
+                 <widget class="QRadioButton" name="radioButton_5">
+                  <property name="text">
+                   <string>No</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QRadioButton" name="radioButton_4">
+                  <property name="text">
+                   <string>Yes</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <spacer name="horizontalSpacer_38">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>800</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QWidget" name="widget_23" native="true">
+            <layout class="QGridLayout" name="gridLayout_57">
+             <item row="1" column="0">
+              <widget class="QWidget" name="widget_30" native="true">
+               <layout class="QGridLayout" name="gridLayout_63">
+                <item row="1" column="1">
+                 <widget class="QDateEdit" name="dateEdit"/>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QComboBox" name="combo_thunder_structure">
+                  <item>
+                   <property name="text">
+                    <string>AWBM</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Canadian Shield</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>GR4J</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>HBV-EC</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>HBV-Light</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>HMETS</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>HYMOD</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>HYPR</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>MOHYSE</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>UBCWM</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Routing-only</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item row="1" column="2">
+                 <spacer name="horizontalSpacer_37">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_137">
+                  <property name="text">
+                   <string>Start date</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_136">
+                  <property name="text">
+                   <string>Model structure</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_138">
+                  <property name="text">
+                   <string>End date</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QDateEdit" name="dateEdit_2"/>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_131">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>14</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>1. Simulation information</string>
+               </property>
+               <property name="margin">
+                <number>0</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QWidget" name="widget_25" native="true">
+            <layout class="QGridLayout" name="gridLayout_58">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_130">
+               <property name="font">
+                <font>
+                 <pointsize>15</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>Welcome to QRaven! </string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_133">
+               <property name="text">
+                <string>The easy mode will allow you to create a Raven model from scratch automatically. Before using this feature, please read QRaven's documentation, review the plugin settings and make sure you have a containerization software installed and running.</string>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
         <widget class="QWidget" name="rvi">
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <property name="leftMargin">
@@ -2126,8 +2535,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1111</width>
-                   <height>775</height>
+                   <width>796</width>
+                   <height>753</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -3208,8 +3617,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>346</width>
-                   <height>907</height>
+                   <width>398</width>
+                   <height>1000</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -3605,8 +4014,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>365</width>
-                   <height>948</height>
+                   <width>429</width>
+                   <height>1054</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_17">
@@ -4022,22 +4431,90 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>1148</width>
-               <height>892</height>
+               <width>1212</width>
+               <height>896</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_27">
-              <item row="6" column="0">
-               <widget class="QCheckBox" name="chk_download_soil">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_127">
+                <property name="font">
+                 <font>
+                  <pointsize>14</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
                 <property name="text">
-                 <string>Soil type</string>
+                 <string>Data</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QCheckBox" name="chk_download_lakes">
+                <property name="text">
+                 <string>Lakes</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
                 </property>
                </widget>
               </item>
-              <item row="4" column="2">
+              <item row="6" column="1">
+               <widget class="QComboBox" name="combo_soil_source">
+                <item>
+                 <property name="text">
+                  <string>CanSIS</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QComboBox" name="combo_lakes_source">
+                <item>
+                 <property name="text">
+                  <string>HydroSheds</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="11" column="0" colspan="2">
+               <widget class="QProgressBar" name="progress_gisdownload">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="chk_download_dem">
+                <property name="text">
+                 <string>DEM</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QCheckBox" name="chk_download_landuse">
+                <property name="text">
+                 <string>Landuse</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="combo_dem_source">
+                <item>
+                 <property name="text">
+                  <string>HydroSheds</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="4" column="1">
                <widget class="QComboBox" name="combo_bankfull_source">
                 <item>
                  <property name="text">
@@ -4046,7 +4523,7 @@
                 </item>
                </widget>
               </item>
-              <item row="13" column="2">
+              <item row="13" column="1">
                <spacer name="verticalSpacer_5">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
@@ -4059,7 +4536,7 @@
                 </property>
                </spacer>
               </item>
-              <item row="8" column="0" colspan="3">
+              <item row="8" column="0" colspan="2">
                <widget class="QWidget" name="widget_21" native="true">
                 <layout class="QGridLayout" name="gridLayout_53">
                  <property name="leftMargin">
@@ -4103,14 +4580,7 @@
                 </layout>
                </widget>
               </item>
-              <item row="12" column="0" colspan="3">
-               <widget class="QPushButton" name="btn_downloadgisdata">
-                <property name="text">
-                 <string>Download</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="2">
+              <item row="2" column="1">
                <widget class="QComboBox" name="combo_flowdir_source">
                 <item>
                  <property name="text">
@@ -4119,117 +4589,7 @@
                 </item>
                </widget>
               </item>
-              <item row="1" column="0">
-               <widget class="QCheckBox" name="chk_download_dem">
-                <property name="text">
-                 <string>DEM</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="11" column="2">
-               <widget class="QProgressBar" name="progress_gisdownload">
-                <property name="value">
-                 <number>0</number>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="2">
-               <widget class="QComboBox" name="combo_lakes_source">
-                <item>
-                 <property name="text">
-                  <string>HydroSheds</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QCheckBox" name="chk_download_landuse">
-                <property name="text">
-                 <string>Landuse</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="2">
-               <widget class="QComboBox" name="combo_landuse_source">
-                <item>
-                 <property name="text">
-                  <string>Natural Resources Canada</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QCheckBox" name="chk_download_flowdir">
-                <property name="text">
-                 <string>Flow direction</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_127">
-                <property name="font">
-                 <font>
-                  <pointsize>14</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Data</string>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="2">
-               <widget class="QLabel" name="lbl_progressbar">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QComboBox" name="combo_dem_source">
-                <item>
-                 <property name="text">
-                  <string>HydroSheds</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="6" column="2">
-               <widget class="QComboBox" name="combo_soil_source">
-                <item>
-                 <property name="text">
-                  <string>CanSIS</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QCheckBox" name="chk_download_bankfull">
-                <property name="text">
-                 <string>Bankfull width</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
+              <item row="0" column="1">
                <widget class="QLabel" name="label_196">
                 <property name="font">
                  <font>
@@ -4246,20 +4606,49 @@
                 </property>
                </widget>
               </item>
-              <item row="3" column="0">
-               <widget class="QCheckBox" name="chk_download_lakes">
+              <item row="7" column="1">
+               <widget class="QgsFileWidget" name="file_gis_download_output">
+                <property name="storageMode">
+                 <enum>QgsFileWidget::GetDirectory</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QComboBox" name="combo_landuse_source">
+                <item>
+                 <property name="text">
+                  <string>Natural Resources Canada</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QCheckBox" name="chk_download_bankfull">
                 <property name="text">
-                 <string>Lakes</string>
+                 <string>Bankfull width</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
                 </property>
                </widget>
               </item>
-              <item row="7" column="2">
-               <widget class="QgsFileWidget" name="file_gis_download_output">
-                <property name="storageMode">
-                 <enum>QgsFileWidget::GetDirectory</enum>
+              <item row="6" column="0">
+               <widget class="QCheckBox" name="chk_download_soil">
+                <property name="text">
+                 <string>Soil type</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QCheckBox" name="chk_download_flowdir">
+                <property name="text">
+                 <string>Flow direction</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -4267,6 +4656,73 @@
                <widget class="QLabel" name="label_129">
                 <property name="text">
                  <string>Output folder</string>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="0" colspan="2">
+               <widget class="QWidget" name="widget_32" native="true">
+                <layout class="QGridLayout" name="gridLayout_65">
+                 <item row="0" column="2">
+                  <spacer name="horizontalSpacer_39">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QPushButton" name="btn_downloadgisdata">
+                   <property name="minimumSize">
+                    <size>
+                     <width>150</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>150</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Download</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <spacer name="horizontalSpacer_40">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="10" column="0" colspan="2">
+               <widget class="QLabel" name="lbl_progressbar">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -4313,8 +4769,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>647</width>
-                   <height>1369</height>
+                   <width>1181</width>
+                   <height>1647</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -5115,8 +5571,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>425</width>
-                   <height>377</height>
+                   <width>589</width>
+                   <height>480</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -5777,8 +6233,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>338</width>
-                   <height>664</height>
+                   <width>512</width>
+                   <height>822</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_20">
@@ -7445,9 +7901,9 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_3"/>
-  <buttongroup name="buttonGroup_4"/>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup_3"/>
  </buttongroups>
 </ui>
