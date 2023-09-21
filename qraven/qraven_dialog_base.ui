@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1394</width>
-    <height>906</height>
+    <width>1138</width>
+    <height>815</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -2578,8 +2578,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>796</width>
-                   <height>753</height>
+                   <width>653</width>
+                   <height>550</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -3686,8 +3686,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>398</width>
-                   <height>1000</height>
+                   <width>346</width>
+                   <height>907</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -4083,8 +4083,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>429</width>
-                   <height>1054</height>
+                   <width>365</width>
+                   <height>948</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_17">
@@ -4500,8 +4500,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>435</width>
-               <height>589</height>
+               <width>329</width>
+               <height>526</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_27">
@@ -4838,785 +4838,1069 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>804</width>
-                   <height>1647</height>
+                   <width>1054</width>
+                   <height>1752</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
-                  <item row="6" column="1">
-                   <widget class="QLabel" name="label_87">
-                    <property name="text">
-                     <string>Soil</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="48" column="2">
-                   <widget class="QComboBox" name="combo_bankfullwidth">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="49" column="2">
-                   <widget class="QComboBox" name="combo_bankfulldischarge">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="28" column="2">
-                   <widget class="QRadioButton" name="rb_dem">
-                    <property name="text">
-                     <string>using_dem</string>
-                    </property>
-                    <property name="checked">
-                     <bool>true</bool>
-                    </property>
-                    <attribute name="buttonGroup">
-                     <string notr="true">buttonGroup_2</string>
-                    </attribute>
-                   </widget>
-                  </item>
-                  <item row="25" column="2">
-                   <spacer name="horizontalSpacer_10">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="12" column="2">
-                   <widget class="QgsFileWidget" name="file_lakes">
-                    <property name="focusPolicy">
-                     <enum>Qt::TabFocus</enum>
-                    </property>
-                    <property name="filter">
-                     <string>*.shp</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="21" column="2">
-                   <widget class="QgsFileWidget" name="file_hybasin">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="focusPolicy">
-                     <enum>Qt::TabFocus</enum>
-                    </property>
-                    <property name="toolTip">
-                     <string>path_to_hydrobasin_polygon</string>
-                    </property>
-                    <property name="filter">
-                     <string>*.shp</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="44" column="2">
-                   <widget class="QComboBox" name="combo_poidrainarea"/>
-                  </item>
-                  <item row="12" column="1">
-                   <widget class="QLabel" name="label_46">
-                    <property name="text">
-                     <string>Lakes</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="21" column="1">
-                   <widget class="QRadioButton" name="rb_modehybasin">
-                    <property name="toolTip">
-                     <string>the extent is defined by subbasins that are drainage to the provided watershed outlet subbasins ID in HydroBASINS product</string>
-                    </property>
-                    <property name="text">
-                     <string>using_hybasin</string>
-                    </property>
-                    <attribute name="buttonGroup">
-                     <string notr="true">buttonGroup</string>
-                    </attribute>
-                   </widget>
-                  </item>
-                  <item row="23" column="2">
-                   <widget class="QgsFileWidget" name="file_providedply">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="focusPolicy">
-                     <enum>Qt::TabFocus</enum>
-                    </property>
-                    <property name="toolTip">
-                     <string>path_to_spatial_extent_polygon</string>
-                    </property>
-                    <property name="filter">
-                     <string>*.shp</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="44" column="3">
-                   <widget class="QComboBox" name="combo_poisource"/>
-                  </item>
-                  <item row="38" column="2">
-                   <widget class="QDoubleSpinBox" name="spin_conlakearea">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="maximum">
-                     <double>1000000.000000000000000</double>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="52" column="2">
-                   <widget class="QgsFileWidget" name="file_landusemanning">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="focusPolicy">
-                     <enum>Qt::TabFocus</enum>
-                    </property>
-                    <property name="filter">
-                     <string>*.csv</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="14" column="2">
-                   <spacer name="horizontalSpacer_12">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="28" column="3">
-                   <widget class="QRadioButton" name="rb_fdr">
-                    <property name="text">
-                     <string>using_fdr</string>
-                    </property>
-                    <attribute name="buttonGroup">
-                     <string notr="true">buttonGroup_2</string>
-                    </attribute>
-                   </widget>
-                  </item>
-                  <item row="42" column="2">
-                   <widget class="QComboBox" name="combo_poiid"/>
-                  </item>
-                  <item row="22" column="3">
-                   <widget class="QLineEdit" name="txt_outletlon">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="placeholderText">
-                     <string>Lon</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="10" column="2">
-                   <widget class="QgsFileWidget" name="file_landuserast">
-                    <property name="focusPolicy">
-                     <enum>Qt::TabFocus</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="24" column="2">
-                   <widget class="QDoubleSpinBox" name="spin_buffer">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="toolTip">
-                     <string>The unit is the same with the spatial unit of input DEM</string>
-                    </property>
-                    <property name="decimals">
-                     <number>8</number>
-                    </property>
-                    <property name="maximum">
-                     <double>999999.999990000040270</double>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="48" column="3">
-                   <widget class="QComboBox" name="combo_bankfulldepth">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="21" column="3">
-                   <widget class="QLineEdit" name="txt_hybasin">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="placeholderText">
-                     <string>id</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="50" column="2">
-                   <widget class="QDoubleSpinBox" name="spin_kcoef">
-                    <property name="enabled">
-                     <bool>true</bool>
-                    </property>
-                    <property name="decimals">
-                     <number>8</number>
-                    </property>
-                    <property name="maximum">
-                     <double>99999.999999000006937</double>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="51" column="1">
-                   <widget class="QLabel" name="label_58">
-                    <property name="toolTip">
-                     <string>if k and c is provided, the path_bkfwidthdepth_polyline will not be used</string>
-                    </property>
-                    <property name="text">
-                     <string>C</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="39" column="1">
-                   <widget class="QLabel" name="label_53">
-                    <property name="text">
-                     <string>non_connected_lake_area_threshold</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="8" column="2">
-                   <spacer name="horizontalSpacer_13">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="37" column="2">
-                   <widget class="QComboBox" name="combo_lakevol">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="27" column="2">
-                   <widget class="QDoubleSpinBox" name="spin_facthreshold">
-                    <property name="enabled">
-                     <bool>true</bool>
-                    </property>
-                    <property name="toolTip">
-                     <string/>
-                    </property>
-                    <property name="decimals">
-                     <number>8</number>
-                    </property>
-                    <property name="maximum">
-                     <double>999999999.999989986419678</double>
-                    </property>
-                    <property name="value">
-                     <double>9000.000000000000000</double>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="45" column="2">
-                   <spacer name="horizontalSpacer_11">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="38" column="1">
-                   <widget class="QLabel" name="label_52">
-                    <property name="text">
-                     <string>connected_lake_area_threshold</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="49" column="3">
-                   <widget class="QComboBox" name="combo_bankfulldrainarea">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="7" column="1">
-                   <widget class="QLabel" name="label_42">
-                    <property name="toolTip">
-                     <string>path of the point shapefile that indicate points of interest,which can include different observation gauges</string>
-                    </property>
-                    <property name="text">
-                     <string>Points of interest</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="39" column="2">
-                   <widget class="QDoubleSpinBox" name="spin_nonconlakearea">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="maximum">
-                     <double>1000000.000000000000000</double>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="47" column="2">
-                   <widget class="QLineEdit" name="txt_epsgcode">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="placeholderText">
-                     <string>32187</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="27" column="1">
-                   <widget class="QLabel" name="label_86">
-                    <property name="toolTip">
-                     <string>flow accumulation thresthold</string>
-                    </property>
-                    <property name="text">
-                     <string>fac_threshold</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="28" column="1">
-                   <widget class="QLabel" name="label_48">
-                    <property name="text">
-                     <string>mode</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="22" column="2">
-                   <widget class="QLineEdit" name="txt_outletlat">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="placeholderText">
-                     <string>Lat</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="13" column="2">
-                   <widget class="QgsFileWidget" name="file_bankfullwidth">
-                    <property name="focusPolicy">
-                     <enum>Qt::TabFocus</enum>
-                    </property>
-                    <property name="filter">
-                     <string>*.shp</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="4" column="2">
-                   <widget class="QgsFileWidget" name="file_dem">
-                    <property name="focusPolicy">
-                     <enum>Qt::StrongFocus</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="5" column="2">
-                   <widget class="QgsFileWidget" name="file_landusepoly">
-                    <property name="focusPolicy">
-                     <enum>Qt::StrongFocus</enum>
-                    </property>
-                    <property name="filter">
-                     <string>*.shp</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="7" column="2">
-                   <widget class="QgsFileWidget" name="file_pointsinterest">
-                    <property name="focusPolicy">
-                     <enum>Qt::TabFocus</enum>
-                    </property>
-                    <property name="filter">
-                     <string>*.shp</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="4" column="1">
-                   <widget class="QLabel" name="label_40">
-                    <property name="text">
-                     <string>DEM</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="6" column="2">
-                   <widget class="QgsFileWidget" name="file_soil">
-                    <property name="focusPolicy">
-                     <enum>Qt::TabFocus</enum>
-                    </property>
-                    <property name="filter">
-                     <string>*.shp</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="20" column="1">
-                   <widget class="QRadioButton" name="rb_modedem">
-                    <property name="toolTip">
-                     <string>the extent of input dem is used</string>
-                    </property>
-                    <property name="text">
-                     <string>using_dem</string>
-                    </property>
-                    <property name="checked">
-                     <bool>true</bool>
-                    </property>
-                    <attribute name="buttonGroup">
-                     <string notr="true">buttonGroup</string>
-                    </attribute>
-                   </widget>
-                  </item>
-                  <item row="36" column="2">
-                   <widget class="QComboBox" name="combo_lakeavgdepth">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="22" column="1">
-                   <widget class="QRadioButton" name="rb_outletpt">
-                    <property name="toolTip">
-                     <string>the extent is defined by the watershed generated from input dem and the watershed outlet coordinates</string>
-                    </property>
-                    <property name="text">
-                     <string>using_outlet_pt</string>
-                    </property>
-                    <attribute name="buttonGroup">
-                     <string notr="true">buttonGroup</string>
-                    </attribute>
-                   </widget>
-                  </item>
-                  <item row="18" column="2">
-                   <spacer name="horizontalSpacer_8">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="10" column="1">
-                   <widget class="QLabel" name="label_59">
-                    <property name="text">
-                     <string>Landuse (raster)</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="50" column="1">
-                   <widget class="QLabel" name="label_57">
-                    <property name="toolTip">
-                     <string>if k and c is provided, the path_bkfwidthdepth_polyline will not be used</string>
-                    </property>
-                    <property name="text">
-                     <string>K</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="51" column="2">
-                   <widget class="QDoubleSpinBox" name="spin_ccoef">
-                    <property name="enabled">
-                     <bool>true</bool>
-                    </property>
-                    <property name="decimals">
-                     <number>8</number>
-                    </property>
-                    <property name="maximum">
-                     <double>99999.999999000006937</double>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="33" column="3">
-                   <widget class="QComboBox" name="combo_laketype">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="42" column="1">
-                   <widget class="QLabel" name="label_54">
-                    <property name="text">
-                     <string>Point_of_interest_attributes</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="13" column="1">
-                   <widget class="QLabel" name="label_41">
-                    <property name="text">
-                     <string>Bankfull width</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="47" column="1">
-                   <widget class="QCheckBox" name="chk_epsgcode">
-                    <property name="layoutDirection">
-                     <enum>Qt::LeftToRight</enum>
-                    </property>
-                    <property name="text">
-                     <string>projected_epsg_code</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="29" column="3">
-                   <widget class="QgsFileWidget" name="file_fdr">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="toolTip">
-                     <string>path of flow direction input dataset</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="33" column="1">
-                   <widget class="QLabel" name="label_51">
-                    <property name="text">
-                     <string>lake_attributes</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="23" column="1">
-                   <widget class="QRadioButton" name="rb_providedply">
-                    <property name="toolTip">
-                     <string>the extent of provided polygon is used</string>
-                    </property>
-                    <property name="text">
-                     <string>using_provided_ply</string>
-                    </property>
-                    <attribute name="buttonGroup">
-                     <string notr="true">buttonGroup</string>
-                    </attribute>
-                   </widget>
-                  </item>
-                  <item row="24" column="1">
-                   <widget class="QLabel" name="label_45">
-                    <property name="text">
-                     <string>buffer_distance</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="33" column="2">
-                   <widget class="QComboBox" name="combo_lakeid">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="16" column="1">
-                   <widget class="QLabel" name="label_49">
-                    <property name="toolTip">
-                     <string>The maximum RAM that BasinMaker will be allowed to use</string>
-                    </property>
-                    <property name="text">
-                     <string>Max memory (MB)</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="16" column="2">
-                   <widget class="QSpinBox" name="spin_ram">
-                    <property name="minimum">
-                     <number>524</number>
-                    </property>
-                    <property name="maximum">
-                     <number>64000</number>
-                    </property>
-                    <property name="singleStep">
-                     <number>2</number>
-                    </property>
-                    <property name="stepType">
-                     <enum>QAbstractSpinBox::DefaultStepType</enum>
-                    </property>
-                    <property name="value">
-                     <number>4096</number>
-                    </property>
-                    <property name="displayIntegerBase">
-                     <number>10</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="42" column="3">
-                   <widget class="QComboBox" name="combo_poiname"/>
-                  </item>
-                  <item row="48" column="1">
-                   <widget class="QLabel" name="label_56">
-                    <property name="text">
-                     <string>bkfwd_attributes</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="5" column="1">
-                   <widget class="QLabel" name="label_88">
-                    <property name="text">
-                     <string>Landuse (polygons)</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="36" column="3">
-                   <widget class="QComboBox" name="combo_lakearea">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="30" column="2">
-                   <spacer name="horizontalSpacer_9">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="52" column="1">
-                   <widget class="QLabel" name="label_60">
-                    <property name="text">
-                     <string>path_land_use_and_manning_n_table</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="2">
-                   <widget class="QgsFileWidget" name="file_outputfolder">
-                    <property name="focusPolicy">
-                     <enum>Qt::TabFocus</enum>
-                    </property>
-                    <property name="storageMode">
-                     <enum>QgsFileWidget::GetDirectory</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="1">
-                   <widget class="QLabel" name="label_47">
-                    <property name="text">
-                     <string>Output folder</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="2">
-                   <widget class="QLabel" name="label_43">
-                    <property name="font">
-                     <font>
-                      <pointsize>14</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="lineWidth">
-                     <number>0</number>
-                    </property>
-                    <property name="midLineWidth">
-                     <number>0</number>
-                    </property>
-                    <property name="text">
-                     <string>Mandatory files</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="9" column="2">
-                   <widget class="QLabel" name="label_61">
-                    <property name="font">
-                     <font>
-                      <pointsize>14</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Optional files</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="19" column="2">
-                   <widget class="QLabel" name="label_44">
-                    <property name="font">
-                     <font>
-                      <pointsize>14</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Define project spatial extent</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="26" column="2">
-                   <widget class="QLabel" name="label_81">
-                    <property name="font">
-                     <font>
-                      <pointsize>14</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Delineate routing structure without lakes</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="31" column="2">
-                   <widget class="QLabel" name="label_50">
-                    <property name="font">
-                     <font>
-                      <pointsize>14</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Add lake and obs control points</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="46" column="2">
-                   <widget class="QLabel" name="label_55">
-                    <property name="font">
-                     <font>
-                      <pointsize>14</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Add hydrology related attributes</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignCenter</set>
-                    </property>
+                  <item row="3" column="0">
+                   <widget class="QWidget" name="widget_36" native="true">
+                    <layout class="QGridLayout" name="gridLayout_69">
+                     <item row="3" column="1">
+                      <widget class="QgsFileWidget" name="file_lakes">
+                       <property name="focusPolicy">
+                        <enum>Qt::TabFocus</enum>
+                       </property>
+                       <property name="filter">
+                        <string>*.shp</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QLabel" name="label_59">
+                       <property name="minimumSize">
+                        <size>
+                         <width>250</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Landuse (raster)</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="0">
+                      <widget class="QLabel" name="label_46">
+                       <property name="text">
+                        <string>Lakes</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="4" column="1">
+                      <widget class="QgsFileWidget" name="file_bankfullwidth">
+                       <property name="focusPolicy">
+                        <enum>Qt::TabFocus</enum>
+                       </property>
+                       <property name="filter">
+                        <string>*.shp</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="4" column="0">
+                      <widget class="QLabel" name="label_41">
+                       <property name="text">
+                        <string>Bankfull width</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="1">
+                      <widget class="QgsFileWidget" name="file_landuserast">
+                       <property name="focusPolicy">
+                        <enum>Qt::TabFocus</enum>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0" colspan="2">
+                      <widget class="QLabel" name="label_61">
+                       <property name="font">
+                        <font>
+                         <pointsize>14</pointsize>
+                         <weight>75</weight>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="text">
+                        <string>Optional files</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="5" column="0">
+                      <widget class="QLabel" name="label_49">
+                       <property name="toolTip">
+                        <string>The maximum RAM that BasinMaker will be allowed to use</string>
+                       </property>
+                       <property name="text">
+                        <string>Max memory (MB)</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="5" column="1">
+                      <widget class="QSpinBox" name="spin_ram">
+                       <property name="minimum">
+                        <number>524</number>
+                       </property>
+                       <property name="maximum">
+                        <number>64000</number>
+                       </property>
+                       <property name="singleStep">
+                        <number>2</number>
+                       </property>
+                       <property name="stepType">
+                        <enum>QAbstractSpinBox::DefaultStepType</enum>
+                       </property>
+                       <property name="value">
+                        <number>4096</number>
+                       </property>
+                       <property name="displayIntegerBase">
+                        <number>10</number>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QWidget" name="widget_41" native="true">
+                    <layout class="QGridLayout" name="gridLayout_74">
+                     <item row="1" column="0">
+                      <widget class="QLabel" name="label_86">
+                       <property name="minimumSize">
+                        <size>
+                         <width>250</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="toolTip">
+                        <string>flow accumulation thresthold</string>
+                       </property>
+                       <property name="text">
+                        <string>fac_threshold</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="0" colspan="2">
+                      <widget class="QLabel" name="label_81">
+                       <property name="font">
+                        <font>
+                         <pointsize>14</pointsize>
+                         <weight>75</weight>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="text">
+                        <string>Delineate routing structure without lakes</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QDoubleSpinBox" name="spin_facthreshold">
+                       <property name="enabled">
+                        <bool>true</bool>
+                       </property>
+                       <property name="toolTip">
+                        <string/>
+                       </property>
+                       <property name="decimals">
+                        <number>8</number>
+                       </property>
+                       <property name="maximum">
+                        <double>999999999.999989986419678</double>
+                       </property>
+                       <property name="value">
+                        <double>9000.000000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="1">
+                      <widget class="QWidget" name="widget_33" native="true">
+                       <layout class="QGridLayout" name="gridLayout_66">
+                        <property name="leftMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <item row="0" column="3">
+                         <widget class="QRadioButton" name="rb_fdr">
+                          <property name="text">
+                           <string>using_fdr</string>
+                          </property>
+                          <attribute name="buttonGroup">
+                           <string notr="true">buttonGroup_2</string>
+                          </attribute>
+                         </widget>
+                        </item>
+                        <item row="0" column="1">
+                         <widget class="QRadioButton" name="rb_dem">
+                          <property name="text">
+                           <string>using_dem</string>
+                          </property>
+                          <property name="checked">
+                           <bool>true</bool>
+                          </property>
+                          <attribute name="buttonGroup">
+                           <string notr="true">buttonGroup_2</string>
+                          </attribute>
+                         </widget>
+                        </item>
+                        <item row="0" column="4">
+                         <spacer name="horizontalSpacer_8">
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>40</width>
+                            <height>20</height>
+                           </size>
+                          </property>
+                         </spacer>
+                        </item>
+                        <item row="0" column="2">
+                         <spacer name="horizontalSpacer_9">
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="sizeType">
+                           <enum>QSizePolicy::Fixed</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>15</width>
+                            <height>20</height>
+                           </size>
+                          </property>
+                         </spacer>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QLabel" name="label_48">
+                       <property name="text">
+                        <string>mode</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="1">
+                      <widget class="QgsFileWidget" name="file_fdr">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="toolTip">
+                        <string>path of flow direction input dataset</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="6" column="0">
+                   <widget class="QWidget" name="widget_34" native="true">
+                    <layout class="QGridLayout" name="gridLayout_67">
+                     <item row="3" column="0">
+                      <widget class="QLabel" name="label_53">
+                       <property name="minimumSize">
+                        <size>
+                         <width>250</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>250</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>non_connected_lake_area_threshold</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="4" column="0">
+                      <widget class="QLabel" name="label_54">
+                       <property name="minimumSize">
+                        <size>
+                         <width>250</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>250</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Point_of_interest_attributes</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QLabel" name="label_51">
+                       <property name="minimumSize">
+                        <size>
+                         <width>250</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>250</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>lake_attributes</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="0" colspan="4">
+                      <widget class="QLabel" name="label_50">
+                       <property name="font">
+                        <font>
+                         <pointsize>14</pointsize>
+                         <weight>75</weight>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="text">
+                        <string>Add lake and obs control points</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QLabel" name="label_52">
+                       <property name="minimumSize">
+                        <size>
+                         <width>250</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>250</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>connected_lake_area_threshold</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1" colspan="3">
+                      <widget class="QWidget" name="widget_42" native="true">
+                       <layout class="QGridLayout" name="gridLayout_75">
+                        <property name="leftMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <item row="1" column="1">
+                         <widget class="QComboBox" name="combo_laketype">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="0">
+                         <widget class="QComboBox" name="combo_lakeid">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="2" column="0">
+                         <widget class="QLabel" name="label_142">
+                          <property name="text">
+                           <string>Average depth</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="2" column="1">
+                         <widget class="QLabel" name="label_143">
+                          <property name="text">
+                           <string>Lake area</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="1">
+                         <widget class="QLabel" name="label_141">
+                          <property name="text">
+                           <string>Type of lake</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="0">
+                         <widget class="QLabel" name="label_140">
+                          <property name="text">
+                           <string>ID</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="5" column="0">
+                         <widget class="QComboBox" name="combo_lakevol">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="3" column="0">
+                         <widget class="QComboBox" name="combo_lakeavgdepth">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="3" column="1">
+                         <widget class="QComboBox" name="combo_lakearea">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="4" column="0">
+                         <widget class="QLabel" name="label_144">
+                          <property name="text">
+                           <string>Volume</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item row="4" column="1" colspan="3">
+                      <widget class="QWidget" name="widget_43" native="true">
+                       <layout class="QGridLayout" name="gridLayout_76">
+                        <property name="leftMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <item row="3" column="0">
+                         <widget class="QComboBox" name="combo_poidrainarea"/>
+                        </item>
+                        <item row="0" column="0">
+                         <widget class="QLabel" name="label_145">
+                          <property name="text">
+                           <string>ID</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="0">
+                         <widget class="QComboBox" name="combo_poiid"/>
+                        </item>
+                        <item row="0" column="1">
+                         <widget class="QLabel" name="label_146">
+                          <property name="text">
+                           <string>Name</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="3" column="1">
+                         <widget class="QComboBox" name="combo_poisource"/>
+                        </item>
+                        <item row="1" column="1">
+                         <widget class="QComboBox" name="combo_poiname"/>
+                        </item>
+                        <item row="2" column="0">
+                         <widget class="QLabel" name="label_147">
+                          <property name="text">
+                           <string>Drainage area</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="2" column="1">
+                         <widget class="QLabel" name="label_148">
+                          <property name="text">
+                           <string>Source</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item row="2" column="1" colspan="3">
+                      <widget class="QDoubleSpinBox" name="spin_conlakearea">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="maximum">
+                        <double>1000000.000000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="1" colspan="3">
+                      <widget class="QDoubleSpinBox" name="spin_nonconlakearea">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="maximum">
+                        <double>1000000.000000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="7" column="0">
+                   <widget class="QWidget" name="widget_44" native="true">
+                    <layout class="QGridLayout" name="gridLayout_77">
+                     <item row="0" column="0" colspan="3">
+                      <widget class="QLabel" name="label_55">
+                       <property name="font">
+                        <font>
+                         <pointsize>14</pointsize>
+                         <weight>75</weight>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="text">
+                        <string>Add hydrology related attributes</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="1">
+                      <widget class="QWidget" name="widget_45" native="true">
+                       <layout class="QGridLayout" name="gridLayout_78">
+                        <property name="leftMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <item row="1" column="1">
+                         <widget class="QComboBox" name="combo_bankfulldepth">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="0">
+                         <widget class="QComboBox" name="combo_bankfullwidth">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="0">
+                         <widget class="QLabel" name="label_149">
+                          <property name="text">
+                           <string>Width</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="3" column="1">
+                         <widget class="QComboBox" name="combo_bankfulldrainarea">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="3" column="0">
+                         <widget class="QComboBox" name="combo_bankfulldischarge">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="1">
+                         <widget class="QLabel" name="label_150">
+                          <property name="text">
+                           <string>Depth</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="2" column="0">
+                         <widget class="QLabel" name="label_151">
+                          <property name="text">
+                           <string>Discharge</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="2" column="1">
+                         <widget class="QLabel" name="label_152">
+                          <property name="text">
+                           <string>Drainage area</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QgsProjectionSelectionWidget" name="qgs_projection_BM"/>
+                     </item>
+                     <item row="3" column="1">
+                      <widget class="QDoubleSpinBox" name="spin_kcoef">
+                       <property name="enabled">
+                        <bool>true</bool>
+                       </property>
+                       <property name="decimals">
+                        <number>8</number>
+                       </property>
+                       <property name="maximum">
+                        <double>99999.999999000006937</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="4" column="0">
+                      <widget class="QLabel" name="label_58">
+                       <property name="toolTip">
+                        <string>if k and c is provided, the path_bkfwidthdepth_polyline will not be used</string>
+                       </property>
+                       <property name="text">
+                        <string>C</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="0">
+                      <widget class="QLabel" name="label_57">
+                       <property name="toolTip">
+                        <string>if k and c is provided, the path_bkfwidthdepth_polyline will not be used</string>
+                       </property>
+                       <property name="text">
+                        <string>K</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QCheckBox" name="chk_epsgcode">
+                       <property name="minimumSize">
+                        <size>
+                         <width>250</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>250</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="layoutDirection">
+                        <enum>Qt::LeftToRight</enum>
+                       </property>
+                       <property name="text">
+                        <string>projected_epsg_code</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="4" column="1">
+                      <widget class="QDoubleSpinBox" name="spin_ccoef">
+                       <property name="enabled">
+                        <bool>true</bool>
+                       </property>
+                       <property name="decimals">
+                        <number>8</number>
+                       </property>
+                       <property name="maximum">
+                        <double>99999.999999000006937</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QLabel" name="label_56">
+                       <property name="text">
+                        <string>bkfwd_attributes</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="5" column="0">
+                      <widget class="QLabel" name="label_60">
+                       <property name="text">
+                        <string>path_land_use_and_manning_n_table</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="5" column="1">
+                      <widget class="QgsFileWidget" name="file_landusemanning">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="focusPolicy">
+                        <enum>Qt::TabFocus</enum>
+                       </property>
+                       <property name="filter">
+                        <string>*.csv</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="QWidget" name="widget_38" native="true">
+                    <layout class="QGridLayout" name="gridLayout_71">
+                     <item row="1" column="0">
+                      <widget class="QRadioButton" name="rb_modedem">
+                       <property name="toolTip">
+                        <string>the extent of input dem is used</string>
+                       </property>
+                       <property name="text">
+                        <string>using_dem</string>
+                       </property>
+                       <property name="checked">
+                        <bool>true</bool>
+                       </property>
+                       <attribute name="buttonGroup">
+                        <string notr="true">buttonGroup</string>
+                       </attribute>
+                      </widget>
+                     </item>
+                     <item row="7" column="1">
+                      <widget class="QDoubleSpinBox" name="spin_buffer">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="toolTip">
+                        <string>The unit is the same with the spatial unit of input DEM</string>
+                       </property>
+                       <property name="decimals">
+                        <number>8</number>
+                       </property>
+                       <property name="maximum">
+                        <double>999999.999990000040270</double>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="1">
+                      <widget class="QWidget" name="widget_39" native="true">
+                       <layout class="QGridLayout" name="gridLayout_72">
+                        <property name="leftMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
+                        <item row="0" column="0">
+                         <widget class="QgsFileWidget" name="file_hybasin">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="focusPolicy">
+                           <enum>Qt::TabFocus</enum>
+                          </property>
+                          <property name="toolTip">
+                           <string>path_to_hydrobasin_polygon</string>
+                          </property>
+                          <property name="filter">
+                           <string>*.shp</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="1">
+                         <widget class="QLineEdit" name="txt_hybasin">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="placeholderText">
+                           <string>id</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item row="2" column="0" rowspan="2">
+                      <widget class="QRadioButton" name="rb_modehybasin">
+                       <property name="minimumSize">
+                        <size>
+                         <width>250</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="toolTip">
+                        <string>the extent is defined by subbasins that are drainage to the provided watershed outlet subbasins ID in HydroBASINS product</string>
+                       </property>
+                       <property name="text">
+                        <string>using_hybasin</string>
+                       </property>
+                       <attribute name="buttonGroup">
+                        <string notr="true">buttonGroup</string>
+                       </attribute>
+                      </widget>
+                     </item>
+                     <item row="5" column="0">
+                      <widget class="QRadioButton" name="rb_providedply">
+                       <property name="toolTip">
+                        <string>the extent of provided polygon is used</string>
+                       </property>
+                       <property name="text">
+                        <string>using_provided_ply</string>
+                       </property>
+                       <attribute name="buttonGroup">
+                        <string notr="true">buttonGroup</string>
+                       </attribute>
+                      </widget>
+                     </item>
+                     <item row="0" column="0" colspan="3">
+                      <widget class="QLabel" name="label_44">
+                       <property name="font">
+                        <font>
+                         <pointsize>14</pointsize>
+                         <weight>75</weight>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="text">
+                        <string>Define project spatial extent</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="7" column="0">
+                      <widget class="QLabel" name="label_45">
+                       <property name="text">
+                        <string>buffer_distance</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="4" column="0">
+                      <widget class="QRadioButton" name="rb_outletpt">
+                       <property name="toolTip">
+                        <string>the extent is defined by the watershed generated from input dem and the watershed outlet coordinates</string>
+                       </property>
+                       <property name="text">
+                        <string>using_outlet_pt</string>
+                       </property>
+                       <attribute name="buttonGroup">
+                        <string notr="true">buttonGroup</string>
+                       </attribute>
+                      </widget>
+                     </item>
+                     <item row="4" column="1">
+                      <widget class="QWidget" name="widget_37" native="true">
+                       <layout class="QGridLayout" name="gridLayout_70">
+                        <property name="leftMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
+                        <item row="0" column="0">
+                         <widget class="QLineEdit" name="txt_outletlat">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="placeholderText">
+                           <string>Lat</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="1">
+                         <widget class="QLineEdit" name="txt_outletlon">
+                          <property name="enabled">
+                           <bool>false</bool>
+                          </property>
+                          <property name="placeholderText">
+                           <string>Lon</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item row="5" column="1">
+                      <widget class="QgsFileWidget" name="file_providedply">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="focusPolicy">
+                        <enum>Qt::TabFocus</enum>
+                       </property>
+                       <property name="toolTip">
+                        <string>path_to_spatial_extent_polygon</string>
+                       </property>
+                       <property name="filter">
+                        <string>*.shp</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QWidget" name="widget_35" native="true">
+                    <layout class="QGridLayout" name="gridLayout_68">
+                     <item row="2" column="1">
+                      <widget class="QgsFileWidget" name="file_dem">
+                       <property name="focusPolicy">
+                        <enum>Qt::StrongFocus</enum>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="4" column="1">
+                      <widget class="QgsFileWidget" name="file_soil">
+                       <property name="focusPolicy">
+                        <enum>Qt::TabFocus</enum>
+                       </property>
+                       <property name="filter">
+                        <string>*.shp</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QgsFileWidget" name="file_outputfolder">
+                       <property name="focusPolicy">
+                        <enum>Qt::TabFocus</enum>
+                       </property>
+                       <property name="storageMode">
+                        <enum>QgsFileWidget::GetDirectory</enum>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QLabel" name="label_47">
+                       <property name="minimumSize">
+                        <size>
+                         <width>250</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Output folder</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="4" column="0">
+                      <widget class="QLabel" name="label_87">
+                       <property name="text">
+                        <string>Soil</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="5" column="1">
+                      <widget class="QgsFileWidget" name="file_pointsinterest">
+                       <property name="focusPolicy">
+                        <enum>Qt::TabFocus</enum>
+                       </property>
+                       <property name="filter">
+                        <string>*.shp</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="1">
+                      <widget class="QgsFileWidget" name="file_landusepoly">
+                       <property name="focusPolicy">
+                        <enum>Qt::StrongFocus</enum>
+                       </property>
+                       <property name="filter">
+                        <string>*.shp</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QLabel" name="label_40">
+                       <property name="text">
+                        <string>DEM</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="0">
+                      <widget class="QLabel" name="label_88">
+                       <property name="text">
+                        <string>Landuse (polygons)</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="5" column="0">
+                      <widget class="QLabel" name="label_42">
+                       <property name="toolTip">
+                        <string>path of the point shapefile that indicate points of interest,which can include different observation gauges</string>
+                       </property>
+                       <property name="text">
+                        <string>Points of interest</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="0" colspan="2">
+                      <widget class="QLabel" name="label_43">
+                       <property name="font">
+                        <font>
+                         <pointsize>14</pointsize>
+                         <weight>75</weight>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="lineWidth">
+                        <number>0</number>
+                       </property>
+                       <property name="midLineWidth">
+                        <number>0</number>
+                       </property>
+                       <property name="text">
+                        <string>Mandatory files</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </widget>
                   </item>
                  </layout>
@@ -5640,8 +5924,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>589</width>
-                   <height>480</height>
+                   <width>1054</width>
+                   <height>1752</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -6302,8 +6586,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>512</width>
-                   <height>822</height>
+                   <width>338</width>
+                   <height>664</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_20">
@@ -7966,13 +8250,18 @@
    <extends>QWidget</extends>
    <header>qgsfilewidget.h</header>
   </customwidget>
+  <customwidget>
+   <class>QgsProjectionSelectionWidget</class>
+   <extends>QWidget</extends>
+   <header>qgsprojectionselectionwidget.h</header>
+  </customwidget>
  </customwidgets>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_4"/>
   <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup_3"/>
  </buttongroups>
 </ui>

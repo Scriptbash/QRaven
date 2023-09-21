@@ -101,7 +101,7 @@ class Daymet:
             if dlg.chk_daymet_fill_values.isChecked():
                 dlg.lbl_daymet_download.setText('Setting fill values from -9999 to -1.2345...')
                 QApplication.processEvents()
-                set_fill_values(output, variable)
+                set_fill_values(output_file, variable)
                 dlg.lbl_daymet_download.setText('Fill and missing values set to -1.2345.')
         dlg.lbl_daymet_download.setText("Download complete!")
         dlg.progress_daymet.setValue(0)
