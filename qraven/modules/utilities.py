@@ -46,6 +46,8 @@ def merge_netcdf(file_path, variable):
             'lon': lon_without_time,
             variable: ds[variable]
         })
+        # Round down the time values to the nearest integer (remove the 0.5)
+        ds_modified['time'] = ds_modified['time'].astype(int)
         ds_modified.to_netcdf(file_path + '/' + variable + '_merged.nc')
         ds.close()
         ds_modified.close()
@@ -107,6 +109,7 @@ def set_fill_values(ncfile, variable):
     ds.to_netcdf(ncfile + '_tmp')
     os.remove(ncfile)
     os.rename(ncfile + '_tmp', ncfile)
+    print('Missing and filling values were change to -1.2345')
 
 
 # Creates a new folder if it does not exist
