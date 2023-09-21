@@ -9,9 +9,9 @@ from .templates.mohyse import loadMohyse
 from .templates.hypr import loadHypr
 from .templates.hymod import loadHymod
 from .templates.awbm import loadAwbm
-from .templates.blended import load_blended
+#from .templates.blended import load_blended
 from .templates.routingonly import load_routing_only
-from . utilities import *
+from .utilities import *
 
 
 class ThunderRaven:
@@ -52,6 +52,9 @@ class ThunderRaven:
             load_routing_only(self.qrvn)
 
     def download_gis_data(self):
+        self.dlg.stackedWidget.setCurrentIndex(4)
+        self.dlg.sidemenu.setCurrentRow(4)
+        QApplication.processEvents()
         output = self.dlg.file_thunder_output.filePath()
         input_polygon = self.dlg.file_thunder_polygon.filePath()
         output_gis = output + '/BasinMaker/Data'

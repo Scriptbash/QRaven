@@ -46,7 +46,6 @@ def merge_netcdf(file_path, variable):
             'lon': lon_without_time,
             variable: ds[variable]
         })
-
         ds_modified.to_netcdf(file_path + '/' + variable + '_merged.nc')
         ds.close()
         ds_modified.close()
@@ -97,6 +96,17 @@ def fill_missing_dates(ncfile, missing_dates):
     else:
         print("No missing dates found.")
     ds.close()
+
+
+def set_fill_values(ncfile, variable):
+    ds = xarray.open_dataset(ncfile)
+    new_variable_name = variable + '_new'  # Create a new variable with the desired _FillValue
+    ds[new_variable_name] = ds[variable].where(ds[variable] != -9999.0, -1.2345)
+    ds = ds.drop_vars(variable)  # Remove the original variable
+    ds = ds.rename({new_variable_name: variable})  # Rename the new variable to the original variable name
+    ds.to_netcdf(ncfile + '_tmp')
+    os.remove(ncfile)
+    os.rename(ncfile + '_tmp', ncfile)
 
 
 # Creates a new folder if it does not exist

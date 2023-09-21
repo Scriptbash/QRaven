@@ -393,7 +393,7 @@ class QRaven:
 
     def setupMenubar(self):
         #Sets up the left menu
-            menuitems = ['Easy mode', 'Raven RVI','Daymet', 'Streamflow', 'GIS', 'BasinMaker','Gridweights',
+            menuitems = ['Easy mode', 'Raven RVI','Daymet', 'Streamflow', 'GIS data', 'BasinMaker','Gridweights',
                          'Run Raven','OSTRICH','Settings']
             icons = ['thunderraven.svg','rvifile.svg','precipitation.svg', 'streamflow.svg', 'gis.svg', 'basinmaker.svg',
                      'gridweights.svg', 'raven.svg','ostrich.svg','settings.svg']
@@ -1485,7 +1485,7 @@ class QRaven:
                 shpattributes = self.dlg.combo_ncattributes.currentText()
                 pythoncmd = 'python3 -u derive_grid_weights.py -i ' + '/root/Gridweights/Data/nc/'+ncfilename + ' -f '+ '"'+shpattributes+'"' + ' -r ' + '/root/Gridweights/Data/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
             else:
-                pythoncmd = 'python3 -u derive_grid_weights.py -i ' + '/root/Gridweights/Data/nc/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/Data/hru/' + hrusfilename + selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
+                pythoncmd = 'python3 -u derive_grid_weights.py -i ' + '/root/Gridweights/Data/nc/'+ncfilename + ' -d ' + '"'+dimlon+','+dimlat+'"' + ' -v ' + '"'+varlon+','+varlat+'"' +' -r ' + '/root/Gridweights/Data/hru/' + hrusfilename + ' -a '+ selectedid + ' ' + subgauge_id + ' -o ' + '/root/Gridweights/'+outputfile #Bash command to start the Gridweights script
     
             self.docker.start('/root/Gridweights', volumenc, volumehrus)
             self.docker.runGridWeights(pythoncmd)
