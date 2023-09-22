@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1138</width>
-    <height>815</height>
+    <width>1139</width>
+    <height>845</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -431,10 +431,36 @@
                  </widget>
                 </item>
                 <item row="3" column="1">
-                 <widget class="QDateEdit" name="dateEdit_2"/>
+                 <widget class="QDateEdit" name="dateEdit_2">
+                  <property name="minimumDate">
+                   <date>
+                    <year>1980</year>
+                    <month>1</month>
+                    <day>1</day>
+                   </date>
+                  </property>
+                 </widget>
                 </item>
                 <item row="2" column="1">
-                 <widget class="QDateEdit" name="dateEdit"/>
+                 <widget class="QDateEdit" name="dateEdit">
+                  <property name="minimumDateTime">
+                   <datetime>
+                    <hour>0</hour>
+                    <minute>0</minute>
+                    <second>0</second>
+                    <year>1980</year>
+                    <month>1</month>
+                    <day>1</day>
+                   </datetime>
+                  </property>
+                  <property name="minimumDate">
+                   <date>
+                    <year>1980</year>
+                    <month>1</month>
+                    <day>1</day>
+                   </date>
+                  </property>
+                 </widget>
                 </item>
                 <item row="1" column="1">
                  <widget class="QLineEdit" name="txt_thunder_model_name"/>
@@ -481,7 +507,7 @@
              <property name="topMargin">
               <number>50</number>
              </property>
-             <item row="0" column="0" colspan="3">
+             <item row="0" column="0" colspan="2">
               <widget class="QLabel" name="label_134">
                <property name="maximumSize">
                 <size>
@@ -497,64 +523,111 @@
                 </font>
                </property>
                <property name="text">
-                <string>3. Watershed information</string>
+                <string>3. Watershed location</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="0" colspan="2">
-              <widget class="QRadioButton" name="radioButton_6">
-               <property name="text">
-                <string>Use a polygon shapefile</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QgsFileWidget" name="file_thunder_polygon">
-               <property name="filter">
-                <string>*.shp</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QRadioButton" name="radioButton_7">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="text">
-                <string>Use lat/lon coordinates</string>
-               </property>
-               <property name="checkable">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1" colspan="2">
-              <widget class="QWidget" name="widget_27" native="true">
-               <layout class="QGridLayout" name="gridLayout_60">
-                <item row="0" column="1">
-                 <widget class="QLineEdit" name="lineEdit_2">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
+             <item row="1" column="0">
+              <widget class="QWidget" name="widget_40" native="true">
+               <layout class="QGridLayout" name="gridLayout_73">
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
                 <item row="0" column="0">
-                 <widget class="QLineEdit" name="lineEdit">
-                  <property name="enabled">
-                   <bool>false</bool>
+                 <widget class="QRadioButton" name="radioButton_6">
+                  <property name="text">
+                   <string>Use a polygon shapefile</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="2">
-                 <widget class="QPushButton" name="pushButton_7">
+                <item row="0" column="1">
+                 <widget class="QgsFileWidget" name="file_thunder_polygon">
+                  <property name="filter">
+                   <string>*.shp</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QRadioButton" name="radioButton_7">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Select on map</string>
+                   <string>Use lat/lon coordinates</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QWidget" name="widget_27" native="true">
+                  <layout class="QGridLayout" name="gridLayout_60">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item row="0" column="1">
+                    <widget class="QLineEdit" name="lineEdit_2">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QLineEdit" name="lineEdit">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="2">
+                    <widget class="QPushButton" name="pushButton_7">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="text">
+                      <string>Select on map</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QRadioButton" name="radioButton">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>Use Nominatim geocoder</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QComboBox" name="comboBox">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="editable">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -586,7 +659,7 @@
              <string notr="true"/>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="tab">
              <property name="styleSheet">
@@ -949,1335 +1022,1350 @@
               <string>Sim. parameters</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_4">
-              <item row="10" column="2">
-               <widget class="QLabel" name="label_29">
-                <property name="text">
-                 <string>SWCloudCorrect</string>
-                </property>
-               </widget>
-              </item>
               <item row="0" column="0">
-               <widget class="QLabel" name="label_27">
-                <property name="text">
-                 <string>CatchmentRoute</string>
-                </property>
+               <widget class="QWidget" name="widget_46" native="true">
+                <layout class="QGridLayout" name="gridLayout_79">
+                 <item row="11" column="3">
+                  <widget class="QComboBox" name="combo_oroprecip">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_NONE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_HBV</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_UBCWM</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_UBCWM2</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_SIMPLELAPSE</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="11" column="2">
+                  <widget class="QLabel" name="label_14">
+                   <property name="text">
+                    <string>OroPrecipCorrect</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="16" column="1">
+                  <widget class="QComboBox" name="combo_swcanopy">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SW_CANOPY_CORR_NONE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SW_CANOPY_CORR_STATIC</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SW_CANOPY_CORR_DYNAMIC</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SW_CANOPY_CORR_UBCWM</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="12" column="0">
+                  <widget class="QLabel" name="label_30">
+                   <property name="text">
+                    <string>OroTempCorrect</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="13" column="0">
+                  <widget class="QLabel" name="label_35">
+                   <property name="text">
+                    <string>PotentialMeltMethod</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QComboBox" name="combo_evapo">
+                   <item>
+                    <property name="text">
+                     <string>PET_HARGREAVES_1985</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_NONE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_DATA</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_OUDIN</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_PENMAN_MONTEITH</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_PENMAN_COMBINATION</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_PRIESTLEY_TAYLOR</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_HARGREAVES</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_HAMON</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_TURC_1961</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_MAKKINK_1957</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_FROMMONTHLY</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_MONTHLY_FACTOR</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_MOHYSE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_CONSTANT</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_BLENDED</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_JENSEN_HAISE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_SHUTTLEWORTH_WALLACE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_PENMAN_SIMPLE33</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_PENMAN_SIMPLE39</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_LINACRE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_GRANGERGRAY</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="16" column="2">
+                  <widget class="QLabel" name="label_29">
+                   <property name="text">
+                    <string>SWCloudCorrect</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_20">
+                   <property name="text">
+                    <string>Evaporation</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="13" column="1">
+                  <widget class="QComboBox" name="combo_potentialmelt">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_DEGREE_DAY</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_NONE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_EB</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_RESTRICTED</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_HBV</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_HBV_ROS</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_UBCWM</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_CRHM</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_HMETS</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_DATA</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_BLENDED</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_DD_RAIN</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_USACE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_CRHM_EBSM</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>POTMELT_RILEY</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="16" column="3">
+                  <widget class="QComboBox" name="combo_swcloud">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SW_CLOUD_CORR_NONE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SW_CLOUD_CORR_UBCWM</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SW_CLOUD_CORR_DINGMAN</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SW_CLOUD_CORR_ANNANDALE</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="17" column="0">
+                  <widget class="QLabel" name="label_36">
+                   <property name="text">
+                    <string>SWRadiationMethod</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="10" column="0">
+                  <widget class="QLabel" name="label_15">
+                   <property name="text">
+                    <string>Method</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="7" column="1">
+                  <widget class="QComboBox" name="combo_cloudcover">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>CLOUDCOV_NONE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>CLOUDCOV_DATA</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>CLOUDCOV_UBCWM</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="16" column="0">
+                  <widget class="QLabel" name="label_13">
+                   <property name="text">
+                    <string>SWCanopyCorrect</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="12" column="3">
+                  <widget class="QComboBox" name="combo_owevapo">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_NONE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_HARGREAVES_1985</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_DATA</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_OUDIN</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_PENMAN_MONTEITH</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_PENMAN_COMBINATION</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_PRIESTLEY_TAYLOR</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_HARGREAVES</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_HAMON</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_TURC_1961</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_MAKKINK_1957</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_FROMMONTHLY</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_MONTHLY_FACTOR</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_MOHYSE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_CONSTANT</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_BLENDED</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_JENSEN_HAISE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_SHUTTLEWORTH_WALLACE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_PENMAN_SIMPLE33</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_PENMAN_SIMPLE39</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_LINACRE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PET_GRANGERGRAY</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="8" column="1">
+                  <widget class="QComboBox" name="combo_interpo">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>INTERP_NEAREST_NEIGHBOR</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>INTERP_INVERSE_DISTANCE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>INTERP_INVERSE_DISTANCE_ELEVATION</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>INTERP_AVERAGE_ALL</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>INTERP_FROM_FILE</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="15" column="2">
+                  <widget class="QLabel" name="label_24">
+                   <property name="text">
+                    <string>SubdailyMethod</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="18" column="0" colspan="4">
+                  <widget class="QWidget" name="widget_71" native="true">
+                   <layout class="QGridLayout" name="gridLayout_104">
+                    <item row="0" column="1">
+                     <widget class="QCheckBox" name="chk_snowsuppressespet">
+                      <property name="text">
+                       <string>SnowSuppressesPET</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="2">
+                     <widget class="QCheckBox" name="chk_suppresscomppet">
+                      <property name="text">
+                       <string>SuppressCompetitivePET</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QCheckBox" name="chk_directevapo">
+                      <property name="text">
+                       <string>DirectEvaporation</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item row="4" column="0" colspan="3">
+                  <widget class="QLabel" name="label_34">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>28</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>14</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string> Optional parameters</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="14" column="3">
+                  <widget class="QComboBox" name="combo_recharge">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>RECHARGE_NONE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>RECHARGE_MODEL</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>RECHARGE_DATA</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="17" column="3">
+                  <widget class="QComboBox" name="combo_windspeed">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>WINDVEL_CONSTANT</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>WINDVEL_DATA</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>WINDVEL_UBCWM</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>WINDVEL_UBC</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>WINDVEL_UBC_MOD</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>WINDVEL_SQRT</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>WINDVEL_LOG</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="7" column="0">
+                  <widget class="QLabel" name="label_26">
+                   <property name="text">
+                    <string>CloudCoverMethod</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="9" column="0">
+                  <widget class="QLabel" name="label_33">
+                   <property name="text">
+                    <string>LakeStorage</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="14" column="0">
+                  <widget class="QLabel" name="label_22">
+                   <property name="text">
+                    <string>RainSnowFraction</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="14" column="2">
+                  <widget class="QLabel" name="label_32">
+                   <property name="text">
+                    <string>RechargeMethod</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QComboBox" name="combo_routing">
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_MUSKINGUM</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_MUSKINGUM_CUNGE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_STORAGE_COEFF</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_PLUG_FLOW</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_DIFFUSIVE_WAVE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_DIFFUSIVE_VARY</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_HYDROLOGIC</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_NONE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_EXTERNAL</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_TVD</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="12" column="1">
+                  <widget class="QComboBox" name="combo_orotemp">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_NONE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_HBV</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_UBCWM</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_UBCWM2</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_SIMPLE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_SIMPLELAPSE</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="13" column="2">
+                  <widget class="QLabel" name="label_21">
+                   <property name="text">
+                    <string>PrecipIceptFract</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="9" column="2">
+                  <widget class="QLabel" name="label_16">
+                   <property name="text">
+                    <string>LWRadiationMethod</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="11" column="1">
+                  <widget class="QComboBox" name="combo_oropet">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_NONE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_HBV</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_UBCWM</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_UBCWM2</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_PRMS</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OROCORR_SIMPLELAPSE</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="13" column="3">
+                  <widget class="QComboBox" name="combo_precipicept">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PRECIP_ICEPT_USER</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PRECIP_ICEPT_LAI</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PRECIP_ICEPT_EXPLAI</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PRECIP_ICEPT_NONE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PRECIP_ICEPT_HEDSTROM</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="15" column="3">
+                  <widget class="QComboBox" name="combo_subdaily">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SUBDAILY_NONE</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SUBDAILY_UBC</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SUBDAILY_SIMPLE</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="6" column="1">
+                  <widget class="QComboBox" name="combo_airpressure">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>AIRPRESS_BASIC</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>AIRPRESS_CONST</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>AIRPRESS_DATA</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>AIRPRESS_UBC</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="17" column="1">
+                  <widget class="QComboBox" name="combo_swradation">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SW_RAD_DEFAULT</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SW_RAD_DATA</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SW_RAD_UBCWM</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SW_RAD_VALIANTZAS</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SW_RAD_NONE</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="9" column="3">
+                  <widget class="QComboBox" name="combo_lwradation">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>LW_RAD_DATA</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>LW_RAD_DEFAULT</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>LW_RAD_UBC</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>LW_RAD_UBCWM</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>LW_RAD_HSPF</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>LW_RAD_VALIANTZAS</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>LW_RAD_NONE</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="17" column="2">
+                  <widget class="QLabel" name="label_17">
+                   <property name="text">
+                    <string>WindspeedMethod</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="3">
+                  <widget class="QComboBox" name="combo_calendar">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PROLEPTIC_GREGORIAN</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>JULIAN</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>GREGORIAN</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>STANDARD</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>NOLEAP</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>365_DAY</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ALL_LEAP</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>366_DAY</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="8" column="0">
+                  <widget class="QLabel" name="label_28">
+                   <property name="layoutDirection">
+                    <enum>Qt::LeftToRight</enum>
+                   </property>
+                   <property name="text">
+                    <string>InterpolationMethod</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="label_25">
+                   <property name="layoutDirection">
+                    <enum>Qt::LeftToRight</enum>
+                   </property>
+                   <property name="text">
+                    <string>Routing</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="15" column="0">
+                  <widget class="QLabel" name="label_18">
+                   <property name="text">
+                    <string>RelativeHumidityMethod</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0" colspan="3">
+                  <widget class="QLabel" name="label_153">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>28</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>14</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Required parameters</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="10" column="3">
+                  <widget class="QComboBox" name="combo_monthlyinterpo">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>MONTHINT_UNIFORM</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>MONTHINT_LINEAR_MID</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>MONTHINT_LINEAR_FOM</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>MONTHINT_LINEAR_21</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="11" column="0">
+                  <widget class="QLabel" name="label_37">
+                   <property name="text">
+                    <string>OroPETCorrect</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="2">
+                  <widget class="QLabel" name="label_31">
+                   <property name="text">
+                    <string>Calendar</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="15" column="1">
+                  <widget class="QComboBox" name="combo_relhumidity">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>RELHUM_CONSTANT</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>RELHUM_DATA</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>RELHUM_MINDEWPT</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="10" column="2">
+                  <widget class="QLabel" name="label_23">
+                   <property name="text">
+                    <string>MonthlyInterpolationMethod</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="10" column="1">
+                  <widget class="QComboBox" name="combo_method">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>EULER</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>STANDARD</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ORDERED_SERIES</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ITER_HEUN</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_27">
+                   <property name="text">
+                    <string>CatchmentRoute</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="0">
+                  <widget class="QLabel" name="label_19">
+                   <property name="text">
+                    <string>AirPressureMethod</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QComboBox" name="combo_catchment">
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_DUMP</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_DELAYED_FIRST_ORDER</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_GAMMA_CONVOLUTION</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_TRI_CONVOLUTION</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>ROUTE_RESERVOIR_SERIES</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="14" column="1">
+                  <widget class="QComboBox" name="combo_rainsnowfrac">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>RAINSNOW_DINGMAN</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>RAINSNOW_DATA</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>RAINSNOW_UBC</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>RAINSNOW_UBCWM</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>RAINSNOW_HBV</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>RAINSNOW_HSPF</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>RAINSNOW_HARDER</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>RAINSNOW_THRESHOLD</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="12" column="2">
+                  <widget class="QLabel" name="label_12">
+                   <property name="text">
+                    <string>OW_Evaporation</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="9" column="1">
+                  <widget class="QComboBox" name="combo_lakestorage">
+                   <item>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SURFACE_WATER</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>LAKE_STORAGE</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="8" column="2" colspan="2">
+                  <widget class="QLineEdit" name="txt_interpofile">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="placeholderText">
+                    <string>Filename</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
-              </item>
-              <item row="16" column="1">
-               <widget class="QComboBox" name="combo_monthlyinterpo">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>MONTHINT_UNIFORM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>MONTHINT_LINEAR_MID</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>MONTHINT_LINEAR_FOM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>MONTHINT_LINEAR_21</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="13" column="2">
-               <widget class="QLabel" name="label_18">
-                <property name="text">
-                 <string>RelativeHumidityMethod</string>
-                </property>
-               </widget>
-              </item>
-              <item row="13" column="0">
-               <widget class="QLabel" name="label_26">
-                <property name="text">
-                 <string>CloudCoverMethod</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QComboBox" name="combo_catchment">
-                <item>
-                 <property name="text">
-                  <string>ROUTE_DUMP</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ROUTE_DELAYED_FIRST_ORDER</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ROUTE_GAMMA_CONVOLUTION</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ROUTE_TRI_CONVOLUTION</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ROUTE_RESERVOIR_SERIES</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="14" column="1">
-               <widget class="QComboBox" name="combo_airpressure">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>AIRPRESS_BASIC</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>AIRPRESS_CONST</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>AIRPRESS_DATA</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>AIRPRESS_UBC</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="13" column="1">
-               <widget class="QComboBox" name="combo_cloudcover">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>CLOUDCOV_NONE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>CLOUDCOV_DATA</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>CLOUDCOV_UBCWM</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="12" column="3">
-               <widget class="QComboBox" name="combo_windspeed">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>WINDVEL_CONSTANT</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>WINDVEL_DATA</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>WINDVEL_UBCWM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>WINDVEL_UBC</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>WINDVEL_UBC_MOD</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>WINDVEL_SQRT</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>WINDVEL_LOG</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QComboBox" name="combo_evapo">
-                <item>
-                 <property name="text">
-                  <string>PET_HARGREAVES_1985</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_NONE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_DATA</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_OUDIN</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_PENMAN_MONTEITH</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_PENMAN_COMBINATION</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_PRIESTLEY_TAYLOR</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_HARGREAVES</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_HAMON</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_TURC_1961</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_MAKKINK_1957</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_FROMMONTHLY</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_MONTHLY_FACTOR</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_MOHYSE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_CONSTANT</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_BLENDED</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_JENSEN_HAISE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_SHUTTLEWORTH_WALLACE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_PENMAN_SIMPLE33</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_PENMAN_SIMPLE39</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_LINACRE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_GRANGERGRAY</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="10" column="3">
-               <widget class="QComboBox" name="combo_swcloud">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SW_CLOUD_CORR_NONE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SW_CLOUD_CORR_UBCWM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SW_CLOUD_CORR_DINGMAN</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SW_CLOUD_CORR_ANNANDALE</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="7" column="0">
-               <widget class="QLabel" name="label_28">
-                <property name="layoutDirection">
-                 <enum>Qt::LeftToRight</enum>
-                </property>
-                <property name="text">
-                 <string>InterpolationMethod</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="2">
-               <widget class="QLabel" name="label_36">
-                <property name="text">
-                 <string>SWRadiationMethod</string>
-                </property>
-               </widget>
-              </item>
-              <item row="16" column="0">
-               <widget class="QLabel" name="label_23">
-                <property name="text">
-                 <string>MonthlyInterpolationMethod</string>
-                </property>
-               </widget>
-              </item>
-              <item row="14" column="3">
-               <widget class="QComboBox" name="combo_precipicept">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PRECIP_ICEPT_USER</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PRECIP_ICEPT_LAI</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PRECIP_ICEPT_EXPLAI</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PRECIP_ICEPT_NONE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PRECIP_ICEPT_HEDSTROM</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="15" column="2">
-               <widget class="QLabel" name="label_32">
-                <property name="text">
-                 <string>RechargeMethod</string>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="1">
-               <widget class="QComboBox" name="combo_oroprecip">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_NONE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_HBV</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_UBCWM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_UBCWM2</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_SIMPLELAPSE</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="18" column="2">
-               <widget class="QCheckBox" name="chk_suppresscomppet">
-                <property name="text">
-                 <string>SuppressCompetitivePET</string>
-                </property>
-               </widget>
-              </item>
-              <item row="14" column="0">
-               <widget class="QLabel" name="label_19">
-                <property name="text">
-                 <string>AirPressureMethod</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="1">
-               <widget class="QComboBox" name="combo_method">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>EULER</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>STANDARD</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ORDERED_SERIES</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ITER_HEUN</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="12" column="0">
-               <widget class="QLabel" name="label_37">
-                <property name="text">
-                 <string>OroPETCorrect</string>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="1">
-               <widget class="QComboBox" name="combo_owevapo">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_NONE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_HARGREAVES_1985</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_DATA</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_OUDIN</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_PENMAN_MONTEITH</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_PENMAN_COMBINATION</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_PRIESTLEY_TAYLOR</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_HARGREAVES</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_HAMON</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_TURC_1961</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_MAKKINK_1957</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_FROMMONTHLY</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_MONTHLY_FACTOR</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_MOHYSE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_CONSTANT</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_BLENDED</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_JENSEN_HAISE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_SHUTTLEWORTH_WALLACE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_PENMAN_SIMPLE33</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_PENMAN_SIMPLE39</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_LINACRE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PET_GRANGERGRAY</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="14" column="2">
-               <widget class="QLabel" name="label_21">
-                <property name="text">
-                 <string>PrecipIceptFract</string>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="0">
-               <widget class="QLabel" name="label_14">
-                <property name="text">
-                 <string>OroPrecipCorrect</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="label_15">
-                <property name="text">
-                 <string>Method</string>
-                </property>
-               </widget>
-              </item>
-              <item row="11" column="3">
-               <widget class="QComboBox" name="combo_lwradation">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>LW_RAD_DATA</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>LW_RAD_DEFAULT</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>LW_RAD_UBC</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>LW_RAD_UBCWM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>LW_RAD_HSPF</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>LW_RAD_VALIANTZAS</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>LW_RAD_NONE</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="9" column="0">
-               <widget class="QLabel" name="label_12">
-                <property name="text">
-                 <string>OW_Evaporation</string>
-                </property>
-               </widget>
-              </item>
-              <item row="11" column="1">
-               <widget class="QComboBox" name="combo_orotemp">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_NONE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_HBV</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_UBCWM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_UBCWM2</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_SIMPLE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_SIMPLELAPSE</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="8" column="0">
-               <widget class="QLabel" name="label_22">
-                <property name="text">
-                 <string>RainSnowFraction</string>
-                </property>
-               </widget>
-              </item>
-              <item row="17" column="3">
-               <widget class="QComboBox" name="combo_calendar">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PROLEPTIC_GREGORIAN</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>JULIAN</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>GREGORIAN</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>STANDARD</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>NOLEAP</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>365_DAY</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ALL_LEAP</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>366_DAY</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="7" column="3">
-               <widget class="QLineEdit" name="txt_interpofile">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="placeholderText">
-                 <string>Filename</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0" colspan="4">
-               <widget class="QLabel" name="label_34">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>28</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>14</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string> Optional parameters</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="15" column="0">
-               <widget class="QLabel" name="label_35">
-                <property name="text">
-                 <string>PotentialMeltMethod</string>
-                </property>
-               </widget>
-              </item>
-              <item row="18" column="0">
-               <widget class="QCheckBox" name="chk_directevapo">
-                <property name="text">
-                 <string>DirectEvaporation</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_20">
-                <property name="text">
-                 <string>Evaporation</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="1">
-               <widget class="QComboBox" name="combo_rainsnowfrac">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>RAINSNOW_DINGMAN</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>RAINSNOW_DATA</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>RAINSNOW_UBC</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>RAINSNOW_UBCWM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>RAINSNOW_HBV</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>RAINSNOW_HSPF</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>RAINSNOW_HARDER</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>RAINSNOW_THRESHOLD</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="12" column="1">
-               <widget class="QComboBox" name="combo_oropet">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_NONE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_HBV</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_UBCWM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_UBCWM2</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_PRMS</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>OROCORR_SIMPLELAPSE</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="15" column="1">
-               <widget class="QComboBox" name="combo_potentialmelt">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_DEGREE_DAY</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_NONE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_EB</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_RESTRICTED</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_HBV</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_HBV_ROS</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_UBCWM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_CRHM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_HMETS</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_DATA</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_BLENDED</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_DD_RAIN</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_USACE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_CRHM_EBSM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>POTMELT_RILEY</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QComboBox" name="combo_routing">
-                <item>
-                 <property name="text">
-                  <string>ROUTE_MUSKINGUM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ROUTE_MUSKINGUM_CUNGE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ROUTE_STORAGE_COEFF</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ROUTE_PLUG_FLOW</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ROUTE_DIFFUSIVE_WAVE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ROUTE_DIFFUSIVE_VARY</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ROUTE_HYDROLOGIC</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ROUTE_NONE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ROUTE_EXTERNAL</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ROUTE_TVD</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="7" column="1">
-               <widget class="QComboBox" name="combo_interpo">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>INTERP_NEAREST_NEIGHBOR</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>INTERP_INVERSE_DISTANCE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>INTERP_INVERSE_DISTANCE_ELEVATION</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>INTERP_AVERAGE_ALL</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>INTERP_FROM_FILE</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="9" column="3">
-               <widget class="QComboBox" name="combo_swcanopy">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SW_CANOPY_CORR_NONE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SW_CANOPY_CORR_STATIC</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SW_CANOPY_CORR_DYNAMIC</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SW_CANOPY_CORR_UBCWM</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="18" column="1">
-               <widget class="QCheckBox" name="chk_snowsuppressespet">
-                <property name="text">
-                 <string>SnowSuppressesPET</string>
-                </property>
-               </widget>
-              </item>
-              <item row="12" column="2">
-               <widget class="QLabel" name="label_17">
-                <property name="text">
-                 <string>WindspeedMethod</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_25">
-                <property name="layoutDirection">
-                 <enum>Qt::LeftToRight</enum>
-                </property>
-                <property name="text">
-                 <string>Routing</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="3">
-               <widget class="QComboBox" name="combo_swradation">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SW_RAD_DEFAULT</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SW_RAD_DATA</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SW_RAD_UBCWM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SW_RAD_VALIANTZAS</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SW_RAD_NONE</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="11" column="2">
-               <widget class="QLabel" name="label_16">
-                <property name="text">
-                 <string>LWRadiationMethod</string>
-                </property>
-               </widget>
-              </item>
-              <item row="17" column="1">
-               <widget class="QComboBox" name="combo_lakestorage">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SURFACE_WATER</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>LAKE_STORAGE</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="17" column="0">
-               <widget class="QLabel" name="label_33">
-                <property name="text">
-                 <string>LakeStorage</string>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="2">
-               <widget class="QLabel" name="label_13">
-                <property name="text">
-                 <string>SWCanopyCorrect</string>
-                </property>
-               </widget>
-              </item>
-              <item row="11" column="0">
-               <widget class="QLabel" name="label_30">
-                <property name="text">
-                 <string>OroTempCorrect</string>
-                </property>
-               </widget>
-              </item>
-              <item row="16" column="2">
-               <widget class="QLabel" name="label_24">
-                <property name="text">
-                 <string>SubdailyMethod</string>
-                </property>
-               </widget>
-              </item>
-              <item row="13" column="3">
-               <widget class="QComboBox" name="combo_relhumidity">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>RELHUM_CONSTANT</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>RELHUM_DATA</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>RELHUM_MINDEWPT</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="17" column="2">
-               <widget class="QLabel" name="label_31">
-                <property name="text">
-                 <string>Calendar</string>
-                </property>
-               </widget>
-              </item>
-              <item row="15" column="3">
-               <widget class="QComboBox" name="combo_recharge">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>RECHARGE_NONE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>RECHARGE_MODEL</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>RECHARGE_DATA</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="16" column="3">
-               <widget class="QComboBox" name="combo_subdaily">
-                <item>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SUBDAILY_NONE</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SUBDAILY_UBC</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>SUBDAILY_SIMPLE</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="5" column="0" colspan="4">
-               <spacer name="horizontalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="3" column="0" colspan="4">
-               <spacer name="horizontalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
               </item>
              </layout>
             </widget>
@@ -2578,8 +2666,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>653</width>
-                   <height>550</height>
+                   <width>904</width>
+                   <height>929</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -3524,7 +3612,7 @@
               <hour>0</hour>
               <minute>0</minute>
               <second>0</second>
-              <year>1950</year>
+              <year>1980</year>
               <month>1</month>
               <day>1</day>
              </datetime>
@@ -3553,9 +3641,19 @@
               <day>31</day>
              </datetime>
             </property>
+            <property name="minimumDateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>1980</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
+            </property>
             <property name="minimumDate">
              <date>
-              <year>1950</year>
+              <year>1980</year>
               <month>1</month>
               <day>1</day>
              </date>
@@ -3686,8 +3784,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>346</width>
-                   <height>907</height>
+                   <width>904</width>
+                   <height>989</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -4083,8 +4181,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>365</width>
-                   <height>948</height>
+                   <width>904</width>
+                   <height>989</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_17">
@@ -4838,8 +4936,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1054</width>
-                   <height>1752</height>
+                   <width>904</width>
+                   <height>1614</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">

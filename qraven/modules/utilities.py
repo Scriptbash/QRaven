@@ -37,7 +37,7 @@ except ImportError:
 def merge_netcdf(file_path, variable):
     print('Merging files...')
     try:
-        ds = xarray.open_mfdataset(file_path + '/*' + variable + '.nc', parallel=True)
+        ds = xarray.open_mfdataset(file_path + '/*' + variable + '.nc', parallel=False)
         # Remove the time dimension from the lat and lon variables
         lat_without_time = ds['lat'].isel(time=0)
         lon_without_time = ds['lon'].isel(time=0)
