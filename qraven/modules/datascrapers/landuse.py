@@ -42,7 +42,7 @@ class LandUseDownload:
             shutil.rmtree(output + '/landuse/tmp')
 
             # Create landuse info csv file for basinmaker
-            row_list = [["Landuse_ID", "LANDUSE_C"],
+            row_list = [["Landuse_ID", "LAND_USE_C"],
                        [1, "WATER"],
                        [2, "OPEN"],
                        [3, "FOREST"],
