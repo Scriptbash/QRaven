@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1139</width>
-    <height>845</height>
+    <width>1394</width>
+    <height>936</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -267,6 +267,19 @@
                </property>
               </widget>
              </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="lbl_thunder_output">
+               <property name="styleSheet">
+                <string notr="true">color:'red';</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -337,94 +350,7 @@
              <item row="1" column="0">
               <widget class="QWidget" name="widget_30" native="true">
                <layout class="QGridLayout" name="gridLayout_63">
-                <item row="3" column="1">
-                 <widget class="QDateEdit" name="dateEdit_2">
-                  <property name="minimumDate">
-                   <date>
-                    <year>1980</year>
-                    <month>1</month>
-                    <day>1</day>
-                   </date>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QComboBox" name="combo_thunder_structure">
-                  <item>
-                   <property name="text">
-                    <string>AWBM</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Canadian Shield</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>GR4J</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>HBV-EC</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>HBV-Light</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>HMETS</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>HYMOD</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>HYPR</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>MOHYSE</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>UBCWM</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Routing-only</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_139">
-                  <property name="text">
-                   <string>Model name</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_137">
-                  <property name="text">
-                   <string>Start date</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QLineEdit" name="txt_thunder_model_name"/>
-                </item>
-                <item row="2" column="2">
+                <item row="3" column="2">
                  <spacer name="horizontalSpacer_37">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
@@ -437,38 +363,79 @@
                   </property>
                  </spacer>
                 </item>
-                <item row="3" column="0">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_136">
+                  <property name="text">
+                   <string>Model structure(s)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="0">
                  <widget class="QLabel" name="label_138">
                   <property name="text">
                    <string>End date</string>
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_136">
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="txt_thunder_model_name"/>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_139">
                   <property name="text">
-                   <string>Model structure</string>
+                   <string>Model name</string>
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="1">
-                 <widget class="QDateEdit" name="dateEdit">
-                  <property name="minimumDateTime">
-                   <datetime>
-                    <hour>0</hour>
-                    <minute>0</minute>
-                    <second>0</second>
-                    <year>1980</year>
-                    <month>1</month>
-                    <day>1</day>
-                   </datetime>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="label_137">
+                  <property name="text">
+                   <string>Start date</string>
                   </property>
+                 </widget>
+                </item>
+                <item row="4" column="1">
+                 <widget class="QDateEdit" name="date_thunder_end">
                   <property name="minimumDate">
                    <date>
                     <year>1980</year>
                     <month>1</month>
                     <day>1</day>
                    </date>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QDateEdit" name="date_thunder_start">
+                  <property name="minimumDate">
+                   <date>
+                    <year>1980</year>
+                    <month>1</month>
+                    <day>1</day>
+                   </date>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QgsCheckableComboBox" name="mcombo_thunder_structure"/>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QLabel" name="lbl_thunder_structure">
+                  <property name="styleSheet">
+                   <string notr="true">color:'red';</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="2">
+                 <widget class="QLabel" name="lbl_thunder_name">
+                  <property name="styleSheet">
+                   <string notr="true">color:'red';</string>
+                  </property>
+                  <property name="text">
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -507,7 +474,50 @@
              <property name="topMargin">
               <number>50</number>
              </property>
-             <item row="0" column="0" colspan="2">
+             <item row="1" column="2">
+              <widget class="QgsFileWidget" name="file_thunder_polygon">
+               <property name="filter">
+                <string>*.shp</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="2">
+              <widget class="QWidget" name="widget_27" native="true">
+               <layout class="QGridLayout" name="gridLayout_60">
+                <property name="leftMargin">
+                 <number>6</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="lineEdit_2">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLineEdit" name="lineEdit">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QPushButton" name="pushButton_7">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>Select on map</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="3">
               <widget class="QLabel" name="label_134">
                <property name="maximumSize">
                 <size>
@@ -523,115 +533,64 @@
                 </font>
                </property>
                <property name="text">
-                <string>3. Watershed location</string>
+                <string>3. Watershed information</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QWidget" name="widget_40" native="true">
-               <layout class="QGridLayout" name="gridLayout_73">
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item row="0" column="0">
-                 <widget class="QRadioButton" name="radioButton_6">
-                  <property name="text">
-                   <string>Use a polygon shapefile</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QgsFileWidget" name="file_thunder_polygon">
-                  <property name="filter">
-                   <string>*.shp</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QRadioButton" name="radioButton_7">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="text">
-                   <string>Use lat/lon coordinates</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QWidget" name="widget_27" native="true">
-                  <layout class="QGridLayout" name="gridLayout_60">
-                   <property name="leftMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <item row="0" column="1">
-                    <widget class="QLineEdit" name="lineEdit_2">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="0">
-                    <widget class="QLineEdit" name="lineEdit">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="2">
-                    <widget class="QPushButton" name="pushButton_7">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="text">
-                      <string>Select on map</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QRadioButton" name="radioButton">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="text">
-                   <string>Use Nominatim geocoder</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QComboBox" name="comboBox">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="editable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+             <item row="3" column="0">
+              <widget class="QRadioButton" name="radioButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Use Nominatim geocoder</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QComboBox" name="comboBox">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QRadioButton" name="radioButton_7">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Use lat/lon coordinates</string>
+               </property>
+               <property name="checkable">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0" colspan="3">
+              <widget class="QLabel" name="lbl_thunder_ws_info">
+               <property name="styleSheet">
+                <string notr="true">color:'red';</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="2">
+              <widget class="QRadioButton" name="rd_thunder_use_poly">
+               <property name="text">
+                <string>Use a polygon shapefile</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
             </layout>
@@ -659,7 +618,7 @@
              <string notr="true"/>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab">
              <property name="styleSheet">
@@ -2666,8 +2625,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>904</width>
-                   <height>929</height>
+                   <width>796</width>
+                   <height>753</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -3784,8 +3743,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>904</width>
-                   <height>989</height>
+                   <width>1181</width>
+                   <height>1000</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -4181,8 +4140,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>904</width>
-                   <height>989</height>
+                   <width>429</width>
+                   <height>1054</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_17">
@@ -4598,8 +4557,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>329</width>
-               <height>526</height>
+               <width>435</width>
+               <height>589</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_27">
@@ -4936,8 +4895,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>904</width>
-                   <height>1614</height>
+                   <width>1181</width>
+                   <height>1803</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -5839,7 +5798,7 @@
                         <property name="bottomMargin">
                          <number>0</number>
                         </property>
-                        <item row="0" column="0">
+                        <item row="0" column="1">
                          <widget class="QLineEdit" name="txt_outletlat">
                           <property name="enabled">
                            <bool>false</bool>
@@ -5849,7 +5808,7 @@
                           </property>
                          </widget>
                         </item>
-                        <item row="0" column="1">
+                        <item row="0" column="0">
                          <widget class="QLineEdit" name="txt_outletlon">
                           <property name="enabled">
                            <bool>false</bool>
@@ -6022,8 +5981,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1054</width>
-                   <height>1752</height>
+                   <width>1195</width>
+                   <height>811</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -6684,8 +6643,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>338</width>
-                   <height>664</height>
+                   <width>512</width>
+                   <height>822</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_20">
@@ -8344,6 +8303,11 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>QgsCheckableComboBox</class>
+   <extends>QComboBox</extends>
+   <header>qgscheckablecombobox.h</header>
+  </customwidget>
+  <customwidget>
    <class>QgsFileWidget</class>
    <extends>QWidget</extends>
    <header>qgsfilewidget.h</header>
@@ -8357,9 +8321,9 @@
  <resources/>
  <connections/>
  <buttongroups>
+  <buttongroup name="buttonGroup_4"/>
   <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="buttonGroup_4"/>
   <buttongroup name="buttonGroup_3"/>
  </buttongroups>
 </ui>
