@@ -34,6 +34,7 @@ class ThunderRaven:
         if status == 0:
             self.prepare_environment()
             #self.load_model()
+            self.download_daymet_data()
             #self.download_gis_data()
             self.run_basin_maker()
 
@@ -70,6 +71,8 @@ class ThunderRaven:
             make_folder(model_folder)
             print('Created ' + model_folder)
 
+        make_folder(output + '/ncfiles')
+        print('Created temporarily' + output + '/ncfile')
         basin_maker_folder = output + '/BasinMaker'
         make_folder(basin_maker_folder + '/Data')
         print('Created ' + basin_maker_folder + '/Data')
@@ -121,6 +124,36 @@ class ThunderRaven:
 
             self.dlg.file_rvioutputdir.setFilePath(output_folder + '/' + structure)
             self.dlg.btn_write.click()
+
+    def download_daymet_data(self):
+        input_polygon = self.dlg.file_thunder_polygon.filePath()
+        output = self.dlg.file_thunder_output.filePath()
+        start_date = self.dlg.date_thunder_start.date()
+        end_date = self.dlg.date_thunder_end.date()
+
+        self.dlg.file_daymet_output.setFilePath(output + '/ncfiles')
+        self.dlg.file_daymet_polygon.setFilePath(input_polygon)
+        self.dlg.date_daymet_start_date.setDate(start_date)
+        self.dlg.date_daymet_end_date.setDate(end_date)
+        item = self.dlg.list_daymet_variables.item(0)
+        item.setSelected(True)
+        item = self.dlg.list_daymet_variables.item(1)
+        item.setSelected(True)
+        item = self.dlg.list_daymet_variables.item(2)
+        item.setSelected(True)
+        self.dlg.chk_daymet_insert_nan.setChecked(True)
+        self.dlg.chk_daymet_merge.setChecked(True)
+        self.dlg.chk_daymet_fill_values.setChecked(True)
+        #self.dlg.btn_download_daymet.click()
+        for structure in self.selected_structures:
+            try:
+                shutil.copytree(output + '/ncfiles', output + '/' + structure + '/forcing')
+            except FileExistsError:
+                shutil.rmtree(output + '/' + structure + '/forcing')
+                shutil.copytree(output + '/ncfiles', output + '/' + structure + '/forcing')
+        shutil.rmtree(output + '/ncfiles')
+
+
 
     def download_gis_data(self):
         self.dlg.stackedWidget.setCurrentIndex(4)
