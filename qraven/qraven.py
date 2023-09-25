@@ -552,9 +552,9 @@ class QRaven:
                 self.dlg.spin_nonconlakearea.setEnabled(False)
         elif widget.objectName() == 'chk_epsgcode':  
             if self.dlg.chk_epsgcode.isChecked():   #If the EPSG checkbox is checked, enable the EPSG line edit
-                self.dlg.txt_epsgcode.setEnabled(True)
+                self.dlg.qgs_projection_BM.setEnabled(True)
             else:
-                self.dlg.txt_epsgcode.setEnabled(False)
+                self.dlg.qgs_projection_BM.setEnabled(False)
         elif widget.objectName() == 'file_bankfullwidth':   #Add hydrology related attributes
             if self.dlg.file_bankfullwidth.filePath() != '':    #If there is a layer for bankfull width, enable the required fields
                 self.dlg.combo_bankfullwidth.setEnabled(True)
@@ -1242,7 +1242,7 @@ class QRaven:
         poisource = self.dlg.combo_poisource.currentText()   #Get the source field of the point of interest
 
         if self.dlg.chk_epsgcode.isChecked():   #Get the EPSG code if the checkbox is checkedm
-            epsgcode = 'EPSG:'+self.dlg.txt_epsgcode.text()
+            epsgcode = self.dlg.qgs_projection_BM.crs().authid()
         else:                                   #Otherwise use the default value of BasinMaker
             epsgcode = 'EPSG:3573'
 

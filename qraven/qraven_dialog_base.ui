@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1394</width>
-    <height>936</height>
+    <width>1139</width>
+    <height>903</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -2625,8 +2625,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>796</width>
-                   <height>753</height>
+                   <width>653</width>
+                   <height>550</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
@@ -3743,8 +3743,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1181</width>
-                   <height>1000</height>
+                   <width>346</width>
+                   <height>907</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_35">
@@ -4140,8 +4140,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>429</width>
-                   <height>1054</height>
+                   <width>365</width>
+                   <height>948</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_17">
@@ -4557,8 +4557,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>435</width>
-               <height>589</height>
+               <width>329</width>
+               <height>526</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_27">
@@ -4894,9 +4894,9 @@
                  <property name="geometry">
                   <rect>
                    <x>0</x>
-                   <y>0</y>
-                   <width>1181</width>
-                   <height>1803</height>
+                   <y>-729</y>
+                   <width>1161</width>
+                   <height>1612</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_15">
@@ -5529,7 +5529,11 @@
                       </widget>
                      </item>
                      <item row="1" column="1">
-                      <widget class="QgsProjectionSelectionWidget" name="qgs_projection_BM"/>
+                      <widget class="QgsProjectionSelectionWidget" name="qgs_projection_BM">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                      </widget>
                      </item>
                      <item row="3" column="1">
                       <widget class="QDoubleSpinBox" name="spin_kcoef">
@@ -5981,8 +5985,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1195</width>
-                   <height>811</height>
+                   <width>1161</width>
+                   <height>805</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_13">
@@ -6643,8 +6647,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>512</width>
-                   <height>822</height>
+                   <width>338</width>
+                   <height>664</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_20">
@@ -8323,7 +8327,7 @@
  <buttongroups>
   <buttongroup name="buttonGroup_4"/>
   <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
