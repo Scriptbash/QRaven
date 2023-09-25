@@ -12,6 +12,7 @@ from .templates.awbm import loadAwbm
 #from .templates.blended import load_blended
 from .templates.routingonly import load_routing_only
 from .utilities import *
+import shutil
 
 
 class ThunderRaven:
@@ -34,7 +35,7 @@ class ThunderRaven:
             self.prepare_environment()
             #self.load_model()
             #self.download_gis_data()
-            #self.run_basin_maker()
+            self.run_basin_maker()
 
     def check_input(self):
         return_code = 0
@@ -74,7 +75,6 @@ class ThunderRaven:
         print('Created ' + basin_maker_folder + '/Data')
         make_folder(basin_maker_folder + '/Output')
         print('Created ' + basin_maker_folder + 'Output')
-
 
     def load_model(self):
         for structure in self.selected_structures:
@@ -122,8 +122,6 @@ class ThunderRaven:
             self.dlg.file_rvioutputdir.setFilePath(output_folder + '/' + structure)
             self.dlg.btn_write.click()
 
-
-
     def download_gis_data(self):
         self.dlg.stackedWidget.setCurrentIndex(4)
         self.dlg.sidemenu.setCurrentRow(4)
@@ -144,6 +142,7 @@ class ThunderRaven:
     def run_basin_maker(self):
         output_folder = self.dlg.file_thunder_output.filePath()
         basin_maker_path = output_folder + '/BasinMaker'
+        model_name = self.dlg.txt_thunder_model_name.text()
         self.dlg.file_outputfolder.setFilePath(basin_maker_path + '/Output')
         self.dlg.file_dem.setFilePath(basin_maker_path + '/Data/DEM/qrvn_dem.tif')
         self.dlg.file_landusepoly.setFilePath(basin_maker_path + '/Data/landuse/qrvn_landuse.shp')
@@ -166,5 +165,10 @@ class ThunderRaven:
         self.dlg.file_pathlanduseinfo.setFilePath(basin_maker_path + '/Data/landuse/landuse_info.csv')
         self.dlg.file_pathsoilinfo.setFilePath(basin_maker_path + '/Data/soil/soil_info.csv')
         self.dlg.file_pathveginfo.setFilePath(basin_maker_path + '/Data/landuse/veg_info.csv')
-        self.dlg.txt_modelname.setText(self.dlg.txt_thunder_model_name.text())
-        self.dlg.btn_dockerrun.click()
+        self.dlg.txt_modelname.setText(model_name)
+        #self.dlg.btn_dockerrun.click()
+        files_to_copy = ['channel_properties.rvp', 'Lakes.rvh', model_name + '.rvh']
+        for file in files_to_copy:
+            for structure in self.selected_structures:
+                shutil.copy(basin_maker_path + '/Output/OIH_Output/network_after_gen_hrus/RavenInput/' + file,
+                            output_folder + '/' + structure + '/' + file)
