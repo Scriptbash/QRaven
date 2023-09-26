@@ -38,7 +38,8 @@ class ThunderRaven:
             #self.download_daymet_data()
             #self.download_gis_data()
             #self.run_basin_maker()
-            self.run_gridweights()
+            #self.run_gridweights()
+            #self.run_raven()
 
     def check_input(self):
         return_code = 0
@@ -71,6 +72,7 @@ class ThunderRaven:
         for structure in self.selected_structures:
             model_folder = output + '/' + structure
             make_folder(model_folder)
+            make_folder(model_folder + '/output')
             print('Created ' + model_folder)
 
         make_folder(output + '/ncfiles')
@@ -231,3 +233,14 @@ class ThunderRaven:
                 os.remove(output + '/' + structure + '/forcing/gridweights.txt')
                 shutil.copy(output + '/gridweights.txt', output + '/' + structure + '/forcing/gridweights.txt')
         os.remove(output + '/gridweights.txt')
+
+    def run_raven(self):
+        output = self.dlg.file_thunder_output.filePath()
+        for structure in self.selected_structures:
+            output_path = output + '/' + structure + '/output'
+            self.dlg.file_runinputdir.setFilePath(output + '/' + structure)
+            self.dlg.file_runoutputdir.setFilePath(output_path)
+            self.dlg.btn_runraven.click()  # Run Raven once to generate an .rvp template
+            self.dlg.btn_overwrite_rvp.click()  # Remove the :CreateRVPTemplate command
+            self.dlg.btn_fillrvptemplate.click()  # Fill the rvp template file
+            self.dlg.btn_runraven.click()  # Run the simulation
