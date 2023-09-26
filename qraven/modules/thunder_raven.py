@@ -13,6 +13,7 @@ from .templates.awbm import loadAwbm
 from .templates.routingonly import load_routing_only
 from .utilities import *
 import shutil
+import os
 
 
 class ThunderRaven:
@@ -34,9 +35,10 @@ class ThunderRaven:
         if status == 0:
             self.prepare_environment()
             #self.load_model()
-            self.download_daymet_data()
+            #self.download_daymet_data()
             #self.download_gis_data()
-            self.run_basin_maker()
+            #self.run_basin_maker()
+            self.run_gridweights()
 
     def check_input(self):
         return_code = 0
@@ -205,3 +207,27 @@ class ThunderRaven:
             for structure in self.selected_structures:
                 shutil.copy(basin_maker_path + '/Output/OIH_Output/network_after_gen_hrus/RavenInput/' + file,
                             output_folder + '/' + structure + '/' + file)
+
+    def run_gridweights(self):
+        # todo Get subbasin ID from the hru shp file
+        output = self.dlg.file_thunder_output.filePath()
+        basinmaker_output = self.dlg.file_thunder_output.filePath() + \
+                            '/BasinMaker/Output/OIH_Output/network_after_gen_hrus/finalcat_info.shp'
+        self.dlg.file_netcdf.setFilePath(output + '/' + self.selected_structures[0] + '/forcing/tmin_merged.nc')
+        self.dlg.txt_dimlon.setText('x')
+        self.dlg.txt_dimlat.setText('y')
+        self.dlg.txt_varlon.setText('lon')
+        self.dlg.txt_varlat.setText('lat')
+        self.dlg.file_hrus.setFilePath(basinmaker_output)
+        self.dlg.rb_subbasinid.setChecked(True)
+        self.dlg.txt_gridid.setText('0000')
+        self.dlg.file_outputgridweight.setFilePath(output + '/gridweights.txt')
+        self.dlg.btn_rungridweight.click()
+
+        for structure in self.selected_structures:
+            try:
+                shutil.copy(output + '/gridweights.txt', output + '/' + structure + '/forcing/gridweights.txt')
+            except FileExistsError:
+                os.remove(output + '/' + structure + '/forcing/gridweights.txt')
+                shutil.copy(output + '/gridweights.txt', output + '/' + structure + '/forcing/gridweights.txt')
+        os.remove(output + '/gridweights.txt')
