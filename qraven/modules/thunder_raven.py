@@ -12,6 +12,7 @@ from .templates.awbm import loadAwbm
 #from .templates.blended import load_blended
 from .templates.routingonly import load_routing_only
 from .utilities import *
+from .datascrapers.geomet import StreamFlow
 import shutil
 import os
 
@@ -34,6 +35,7 @@ class ThunderRaven:
         status = self.check_input()
         if status == 0:
             self.prepare_environment()
+            self.download_streamflow()
             #self.load_model()
             #self.download_daymet_data()
             #self.download_gis_data()
@@ -128,6 +130,9 @@ class ThunderRaven:
 
             self.dlg.file_rvioutputdir.setFilePath(output_folder + '/' + structure)
             self.dlg.btn_write.click()
+
+    def download_streamflow(self):
+        StreamFlow(self.dlg).get_hydro_data(self.selected_structures)
 
     def download_daymet_data(self):
         input_polygon = self.dlg.file_thunder_polygon.filePath()
