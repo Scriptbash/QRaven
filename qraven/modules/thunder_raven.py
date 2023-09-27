@@ -35,14 +35,14 @@ class ThunderRaven:
         status = self.check_input()
         if status == 0:
             self.prepare_environment()
-            #self.download_streamflow()
-            #self.load_model()
-            #self.download_daymet_data()
-            #self.download_gis_data()
-            #self.run_basin_maker()
-            #self.run_gridweights()
+            self.download_streamflow()
+            self.load_model()
+            self.download_daymet_data()
+            self.download_gis_data()
+            self.run_basin_maker()
+            self.run_gridweights()
             self.create_main_rvt_file()
-            #self.run_raven()
+            self.run_raven()
 
     def check_input(self):
         return_code = 0
@@ -79,7 +79,7 @@ class ThunderRaven:
             print('Created ' + model_folder)
 
         make_folder(output + '/ncfiles')
-        print('Created temporarily' + output + '/ncfile')
+        print('Created temporary folder' + output + '/ncfile')
         basin_maker_folder = output + '/BasinMaker'
         make_folder(basin_maker_folder + '/Data')
         print('Created ' + basin_maker_folder + '/Data')
@@ -157,8 +157,9 @@ class ThunderRaven:
         self.dlg.chk_daymet_insert_nan.setChecked(True)
         self.dlg.chk_daymet_merge.setChecked(True)
         self.dlg.chk_daymet_fill_values.setChecked(True)
-        #self.dlg.btn_download_daymet.click()
+        self.dlg.btn_download_daymet.click()
         for structure in self.selected_structures:
+            make_folder(output + '/' + structure + '/forcing')
             shutil.copy(output + '/ncfiles/prcp_merged.nc', output + '/' + structure + '/forcing/prcp.nc')
             shutil.copy(output + '/ncfiles/tmin_merged.nc', output + '/' + structure + '/forcing/tmin.nc')
             shutil.copy(output + '/ncfiles/tmax_merged.nc', output + '/' + structure + '/forcing/tmax.nc')
@@ -210,7 +211,7 @@ class ThunderRaven:
         self.dlg.file_pathsoilinfo.setFilePath(basin_maker_path + '/Data/soil/soil_info.csv')
         self.dlg.file_pathveginfo.setFilePath(basin_maker_path + '/Data/landuse/veg_info.csv')
         self.dlg.txt_modelname.setText(model_name)
-        #self.dlg.btn_dockerrun.click()
+        self.dlg.btn_dockerrun.click()
         files_to_copy = ['channel_properties.rvp', 'Lakes.rvh', model_name + '.rvh']
         for file in files_to_copy:
             for structure in self.selected_structures:
