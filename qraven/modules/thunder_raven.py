@@ -159,11 +159,9 @@ class ThunderRaven:
         self.dlg.chk_daymet_fill_values.setChecked(True)
         #self.dlg.btn_download_daymet.click()
         for structure in self.selected_structures:
-            try:
-                shutil.copytree(output + '/ncfiles', output + '/' + structure + '/forcing')
-            except FileExistsError:
-                shutil.rmtree(output + '/' + structure + '/forcing')
-                shutil.copytree(output + '/ncfiles', output + '/' + structure + '/forcing')
+            shutil.copy(output + '/ncfiles/prcp_merged.nc', output + '/' + structure + '/forcing/prcp.nc')
+            shutil.copy(output + '/ncfiles/tmin_merged.nc', output + '/' + structure + '/forcing/tmin.nc')
+            shutil.copy(output + '/ncfiles/tmax_merged.nc', output + '/' + structure + '/forcing/tmax.nc')
         shutil.rmtree(output + '/ncfiles')
 
 
