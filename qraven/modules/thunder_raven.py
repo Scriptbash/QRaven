@@ -132,6 +132,9 @@ class ThunderRaven:
             self.dlg.btn_write.click()
 
     def download_streamflow(self):
+        output = self.dlg.file_thunder_output.filePath()
+        output = output + '/BasinMaker/Data/gauges'
+        make_folder(output)
         StreamFlow(self.dlg).get_hydro_data(self.selected_structures)
 
     def download_daymet_data(self):

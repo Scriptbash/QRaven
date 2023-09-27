@@ -1,6 +1,9 @@
-from qgis.core import QgsVectorLayer
+from qgis.core import QgsVectorLayer, QgsField, QgsFeature, QgsGeometry, QgsProject, QgsVectorFileWriter
+from qgis.PyQt.QtCore import *
 from owslib.ogcapi.features import Features
-import processing
+from osgeo import ogr, osr
+import json
+import re
 
 # Todo Create a shapefile for the stations, check if regulation and drainage area info can be get with the API
 class StreamFlow:
@@ -43,10 +46,22 @@ class StreamFlow:
             limit=10000
         )
         if "features" in station_data:
-            stations = []
 
+            # Open the polygon shapefile
+            input_polygon = self.dlg.file_thunder_polygon.filePath()
+            polygon_datasource = ogr.Open(input_polygon)
+            polygon_layer = polygon_datasource.GetLayer()
+            polygon_feature = polygon_layer.GetNextFeature()
+            polygon_geometry = polygon_feature.GetGeometryRef()
+
+            stations = []
+            # Iterate through the point features and check if they intersect with the polygon
             for feature in station_data['features']:
-                stations.append(feature['properties']['STATION_NUMBER'])
+                point_geometry = ogr.CreateGeometryFromJson(json.dumps(feature['geometry']))
+                if polygon_geometry.Intersects(point_geometry):
+                    stations.append([feature['properties']['STATION_NUMBER'],
+                                     feature['geometry']['coordinates'][0],
+                                     feature['geometry']['coordinates'][1]])
             return stations
         else:
             print("No hydrometric stations were found at this location.")
@@ -66,7 +81,7 @@ class StreamFlow:
                 "hydrometric-daily-mean",
                 bbox=self.bbox,
                 datetime=f"{start_date}/{end_date}",
-                STATION_NUMBER=station,
+                STATION_NUMBER=station[0],
                 sortby= '+DATE',
                 limit=10000
             )
@@ -78,7 +93,7 @@ class StreamFlow:
                     else:
                         discharge.append(data['properties']['DISCHARGE'])
                 for structure in selected_structures:
-                    with open(output + '/' + structure + '/' + station + '.rvt', 'w') as rvt:
+                    with open(output + '/' + structure + '/' + station[0] + '.rvt', 'w') as rvt:
                         rvt.write(':ObservationData HYDROGRAPH <hruid> 1.0 m3/s \n')
                         rvt.write('\t' + str(start_date) + ' 00:00:00 ' + str(len(discharge)))
                         for value in discharge:
@@ -86,4 +101,41 @@ class StreamFlow:
                         rvt.write('\n:EndObservationData')
                 print('Done.')
             else:
-                print('There are no data for station ' + station + ' at the selected dates.')
+                print('There are no data for station ' + station[0] + ' at the selected dates.')
+        self.create_station_layer(stations)
+
+    def create_station_layer(self, stations):
+        output = self.dlg.file_thunder_output.filePath()
+        output = output + '/BasinMaker/Data/gauges/qrvn_stations.shp'
+
+        # Creates layer
+        vl = QgsVectorLayer('Point', "qrvn_stations", "memory")
+        pr = vl.dataProvider()
+
+        # Adds fields
+        pr.addAttributes([
+            QgsField("id", QVariant.Int),
+            QgsField("name", QVariant.String),
+            QgsField("drain_area", QVariant.Double),
+            QgsField("source", QVariant.String)])
+        vl.updateFields()  # tell the vector layer to fetch changes from the provider
+
+        for station in stations:
+            station_id = re.sub("[^0-9]", "", station[0])
+            # Creates a feature
+            fet = QgsFeature()
+            # Sets the geometry
+            pt = QgsGeometry.fromWkt('Point(' + str(station[1]) + ' ' + str(station[2]) + ')')
+            fet.setGeometry(pt)
+            # Sets the attributes
+            fet.setAttributes([int(station_id), station[0], -999, "CA"])
+            # Adds the feature
+            pr.addFeatures([fet])
+        # update layer's extent when new features have been added
+        # because change of extent in provider is not propagated to the layer
+        vl.updateExtents()
+        if vl.isValid():
+            # Save the layer to the specified shapefile path
+            QgsVectorFileWriter.writeAsVectorFormat(vl, output, 'UTF-8', vl.crs(), 'ESRI Shapefile')
+            station_layer = QgsVectorLayer(output, "qrvn_stations", "ogr")
+            QgsProject.instance().addMapLayer(station_layer)
