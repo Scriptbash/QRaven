@@ -35,14 +35,15 @@ class ThunderRaven:
         status = self.check_input()
         if status == 0:
             self.prepare_environment()
-            self.download_streamflow()
+            #self.download_streamflow()
             #self.load_model()
             #self.download_daymet_data()
             #self.download_gis_data()
             #self.run_basin_maker()
             #self.run_gridweights()
-            self.create_main_rvt_file()
+            #self.create_main_rvt_file()
             #self.run_raven()
+            self.run_ostrich()
 
     def check_input(self):
         return_code = 0
@@ -276,3 +277,43 @@ class ThunderRaven:
             self.dlg.btn_overwrite_rvp.click()  # Remove the :CreateRVPTemplate command
             self.dlg.btn_fillrvptemplate.click()  # Fill the rvp template file
             self.dlg.btn_runraven.click()  # Run the simulation
+
+    def run_ostrich(self):
+        # Set basic config
+        self.dlg.combo_programtype.setCurrentText('DDS')
+        self.dlg.file_ost_exe.setFilePath('')
+        self.dlg.txt_ost_modelsubdir.setText('')
+        self.dlg.combo_ost_objfunc.setCurrentText('gcop')
+        self.dlg.file_ost_preservebestmod.setFilePath('')
+        self.dlg.combo_ost_preservebestmodoutput.setCurrentText('no')
+        self.dlg.combo_ost_warmstart.setCurrentText('no')
+        self.dlg.spin_ost_numdigits.setValue(6)
+        self.dlg.combo_telescopingstrat.setCurrentText('none')
+        self.dlg.txt_ost_randomseed.setText('')
+        self.dlg.combo_ost_onobserror.setCurrentText('quit')
+        self.dlg.combo_ost_checksensitivities.setCurrentText('no')
+        self.dlg.combo_ost_supermuse.setCurrentText('no')
+        self.dlg.combo_ost_caching.setCurrentText('no')
+        self.dlg.spin_ost_boxcoxtrans.setValue(1.00)
+        self.dlg.txt_ost_modoutputredirection.setText('OstExeOut.txt')
+
+        output = self.dlg.file_thunder_output.filePath()
+        model_name = self.dlg.txt_thunder_model_name.text()
+
+        for structure in self.selected_structures:
+            model_files_path = output + '/' + structure + '/' + model_name
+            # Clear the file pairs table
+            while self.dlg.table_filepairs.rowCount() > 0:
+                self.dlg.table_filepairs.removeRow(0)
+
+            # Set the file pairs
+            self.dlg.btn_add_filepair.click()
+            template_file = self.dlg.table_filepairs.cellWidget(0, 0)
+            template_file.setFilePath(model_files_path + '.rvp_temp.rvp')
+            model_file = self.dlg.table_filepairs.cellWidget(0, 1)
+            model_file.setFilePath(model_files_path + '.rvp')
+
+            # Load parameters to calibrate
+            self.dlg.btn_ost_load_params.click()
+            self.dlg.btn_ost_select_all.click()
+            self.dlg.btn_ost_refresh_vals.click()

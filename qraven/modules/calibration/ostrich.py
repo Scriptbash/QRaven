@@ -404,7 +404,7 @@ class Ostrich:
 
         with open(rvp_file, 'r') as rvp:
             data = rvp.readlines()
-            with open(rvp_template_file+'.test', 'w') as tpl_rvp:
+            with open(rvp_template_file, 'w') as tpl_rvp:
                 for line in data:
                     line = line.split()
                     # Remove commas from item
