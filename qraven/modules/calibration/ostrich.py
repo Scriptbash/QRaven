@@ -184,27 +184,38 @@ class Ostrich:
         cols = table.columnCount()
         calibration_real_values = []
         calibration_int_values = []
-
-        for row in range(rows):
-            tmp_calib_values = []
-            value_type = ''
-            for col in range(cols):
-                current_widget = table.cellWidget(row, col)
-                if isinstance(current_widget, QComboBox):
-                    value_type = current_widget.currentText()
-                elif isinstance(current_widget, QLineEdit):
-                    if current_widget.text() != '':
+        count = 1
+        file_pairs = self.get_file_pairs(dlg)
+        with open(file_pairs[0][1], 'r') as rvp:
+            rvp_data = rvp.read()
+            for row in range(rows):
+                tmp_calib_values = []
+                value_type = ''
+                for col in range(cols):
+                    current_widget = table.cellWidget(row, col)
+                    if isinstance(current_widget, QComboBox):
+                        value_type = current_widget.currentText()
+                    elif isinstance(current_widget, QLineEdit):
+                        if current_widget.text() != '':
+                            tmp_calib_values.append(current_widget.text())
+                        else:
+                            tmp_calib_values.append('none')
+                    elif isinstance(current_widget, QSpinBox) or isinstance(current_widget, QDoubleSpinBox):
+                        tmp_calib_values.append(str(current_widget.value()))
+                    elif isinstance(current_widget, QLabel):
                         tmp_calib_values.append(current_widget.text())
-                    else:
-                        tmp_calib_values.append('none')
-                elif isinstance(current_widget, QSpinBox) or isinstance(current_widget, QDoubleSpinBox):
-                    tmp_calib_values.append(str(current_widget.value()))
-                elif isinstance(current_widget, QLabel):
-                    tmp_calib_values.append(current_widget.text())
-            if value_type == 'Integer':
-                calibration_int_values.append(tmp_calib_values)
-            else:
-                calibration_real_values.append(tmp_calib_values)
+                if value_type == 'Integer':
+                    rvp_data = rvp_data.replace(tmp_calib_values[0], 'param_x' + str(count))
+                    tmp_calib_values[0] = 'param_x' + str(count)
+                    calibration_int_values.append(tmp_calib_values)
+                    count += 1
+                else:
+                    rvp_data = rvp_data.replace(tmp_calib_values[0], 'param_x' + str(count))
+                    tmp_calib_values[0] = 'param_x' + str(count)
+                    calibration_real_values.append(tmp_calib_values)
+                    count += 1
+        with open(file_pairs[0][0], 'w') as file:
+            file.write(rvp_data)
 
         return calibration_int_values, calibration_real_values
 
