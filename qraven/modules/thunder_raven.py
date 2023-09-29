@@ -36,13 +36,13 @@ class ThunderRaven:
         if status == 0:
             self.prepare_environment()
             self.download_streamflow()
-            self.load_model()
-            self.download_daymet_data()
-            self.download_gis_data()
-            self.run_basin_maker()
-            self.run_gridweights()
+            #self.load_model()
+            #self.download_daymet_data()
+            #self.download_gis_data()
+            #self.run_basin_maker()
+            #self.run_gridweights()
             self.create_main_rvt_file()
-            self.run_raven()
+            #self.run_raven()
 
     def check_input(self):
         return_code = 0
@@ -250,16 +250,21 @@ class ThunderRaven:
                         ['max_temp', 'TEMP_MAX', 'tmax']]
         for structure in self.selected_structures:
             output_path = output + '/' + structure + '/' + model_name + '.rvt'
+            stations = []
+            for file in os.listdir(output + '/' + structure):
+                if file.endswith(".rvt"):
+                    stations.append(file)
             with open(output_path, 'w') as rvt:
                 for variable in forcing_vars:
                     rvt.write(':GriddedForcing\t\t' + variable[0])
                     rvt.write('\n\t:ForcingType\t' + variable[1])
                     rvt.write('\n\t:FileNameNC\tforcing/' + variable[2] + '.nc')
                     rvt.write('\n\t:VarNameNC\t' + variable[2])
-                    rvt.write('\n\t:DimNamesNC\tx y time')
+                    rvt.write('\n\t:DimNamesNC\tlon lat time')
                     rvt.write('\n\t:RedirectToFile\tgridweights.txt')
                     rvt.write('\n:EndGriddedForcing\n\n')
-                rvt.write(':RedirectToFile\t   !!!!ADD STATIONS HERE!!!!')
+                for station in stations:
+                    rvt.write('\n:RedirectToFile\t' + station)
 
     def run_raven(self):
         output = self.dlg.file_thunder_output.filePath()
