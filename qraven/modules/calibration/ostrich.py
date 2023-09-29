@@ -184,38 +184,27 @@ class Ostrich:
         cols = table.columnCount()
         calibration_real_values = []
         calibration_int_values = []
-        count = 1
-        file_pairs = self.get_file_pairs(dlg)
-        with open(file_pairs[0][1], 'r') as rvp:
-            rvp_data = rvp.read()
-            for row in range(rows):
-                tmp_calib_values = []
-                value_type = ''
-                for col in range(cols):
-                    current_widget = table.cellWidget(row, col)
-                    if isinstance(current_widget, QComboBox):
-                        value_type = current_widget.currentText()
-                    elif isinstance(current_widget, QLineEdit):
-                        if current_widget.text() != '':
-                            tmp_calib_values.append(current_widget.text())
-                        else:
-                            tmp_calib_values.append('none')
-                    elif isinstance(current_widget, QSpinBox) or isinstance(current_widget, QDoubleSpinBox):
-                        tmp_calib_values.append(str(current_widget.value()))
-                    elif isinstance(current_widget, QLabel):
+
+        for row in range(rows):
+            tmp_calib_values = []
+            value_type = ''
+            for col in range(cols):
+                current_widget = table.cellWidget(row, col)
+                if isinstance(current_widget, QComboBox):
+                    value_type = current_widget.currentText()
+                elif isinstance(current_widget, QLineEdit):
+                    if current_widget.text() != '':
                         tmp_calib_values.append(current_widget.text())
-                if value_type == 'Integer':
-                    rvp_data = rvp_data.replace(tmp_calib_values[0], 'param_x' + str(count))
-                    tmp_calib_values[0] = 'param_x' + str(count)
-                    calibration_int_values.append(tmp_calib_values)
-                    count += 1
-                else:
-                    rvp_data = rvp_data.replace(tmp_calib_values[0], 'param_x' + str(count))
-                    tmp_calib_values[0] = 'param_x' + str(count)
-                    calibration_real_values.append(tmp_calib_values)
-                    count += 1
-        with open(file_pairs[0][0], 'w') as file:
-            file.write(rvp_data)
+                    else:
+                        tmp_calib_values.append('none')
+                elif isinstance(current_widget, QSpinBox) or isinstance(current_widget, QDoubleSpinBox):
+                    tmp_calib_values.append(str(current_widget.value()))
+                elif isinstance(current_widget, QLabel):
+                    tmp_calib_values.append(current_widget.text())
+            if value_type == 'Integer':
+                calibration_int_values.append(tmp_calib_values)
+            else:
+                calibration_real_values.append(tmp_calib_values)
 
         return calibration_int_values, calibration_real_values
 
@@ -312,7 +301,7 @@ class Ostrich:
         extra_files = self.get_extra_file(dlg)
         extra_dir = self.get_extra_dir(dlg)
         int_params, real_params = self.export_calibration_values(dlg)
-
+        self.create_rvp_template(dlg, int_params, real_params)
         with open(output_file,'w') as ostin:
 
             # Write header
@@ -404,3 +393,73 @@ class Ostrich:
         }
 
         return params
+
+    def create_rvp_template(self, dlg, int_params, real_params):
+        file_pairs = self.get_file_pairs(dlg)
+        rvp_file = file_pairs[0][1]
+        rvp_template_file = file_pairs[0][0]
+        params = int_params + real_params
+        count_param = 1
+        index = []
+
+        with open(rvp_file, 'r') as rvp:
+            data = rvp.readlines()
+            with open(rvp_template_file+'.test', 'w') as tpl_rvp:
+                for line in data:
+                    line = line.split()
+                    # Remove commas from item
+                    cleaned_line = [word.rstrip(',') for word in line]
+                    # Skip empty lines
+                    if not cleaned_line:
+                        tpl_rvp.write('\n')
+                        continue
+                    # We just skip this row if it's the units line
+                    if cleaned_line[0] == ':Units':
+                        for word in line:
+                            tpl_rvp.write(' ' + word)
+                        tpl_rvp.write('\n')
+                        continue
+                    # We reached an attribute tag. We check if a param we want to calibrate is in the tag.
+                    # If yes, we add the index to a list
+                    elif ':Attributes' in cleaned_line or ':Parameters' in cleaned_line:
+                        for word in line:
+                            tpl_rvp.write(' ' + word)
+                        tpl_rvp.write('\n')
+                        index = []
+                        for param in params:
+                            if param[0] in cleaned_line:
+                                index.append([count_param, cleaned_line.index(param[0])])
+                                count_param += 1
+                            else:
+                                pass
+                    elif ':GlobalParameter' in cleaned_line:
+                        for param in params:
+                            if param[0] in cleaned_line:
+                                line[2] = 'param_x' + str(count_param)
+                                count_param += 1
+                        for word in line:
+                            tpl_rvp.write(word + ' ')
+                        tpl_rvp.write('\n')
+                    elif len(line) == 1:  # If the length of the list is only 1, there's a chance it's an :End tag
+                        check_end_tag = [word for word in line if ':End' in word]
+                        if check_end_tag:
+                            index = []  # An :End tag was found, reset the index list and proceed to the next line
+                            for word in line:
+                                tpl_rvp.write(word)
+                            tpl_rvp.write('\n')
+                            continue
+                        else:
+                            for word in line:
+                                tpl_rvp.write(word)
+                            tpl_rvp.write('\n')
+                    else:
+                        if index:   # If the index list exists, replace the parameters value until another tag is read
+                            for i in index:
+                                line[i[1]] = 'param_x' + str(i[0]) + ', '
+                            for word in line:
+                                tpl_rvp.write(' ' + word)
+                            tpl_rvp.write('\n')
+                        else:
+                            for word in line:
+                                tpl_rvp.write(word + ' ')
+                            tpl_rvp.write('\n')

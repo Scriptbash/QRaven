@@ -1949,7 +1949,7 @@ class QRaven:
     def overwrite_rvp_template(self):
         inputdir = self.dlg.file_runinputdir.filePath()
         prefix = self.dlg.txt_runnameprefix.text()  # Get the chosen prefix
-        rvifile = inputdir + prefix + '.rvi'
+        rvifile = inputdir + '/' + prefix + '.rvi'
         command_found = False
 
         try:
