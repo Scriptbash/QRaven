@@ -538,3 +538,243 @@ class Ostrich:
             response_vars.append(tmp_response_vars)
 
         return response_vars
+
+    def set_algorithm_settings(self, dlg):
+        bisectionalg = {'MaxOuterIterations': 50,
+                        'MaxInnerIterations': 20
+                        }
+        levmar = {'InitialLambda': 10.00,
+                  'LambdaScaleFactor': 1.10,
+                  'MoveLimit': 0.10,
+                  'AlgorithmConvergenceValue': 0.0001,
+                  'LambdaPhiRatio': 0.30,
+                  'LambdaRelReduction': 0.01,
+                  'MaxLambdas': 10,
+                  'MaxIterations': 30
+                  }
+        levmar2 = {'InitialLambda': 10.00,
+                   'LambdaScaleFactor': 1.10,
+                   'MoveLimit': 0.10,
+                   'AlgorithmConvergenceValue': 0.0001,
+                   'LambdaPhiRatio': 0.30,
+                   'LambdaRelReduction': 0.01,
+                   'MaxLambdas': 10,
+                   'MaxIterations': 30,
+                   'NumMultiStarts': 1
+                   }
+        gridalg = {'Dimensions': None,
+                   'EvalsPerIter': 1000
+                   }
+        steepdescalg = {'ConvergenceVal': 0.000001,
+                        'MaxIterations': 20
+                        }
+        appso = {'SwarmSize': 20,
+                 'NumGenerations': 50,
+                 'ConstrictionFactor': 1.00,
+                 'CognitiveParam': 2.00,
+                 'SocialParam': 2.00,
+                 'InertiaWeight': 1.2,
+                 'InertiaReductionRate': 0.10
+                 }
+        beers = {'NumSamples': 25}
+        simulatedalg = {'NumInitialTrials': 100,
+                        'TemperatureScaleFactor': 0.90,
+                        'OuterIterations': 20,
+                        'InnerIterations': 10,
+                        'ConvergenceVal': 0.001,
+                        'FinalTemperature': None,
+                        'TransitionMethod': ['Gauss', 'Uniform']
+                        }
+        ddsalg = {'PerturbationValue': 0.2,
+                  'MaxIterations': 100,
+                  'UseParamValues': ['UseRandomParamValues', 'UseInitialParamValues']
+                  }
+        sceua = {'Budget': 1000,
+                 'LoopStagnationCriteria': 5,
+                 'PctChangeCriteria': 0.01,
+                 'PopConvCriteria': 0.001,
+                 'NumComplexes': 3,
+                 'NumPointsPerComplex': 19,
+                 'NumPointsPerSubComplex': 10,
+                 'NumEvolutionSteps': 19,
+                 'MinNumberOfComplexes': 3,
+                 'UseInitialPoint': ['no', 'yes']
+                 }
+        fletchreevesalg = {'ConvergenceVal': 0.000001,
+                           'MaxStalls': 3,
+                           'MaxIterations': 20
+                           }
+        powellalg = {'ConvergenceVal': 0.000001,
+                     'MaxIterations': 20
+                     }
+        particleswarm = {'SwarmSize': 20,
+                         'NumGenerations': 50,
+                         'ConstrictionFactor': 1.00,
+                         'CognitiveParam': 2.00,
+                         'SocialParam': 2.00,
+                         'InertiaWeight': 1.2,
+                         'InertiaReductionRate': 0.10,
+                         'InitPopulationMethod': ['random', 'LHS', 'QuadTree'],
+                         'ConvergenceVal': 0.0001
+                         }
+        geneticalg = {'ParallelMethod': ['synchronous', 'asynchronous'],
+                      'InitPopulationMethod': ['random', 'LHS', 'QuadTree'],
+                      'PopulationSize': 50,
+                      'MutationRate': 0.05,
+                      'Survivors': 1,
+                      'NumGenerations': 10,
+                      'ConvergenceVal': 0.0001
+                      }
+        samplingalg = {'MaxEvaluations': 100}
+        ddsau = {'PerturbationValue': 0.2,
+                 'NumSearches': 25,
+                 'MinItersPerSearch': 30,
+                 'MaxItersPerSearch': 70,
+                 'ParallelSearches': ['no', 'yes'],
+                 'Threshold': 1000,
+                 'Randomize': ['no', 'yes'],
+                 'ReviseAU': ['no', 'yes']
+                 }
+        metropolissampler = {'SamplesPerIter': 10,
+                             'NumDesired': 10,
+                             'BurnInSamples': 0,
+                             'MaxSamples': 100,
+                             'LikelihoodType': ['Stedinger', 'Beven'],
+                             'ShapingFactor': 0.5,  # Only if Beven!!!
+                             'TelescopeRate': 0
+                             }
+        glue = {'SamplesPerIter': 10,
+                'NumBehavioral': 10,
+                'MaxSamples': 100,
+                'Threshold': 1000
+                }
+        rejectionsample = {'SamplesPerIter': 10,
+                           'NumDesired': 10,
+                           'BurnInSamples': 0,
+                           'MaxSamples': 100,
+                           'LikelihoodType': ['Stedinger', 'Beven'],
+                           'ShapingFactor': 0.5,  # Only if Beven!!!
+                           'TelescopeRate': 0,
+                           'MinWSSE': 1000000000000
+                           }
+        padds = {'PerturbationValue': 0.2,
+                 'MaxIterations': 50,
+                 'SelectionMetric': ['ExactHyperVolumeContribution', 'Random', 'CrowdingDistance',
+                                     'EstimatedHyperVolumeContribution']
+                 }
+        smooth = {'SamplesPerIter': 20,
+                  'NumIterations': 50
+                  }
+        algorithms = {'GeneticAlgorithm': geneticalg,
+                      'BinaryGeneticAlgorithm': geneticalg,
+                      'ShuffledComplexEvolution': sceua,
+                      'BisectionAlgorithm': bisectionalg,
+                      'SamplingAlgorithm': samplingalg,
+                      'ParticleSwarm': particleswarm,
+                      'APPSO': appso,
+                      'PSO-GML':'',
+                      'SimulatedAnnealing': simulatedalg,
+                      'DiscreteSimulatedAnnealing': simulatedalg,
+                      'VanderbiltSimulatedAnnealing': simulatedalg,
+                      'Levenberg-Marquardt': levmar,
+                      'GML-MS':'',
+                      'Powell': powellalg,
+                      'Steepest-Descent': steepdescalg,
+                      'Fletcher-Reeves ': fletchreevesalg,
+                      'RegressionStatistics':'',
+                      'Jacobian':'',
+                      'Hessian':'',
+                      'Gradient':'',
+                      'ModelEvaluation':'',
+                      'GridAlgorithm': gridalg,
+                      'DDS': ddsalg,
+                      'DDSAU': ddsau,
+                      'ParallelDDS': ddsalg,
+                      'DiscreteDDS': ddsalg,
+                      'GLUE': glue,
+                      'RejectionSampler': rejectionsample,
+                      'MetropolisSampler': metropolissampler,
+                      'SMOOTH': smooth,
+                      'PADDS': padds,
+                      'ParaPADDS': padds,
+                      'BEERS': beers,
+                      }
+
+        table_program_type = dlg.table_ost_algorithm
+        selected_program_type = dlg.combo_programtype.currentText()
+        parameters = algorithms[selected_program_type]
+
+        while table_program_type.rowCount() > 0:
+            table_program_type.removeRow(0)
+
+        for key, value in parameters.items():
+            current_row = table_program_type.rowCount()  # Get the number of rows the table has
+            table_program_type.insertRow(current_row)  # Inserts a new row below the last row
+            parameter_widget = QLabel()
+            parameter_widget.setText(key)
+
+            if isinstance(value, list):
+                value_widget = QComboBox()
+                value_widget.addItems(value)
+            else:
+                value_widget = QLineEdit()
+                value_widget.setText(str(value))
+
+            table_program_type.setCellWidget(current_row, 0, parameter_widget)
+            table_program_type.setCellWidget(current_row, 1, value_widget)
+
+        table_program_type.resizeColumnsToContents()
+
+
+    def set_objective_function_settings(self, dlg):
+        gcop = {'CostFunction': None,
+                'PenaltyFunction': ['MPM', 'APM', 'EPM']
+                }
+        table_objective_function = dlg.table_ost_function
+        selected_objective_function = dlg.combo_ost_objfunc.currentText()
+        table_response_vars = dlg.table_ost_resp_var
+        table_tied_response_vars = dlg.table_ost_tied_resp_var
+
+        rows_response_vars = table_response_vars.rowCount()
+        rows_tied_response_vars = table_tied_response_vars.rowCount()
+
+        if rows_response_vars > 0 or rows_tied_response_vars > 0:
+            response_vars = []
+            for row in range(rows_response_vars):
+                current_widget = table_response_vars.cellWidget(row, 0)
+                if isinstance(current_widget, QLineEdit):
+                    response_vars.append(current_widget.text())
+            for row in range(rows_tied_response_vars):
+                current_widget = table_tied_response_vars.cellWidget(row, 0)
+                if isinstance(current_widget, QLineEdit):
+                    response_vars.append(current_widget.text())
+        else:
+            return
+
+        while table_objective_function.rowCount() > 0:
+            table_objective_function.removeRow(0)
+
+        if selected_objective_function == 'gcop':
+            for variable in response_vars:  # Must use the response var!!!
+                if not variable:
+                    continue
+                current_row = table_objective_function.rowCount()  # Get the number of rows the table has
+                table_objective_function.insertRow(current_row)  # Inserts a new row below the last row
+                parameter_widget = QLabel()
+                parameter_widget.setText('CostFunction')
+                value_widget = QLabel()
+                value_widget.setText(variable)
+                chk_selected = QCheckBox()
+                chk_selected.setChecked(True)
+                table_objective_function.setCellWidget(current_row, 0, parameter_widget)
+                table_objective_function.setCellWidget(current_row, 1, value_widget)
+                table_objective_function.setCellWidget(current_row, 2, chk_selected)
+            current_row = table_objective_function.rowCount()
+            table_objective_function.insertRow(current_row)
+            penalty_widget = QLabel('PenaltyFunction')
+            table_objective_function.setCellWidget(current_row, 0, penalty_widget)
+            penalty_widget = QComboBox()
+            penalty_widget.addItems(gcop['PenaltyFunction'])
+            table_objective_function.setCellWidget(current_row, 1, penalty_widget)
+
+            table_objective_function.resizeColumnsToContents()

@@ -369,6 +369,13 @@ class QRaven:
             self.dlg.btn_ost_run.clicked.connect(self.run_ostrich)
 
             self.dlg.combo_ost_onobserror.currentIndexChanged.connect(self.toggleWidget)
+            self.dlg.combo_ost_objfunc.currentIndexChanged.connect(
+                lambda: self.ostrich.set_objective_function_settings(self.dlg))
+            self.dlg.btn_ost_obj_refresh.clicked.connect(lambda: self.ostrich.set_objective_function_settings(self.dlg))
+            self.dlg.combo_programtype.currentIndexChanged.connect(
+                lambda: self.ostrich.set_algorithm_settings(self.dlg))
+            self.dlg.btn_ost_alg_refresh.clicked.connect(lambda: self.ostrich.set_algorithm_settings(self.dlg))
+
             # ----------------------------------------#
 
             #----------------Settings----------------#

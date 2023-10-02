@@ -6639,7 +6639,7 @@
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_3">
             <property name="currentIndex">
-             <number>4</number>
+             <number>5</number>
             </property>
             <widget class="QWidget" name="tab_9">
              <attribute name="title">
@@ -7528,7 +7528,7 @@
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QTableWidget" name="tableWidget_2">
+               <widget class="QTableWidget" name="table_ost_tied_resp_var">
                 <column>
                  <property name="text">
                   <string>Name</string>
@@ -7554,6 +7554,166 @@
                   <string>Type data</string>
                  </property>
                 </column>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="tab_16">
+             <attribute name="title">
+              <string>Alg. settings</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_80">
+              <item row="5" column="0">
+               <widget class="QTableWidget" name="table_ost_function">
+                <column>
+                 <property name="text">
+                  <string>Parameter</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Value</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Selected</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QWidget" name="widget_40" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_81">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>5</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="verticalSpacing">
+                  <number>2</number>
+                 </property>
+                 <item row="1" column="0">
+                  <widget class="QPushButton" name="btn_ost_obj_refresh">
+                   <property name="maximumSize">
+                    <size>
+                     <width>150</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Refresh</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <spacer name="horizontalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_155">
+                   <property name="text">
+                    <string>Objective function settings</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QTableWidget" name="table_ost_algorithm">
+                <column>
+                 <property name="text">
+                  <string>Parameter</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Value</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QWidget" name="widget_47" native="true">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_82">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="verticalSpacing">
+                  <number>2</number>
+                 </property>
+                 <item row="1" column="0">
+                  <widget class="QPushButton" name="btn_ost_alg_refresh">
+                   <property name="maximumSize">
+                    <size>
+                     <width>150</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Refresh</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <spacer name="horizontalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_154">
+                   <property name="text">
+                    <string>Algorithm settings</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
              </layout>
