@@ -362,6 +362,8 @@ class QRaven:
             self.dlg.btn_rm_extra_file.clicked.connect(lambda: self.ostrich.remove_extra_file(self.dlg))
             self.dlg.btn_add_extra_dir.clicked.connect(lambda: self.ostrich.add_extra_dir(self.dlg))
             self.dlg.btn_rm_extra_dir.clicked.connect(lambda: self.ostrich.remove_extra_dir(self.dlg))
+            self.dlg.btn_ost_add_resp_var.clicked.connect(lambda: self.ostrich.add_response_variable(self.dlg))
+            self.dlg.btn_ost_rm_resp_var.clicked.connect(lambda: self.ostrich.remove_response_variable(self.dlg))
             self.dlg.file_ost_output.fileChanged.connect(lambda: self.ostrich.set_input_file(self.dlg))
             self.dlg.btn_ost_write.clicked.connect(lambda: self.ostrich.write_input_file(self.dlg))
             self.dlg.btn_ost_run.clicked.connect(self.run_ostrich)

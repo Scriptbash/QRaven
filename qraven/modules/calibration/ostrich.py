@@ -301,6 +301,7 @@ class Ostrich:
         extra_files = self.get_extra_file(dlg)
         extra_dir = self.get_extra_dir(dlg)
         int_params, real_params = self.export_calibration_values(dlg)
+        response_vars = self.get_response_var(dlg)
         self.create_rvp_template(dlg, int_params, real_params)
         with open(output_file,'w') as ostin:
 
@@ -340,7 +341,7 @@ class Ostrich:
                 for line in real_params:
                     ostin.write('\n ')
                     for value in line:
-                        ostin.write(value.ljust(20))
+                        ostin.write(value.ljust(15))
                 ostin.write('\nEndParams\n')
 
             if int_params:
@@ -349,8 +350,16 @@ class Ostrich:
                 for line in int_params:
                     ostin.write('\n ')
                     for value in line:
-                        ostin.write(value.ljust(20))
+                        ostin.write(value.ljust(15))
                 ostin.write('\nEndIntegerParams\n')
+
+            if response_vars:
+                ostin.write('\nBeginResponseVars')
+                for line in response_vars:
+                    ostin.write('\n ')
+                    for value in line:
+                        ostin.write(str(value).ljust(20))
+                ostin.write('\nEndResponseVars\n')
 
     def get_basic_config_params(self,dlg):
 
@@ -463,3 +472,69 @@ class Ostrich:
                             for word in line:
                                 tpl_rvp.write(word + ' ')
                             tpl_rvp.write('\n')
+
+    def add_response_variable(self, dlg):
+        table = dlg.table_ost_resp_var
+        current_row = table.rowCount()  # Get the number of rows the table has
+        table.insertRow(current_row)  # Inserts a new row below the last row
+
+        var_name = QLineEdit()
+        filename = QgsFileWidget()
+        filename.setStorageMode(QgsFileWidget.GetFile)
+        key = QLineEdit()
+        key.setText('OST_NULL')
+        line = QSpinBox()
+        line.setMaximum(99999)
+        line.setMinimum(0)
+        line.setValue(1)
+        col = QSpinBox()
+        col.setMaximum(99999)
+        col.setMinimum(0)
+        col.setValue(3)
+        token = QLineEdit()
+        token.setText(',')
+        augmented = QCheckBox()
+
+        table.setCellWidget(current_row, 0, var_name)
+        table.setCellWidget(current_row, 1, filename)
+        table.setCellWidget(current_row, 2, key)
+        table.setCellWidget(current_row, 3, line)
+        table.setCellWidget(current_row, 4, col)
+        table.setCellWidget(current_row, 5, token)
+        table.setCellWidget(current_row, 6, augmented)
+
+        table.resizeColumnsToContents()
+
+    def remove_response_variable(self, dlg):
+        table = dlg.table_ost_resp_var
+        selected_row = table.currentRow()
+        table.removeRow(selected_row)
+
+    def get_response_var(self, dlg):
+        table = dlg.table_ost_resp_var
+        rows = table.rowCount()
+        cols = table.columnCount()
+        response_vars = []
+
+        for row in range(rows):
+            tmp_response_vars = []
+            for col in range(cols):
+                current_widget = table.cellWidget(row, col)
+                if isinstance(current_widget, QLineEdit):
+                    if col == 5:    # It's the token column, must be between ' '
+                        tmp_response_vars.append("'" + current_widget.text() + "'")
+                    else:
+                        tmp_response_vars.append(current_widget.text())
+                elif isinstance(current_widget, QgsFileWidget):
+                    file = path.basename(current_widget.filePath())
+                    tmp_response_vars.append(file + ' ; ')
+                elif isinstance(current_widget, QSpinBox):
+                    tmp_response_vars.append(current_widget.value())
+                elif isinstance(current_widget, QCheckBox):
+                    if current_widget.isChecked():
+                        tmp_response_vars.append('yes')
+                    else:
+                        tmp_response_vars.append('no')
+            response_vars.append(tmp_response_vars)
+
+        return response_vars
