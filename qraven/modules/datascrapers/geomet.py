@@ -1,4 +1,5 @@
-from qgis.core import QgsVectorLayer, QgsField, QgsFeature, QgsGeometry, QgsProject, QgsVectorFileWriter
+from qgis.core import QgsVectorLayer, QgsField, QgsFeature, QgsGeometry, QgsProject, QgsVectorFileWriter, \
+    QgsCoordinateReferenceSystem, QgsCoordinateTransform
 from qgis.PyQt.QtCore import *
 from owslib.ogcapi.features import Features
 from osgeo import ogr, osr
@@ -31,11 +32,24 @@ class StreamFlow:
         feats = [feat for feat in layer.getFeatures()]
 
         for i, feat in enumerate(feats):
-            bbox = feat.geometry().boundingBox()
+            geom = feat.geometry()
+            # Extract bounding box
+            bbox = geom.boundingBox()
             xmin, ymin, xmax, ymax = bbox.toRectF().getCoords()
             bbox = [str(round(xmin, 2)), str(round(ymin, 2)), str(round(xmax, 2)), str(round(ymax, 2))]
+
+            # Get the area of the watershed
+            if crs != 'EPSG:4326':
+                desired_crs = QgsCoordinateReferenceSystem(crs)  # keep the original crs
+            else:
+                desired_crs = QgsCoordinateReferenceSystem('EPSG:3348')  # Reproject the layer in metric
+            transform = QgsCoordinateTransform(layer.crs(), desired_crs, QgsProject.instance())
+            geom.transform(transform)
+            area_km2 = geom.area() / 1e6  # Convert square meters to square kilometers
         print('Bounding box extraction done.')
         self.bbox = bbox
+        self.area = round(area_km2, 3)
+        print("Watershed's drainage area is : ", self.area, ' km2')
 
     def get_hydro_station_by_poly(self):
         self.define_area()
@@ -116,7 +130,7 @@ class StreamFlow:
         pr.addAttributes([
             QgsField("id", QVariant.Int),
             QgsField("name", QVariant.String),
-            QgsField("drain_area", QVariant.Double),
+            QgsField("drain_area", QVariant.Double, "double", 10, 3),
             QgsField("source", QVariant.String)])
         vl.updateFields()  # tell the vector layer to fetch changes from the provider
 
@@ -128,7 +142,7 @@ class StreamFlow:
             pt = QgsGeometry.fromWkt('Point(' + str(station[1]) + ' ' + str(station[2]) + ')')
             fet.setGeometry(pt)
             # Sets the attributes
-            fet.setAttributes([int(station_id), station[0], -999, "CA"])
+            fet.setAttributes([int(station_id), station[0], self.area, "CA"])
             # Adds the feature
             pr.addFeatures([fet])
         # update layer's extent when new features have been added
