@@ -303,6 +303,7 @@ class Ostrich:
         int_params, real_params = self.export_calibration_values(dlg)
         response_vars = self.get_response_var(dlg)
         gcop_settings = self.get_gcop_settings(dlg)
+        algorithm_settings = self.get_algorithm_settings(dlg)
         self.create_rvp_template(dlg, int_params, real_params)
         with open(output_file, 'w') as ostin:
 
@@ -369,6 +370,66 @@ class Ostrich:
                     for value in line:
                         ostin.write(str(value).ljust(20))
                 ostin.write('\nEndGCOP\n')
+
+            if algorithm_settings:
+                algorithm = dlg.combo_programtype.currentText()
+                if algorithm == 'BisectionAlgorithm':
+                    tag = 'BisectionAlg'
+                elif algorithm == 'Fletcher-Reeves':
+                    tag = 'FletchReevesAlg'
+                elif algorithm == 'Levenberg-Marquardt' or algorithm == 'GML-MS':
+                    tag = 'LevMar'
+                elif algorithm == 'GridAlgorithm':
+                    tag = 'GridAlg'
+                elif algorithm == 'Powell':
+                    tag = 'PowellAlg'
+                elif algorithm == 'Steepest-Descent':
+                    tag = 'SteepDescAlg'
+                elif algorithm == 'ParticleSwarm':
+                    tag = 'ParticleSwarm'
+                elif algorithm == 'APPSO':
+                    tag = 'APPSO'
+                elif algorithm == 'BEERS':
+                    tag = 'BEERS'
+                elif algorithm == 'BinaryGeneticAlgorithm' or algorithm == 'GeneticAlgorithm':
+                    tag = 'GeneticAlg'
+                elif algorithm == 'SimulatedAnnealing' or algorithm == 'DiscreteSimulatedAnnealing' or \
+                        algorithm == 'VanderbiltSimulatedAnnealing':
+                    tag = 'SimulatedAlg'
+                elif algorithm == 'DDS':
+                    tag = 'DDSAlg'
+                elif algorithm == 'ParallelDDS':
+                    tag = 'ParallelDDSAlg'
+                elif algorithm == 'DiscreteDDS':
+                    tag = 'DiscreteDDSAlg'
+                elif algorithm == 'ShuffledComplexEvolution':
+                    tag = 'SCEUA'
+                elif algorithm == 'SamplingAlgorithm':
+                    tag = 'SamplingAlg'
+                elif algorithm == 'DDSAU':
+                    tag = '_DDSAU_Alg'
+                elif algorithm == 'GLUE':
+                    tag = 'GLUE'
+                elif algorithm == 'MetropolisSampler':
+                    tag = 'MetropolisSampler'
+                elif algorithm == 'RejectionSampler':
+                    tag = 'RejectionSampler'
+                elif algorithm == 'PADDS':
+                    tag = 'PADDSAlg'
+                elif algorithm == 'ParaPADDS':
+                    tag = 'ParallelPADDSAlg'
+                elif algorithm == 'SMOOTH':
+                    tag = 'SMOOTH'
+
+                ostin.write('\nBegin' + tag)
+                for line in algorithm_settings:
+                    ostin.write('\n ')
+                    for value in line:
+                        if value == 'UseParamValues':
+                            pass
+                        else:
+                            ostin.write(str(value).ljust(30))
+                ostin.write('\nEnd' + tag + '\n')
 
     def get_basic_config_params(self, dlg):
 
@@ -686,7 +747,7 @@ class Ostrich:
                       'DiscreteSimulatedAnnealing': simulatedalg,
                       'VanderbiltSimulatedAnnealing': simulatedalg,
                       'Levenberg-Marquardt': levmar,
-                      'GML-MS':'',
+                      'GML-MS': levmar2,
                       'Powell': powellalg,
                       'Steepest-Descent': steepdescalg,
                       'Fletcher-Reeves ': fletchreevesalg,
@@ -812,3 +873,34 @@ class Ostrich:
             if tmp_settings[0] == 'PenaltyFunction':
                 gcop_settings.append(tmp_settings)
         return gcop_settings
+
+    def get_algorithm_settings(self, dlg):
+        table = dlg.table_ost_algorithm
+        rows = table.rowCount()
+        cols = table.columnCount()
+        tmp_algorithm_settings = []
+
+        for row in range(rows):
+            tmp_settings = []
+            for col in range(cols):
+                current_widget = table.cellWidget(row, col)
+                if isinstance(current_widget, QLabel):
+                    tmp_settings.append(current_widget.text())
+                elif isinstance(current_widget, QLineEdit):
+                    tmp_settings.append(current_widget.text())
+                elif isinstance(current_widget, QComboBox):
+                    tmp_settings.append(current_widget.currentText())
+            tmp_algorithm_settings.append(tmp_settings)
+
+        algorithm_settings = []
+        remove_next = False
+        # Skips the "ShapingFactor" parameter if the LikelihoodType is Stedinger
+        for row in tmp_algorithm_settings:
+            if remove_next:
+                remove_next = False
+                continue
+            if 'Stedinger' in row:
+                remove_next = True
+            algorithm_settings.append(row)
+
+        return algorithm_settings
