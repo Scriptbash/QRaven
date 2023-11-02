@@ -306,7 +306,7 @@ class Docker:
             print(e)
 
     def run_raven(self, prefix, run_name):
-        raven_cmd = './Raven.exe ' + '~/Raven/model/' + prefix + ' -o output -r '+ run_name
+        raven_cmd = 'Raven.exe ' + '~/Raven/model/' + prefix + ' -o output -r '+ run_name
         cmd = self.containerization, 'exec', '-t', 'qraven', '/bin/bash', '-i', '-c', raven_cmd
 
         try:
@@ -333,9 +333,7 @@ class Docker:
             print(e)
 
     def run_ostrich(self):
-        cmd = self.containerization, 'exec', '-t', 'qraven', '/bin/bash', '-i', '-c', 'cp ../OstrichMPI model'
-        self.runCommand(cmd)
-        cmd = self.containerization, 'exec', '-t', 'qraven', '/bin/bash', '-i', '-c', './model/OstrichMPI'
+        cmd = self.containerization, 'exec', '-t', 'qraven', '/bin/bash', '-i', '-c', 'OstrichMPI'
         try:
             rc = self.runCommand(cmd)
             if rc == 0:
