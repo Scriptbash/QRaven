@@ -375,6 +375,7 @@ class QRaven:
             self.dlg.combo_programtype.currentIndexChanged.connect(
                 lambda: self.ostrich.set_algorithm_settings(self.dlg))
             self.dlg.btn_ost_alg_refresh.clicked.connect(lambda: self.ostrich.set_algorithm_settings(self.dlg))
+            self.dlg.combo_ost_exe.currentIndexChanged.connect(self.toggleWidget)
 
             # ----------------------------------------#
 
@@ -623,8 +624,14 @@ class QRaven:
                 self.dlg.spin_ost_onobserror.setEnabled(False)
             else:
                 self.dlg.spin_ost_onobserror.setEnabled(True)
+        elif widget.objectName() == 'combo_ost_exe':
+            if self.dlg.combo_ost_exe.currentText() == 'QRaven generated':
+                self.dlg.file_ost_exe.setFilePath('')
+                self.dlg.file_ost_exe.setStorageMode(3)
+            else:
+                self.dlg.file_ost_exe.setFilePath('')
+                self.dlg.file_ost_exe.setStorageMode(0)
 
-             
 
     #This method enables and disables the spinbox next to the SoilModel combobox depending on the selected value of the combobox
     def toggleSoilModel(self):
@@ -2058,19 +2065,20 @@ class QRaven:
             ostrich_executable = self.dlg.file_ostrichexe.filePath()
             ostrich_exe_name = os.path.basename(ostrich_executable)
             try:
-                print('Creating a symlink...')
-                if computerOS != 'windows':
-                    cmd = 'ln', '-s', ostrich_executable, ostrich_input_folder    #Create a symlink so model can be run
-                else:
-                    cmd = 'copy', ostrich_executable, ostrich_input_folder  #Need testing on Windows!!
-                rc = self.docker.runCommand(cmd)
-                if rc != 0:
-                    print('A symlink may be already created.')
-                else:
-                    print('Symlink created.')
+                # print('Creating a symlink...')
+                # if computerOS != 'windows':
+                #     cmd = 'ln', '-s', ostrich_executable, ostrich_input_folder    #Create a symlink so model can be run
+                # else:
+                #     cmd = 'copy', ostrich_executable, ostrich_input_folder  #Need testing on Windows!!
+                # rc = self.docker.runCommand(cmd)
+                # if rc != 0:
+                #     print('A symlink may be already created.')
+                # else:
+                #     print('Symlink created.')
                 print('Launching OSTRICH using the executable...')
                 os.chdir(ostrich_input_folder)
-                cmd = './'+ostrich_exe_name # Command that launches the Raven model
+               # cmd = './'+ostrich_exe_name # Command that launches the Raven model
+                cmd = ostrich_executable
                 rc = self.docker.runCommand(cmd)
                 if rc != 0:
                     print('The OSTRICH calibration process failed.')
