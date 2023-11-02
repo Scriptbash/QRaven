@@ -55,7 +55,7 @@ RUN apt-get update \
     && sed -i 's/^CXXFLAGS += -std=c++11/#&/' Makefile \
     && sed -i '/Options.pause =true;/c\Options.pause =false;' RavenMain.cpp \
     && make \
-    && cp Raven.exe ~/Raven \
+    && cp Raven.exe /usr/local/bin \
     && rm -R ~/Raven/build \
     && cd ~/Ostrich/build \
     && wget --secure-protocol=TLSv1_2 https://github.com/usbr/ostrich/archive/refs/tags/v21.03.16.zip \
