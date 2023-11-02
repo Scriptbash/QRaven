@@ -62,7 +62,7 @@ RUN apt-get update \
     && unzip v21.03.16.zip \
     && cd ostrich-21.03.16/make \
     && make GCC_MPI \
-    && cp OstrichMPI ~/Ostrich \
+    && cp OstrichMPI /usr/local/bin \
     && rm -R ~/Ostrich/build \
     && cd ~ \
     && grass -c EPSG:4326 ~/grass_tmp --text --exec g.extension r.clip \
