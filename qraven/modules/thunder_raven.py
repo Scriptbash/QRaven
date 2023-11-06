@@ -43,7 +43,8 @@ class ThunderRaven:
             #self.run_gridweights()
             #self.create_main_rvt_file()
             #self.run_raven()
-            self.run_ostrich()
+            if self.dlg.rd_calibration_yes.isChecked():
+                self.run_ostrich()
 
     def check_input(self):
         return_code = 0
@@ -279,13 +280,19 @@ class ThunderRaven:
             self.dlg.btn_runraven.click()  # Run the simulation
 
     def run_ostrich(self):
+
+        # Get OSTRICH settings
+        ostrich_mode = self.dlg.combo_ostrichexe_mode.currentText()
+        raven_mode = self.dlg.combo_ravenexe_mode.currentText()
+
         # Set basic config
+        self.dlg.combo_ost_exe.setCurrentText('QRaven generated')
+        self.dlg.file_ost_exe.setFilePath('Raven.exe')
         self.dlg.combo_programtype.setCurrentText('DDS')
-        self.dlg.file_ost_exe.setFilePath('')
-        self.dlg.txt_ost_modelsubdir.setText('')
+        self.dlg.txt_ost_modelsubdir.setText('processor_')
         self.dlg.combo_ost_objfunc.setCurrentText('gcop')
         self.dlg.file_ost_preservebestmod.setFilePath('')
-        self.dlg.combo_ost_preservebestmodoutput.setCurrentText('no')
+        self.dlg.combo_ost_preservebestmodoutput.setCurrentText('yes')
         self.dlg.combo_ost_warmstart.setCurrentText('no')
         self.dlg.spin_ost_numdigits.setValue(6)
         self.dlg.combo_telescopingstrat.setCurrentText('none')
@@ -302,9 +309,17 @@ class ThunderRaven:
 
         for structure in self.selected_structures:
             model_files_path = output + '/' + structure + '/' + model_name
-            # Clear the file pairs table
+
+            # Define the executable script for each model
+            self.dlg.file_ost_exe.setFilePath(output + '/' + structure + '/qrvn_launch_raven.sh')
+
+            # Clear the file pairs, response and tied response variables tables
             while self.dlg.table_filepairs.rowCount() > 0:
                 self.dlg.table_filepairs.removeRow(0)
+            while self.dlg.table_ost_resp_var.rowCount() > 0:
+                self.dlg.table_ost_resp_var.removeRow(0)
+            while self.dlg.table_ost_tied_resp_var.rowCount() > 0:
+                self.dlg.table_ost_tied_resp_var.removeRow(0)
 
             # Set the file pairs
             self.dlg.btn_add_filepair.click()
@@ -317,3 +332,21 @@ class ThunderRaven:
             self.dlg.btn_ost_load_params.click()
             self.dlg.btn_ost_select_all.click()
             self.dlg.btn_ost_refresh_vals.click()
+
+            # Add response variables
+            diagnostics_file = output + '/' + structure + '/output/Diagnostics.csv'
+            self.dlg.btn_ost_add_resp_var.click()
+            self.dlg.table_ost_resp_var.cellWidget(0, 0).setText('KGE')
+            self.dlg.table_ost_resp_var.cellWidget(0, 1).setFilePath(diagnostics_file)
+
+            # Load algorithm settings
+            self.dlg.btn_ost_alg_refresh.click()
+            self.dlg.btn_ost_obj_refresh.click()
+
+            # Write OSTRICH input file
+            self.dlg.file_ost_output.setFilePath(output + '/' + structure + '/ostIn.txt')
+            self.dlg.btn_ost_write.click()
+
+            # Run OSTRICH
+            self.dlg.file_ost_input.setFilePath(output + '/' + structure + '/ostIn.txt')
+            self.dlg.btn_ost_run.click()

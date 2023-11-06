@@ -2065,19 +2065,8 @@ class QRaven:
             ostrich_executable = self.dlg.file_ostrichexe.filePath()
             ostrich_exe_name = os.path.basename(ostrich_executable)
             try:
-                # print('Creating a symlink...')
-                # if computerOS != 'windows':
-                #     cmd = 'ln', '-s', ostrich_executable, ostrich_input_folder    #Create a symlink so model can be run
-                # else:
-                #     cmd = 'copy', ostrich_executable, ostrich_input_folder  #Need testing on Windows!!
-                # rc = self.docker.runCommand(cmd)
-                # if rc != 0:
-                #     print('A symlink may be already created.')
-                # else:
-                #     print('Symlink created.')
                 print('Launching OSTRICH using the executable...')
                 os.chdir(ostrich_input_folder)
-               # cmd = './'+ostrich_exe_name # Command that launches the Raven model
                 cmd = ostrich_executable
                 rc = self.docker.runCommand(cmd)
                 if rc != 0:

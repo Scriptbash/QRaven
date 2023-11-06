@@ -431,17 +431,24 @@ class Ostrich:
                         else:
                             ostin.write(str(value).ljust(30))
                 ostin.write('\nEnd' + tag + '\n')
+        print('Wrote OSTRICH input file.')
         if dlg.combo_ost_exe.currentText() == 'QRaven generated':
+            print('Generating launcher script...')
             self.generate_model_executable_script(dlg)
+        else:
+            print('Skipping script generation...')
 
     def get_basic_config_params(self, dlg):
 
         program_type = dlg.combo_programtype.currentText()
-        model_executable = dlg.file_ost_exe.filePath() #Need to add a check for container
+        model_executable = dlg.file_ost_exe.filePath()
+        if dlg.combo_ostrichexe_mode.currentText() == 'Container':
+            model_executable = path.basename(dlg.file_ost_exe.filePath())
         model_sub_directory = dlg.txt_ost_modelsubdir.text()
         objective_function = dlg.combo_ost_objfunc.currentText()
         preserve_best_model = dlg.file_ost_preservebestmod.filePath()
         preserve_best_model_output = dlg.combo_ost_preservebestmodoutput.currentText()
+        preserve_best_model_output = ''
         ostrich_warm_start = dlg.combo_ost_warmstart.currentText()
         number_digits_precision = str(dlg.spin_ost_numdigits.value())
         telescoping_strategy = dlg.combo_telescopingstrat.currentText()
