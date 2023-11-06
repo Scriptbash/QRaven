@@ -3,7 +3,8 @@ from qgis.PyQt.QtWidgets import *
 from ..PyRavenR import readRavenParams, readRVPtemplate
 from pathlib import Path
 from os import path
-
+from sys import platform
+import subprocess
 
 class Ostrich:
     def __init__(self):
@@ -430,6 +431,8 @@ class Ostrich:
                         else:
                             ostin.write(str(value).ljust(30))
                 ostin.write('\nEnd' + tag + '\n')
+        if dlg.combo_ost_exe.currentText() == 'QRaven generated':
+            self.generate_model_executable_script(dlg)
 
     def get_basic_config_params(self, dlg):
 
@@ -904,3 +907,67 @@ class Ostrich:
             algorithm_settings.append(row)
 
         return algorithm_settings
+
+    def generate_model_executable_script(self, dlg):
+        raven_mode = dlg.combo_ravenexe_mode.currentText()
+        ostrich_mode = dlg.combo_ostrichexe_mode.currentText()
+        extra_dirs = self.get_extra_dir(dlg)
+        file_pairs = self.get_file_pairs(dlg)
+        output_file = dlg.file_ost_exe.filePath()
+
+        # Set the proper Raven execution command
+        if ostrich_mode == 'Container':
+            raven_path = 'Raven.exe'
+        else:
+            if raven_mode == 'Executable':
+                raven_path = dlg.file_ravenexe.filePath()
+            elif raven_mode == 'Flatpak':
+                raven_path = 'flatpak run ca.uwaterloo.Raven'
+            else:
+                raven_path = 'Raven.exe'
+
+        # Get an extra directory if one exists
+        if extra_dirs:
+            extra_dir = extra_dirs[0]
+        else:
+            extra_dir = ''
+
+        # Get the file name of a pair in hopes it's the model name
+        if file_pairs:
+            model_name = path.splitext(path.basename(file_pairs[0][1]))[0]
+        else:
+            model_name = 'model_name'
+
+        # Making sure the proper extension is used and generate the script
+        file_path, extension = path.splitext(output_file)
+        if platform == "linux" or platform == "linux2" or platform == 'darwin':
+            if extension != '.sh':
+                file_path += '.sh'
+            else:
+                file_path += extension
+
+            # Write a bash script and make it executable
+            with open(file_path, 'w') as script:
+                script.write('#!/bin/bash\n\n')
+                script.write('set -e\n')
+                if extra_dir:
+                    script.write('cd ' + extra_dir + '\n')
+                script.write(raven_path + ' ' + model_name + ' -o output/\n')
+                script.write('exit 0')
+            subprocess.run(['chmod', '+x', file_path])
+
+        elif platform == "win32":
+            if extension != '.bat':
+                file_path += '.bat'
+            else:
+                file_path += extension
+
+            # Write a batch script and make it executable
+            with open(file_path, 'w') as script:
+                script.write('@echo off\n\n')
+                if extra_dir:
+                    script.write('cd ' + extra_dir + '\n')
+                script.write(raven_path + ' ' + model_name + ' -o output/')
+            subprocess.run(['attrib', '+x', file_path])
+
+        print('Script generated.')
