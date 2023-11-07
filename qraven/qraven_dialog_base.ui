@@ -127,7 +127,7 @@
                <x>0</x>
                <y>0</y>
                <width>1173</width>
-               <height>778</height>
+               <height>774</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_73">
@@ -395,7 +395,7 @@
                     </font>
                    </property>
                    <property name="text">
-                    <string>2. Would you like your model to be calibrated?</string>
+                    <string>2. Would you like your model(s) to be calibrated?</string>
                    </property>
                   </widget>
                  </item>
@@ -6649,8 +6649,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1176</width>
-                   <height>864</height>
+                   <width>585</width>
+                   <height>825</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_20">
@@ -8524,9 +8524,9 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
