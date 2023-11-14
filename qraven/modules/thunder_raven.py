@@ -35,14 +35,14 @@ class ThunderRaven:
         status = self.check_input()
         if status == 0:
             self.prepare_environment()
-            #self.download_streamflow()
-            #self.load_model()
-            #self.download_daymet_data()
-            #self.download_gis_data()
-            #self.run_basin_maker()
-            #self.run_gridweights()
-            #self.create_main_rvt_file()
-            #self.run_raven()
+            self.download_streamflow()
+            self.load_model()
+            self.download_daymet_data()
+            self.download_gis_data()
+            self.run_basin_maker()
+            self.run_gridweights()
+            self.create_main_rvt_file()
+            self.run_raven()
             if self.dlg.rd_calibration_yes.isChecked():
                 self.run_ostrich()
 
@@ -224,8 +224,8 @@ class ThunderRaven:
         # todo Get subbasin ID from the hru shp file
         output = self.dlg.file_thunder_output.filePath()
         basinmaker_output = self.dlg.file_thunder_output.filePath() + \
-                            '/BasinMaker/Output/OIH_Output/network_after_gen_hrus/finalcat_info.shp'
-        self.dlg.file_netcdf.setFilePath(output + '/' + self.selected_structures[0] + '/forcing/tmin_merged.nc')
+                            '/BasinMaker/Output/OIH_Output/network_after_gen_hrus/finalcat_hru_info.shp'
+        self.dlg.file_netcdf.setFilePath(output + '/' + self.selected_structures[0] + '/forcing/tmin.nc')
         self.dlg.txt_dimlon.setText('x')
         self.dlg.txt_dimlat.setText('y')
         self.dlg.txt_varlon.setText('lon')
@@ -263,7 +263,7 @@ class ThunderRaven:
                     rvt.write('\n\t:FileNameNC\tforcing/' + variable[2] + '.nc')
                     rvt.write('\n\t:VarNameNC\t' + variable[2])
                     rvt.write('\n\t:DimNamesNC\tlon lat time')
-                    rvt.write('\n\t:RedirectToFile\tgridweights.txt')
+                    rvt.write('\n\t:RedirectToFile\tforcing/gridweights.txt')
                     rvt.write('\n:EndGriddedForcing\n\n')
                 for station in stations:
                     rvt.write('\n:RedirectToFile\t' + station)
