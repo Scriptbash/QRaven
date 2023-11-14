@@ -109,7 +109,7 @@ class StreamFlow:
                 for structure in selected_structures:
                     with open(output + '/' + structure + '/' + station[0] + '.rvt', 'w') as rvt:
                         rvt.write(':ObservationData HYDROGRAPH <hruid> 1.0 m3/s \n')
-                        rvt.write('\t' + str(start_date) + ' 00:00:00 ' + str(len(discharge)))
+                        rvt.write('\t' + str(start_date) + ' 00:00:00 1.0 ' + str(len(discharge)))
                         for value in discharge:
                             rvt.write('\n\t' + str(value))
                         rvt.write('\n:EndObservationData')
