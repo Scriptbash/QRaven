@@ -20,6 +20,7 @@ class Docker:
         elif self.containerization == 'podman':
             if self.computerOS == 'macos':
                 os.environ["PATH"] = "/opt/podman/bin"
+                os.environ["PATH"] = "/opt/homebrew/bin/"
             elif self.computerOS == 'windows':
                 os.environ["PATH"] = "C:\\Program Files\\RedHat\\Podman"
 
