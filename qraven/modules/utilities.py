@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import numpy as np
 from zipfile import ZipFile, BadZipfile
 import tarfile
 import shutil
@@ -12,32 +13,35 @@ from PyQt5.QtWidgets import QApplication
 try:
     import xarray
 except ImportError:
-    script_dir = Path(__file__).parent.parent
-    # List of module names and their corresponding .whl file paths
-    modules_to_import = [
-        ('fsspec', 'fsspec-2023.6.0-py3-none-any.whl'),
-        ('cloudpickle', 'cloudpickle-2.2.1-py3-none-any.whl'),
-        ('toolz', 'toolz-0.12.0-py3-none-any.whl'),
-        ('dask', 'dask-2022.11.0-py3-none-any'),
-        ('xarray', 'xarray-2022.11.0-py3-none-any.whl'),
-    ]
+    print('xarray not installed')
+    # script_dir = Path(__file__).parent.parent
+    # # List of module names and their corresponding .whl file paths
+    # modules_to_import = [
+    #     ('fsspec', 'fsspec-2023.6.0-py3-none-any.whl'),
+    #     ('cloudpickle', 'cloudpickle-2.2.1-py3-none-any.whl'),
+    #     ('toolz', 'toolz-0.12.0-py3-none-any.whl'),
+    #     ('dask', 'dask-2022.11.0-py3-none-any'),
+    #     ('xarray', 'xarray-2022.11.0-py3-none-any.whl'),
+    # ]
+    #
+    # # Add the plugin directory to the Python path
+    # sys.path.insert(0, str(script_dir))
 
-    # Add the plugin directory to the Python path
-    sys.path.insert(0, str(script_dir))
-
-    # Loop through the module paths and import the modules
-    for module_name, module_whl in modules_to_import:
-        module_path = os.path.join(script_dir, 'ext_data/modules', module_whl)
-        sys.path.append(module_path)
-        import_statement = f'import {module_name}'
-        exec(import_statement)
-        print(f'{module_name} loaded locally.')
+    # # Loop through the module paths and import the modules
+    # for module_name, module_whl in modules_to_import:
+    #     module_path = os.path.join(script_dir, 'ext_data/modules', module_whl)
+    #     sys.path.append(module_path)
+    #     import_statement = f'import {module_name}'
+    #     exec(import_statement)
+    #     print(f'{module_name} loaded locally.')
 
 
 def merge_netcdf(file_path, variable):
     print('Merging files...')
     try:
         ds = xarray.open_mfdataset(file_path + '/*' + variable + '.nc', parallel=False)
+        # Round down the time values to the nearest integer (remove the 0.5)
+        ds['time'] = ds['time'].dt.floor('D')
         # Remove the time dimension from the lat and lon variables
         lat_without_time = ds['lat'].isel(time=0)
         lon_without_time = ds['lon'].isel(time=0)
@@ -46,13 +50,13 @@ def merge_netcdf(file_path, variable):
             'lon': lon_without_time,
             variable: ds[variable]
         })
-        # Round down the time values to the nearest integer (remove the 0.5)
-        ds_modified['time'] = ds_modified['time'].astype(int)
+        #ds_modified['time'] = ds_modified['time'].astype(int)
         ds_modified.to_netcdf(file_path + '/' + variable + '_merged.nc')
         ds.close()
         ds_modified.close()
-    except:
+    except Exception as e:
         print('The merging attempt failed. Manual processing will be required.')
+        print(e)
         return
     # try:
     #     print('ValueError: Coordinate variable time is neither monotonically '
@@ -64,7 +68,6 @@ def merge_netcdf(file_path, variable):
     # except:
     #     print('All attempts to merge the netCDF files failed. Manual processing will be required.')
     #     return
-
 
 
 def check_missing_dates(ncfile):
