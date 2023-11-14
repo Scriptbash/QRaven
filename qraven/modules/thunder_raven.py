@@ -262,7 +262,7 @@ class ThunderRaven:
                     rvt.write('\n\t:ForcingType\t' + variable[1])
                     rvt.write('\n\t:FileNameNC\tforcing/' + variable[2] + '.nc')
                     rvt.write('\n\t:VarNameNC\t' + variable[2])
-                    rvt.write('\n\t:DimNamesNC\tlon lat time')
+                    rvt.write('\n\t:DimNamesNC\tx y time')
                     rvt.write('\n\t:RedirectToFile\tforcing/gridweights.txt')
                     rvt.write('\n:EndGriddedForcing\n\n')
                 for station in stations:
