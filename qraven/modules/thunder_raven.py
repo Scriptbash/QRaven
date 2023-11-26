@@ -13,6 +13,7 @@ from .templates.awbm import loadAwbm
 from .templates.routingonly import load_routing_only
 from .utilities import *
 from .datascrapers.geomet import StreamFlow
+from qgis.core import QgsVectorLayer
 import shutil
 import os
 
@@ -35,13 +36,14 @@ class ThunderRaven:
         status = self.check_input()
         if status == 0:
             self.prepare_environment()
-            self.download_streamflow()
-            self.load_model()
-            self.download_daymet_data()
-            self.download_gis_data()
-            self.run_basin_maker()
-            self.run_gridweights()
+            #self.download_streamflow()
+            #self.load_model()
+            #self.download_daymet_data()
+            #self.download_gis_data()
+            #self.run_basin_maker()
+            #self.run_gridweights()
             self.create_main_rvt_file()
+            self.assign_hruid_to_rvt()
             self.run_raven()
             if self.dlg.rd_calibration_yes.isChecked():
                 self.run_ostrich()
@@ -252,10 +254,10 @@ class ThunderRaven:
                         ['max_temp', 'TEMP_MAX', 'tmax']]
         for structure in self.selected_structures:
             output_path = output + '/' + structure + '/' + model_name + '.rvt'
-            stations = []
+            self.stations = []
             for file in os.listdir(output + '/' + structure):
                 if file.endswith(".rvt"):
-                    stations.append(file)
+                    self.stations.append(file)
             with open(output_path, 'w') as rvt:
                 for variable in forcing_vars:
                     rvt.write(':GriddedForcing\t\t' + variable[0])
@@ -265,8 +267,53 @@ class ThunderRaven:
                     rvt.write('\n\t:DimNamesNC\tx y time')
                     rvt.write('\n\t:RedirectToFile\tforcing/gridweights.txt')
                     rvt.write('\n:EndGriddedForcing\n\n')
-                for station in stations:
+                for station in self.stations:
                     rvt.write('\n:RedirectToFile\t' + station)
+
+
+    def assign_hruid_to_rvt(self):
+        output = self.dlg.file_thunder_output.filePath()
+        hru_file = output + '/BasinMaker/Output/OIH_Output/network_after_gen_hrus/finalcat_hru_info.shp'
+
+        layer = QgsVectorLayer(hru_file, "bm_hru", "ogr")
+        # Check if the layer is valid
+        if not layer.isValid():
+            print("HRUs file failed to load!")
+            return
+        for structure in self.selected_structures:
+            model_directory = output + '/' + structure + '/'
+            for station in self.stations:
+                rvt_file = model_directory + station
+                # Define the target value for the "Obs_NM" column
+                target_station_id = station.strip('.rvt')
+                # Get the index of the "SubId" column
+                sub_id_index = layer.fields().indexOf("SubId")
+                # Iterate through features and find the matching "SubId"
+                for feature in layer.getFeatures():
+                    # Get the index of the "Obs_NM" column
+                    station_id_index = layer.fields().indexOf("Obs_NM")
+                    if feature[station_id_index] == target_station_id:
+                        # Get the value from the "SubId" column for the matching row
+                        sub_id_value = feature[sub_id_index]
+                        print(f"Found matching station id '{target_station_id}'. The corresponding SubId is: {sub_id_value}")
+                        break
+
+                # Read the rvt file
+                with open(rvt_file, 'r') as rvt:
+                    lines = rvt.readlines()
+
+                # Write a new rvt file replacing the <hruid> placeholder with the SubId
+                with open(rvt_file, 'w') as rvt:
+                    for line in lines:
+                        if '<hruid>' in line:
+                            if sub_id_value:
+                                line = line.replace('<hruid>', str(sub_id_value))
+                            else:
+                                rvt.write(line)
+                        rvt.write(line)
+        # Close the shapefile
+        layer = None
+
 
     def run_raven(self):
         output = self.dlg.file_thunder_output.filePath()
