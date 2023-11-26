@@ -584,7 +584,7 @@ abstractionAlg = ['ABST_SCS','ABST_PERCENTAGE','ABST_FILL',
                  ]  #:Abstraction [string method] PONDED_WATER DEPRESSION/MULTIPLE
 glacierinfiltrationAlg = ["GINFIL_UBCWM"] 
 splitAlg = ['RAVEN_DEFAULT']
-convolutionAlg = ['CONVOL_GR4J_1','CONVOL_GR4J_2','CONVOL_GAMMA','CONVOL_GAMMA2']
+convolutionAlg = ['CONVOL_GR4J_1','CONVOL_GR4J_2','CONVOL_GAMMA','CONVOL_GAMMA_2']
 snowtempevolveAlg = ['SNOTEMP_NEWTONS']
 depresoverflowAlg = ['DFLOW_THRESHPOW','DFLOW_LINEAR','DFLOW_WEIR']
 exchangeflowAlg = ['RAVEN_DEFAULT']#:ExchangeFlow RAVEN_DEFAULT [state_var from] [state_var mixing_zone]

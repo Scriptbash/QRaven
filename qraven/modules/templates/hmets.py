@@ -101,7 +101,7 @@ def loadHmets(self):
         combo_proc = table.cellWidget(9,0)
         combo_proc.setCurrentText("Convolve")
         combo_alg = table.cellWidget(9,1)
-        combo_alg.setCurrentText("CONVOL_GAMMA2")
+        combo_alg.setCurrentText("CONVOL_GAMMA_2")
         combo_from = table.cellWidget(9,2)
         combo_from.setCurrentText("CONVOLUTION[1]")
         combo_to = table.cellWidget(9,4)
