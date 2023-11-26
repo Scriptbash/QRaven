@@ -107,16 +107,12 @@ def field_calculator(dlg, layer, formula, field_name, field_type, output, tempor
                                      'OUTPUT': output})
 
 
-
 def remove_small_areas(dlg, layer, threshold, output):
-    # GRASS temporary outputs are broken, so must save in a tmp folder
-    cleaned = processing.run("grass7:v.clean", {'input': layer,
-                                      'type': [0, 1, 2, 3, 4, 5, 6], 'tool': [10], 'threshold': '', '-b': False,
-                                      '-c': True, 'output': output, 'error': 'TEMPORARY_OUTPUT',
-                                      'GRASS_REGION_PARAMETER': None, 'GRASS_SNAP_TOLERANCE_PARAMETER': threshold,
-                                      'GRASS_MIN_AREA_PARAMETER': 0.0001, 'GRASS_OUTPUT_TYPE_PARAMETER': 0,
-                                      'GRASS_VECTOR_DSCO': '', 'GRASS_VECTOR_LCO': '',
-                                      'GRASS_VECTOR_EXPORT_NOCAT': False})
+    expression = '$area < 100000'
+    layer.selectByExpression(expression)
+    processing.run("qgis:eliminateselectedpolygons",
+                   {'INPUT': layer, 'MODE': 0,
+                    'OUTPUT': output})
 
 
 def fix_geometries(dlg, layer):
