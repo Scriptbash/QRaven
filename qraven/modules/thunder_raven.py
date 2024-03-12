@@ -38,9 +38,9 @@ class ThunderRaven:
             self.prepare_environment()
             #self.download_streamflow()
             #self.load_model()
-            #self.download_daymet_data()
+            self.download_daymet_data()
             #self.download_gis_data()
-            self.run_basin_maker()
+            #self.run_basin_maker()
             self.run_gridweights()
             self.create_main_rvt_file()
             self.assign_hruid_to_rvt()
@@ -161,7 +161,7 @@ class ThunderRaven:
         item.setSelected(True)
         self.dlg.chk_daymet_insert_nan.setChecked(True)
         self.dlg.chk_daymet_merge.setChecked(True)
-        self.dlg.chk_daymet_fill_values.setChecked(True)
+        #self.dlg.chk_daymet_fill_values.setChecked(True)
         self.dlg.btn_download_daymet.click()
         for structure in self.selected_structures:
             make_folder(output + '/' + structure + '/forcing')
@@ -412,3 +412,4 @@ class ThunderRaven:
 # TODO
 # Add avgannualrunoff global parameter in rvp
 # Remove netcdf filling data. prcp --> 0, min/max temp --> average
+# Add file filter to modelexecutable in ostrich

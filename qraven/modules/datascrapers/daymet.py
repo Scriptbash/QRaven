@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QApplication
 from qgis.core import QgsVectorLayer
 import processing
 import urllib.request
-from ..utilities import merge_netcdf, check_missing_dates, fill_missing_dates, set_fill_values
+from ..utilities import merge_netcdf, check_missing_dates, fill_missing_dates, fix_missing_values, set_fill_values
 
 
 class Daymet:
@@ -68,6 +68,7 @@ class Daymet:
                         "&disableProjSubset=on&horizStride=1&time_start=" + \
                         str(start) + "T12:00:00Z&time_end=" + str(end) + "T12:00:00Z&timeStride=1&accept=netcdf"
                 req = urllib.request.Request(url)
+                print(url)
                 response = urllib.request.urlopen(req, timeout=timeout)
                 totalsize = response.info()['Content-Length']
                 currentsize = 0
@@ -90,7 +91,8 @@ class Daymet:
                             dlg.progress_daymet.setValue(100)
                 if dlg.chk_daymet_insert_nan.isChecked():
                     missing_dates = check_missing_dates(output_file)
-                    fill_missing_dates(output_file, missing_dates)
+                    #fill_missing_dates(output_file, missing_dates)
+                    fix_missing_values(output_file, missing_dates, variable)
                 else:
                     pass
             if dlg.chk_daymet_merge.isChecked():

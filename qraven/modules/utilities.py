@@ -103,10 +103,155 @@ def fill_missing_dates(ncfile, missing_dates):
     ds.close()
 
 
+def fix_missing_values(ncfile, missing_dates, variable):
+    ds = xarray.open_dataset(ncfile)
+
+    if variable == 'prcp':
+        if missing_dates:
+            # Create an empty DataArray with NaN values for the missing dates
+            missing_data = xarray.full_like(ds.isel(time=0), fill_value=float(0.0))
+            missing_data['time'] = missing_dates
+            # Concatenate the missing data with the ds along the 'time' dimension
+            updated_data = xarray.concat([ds, missing_data], dim='time')
+            updated_data = updated_data.fillna(float(0.0))
+            #updated_data.to_netcdf(ncfile)
+        else:
+            updated_data = ds.fillna(float(0.0))
+            # updated_data.to_netcdf('./result/test.nc')
+    else:
+        if ds.isnull().any():
+            print('Found NaN values. Attempting to fix...')
+            try:
+                radius = 1
+                # Find indices of missing values
+                missing_indices = np.argwhere(np.isnan(ds[variable].values))
+
+                for idx in missing_indices:
+                    time_idx, lat_idx, lon_idx = idx
+
+                    # Find neighboring values within the radius
+                    y_slice = slice(max(lat_idx - radius, 0), min(lat_idx + radius + 1, len(ds['y'])))
+                    x_slice = slice(max(lon_idx - radius, 0), min(lon_idx + radius + 1, len(ds['x'])))
+                    neighbor_values = ds[variable].isel(time=time_idx, y=y_slice, x=x_slice)
+
+                    # Exclude NaN values and compute the mean
+                    neighbor_mean = np.nanmean(neighbor_values)
+
+                    # Fill missing values with the mean of neighboring values
+                    ds[variable].values[time_idx, lat_idx, lon_idx] = neighbor_mean
+            except Exception as e:
+                print('Unable to fix the NaN values.')
+                print(e)
+        # if ds.isnull().any():
+        #     print('Found NaN values. Attempting to fix...')
+        #     try:
+        #         radius = 1
+        #         # Iterate over all timestamps
+        #         for time_idx, time in enumerate(ds['time']):
+        #             # Iterate over all locations
+        #             for lat_idx, lat in enumerate(ds['y']):
+        #                 for lon_idx, lon in enumerate(ds['x']):
+        #                     # Check if there are any missing values at this location for the current timestamp
+        #                     if ds[variable].isel(time=time_idx, y=lat_idx, x=lon_idx).isnull():
+        #                         # Find neighboring values within the radius
+        #                         y_slice = slice(max(lat_idx - radius, 0), min(lat_idx + radius + 1, len(ds['y'])))
+        #                         x_slice = slice(max(lon_idx - radius, 0), min(lon_idx + radius + 1, len(ds['x'])))
+        #                         neighbor_values = ds[variable].isel(time=time_idx, y=y_slice, x=x_slice)
+        #                         # Exclude NaN values and compute the mean
+        #                         neighbor_mean = np.nanmean(neighbor_values)
+        #                         # Fill missing values with the mean of neighboring values
+        #                         ds[variable].loc[dict(time=time, y=lat, x=lon)] = neighbor_mean
+        #     except Exception as e:
+        #         print('Unable to fix the NaN values.')
+        #         print(e)
+        if missing_dates:
+            missing_data = xarray.full_like(ds.isel(time=0), fill_value=np.nan, dtype=float)
+            missing_data['time'] = missing_dates
+            # Concatenate the missing data with the ds along the 'time' dimension
+            updated_data = xarray.concat([ds, missing_data], dim='time')
+            for date in missing_dates:
+                try:
+                    # Attempt to extract values for the day before and day after
+                    # Find nearest available dates (day before and day after)
+                    before_date = (pd.to_datetime(date) - pd.Timedelta(days=1)).strftime('%Y-%m-%d')
+                    after_date = (pd.to_datetime(date) + pd.Timedelta(days=1)).strftime('%Y-%m-%d')
+
+                    if before_date in [str(ts)[:10] for ts in updated_data.time.values] and after_date in [str(ts)[:10]
+                                                                                                           for ts in
+                                                                                                           updated_data.time.values]:
+                        before_values = updated_data[variable].sel(time=before_date, method='nearest').values
+                        after_values = updated_data[variable].sel(time=after_date, method='nearest').values
+                        if not np.any(np.isnan(before_values)) and not np.any(np.isnan(after_values)):
+                            # Calculate the average
+                            average_value = (before_values + after_values) / 2.0
+                            # Assign the average value to the missing date
+                            updated_data[variable].loc[dict(time=date)] = average_value
+                            print('Using average of the day before and the day after for interpolation.')
+                            continue
+
+                    before_date = (pd.to_datetime(date) - pd.Timedelta(days=1)).strftime('%Y-%m-%d')
+                    after_date = (pd.to_datetime(date) - pd.Timedelta(days=2)).strftime('%Y-%m-%d')
+                    if before_date in [str(ts)[:10] for ts in updated_data.time.values] and after_date in [str(ts)[:10]
+                                                                                                           for ts in
+                                                                                                           updated_data.time.values]:
+                        before_values = updated_data[variable].sel(time=before_date, method='nearest').values
+                        after_values = updated_data[variable].sel(time=after_date, method='nearest').values
+                        if not np.any(np.isnan(before_values)) and not np.any(np.isnan(after_values)):
+                            # Calculate the average
+                            average_value = (before_values + after_values) / 2.0
+                            # Assign the average value to the missing date
+                            updated_data[variable].loc[dict(time=date)] = average_value
+                            print('Using average of the two days before for interpolation.')
+                            continue
+
+                    before_date = (pd.to_datetime(date) + pd.Timedelta(days=1)).strftime('%Y-%m-%d')
+                    after_date = (pd.to_datetime(date) + pd.Timedelta(days=2)).strftime('%Y-%m-%d')
+                    if before_date in [str(ts)[:10] for ts in updated_data.time.values] and after_date in [str(ts)[:10]
+                                                                                                           for ts in
+                                                                                                           updated_data.time.values]:
+                        before_values = updated_data[variable].sel(time=before_date, method='nearest').values
+                        after_values = updated_data[variable].sel(time=after_date, method='nearest').values
+                        if not np.any(np.isnan(before_values)) and not np.any(np.isnan(after_values)):
+                            # Calculate the average
+                            average_value = (before_values + after_values) / 2.0
+                            # Assign the average value to the missing date
+                            updated_data[variable].loc[dict(time=date)] = average_value
+                            print('Using average of the two days after for interpolation.')
+                            continue
+                    print('Missing values are present. Could not interpolate.')
+
+                except KeyError:
+                    print(f"No data available for {date}. Skipping.")
+
+        else:
+            updated_data = ds
+
+    updated_data.to_netcdf(ncfile)
+    updated_data.close()
+
+    ds.close()
+
 def set_fill_values(ncfile, variable):
     ds = xarray.open_dataset(ncfile)
     new_variable_name = variable + '_new'  # Create a new variable with the desired _FillValue
-    ds[new_variable_name] = ds[variable].where(ds[variable] != -9999.0, -1.2345)
+    if variable == 'prcp':
+        ds[new_variable_name] = ds[variable].where(ds[variable] == -9999.0, 0.0)
+    else:
+        for i in range(ds[variable].shape[1]):
+            for j in range(ds[variable].shape[2]):
+                if np.isnan(ds[variable][:, i, j]).any():
+                    neighbors = []
+
+                    for ii in range(i - 1, i + 2):
+                        for jj in range(j - 1, j + 2):
+                            if 0 <= ii < ds[variable].shape[1] and 0 <= jj < ds[variable].shape[2] and not (
+                                    ii == i and jj == j):
+                                neighbors.append(ds[variable][:, ii, jj])
+
+                    if neighbors:
+                        average = np.nanmean(neighbors, axis=0)
+                        ds[variable][:, i, j] = np.where(np.isnan(ds[variable][:, i, j]), average, ds[variable][:, i, j])
+
     ds = ds.drop_vars(variable)  # Remove the original variable
     ds = ds.rename({new_variable_name: variable})  # Rename the new variable to the original variable name
     ds.to_netcdf(ncfile + '_tmp')
